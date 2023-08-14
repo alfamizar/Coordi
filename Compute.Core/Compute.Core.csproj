@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CoordinateSharp" Version="2.19.1.1" />
+    <PackageReference Include="CoordinateSharp.Magnetic" Version="1.1.9" />
+    <PackageReference Include="DotNext" Version="4.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Entities\Models\Sun\" />
+    <Folder Include="Domain\Interfaces\" />
+  </ItemGroup>
+
+</Project>

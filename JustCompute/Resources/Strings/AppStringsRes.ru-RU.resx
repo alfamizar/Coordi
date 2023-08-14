@@ -1,0 +1,510 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddLocationLabel" xml:space="preserve">
+    <value>Добавить местоположение</value>
+  </data>
+  <data name="AnnularEclipseLabel" xml:space="preserve">
+    <value>Кольцевой</value>
+  </data>
+  <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Время начала кольцеобразного или полного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
+    <value>Время окончания кольцевого или полного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
+    <value>Продолжительность кольцеобразного или полного затмения: {0}</value>
+  </data>
+  <data name="AquariusLabel" xml:space="preserve">
+    <value>Водолей</value>
+  </data>
+  <data name="AriesLabel" xml:space="preserve">
+    <value>Овен</value>
+  </data>
+  <data name="AtTheseCoordinatesLabel" xml:space="preserve">
+    <value>По этим координатам:</value>
+  </data>
+  <data name="BeaverMoonLabel" xml:space="preserve">
+    <value>Бобровая луна</value>
+  </data>
+  <data name="BlueMoonLabel" xml:space="preserve">
+    <value>Голубая луна</value>
+  </data>
+  <data name="BuckMoonLabel" xml:space="preserve">
+    <value>Бак Мун</value>
+  </data>
+  <data name="CancerLabel" xml:space="preserve">
+    <value>Рак</value>
+  </data>
+  <data name="CannotGetCurrentLocationError" xml:space="preserve">
+    <value>Не удается определить ваше текущее местоположение. Проверьте разрешения приложения и повторите попытку позже.</value>
+  </data>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>Не удается получить текущее местоположение. Пожалуйста, попробуйте позднее</value>
+  </data>
+  <data name="CannotGetLocationLabel" xml:space="preserve">
+    <value>Не удается получить местоположение</value>
+  </data>
+  <data name="CapricornLabel" xml:space="preserve">
+    <value>Козерог</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>Город</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="ColdMoonLabel" xml:space="preserve">
+    <value>Холодная Луна</value>
+  </data>
+  <data name="ConvertersLabel" xml:space="preserve">
+    <value>Конвертеры</value>
+  </data>
+  <data name="CoordinatesConverterLabel" xml:space="preserve">
+    <value>Конвертер координат</value>
+  </data>
+  <data name="CornMoonLabel" xml:space="preserve">
+    <value>Кукурузная луна</value>
+  </data>
+  <data name="CountryLabel" xml:space="preserve">
+    <value>Страна</value>
+  </data>
+  <data name="DarkThemeLabel" xml:space="preserve">
+    <value>Темная тема</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Дата: {0:dd MMMM yyyy}</value>
+  </data>
+  <data name="DateWithTimeLabel" xml:space="preserve">
+    <value>Дата: {0:dd MMMM yyyy hh:mm:ss}</value>
+  </data>
+  <data name="DayDurationLabel" xml:space="preserve">
+    <value>Продолжительность дня: {0}</value>
+  </data>
+  <data name="DeleteLabel" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="DigraphLabel" xml:space="preserve">
+    <value>Диграф (идентификатор MGRS 100 000 квадратных метров): {0}</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Расстояние: {0:0.##} {1}</value>
+  </data>
+  <data name="DistanceUnitLabel" xml:space="preserve">
+    <value>Единица расстояния</value>
+  </data>
+  <data name="EclipsesLabel" xml:space="preserve">
+    <value>Затмения</value>
+  </data>
+  <data name="FeetsAbbreviationLabel" xml:space="preserve">
+    <value>футов</value>
+  </data>
+  <data name="FeetsLabel" xml:space="preserve">
+    <value>Футы</value>
+  </data>
+  <data name="FirstQuarterLabel" xml:space="preserve">
+    <value>Первая четверть</value>
+  </data>
+  <data name="FullMoonLabel" xml:space="preserve">
+    <value>Полнолуние</value>
+  </data>
+  <data name="GeminiLabel" xml:space="preserve">
+    <value>Близнецы</value>
+  </data>
+  <data name="GoToSettings" xml:space="preserve">
+    <value>Перейти в настройки</value>
+  </data>
+  <data name="HuntersMoonLabel" xml:space="preserve">
+    <value>Охотничья Луна</value>
+  </data>
+  <data name="InverseFlatteningLabel" xml:space="preserve">
+    <value>Обратная Сплюснутость: {0}</value>
+  </data>
+  <data name="KilometersAbbreviationLabel" xml:space="preserve">
+    <value>км</value>
+  </data>
+  <data name="KmLabel" xml:space="preserve">
+    <value>Км</value>
+  </data>
+  <data name="LastQuarterLabel" xml:space="preserve">
+    <value>Последняя четверть</value>
+  </data>
+  <data name="LatitudeLabel" xml:space="preserve">
+    <value>Широта</value>
+  </data>
+  <data name="LatitudeStringFormatLabel" xml:space="preserve">
+    <value>Широта: {0:0.#####}</value>
+  </data>
+  <data name="LeoLabel" xml:space="preserve">
+    <value>Лев</value>
+  </data>
+  <data name="LibraLabel" xml:space="preserve">
+    <value>Весы</value>
+  </data>
+  <data name="LocationLabel" xml:space="preserve">
+    <value>Расположение:</value>
+  </data>
+  <data name="LocationNameLabel" xml:space="preserve">
+    <value>Название местоположения</value>
+  </data>
+  <data name="LocationPermissionDialogMessage" xml:space="preserve">
+    <value>Приложению требуется доступ к местоположению устройства для работы</value>
+  </data>
+  <data name="LocationPermissionDialogTitle" xml:space="preserve">
+    <value>Разрешение на доступ к местоположению</value>
+  </data>
+  <data name="LocationsLabel" xml:space="preserve">
+    <value>Места</value>
+  </data>
+  <data name="LongitudeLabel" xml:space="preserve">
+    <value>Долгота</value>
+  </data>
+  <data name="LongitudeStringFormatLabel" xml:space="preserve">
+    <value>Долгота: {0:0.#####}</value>
+  </data>
+  <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
+    <value>Максимальное время затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="MetersAbbreviationLabel" xml:space="preserve">
+    <value>м</value>
+  </data>
+  <data name="MetersLabel" xml:space="preserve">
+    <value>Метры</value>
+  </data>
+  <data name="MGRSEastingLabel" xml:space="preserve">
+    <value>Восток MGRS: {0}</value>
+  </data>
+  <data name="MGRSLabel" xml:space="preserve">
+    <value>MGRS</value>
+  </data>
+  <data name="MGRSLatZoneLabel" xml:space="preserve">
+    <value>Обозначение зоны сетки широтного диапазона MGRS: {0}</value>
+  </data>
+  <data name="MGRSLonZoneLabel" xml:space="preserve">
+    <value>Обозначение зоны координатной сетки полосы долготы MGRS: {0}</value>
+  </data>
+  <data name="MGRSNorthingLabel" xml:space="preserve">
+    <value>Северное направление MGRS: {0}</value>
+  </data>
+  <data name="MGRSTypeLabel" xml:space="preserve">
+    <value>Тип MGRS: {0}</value>
+  </data>
+  <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
+    <value>Время середины затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="MilesAbbreviationLabel" xml:space="preserve">
+    <value>ми</value>
+  </data>
+  <data name="MilesLabel" xml:space="preserve">
+    <value>Мили</value>
+  </data>
+  <data name="MoonEclipsesLabel" xml:space="preserve">
+    <value>Лунные затмения</value>
+  </data>
+  <data name="MoonInZodiacSignLabel" xml:space="preserve">
+    <value>Луна в: {0}</value>
+  </data>
+  <data name="MoonLabel" xml:space="preserve">
+    <value>Луна</value>
+  </data>
+  <data name="MoonNameLabel" xml:space="preserve">
+    <value>Имя луны:</value>
+  </data>
+  <data name="MoonPhaseLabel" xml:space="preserve">
+    <value>Фаза луны:</value>
+  </data>
+  <data name="MoonRiseDurationLabel" xml:space="preserve">
+    <value>Продолжительность восхода луны: {0}</value>
+  </data>
+  <data name="MoonRiseLabel" xml:space="preserve">
+    <value>Восход луны: {0:hh:mm tt}</value>
+  </data>
+  <data name="MoonSetLabel" xml:space="preserve">
+    <value>Закат Луны: {0:hh:mm tt}</value>
+  </data>
+  <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
+    <value>НМИ</value>
+  </data>
+  <data name="NauticalMilesLabel" xml:space="preserve">
+    <value>Морские мили</value>
+  </data>
+  <data name="NewMoonLabel" xml:space="preserve">
+    <value>Новолуние</value>
+  </data>
+  <data name="NoSavedLocationsLabel" xml:space="preserve">
+    <value>У вас еще нет сохраненных мест, нажмите кнопку «+», чтобы добавить</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="PartialEclipseLabel" xml:space="preserve">
+    <value>Частичное</value>
+  </data>
+  <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Время начала частичного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Время окончания частичного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Время начала частичного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Время окончания частичного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PenumbralEclipseLabel" xml:space="preserve">
+    <value>Полутень</value>
+  </data>
+  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Время начала полутеневого затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Время окончания полутеневого затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="PermissionRequiredDialogMessage" xml:space="preserve">
+    <value>Для работы приложению требуется разрешение на определение местоположения. Перейдите к настройкам приложения и предоставьте доступ или закройте приложение.</value>
+  </data>
+  <data name="PermissionRequiredDialogTitle" xml:space="preserve">
+    <value>Требуется разрешение</value>
+  </data>
+  <data name="PinkMoonLabel" xml:space="preserve">
+    <value>Розовая луна</value>
+  </data>
+  <data name="PiscesLabel" xml:space="preserve">
+    <value>Рыбы</value>
+  </data>
+  <data name="PlusAddLocationLabel" xml:space="preserve">
+    <value>+ Добавить местоположение</value>
+  </data>
+  <data name="SagittariusLabel" xml:space="preserve">
+    <value>Стрелец</value>
+  </data>
+  <data name="SavedLocationsLabel" xml:space="preserve">
+    <value>Сохраненные локации:</value>
+  </data>
+  <data name="SaveLocationButtonText" xml:space="preserve">
+    <value>Сохранить местоположение</value>
+  </data>
+  <data name="ScorpioLabel" xml:space="preserve">
+    <value>Скорпион</value>
+  </data>
+  <data name="SetsAndRisesLabel" xml:space="preserve">
+    <value>Закаты и Рассветы</value>
+  </data>
+  <data name="SettingsLabel" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SnowMoonLabel" xml:space="preserve">
+    <value>Снежная Луна</value>
+  </data>
+  <data name="StrawberryMoonLabel" xml:space="preserve">
+    <value>Клубничная луна</value>
+  </data>
+  <data name="SturgeonMoonLabel" xml:space="preserve">
+    <value>Осетровая луна</value>
+  </data>
+  <data name="SunAndMoonLabel" xml:space="preserve">
+    <value>Солнце и Луна</value>
+  </data>
+  <data name="SunEclipsesLabel" xml:space="preserve">
+    <value>Солнечные затмения</value>
+  </data>
+  <data name="SunEclispseTypeLabel" xml:space="preserve">
+    <value>Тип: {0}</value>
+  </data>
+  <data name="SunLabel" xml:space="preserve">
+    <value>Солнце</value>
+  </data>
+  <data name="SunRiseLabel" xml:space="preserve">
+    <value>Восход солнца: {0:hh:mm tt}</value>
+  </data>
+  <data name="SunSetLabel" xml:space="preserve">
+    <value>Закат: {0:hh:mm tt}</value>
+  </data>
+  <data name="TaurusLabel" xml:space="preserve">
+    <value>Телец</value>
+  </data>
+  <data name="TimeLabel" xml:space="preserve">
+    <value>Время: {0:hh:mm:ss tt}</value>
+  </data>
+  <data name="TimeTravelLabel" xml:space="preserve">
+    <value>Путешествие во времени</value>
+  </data>
+  <data name="TotalEclipseLabel" xml:space="preserve">
+    <value>Полное затмение</value>
+  </data>
+  <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Время начала полного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Общее время окончания полного затмения: {0:hh:mm tt}</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Тип: {0}</value>
+  </data>
+  <data name="UnknownLocationLabel" xml:space="preserve">
+    <value>Неизвестное местоположение</value>
+  </data>
+  <data name="UTCTimeOffsetLabel" xml:space="preserve">
+    <value>UTC пояс</value>
+  </data>
+  <data name="UTMEastingLabel" xml:space="preserve">
+    <value>UTM-ориентация на восток: {0}</value>
+  </data>
+  <data name="UTMLabel" xml:space="preserve">
+    <value>UTM</value>
+  </data>
+  <data name="UTMLatZoneLabel" xml:space="preserve">
+    <value>Обозначение зоны сетки UTM Latitude Band: {0}</value>
+  </data>
+  <data name="UTMLonZoneLabel" xml:space="preserve">
+    <value>Обозначение зоны сетки полосы долготы UTM: {0}</value>
+  </data>
+  <data name="UTMNorthingLabel" xml:space="preserve">
+    <value>Северное направление UTM: {0}</value>
+  </data>
+  <data name="UTMTypeLabel" xml:space="preserve">
+    <value>Тип UTM: {0}</value>
+  </data>
+  <data name="VirgoLabel" xml:space="preserve">
+    <value>Дева</value>
+  </data>
+  <data name="WaningCrescentLabel" xml:space="preserve">
+    <value>Старая Луна</value>
+  </data>
+  <data name="WaningGibbousLabel" xml:space="preserve">
+    <value>Убывающая Луна</value>
+  </data>
+  <data name="WaxingCrescentLabel" xml:space="preserve">
+    <value>Молодая Луна</value>
+  </data>
+  <data name="WaxingGibbousLabel" xml:space="preserve">
+    <value>Прибывающая Луна</value>
+  </data>
+  <data name="WolfMoonLabel" xml:space="preserve">
+    <value>Волчья Луна</value>
+  </data>
+  <data name="WormMoonLabel" xml:space="preserve">
+    <value>Червячная Луна</value>
+  </data>
+  <data name="ZodiacSignLabel" xml:space="preserve">
+    <value>Знак зодиака: {0}</value>
+  </data>
+</root>

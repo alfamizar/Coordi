@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.SunEclipsesPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:models="clr-namespace:CoordinateSharp;assembly=CoordinateSharp"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls">
+
+    <Grid>
+
+        <Label Text="{localization:Localize CannotGetLocationLabel}"
+               VerticalOptions="Center"
+               HorizontalOptions="Center">
+            <Label.IsVisible>
+                <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                    <Binding Path="Location"
+                             Converter="{StaticResource IsNullConverter}" />
+                    <Binding Path="IsBusy"
+                             Converter="{StaticResource InvertedBoolConverter}" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <CollectionView ItemsSource="{Binding GroupedEclipseList}"
+                        SelectionMode="None"
+                        IsGrouped="True">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <StackLayout Margin="10,0">
+                        <Label Text="{Binding Key}"
+                               FontAttributes="Bold"
+                               FontSize="18" />
+                        <BoxView Style="{StaticResource DividerStyle}" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SunEclipsesViewModel}}, Path=Commands[ToggleGroupCommand]}"
+                                                  CommandParameter="{Binding .}" />
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="models:SolarEclipseDetails">
+
+                    <Frame>
+
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8"
+                              RowSpacing="8">
+
+                            <Label x:Name="Date"
+                                   Grid.Column="0"
+                                   Grid.Row="0"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding Date, StringFormat={localization:Localize DateLabel}}" />
+
+                            <Label x:Name="Type"
+                                   Grid.Column="1"
+                                   Grid.Row="0"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding Type, Converter={StaticResource SunEclipseTypeToNameConverter}, 
+                                    StringFormat={localization:Localize TypeLabel}}" />
+
+                            <BoxView Grid.ColumnSpan="2"
+                                     Grid.Row="1"
+                                     Style="{StaticResource DividerStyle}" />
+
+                            <Label x:Name="PartialEclispeBegin"
+                                   Grid.Column="0"
+                                   Grid.Row="2"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding PartialEclispeBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel}}" />
+
+                            <Label x:Name="PartialEclispeEnd"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding PartialEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclispeEnd, StringFormat={localization:Localize PartialSolarEclipseEndTimeLabel}}" />
+
+                            <BoxView Grid.ColumnSpan="2"
+                                     Grid.Row="3"
+                                     Style="{StaticResource DividerStyle}" />
+
+                            <Label x:Name="MaximumEclipse"
+                                   Grid.Column="0"
+                                   Grid.Row="4"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding MaximumEclipse, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel}}" />
+
+                            <Label x:Name="AorTDuration"
+                                   Grid.Column="1"
+                                   Grid.Row="4"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding AorTDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
+                                   Text="{Binding AorTDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel}}" />
+
+                            <BoxView Grid.ColumnSpan="2"
+                                     Grid.Row="5"
+                                     Style="{StaticResource DividerStyle}" />
+
+                            <Label x:Name="AorTEclipseBegin"
+                                   Grid.Column="0"
+                                   Grid.Row="6"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding AorTEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding AorTEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel}}" />
+
+                            <Label x:Name="AorTEclipseEnd"
+                                   Grid.Column="1"
+                                   Grid.Row="6"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   IsVisible="{Binding AorTEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding AorTEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel}}" />
+
+                            <BoxView Grid.ColumnSpan="2"
+                                     Grid.Row="7"
+                                     Style="{StaticResource DividerStyle}">
+                                <BoxView.IsVisible>
+                                    <MultiBinding Converter="{StaticResource AnyTrueConverter}">
+                                        <Binding Source="{x:Reference AorTEclipseBegin}"
+                                                 Path="IsVisible" />
+                                        <Binding Source="{x:Reference AorTEclipseEnd}"
+                                                 Path="IsVisible" />
+                                    </MultiBinding>
+                                </BoxView.IsVisible>
+                            </BoxView>
+
+                        </Grid>
+
+                    </Frame>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
+
+    </Grid>
+
+</v1:BasePage>

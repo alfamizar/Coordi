@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="JustCompute.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:JustCompute.Presentation.Pages"
+       xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+       Shell.TabBarIsVisible="True"
+       FlyoutWidth="230"
+       FlyoutHeaderBehavior="CollapseOnScroll">
+
+    <Shell.FlyoutHeader>
+        <Image Source="appshell_header.png"
+               WidthRequest="230"
+               HeightRequest="230"/>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize LocationsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=location_icon_black.png, Dark=location_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize LocationsLabel}"
+                      ContentTemplate="{DataTemplate pages:LocationsPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SetsAndRisesLabel}"
+                FlyoutIcon="{AppThemeBinding Light=stars_icon_black.png, Dark=stars_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize SunLabel}"
+                      Icon="sun_icon.png"
+                      ContentTemplate="{DataTemplate pages:SunPage}" />
+        <ShellContent Title="{localization:Localize MoonLabel}"
+                      Icon="moon_icon.png"
+                      ContentTemplate="{DataTemplate pages:MoonPage}" />
+        <!--
+        Shell has implicit conversion operators that enable the Shell visual hierarchy to be simplified.
+        This is possible because a subclassed Shell object can only ever contain a FlyoutItem object or a TabBar object,
+        which can only ever contain Tab objects, which can only ever contain ShellContent objects.
+
+        The implicit conversion automatically wraps the ShellContent objects below in Tab objects.
+        -->
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize EclipsesLabel}"
+                FlyoutIcon="{AppThemeBinding Light=hide_icon_black.png, Dark=hide_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize SunEclipsesLabel}"
+                      Icon="sun_icon.png"
+                      ContentTemplate="{DataTemplate pages:SunEclipsesPage}" />
+        <ShellContent Title="{localization:Localize MoonEclipsesLabel}"
+                      Icon="moon_icon.png"
+                      ContentTemplate="{DataTemplate pages:MoonEclipsesPage}" />
+
+    </FlyoutItem>
+
+    <!--todo: make visible when implemented-->
+    <FlyoutItem IsVisible="False"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize ConvertersLabel}"
+                FlyoutIcon="{AppThemeBinding Light=convert_icon_black.png, Dark=convert_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
+                      ContentTemplate="{DataTemplate pages:CoordinatesConverterPage}" />
+
+    </FlyoutItem>
+    
+    <!--todo: make visible when implemented-->
+    <FlyoutItem IsVisible="False"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize TimeTravelLabel}"
+                FlyoutIcon="{AppThemeBinding Light=clock_icon_black.png, Dark=clock_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize TimeTravelLabel}"
+                      ContentTemplate="{DataTemplate pages:TimeTravelPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem IsVisible="True"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SettingsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=settings_icon_black.png, Dark=settings_icon_white.png}">
+
+        <ShellContent Title="{localization:Localize SettingsLabel}"
+                      ContentTemplate="{DataTemplate pages:SettingsPage}" />
+
+    </FlyoutItem>
+
+</Shell>

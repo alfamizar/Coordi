@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.CoordinatesConverterPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             x:DataType="ViewModels:CoordinatesConverterViewModel"
+             Shell.TabBarIsVisible="False">
+
+    <StackLayout>
+
+        <Label Text="{localization:Localize CoordinatesConverterLabel}"/>
+
+    </StackLayout>
+
+</v1:BasePage>

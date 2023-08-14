@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.TimeTravelPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.TabBarIsVisible="False"
+             x:DataType="ViewModels:TimeTravelViewModel">
+
+    <Grid>
+
+        <Label Text="{localization:Localize CannotGetLocationLabel}"
+               VerticalOptions="Center"
+               HorizontalOptions="Center">
+            <Label.IsVisible>
+                <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                    <Binding Path="Location"
+                             Converter="{StaticResource IsNullConverter}" />
+                    <Binding Path="IsBusy"
+                             Converter="{StaticResource InvertedBoolConverter}" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <StackLayout Margin="4,4,4,4">
+
+            <DatePicker MinimumDate="01/01/1900"
+                        MaximumDate="12/31/2500"
+                        Date="{Binding DateNow, Mode=TwoWay}"
+                        HorizontalOptions="Fill">
+                <DatePicker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="DateSelected"
+                                                    Command="{Binding Commands[InitDateCommand]}">
+                    </toolkit:EventToCommandBehavior>
+                </DatePicker.Behaviors>
+            </DatePicker>
+
+        </StackLayout>
+
+    </Grid>
+
+</v1:BasePage>

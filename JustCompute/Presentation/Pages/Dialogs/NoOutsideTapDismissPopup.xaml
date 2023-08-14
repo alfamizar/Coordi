@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup x:Class="JustCompute.Presentation.Pages.Dialogs.NoOutsideTapDismissPopup"
+           xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:dialogs="clr-namespace:JustCompute.Presentation.Pages.Dialogs"
+           x:DataType="dialogs:NoOutsideTapDismissPopup"
+           x:Name="this"
+           BindingContext="{x:Reference this}">
+
+    <Grid Style="{StaticResource GridDialogContent}"
+          ColumnDefinitions="350"
+          RowDefinitions="Auto,Auto,Auto">
+
+        <Label Grid.Row="0"
+               Style="{StaticResource DialogTitle}"
+               Text="{Binding DialogTitle}"
+               IsVisible="{Binding DialogTitle, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        <Label Grid.Row="1"
+               Text="{Binding DialogMessage}"
+               Style="{StaticResource DialogMessage}"
+               IsVisible="{Binding DialogMessage, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        <StackLayout  Grid.Row="2"
+                      Orientation="Horizontal"
+                      HorizontalOptions="Fill"
+                      Spacing="8">
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="NegativeButtonClicked"
+                    Text="{Binding NegativeButtonText}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding NegativeButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="NeutralButtonClicked"
+                    Text="{Binding NeutralButtonText}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding NeutralButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="PositiveButtonClicked"
+                    Text="{Binding PositiveButtonText}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding PositiveButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        </StackLayout>
+
+    </Grid>
+
+</mct:Popup>

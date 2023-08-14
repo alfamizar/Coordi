@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:converters="clr-namespace:JustCompute.Presentation.Converters"
+                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                    x:Class="JustCompute.Resources.Converters">
+
+    <converters:IsIntEqualZeroConverter x:Key="IsIntEqualZeroConverter" />
+    <converters:IsIntNotEqualZeroConverter x:Key="IsIntNotEqualZeroConverter" />
+    <converters:EmptyStringToBoolConverter x:Key="EmptyStringToBoolConverter" />
+    <converters:MoonPhaseToNameConverter x:Key="MoonPhaseToNameConverter" />
+    <converters:SunEclipseTypeToNameConverter x:Key="SunEclipseTypeToNameConverter" />
+    <converters:MoonEclipseTypeToNameConverter x:Key="MoonEclipseTypeToNameConverter" />
+    <converters:IsDateTimeSetConverter x:Key="IsDateTimeSetConverter" />
+    <converters:IsTimeSpanSetConverter x:Key="IsTimeSpanSetConverter" />
+    <converters:KilometersToTargetDistanceTypeConverter x:Key="KilometersToTargetDistanceTypeConverter" />
+    <converters:MoonNameEnumToStringConverter x:Key="MoonNameEnumToStringConverter" />
+    <converters:ZodiacSignEnumToLocalizedStringConverter x:Key="ZodiacSignEnumToLocalizedStringConverter" />
+    <converters:CoordinateRangeValidatorToBoolConverter x:Key="CoordinateRangeValidatorToBoolConverter" />
+    <converters:RiseAndSetToDurationConverter x:Key="RiseAndSetToDurationConverter" />
+    <converters:CoordinateToMoonPhaseConverter x:Key="CoordinateToMoonPhaseConverter" />
+    <converters:MoonCycleToMoonPhaseConverter x:Key="MoonCycleToMoonPhaseConverter" />
+    <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
+    <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
+    <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter" ConditionType="All" />
+    <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter" ConditionType="Any" />
+    <toolkit:IsNullConverter x:Key="IsNullConverter" />
+    <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+
+</ResourceDictionary>

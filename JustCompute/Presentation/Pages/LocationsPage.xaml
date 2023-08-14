@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:extendedcontrols="clr-namespace:JustCompute.Presentation.ExtendedControls"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
+             x:Class="JustCompute.Presentation.Pages.LocationsPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:converters="clr-namespace:JustCompute.Presentation.Converters"
+             x:DataType="ViewModels:LocationsViewModel"
+             Shell.TabBarIsVisible="False">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{localization:Localize PlusAddLocationLabel}"
+                     Command="{Binding Commands[GoToAddLocationCommand]}" />
+    </ContentPage.ToolbarItems>
+
+    <AbsoluteLayout>
+        <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
+              AbsoluteLayout.LayoutFlags="All"
+              RowDefinitions="Auto,Auto,Auto,Auto,*"
+              ColumnDefinitions="*"
+              IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+              Margin="4,4,4,4">
+
+            <StackLayout Grid.Row="0"
+                         Grid.ColumnSpan="1"
+                         HorizontalOptions="Fill"
+                         Orientation="Horizontal">
+
+                <Label VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Start"
+                       IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}"
+                       Text="{localization:Localize LocationLabel}" />
+
+                <Label Text="{Binding CurrentTime, StringFormat={localization:Localize TimeLabel}}"
+                       HorizontalOptions="EndAndExpand" />
+
+            </StackLayout>
+
+            <Label x:Name="CantGetLocationLabel"
+                   Grid.Row="1"
+                   Text="{localization:Localize CannotGetCurrentLocationLabel}"
+                   HorizontalOptions="Center"
+                   Margin="4">
+                <Label.IsVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                        <Binding Path="CurrentLocation"
+                                 Converter="{StaticResource IsNullConverter}" />
+                        <Binding Path="IsBusy"
+                                 Converter="{StaticResource InvertedBoolConverter}" />
+                        <Binding Path="LocationsCount"
+                                 Converter="{StaticResource IsIntEqualZeroConverter}" />
+                    </MultiBinding>
+                </Label.IsVisible>
+            </Label>
+
+            <CarouselView x:Name="carouselView"
+                          Grid.Row="1"
+                          Loop="False"
+                          Grid.ColumnSpan="1"
+                          HeightRequest="100"
+                          HorizontalOptions="FillAndExpand"
+                          ItemsSource="{Binding Locations}"
+                          IndicatorView="indicatorView"
+                          CurrentItemChangedCommand="{Binding Commands[UpdateCurrentLocationCommand]}"
+                          CurrentItemChangedCommandParameter="{Binding Source={x:Reference carouselView}, Path=CurrentItem}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Location">
+
+                        <Grid>
+
+                            <Frame>
+
+                                <SwipeView>
+                                    <SwipeView.BottomItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="{localization:Localize DeleteLabel}"
+                                                       BackgroundColor="LightPink"
+                                                       Command="{Binding Source={x:Reference carouselView}, Path=BindingContext.Commands[DeleteLocationCommand]}"
+                                                       CommandParameter="{Binding}" />
+                                        </SwipeItems>
+                                    </SwipeView.BottomItems>
+                                    <SwipeView.TopItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="{localization:Localize DeleteLabel}"
+                                                       BackgroundColor="LightPink"
+                                                       Command="{Binding Source={x:Reference carouselView}, Path=BindingContext.Commands[DeleteLocationCommand]}"
+                                                       CommandParameter="{Binding}" />
+                                        </SwipeItems>
+                                    </SwipeView.TopItems>
+
+                                    <Grid ColumnDefinitions="*,*"
+                                          ColumnSpacing="4">
+
+                                        <StackLayout VerticalOptions="Fill">
+
+                                            <Label x:Name="LocationName"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   Text="{Binding Name}"
+                                                   IsVisible="{Binding Name, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                            <Label x:Name="CityName"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   Text="{Binding City.CityName}"
+                                                   IsVisible="{Binding City.CityName, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                            <Label x:Name="CountryName"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   Text="{Binding City.CountryName}"
+                                                   IsVisible="{Binding City.CountryName, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                        </StackLayout>
+
+                                        <Frame Grid.Column="1"
+                                               Grid.Row="0"
+                                               Padding="4">
+
+                                            <StackLayout VerticalOptions="Fill">
+
+                                                <Label x:Name="Latitude"
+                                                       VerticalOptions="CenterAndExpand"
+                                                       VerticalTextAlignment="Center"
+                                                       HorizontalOptions="Center"
+                                                       Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
+
+                                                <Label x:Name="Longitude"
+                                                       VerticalOptions="CenterAndExpand"
+                                                       VerticalTextAlignment="Center"
+                                                       HorizontalOptions="Center"
+                                                       Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
+
+                                            </StackLayout>
+
+                                        </Frame>
+
+                                    </Grid>
+
+                                </SwipeView>
+
+                            </Frame>
+
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            
+            <IndicatorView x:Name="indicatorView"
+                           Grid.Row="2"
+                           Margin="0,8"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="DarkGray"
+                           HorizontalOptions="Center"
+                           HideSingle="False" />
+
+            <Label Grid.Row="3"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}"
+                   Text="{Binding Coordinate}"
+                   Style="{StaticResource TitleLabel}" />
+
+            <Grid Grid.Row="4">
+
+                <Frame IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}">
+
+                    <ScrollView IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}"
+                                VerticalScrollBarVisibility="Never">
+
+                        <StackLayout Padding="0"
+                                     Spacing="8">
+
+                            <!--Sun-->
+                            <Label Text="{localization:Localize SunLabel}"
+                                   Style="{StaticResource TitleLabel}" />
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <Label>
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{localization:Localize DayDurationLabel}">
+                                        <MultiBinding.Converter>
+                                            <converters:RiseAndSetToDurationConverter CelestialBody="Sun" />
+                                        </MultiBinding.Converter>
+                                        <Binding Path="Coordinate.CelestialInfo.SunRise" />
+                                        <Binding Path="Coordinate.CelestialInfo.SunSet" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+
+                            <Label x:Name="RiseTime"
+                                   Text="{Binding Coordinate.CelestialInfo.SunRise, StringFormat={localization:Localize SunRiseLabel}}" />
+
+                            <Label x:Name="SetTime"
+                                   Text="{Binding Coordinate.CelestialInfo.SunSet, StringFormat={localization:Localize SunSetLabel}}" />
+
+                            <Label x:Name="ZodiacSign"
+                                   Text="{Binding Coordinate.CelestialInfo.AstrologicalSigns.EZodiacSign,
+                                              Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
+                                              StringFormat={localization:Localize ZodiacSignLabel}}" />
+                            <!--Moon-->
+                            <Label Text="{localization:Localize MoonLabel}"
+                                   Style="{StaticResource TitleLabel}" />
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <Label>
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{localization:Localize MoonRiseDurationLabel}">
+                                        <MultiBinding.Converter>
+                                            <converters:RiseAndSetToDurationConverter CelestialBody="Moon" />
+                                        </MultiBinding.Converter>
+                                        <Binding Path="Coordinate.CelestialInfo.MoonRise" />
+                                        <Binding Path="Coordinate.CelestialInfo.MoonSet" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+
+                            <Label x:Name="MoonPhase">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{localization:Localize MoonPhaseLabel}" />
+                                        <Span Text="{Binding Coordinate, Converter={StaticResource CoordinateToMoonPhaseConverter}}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label x:Name="MoonRiseTime"
+                                   Text="{Binding Coordinate.CelestialInfo.MoonRise, StringFormat={localization:Localize MoonRiseLabel}}" />
+
+                            <Label x:Name="MoonSetTime"
+                                   Text="{Binding Coordinate.CelestialInfo.MoonSet, StringFormat={localization:Localize MoonSetLabel}}" />
+
+                            <Label x:Name="MoonZodiacSign"
+                                   Text="{Binding Coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
+                                              Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
+                                              StringFormat={localization:Localize MoonInZodiacSignLabel}}" />
+
+                            <!--MGRS-->
+                            <Label Text="{localization:Localize MGRSLabel}"
+                                   Style="{StaticResource TitleLabel}" />
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.Digraph, StringFormat={localization:Localize DigraphLabel}}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.Easting, StringFormat={localization:Localize MGRSEastingLabel}}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.Northing, StringFormat={localization:Localize MGRSNorthingLabel}}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.LatZone, StringFormat={localization:Localize MGRSLatZoneLabel}}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.LongZone, StringFormat={localization:Localize MGRSLonZoneLabel}}" />
+
+                            <Label Text="{Binding Coordinate.MGRS.SystemType, StringFormat={localization:Localize MGRSTypeLabel}}" />
+
+                            <!--UTM-->
+                            <Label Text="{localization:Localize UTMLabel}"
+                                   Style="{StaticResource TitleLabel}" />
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <Label Text="{Binding Coordinate.UTM.Inverse_Flattening, StringFormat={localization:Localize InverseFlatteningLabel}}" />
+
+                            <Label Text="{Binding Coordinate.UTM.Easting, StringFormat={localization:Localize UTMEastingLabel}}" />
+
+                            <Label Text="{Binding Coordinate.UTM.Northing, StringFormat={localization:Localize UTMNorthingLabel}}" />
+
+                            <Label Text="{Binding Coordinate.UTM.LatZone, StringFormat={localization:Localize UTMLatZoneLabel}}" />
+
+                            <Label Text="{Binding Coordinate.UTM.LongZone, StringFormat={localization:Localize UTMLonZoneLabel}}" />
+
+                            <Label Text="{Binding Coordinate.UTM.SystemType, StringFormat={localization:Localize UTMTypeLabel}}" />
+
+                        </StackLayout>
+
+                    </ScrollView>
+
+                </Frame>
+
+            </Grid>
+
+            <Label Grid.RowSpan="5"
+                   Text="{localization:Localize NoSavedLocationsLabel}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="8">
+                <Label.IsVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                        <Binding Path="LocationsCount"
+                                 Converter="{StaticResource IsIntEqualZeroConverter}" />
+                        <Binding Path="IsBusy"
+                                 Converter="{StaticResource InvertedBoolConverter}" />
+                    </MultiBinding>
+                </Label.IsVisible>
+            </Label>
+
+        </Grid>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           AbsoluteLayout.LayoutFlags="All"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
+
+    </AbsoluteLayout>
+
+</v1:BasePage>
