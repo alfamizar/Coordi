@@ -21,6 +21,10 @@
     </ContentPage.ToolbarItems>
 
     <AbsoluteLayout>
+        <AbsoluteLayout.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Down"
+                                    Command="{Binding Commands[RefreshCommand]}" />
+        </AbsoluteLayout.GestureRecognizers>
         <Grid AbsoluteLayout.LayoutBounds="0,0,1,1"
               AbsoluteLayout.LayoutFlags="All"
               RowDefinitions="Auto,Auto,Auto,Auto,*"
@@ -99,47 +103,47 @@
                                     <Grid ColumnDefinitions="*,*"
                                           ColumnSpacing="4">
 
-                                        <StackLayout VerticalOptions="Fill">
+                                        <VerticalStackLayout VerticalOptions="Center">
 
                                             <Label x:Name="LocationName"
                                                    HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand"
+                                                   VerticalOptions="Center"
                                                    Text="{Binding Name}"
                                                    IsVisible="{Binding Name, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
                                             <Label x:Name="CityName"
                                                    HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand"
+                                                   VerticalOptions="Center"
                                                    Text="{Binding City.CityName}"
                                                    IsVisible="{Binding City.CityName, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
                                             <Label x:Name="CountryName"
                                                    HorizontalOptions="Center"
-                                                   VerticalOptions="CenterAndExpand"
+                                                   VerticalOptions="Center"
                                                    Text="{Binding City.CountryName}"
                                                    IsVisible="{Binding City.CountryName, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-                                        </StackLayout>
+                                        </VerticalStackLayout>
 
                                         <Frame Grid.Column="1"
                                                Grid.Row="0"
                                                Padding="4">
 
-                                            <StackLayout VerticalOptions="Fill">
+                                            <VerticalStackLayout VerticalOptions="Center">
 
                                                 <Label x:Name="Latitude"
-                                                       VerticalOptions="CenterAndExpand"
+                                                       VerticalOptions="Center"
                                                        VerticalTextAlignment="Center"
                                                        HorizontalOptions="Center"
                                                        Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
 
                                                 <Label x:Name="Longitude"
-                                                       VerticalOptions="CenterAndExpand"
+                                                       VerticalOptions="Center"
                                                        VerticalTextAlignment="Center"
                                                        HorizontalOptions="Center"
                                                        Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
 
-                                            </StackLayout>
+                                            </VerticalStackLayout>
 
                                         </Frame>
 
@@ -153,7 +157,7 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
             </CarouselView>
-            
+
             <IndicatorView x:Name="indicatorView"
                            Grid.Row="2"
                            Margin="0,8"

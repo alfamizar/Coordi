@@ -28,7 +28,7 @@ namespace JustCompute.Presentation.ViewModels.Base
 
         protected BaseViewModel()
         {
-            Commands = new Dictionary<string, ICommand>();
+            Commands = [];
             _dialogService = ServicesProvider.Current.GetService<IDialogService>();
             _locationManager = ServicesProvider.Current.GetService<ILocationManager>();
         }
@@ -87,7 +87,6 @@ namespace JustCompute.Presentation.ViewModels.Base
         public virtual async void OnNavigatedTo()
         {
             await LoadItems();
-            // Custom logic
         }
 
         public virtual void OnAppWindowCreated()

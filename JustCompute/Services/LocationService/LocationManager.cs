@@ -34,7 +34,7 @@ namespace JustCompute.Services.LocationService
             GettingLocationFinished = new TaskCompletionSource<bool>();
         }
 
-        public async Task<Result<Location, FaultCode>> ObtainCurrentLocation()
+        public async Task<Result<Location, FaultCode>> RequestCurrentLocation()
         {
             try
             {

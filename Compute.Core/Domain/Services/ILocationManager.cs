@@ -10,7 +10,7 @@ namespace Compute.Core.Domain.Services
 
         public TaskCompletionSource<bool> GettingLocationFinished { get; }
 
-        Task<Result<Location, FaultCode>> ObtainCurrentLocation();
+        Task<Result<Location, FaultCode>> RequestCurrentLocation();
 
         Task<List<Location>> GetSavedLocations();
 

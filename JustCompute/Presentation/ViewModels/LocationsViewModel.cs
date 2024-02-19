@@ -57,6 +57,7 @@ namespace JustCompute.Presentation.ViewModels
             Commands.Add("DeleteLocationCommand",
                 new Command<Location>(async (location) => await OnDeleteLocation(location)));
 
+            Commands.Add("RefreshCommand", new Command(InitViewModel));
 
             Locations = new RangeEnabledObservableCollection<Location>();
             Locations.CollectionChanged += LocationsCollectionChanged;
@@ -77,15 +78,16 @@ namespace JustCompute.Presentation.ViewModels
         private void LocationsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LocationsCount = Locations.Count;
-
             if (LocationsCount == 0)
             {
                 UpdateCurrentLocation(null);
             }
         }
 
-        private async Task GetCurrentLocation()
+        private async Task InitCurrentLocation()
         {
+            if (IsBusy) return;
+
             var permissionsAllowed = await HandlePermissions();
             if (!permissionsAllowed || CurrentLocation != null)
             {
@@ -94,7 +96,7 @@ namespace JustCompute.Presentation.ViewModels
 
             IsBusy = true;
 
-            var locationResult = await _locationManager.ObtainCurrentLocation();
+            var locationResult = await _locationManager.RequestCurrentLocation();
 
             if (locationResult.IsSuccessful)
             {
@@ -152,30 +154,15 @@ namespace JustCompute.Presentation.ViewModels
             return true;
         }
 
-        public override async void OnAppWindowResumed()
+        public override void OnAppWindowResumed()
         {
-            base.OnAppWindowResumed();
-
             // to cover case when returned from settings after changing permission status
-            await GetCurrentLocation();
+            InitViewModel();
         }
 
-        public override async void OnPageAppearing()
+        public override void OnPageAppearing()
         {
-            base.OnPageAppearing();
-
-            await GetCurrentLocation();
-            if (CurrentLocation != null)
-            {
-                await SaveLocationIfNotExists(CurrentLocation);
-            }
-
-            await GetSavedLocations();
-
-            if (CurrentLocation == null && LocationsCount > 0)
-            {
-                UpdateCurrentLocation(Locations.First());
-            }
+            InitViewModel();
         }
 
         public override void OnPageDisappearing()
@@ -185,8 +172,10 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task SaveLocationIfNotExists(Location location)
         {
+            if (location == null) return;
+
             var savedLocations = await _locationManager.GetSavedLocations();
-            if (location != null && !savedLocations.Any(x => x.Name == location.Name))
+            if (!savedLocations.Any(x => x.Name == location.Name))
             {
                 await _locationManager.SaveLocation(location);
             }
@@ -200,6 +189,7 @@ namespace JustCompute.Presentation.ViewModels
 
         private void UpdateCurrentLocation(Location location)
         {
+            CurrentLocation = location;
             _locationManager.CurrentLocation = location;
             UpdateAtThisCoordinate(location);
         }
@@ -217,6 +207,13 @@ namespace JustCompute.Presentation.ViewModels
         private async void OnGoToAddLocation()
         {
             await Shell.Current.GoToAsync("addlocation");
+        }
+
+        private async void InitViewModel()
+        {
+            await InitCurrentLocation();
+            await SaveLocationIfNotExists(CurrentLocation);
+            await GetSavedLocations();
         }
     }
 }
