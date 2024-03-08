@@ -69,12 +69,10 @@ namespace JustCompute.Services.LocationService
             catch (FeatureNotEnabledException)
             {
                 return new(FaultCode.FeatureNotEnabled);
-
             }
             catch (PermissionException)
             {
                 return new(FaultCode.PermissionException);
-
             }
             catch (Exception)
             {
