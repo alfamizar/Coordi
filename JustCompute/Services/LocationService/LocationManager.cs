@@ -31,13 +31,14 @@ namespace JustCompute.Services.LocationService
         {
             _localizer = localizer;
             _mapper = mapper;
-            GettingLocationFinished = new TaskCompletionSource<bool>();
         }
 
         public async Task<Result<Location, FaultCode>> RequestCurrentLocation()
         {
             try
             {
+                GettingLocationFinished = new TaskCompletionSource<bool>();
+
                 _isCheckingLocation = true;
 
                 GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));

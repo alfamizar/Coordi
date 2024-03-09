@@ -43,7 +43,6 @@ namespace JustCompute.Presentation.ViewModels.Base
 
             if (Location == null)
             {
-                IsBusy = false;
                 return;
             }
 

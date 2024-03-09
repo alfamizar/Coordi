@@ -54,7 +54,7 @@ namespace JustCompute.Platforms.Android.UI
             var window = activity.Window;
 
             window.SetNavigationBarColor(
-                activity.Resources.GetColor(Resource.Color.background_material_dark, activity.Theme));
+                activity.Resources.GetColor(_Microsoft.Android.Resource.Designer.ResourceConstant.Color.background_material_dark, activity.Theme));
         }
     }
 }

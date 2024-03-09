@@ -77,7 +77,7 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="DotNext" Version="5.0.2" />
+    <PackageReference Include="DotNext" Version="5.2.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
