@@ -22,9 +22,9 @@ namespace JustCompute.Services.LocationService
         private readonly IMapper _mapper;
 
         private CancellationTokenSource _cancelTokenSource;
-        private bool _isCheckingLocation;
 
         public TaskCompletionSource<bool> GettingLocationFinished { get; private set; }
+        public bool IsGettingCurrentLocation { get; private set; }
         public Location CurrentLocation { get; set; }
 
         public LocationManager(IStringLocalizer<AppStringsRes> localizer, IMapper mapper)
@@ -39,7 +39,7 @@ namespace JustCompute.Services.LocationService
             {
                 GettingLocationFinished = new TaskCompletionSource<bool>();
 
-                _isCheckingLocation = true;
+                IsGettingCurrentLocation = true;
 
                 GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
 
@@ -81,9 +81,15 @@ namespace JustCompute.Services.LocationService
             }
             finally
             {
-                _isCheckingLocation = false;
+                IsGettingCurrentLocation = false;
                 GettingLocationFinished.TrySetResult(true);
             }
+        }
+
+                public void CancelRequest()
+        {
+            if (IsGettingCurrentLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
+                _cancelTokenSource.Cancel();
         }
 
         private async Task<City> GetCity(double latitude, double longitude)
@@ -99,12 +105,6 @@ namespace JustCompute.Services.LocationService
             };
 
             return city;
-        }
-
-        public void CancelRequest()
-        {
-            if (_isCheckingLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
-                _cancelTokenSource.Cancel();
         }
 
         public async Task<List<Location>> GetSavedLocations()

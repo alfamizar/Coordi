@@ -8,6 +8,8 @@ namespace Compute.Core.Domain.Services
     {
         public Location CurrentLocation { get; set; }
 
+        public bool IsGettingCurrentLocation { get; }
+
         public TaskCompletionSource<bool> GettingLocationFinished { get; }
 
         Task<Result<Location, FaultCode>> RequestCurrentLocation();

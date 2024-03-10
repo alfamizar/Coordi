@@ -35,7 +35,7 @@ namespace JustCompute.Presentation.ViewModels.Base
 
         protected async Task LoadItems()
         {
-            if (!_locationManager.GettingLocationFinished.Task.IsCompleted && IsBusy)
+            if (_locationManager.IsGettingCurrentLocation)
             {
                 await _locationManager.GettingLocationFinished.Task;
             }
