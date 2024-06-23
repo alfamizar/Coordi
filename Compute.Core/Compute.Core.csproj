@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="CoordinateSharp" Version="2.23.1.1" />
     <PackageReference Include="CoordinateSharp.Magnetic" Version="1.1.13" />
-    <PackageReference Include="DotNext" Version="5.3.1" />
+    <PackageReference Include="DotNext" Version="5.7.0" />
   </ItemGroup>
 
   <ItemGroup>
