@@ -1,23 +1,31 @@
 ﻿using Compute.Core.Domain.Entities.Models;
+using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Domain.Errors;
 using DotNext;
+using System.Reflection;
 
 namespace Compute.Core.Domain.Services
 {
     public interface ILocationManager
     {
-        public Location CurrentLocation { get; set; }
+        public Location? DeviceLocation { get; }
 
-        public bool IsGettingCurrentLocation { get; }
+        public Location? SelectedLocation { get; set; }
 
-        public TaskCompletionSource<bool> GettingLocationFinished { get; }
+        public bool IsGettingDeviceLocation { get; }
 
-        Task<Result<Location, FaultCode>> RequestCurrentLocation();
+        public TaskCompletionSource<bool>? GettingDeviceLocationFinished { get; }
+
+        void ResetDeviceLocation();
+
+        Task<Result<Location, FaultCode>> GetDeviceLocation();
 
         Task<List<Location>> GetSavedLocations();
 
-        Task SaveLocation(Location location); 
+        Task SaveLocation(Location location);
 
         Task DeleteLocation(Location location);
+
+        Task<List<Location>> GetLocationsByCity(string searchParam);
     }
 }

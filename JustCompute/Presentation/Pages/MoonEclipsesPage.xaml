@@ -9,7 +9,7 @@
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls">
 
-    <Grid>
+    <Grid Padding="4,0">
 
         <Label Text="{localization:Localize CannotGetLocationLabel}"
                VerticalOptions="Center"
@@ -29,7 +29,7 @@
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="10,0">
+                    <StackLayout Padding="8,0">
                         <Label Text="{Binding Key}"
                                FontAttributes="Bold"
                                FontSize="18" />
@@ -81,14 +81,16 @@
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding PartialEclispeBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialLunarEclipseBeginTimeLabel}}" />
+                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialLunarEclipseBeginTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="PartialEclispeEnd"
                                    Grid.Column="1"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding PartialEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeEnd, StringFormat={localization:Localize PartialLunarEclipseEndTimeLabel}}" />
+                                   Text="{Binding PartialEclispeEnd, StringFormat={localization:Localize PartialLunarEclipseEndTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="3"
@@ -108,14 +110,16 @@
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding PenumbralEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PenumbralEclipseBegin, StringFormat={localization:Localize PenumbralLunarEclipseBeginTimeLabel}}" />
+                                   Text="{Binding PenumbralEclipseBegin, StringFormat={localization:Localize PenumbralLunarEclipseBeginTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="PenumbralEclispeEnd"
                                    Grid.Column="1"
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding PenumbralEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PenumbralEclispeEnd, StringFormat={localization:Localize PenumbralLunarEclipseEndTimeLabel}}" />
+                                   Text="{Binding PenumbralEclispeEnd, StringFormat={localization:Localize PenumbralLunarEclipseEndTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="5"
@@ -135,14 +139,16 @@
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding TotalEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding TotalEclipseBegin, StringFormat={localization:Localize TotalLunarEclipseBeginTimeLabel}}" />
+                                   Text="{Binding TotalEclipseBegin, StringFormat={localization:Localize TotalLunarEclipseBeginTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="TotalEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding TotalEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding TotalEclipseEnd, StringFormat={localization:Localize TotalLunarEclipseEndTimeLabel}}" />
+                                   Text="{Binding TotalEclipseEnd, StringFormat={localization:Localize TotalLunarEclipseEndTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="7"
@@ -163,7 +169,8 @@
                                    Grid.Row="8"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding MidEclipse, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding MidEclipse, StringFormat={localization:Localize MidLunarEclipseTimeLabel}}" />
+                                   Text="{Binding MidEclipse, StringFormat={localization:Localize MidLunarEclipseTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="9"

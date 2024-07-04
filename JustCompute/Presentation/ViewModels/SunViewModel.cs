@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Core.Domain.Entities.Models;
-using Compute.Core.Domain.Services;
+using Compute.Core.Domain.Services.Sun;
 using JustCompute.Presentation.ViewModels.Base;
 using static Compute.Core.Helpers.GroupingHelper;
 
@@ -11,14 +11,13 @@ namespace JustCompute.Presentation.ViewModels
         private readonly ISunService _sunService;
 
         [ObservableProperty]
-        List<Group<string, BaseCelestialBodyCycle>> groupedSunCycles;
+        private List<Group<string, BaseCelestialBodyCycle>> groupedSunCycles = [];
 
-        List<BaseCelestialBodyCycle> sunCycleList = new();
+        List<BaseCelestialBodyCycle> sunCycleList = [];
 
         public SunViewModel(ISunService sunService)
         {
             _sunService = sunService;
-            GroupedSunCycles = new List<Group<string, BaseCelestialBodyCycle>>();
             Commands.Add("ToggleGroupCommand", new Command<Group<string, BaseCelestialBodyCycle>>(ToggleGroup));
         }
 

@@ -2,16 +2,10 @@
 {
     public static class GroupingHelper
     {
-        public class Group<TKey, TItem> : RangeEnabledObservableCollection<TItem>
+        public class Group<TKey, TItem>(TKey key, IEnumerable<TItem> items, bool isExpanded = true) : RangeEnabledObservableCollection<TItem>(items)
         {
-            public TKey Key { get; private set; }
-            public bool IsExpanded { get; set; }
-
-            public Group(TKey key, IEnumerable<TItem> items, bool isExpanded = true) : base(items)
-            {
-                Key = key;
-                IsExpanded = isExpanded;
-            }
+            public TKey Key { get; private set; } = key;
+            public bool IsExpanded { get; set; } = isExpanded;
         }
 
         public static IEnumerable<Group<TKey, TItem>> GetGroupedData<TItem, TKey>(IEnumerable<TItem> data,

@@ -10,7 +10,7 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:converters="clr-namespace:JustCompute.Presentation.Converters">
 
-    <Grid>
+    <Grid Padding="4,0">
 
         <Label Text="{localization:Localize CannotGetLocationLabel}"
                VerticalOptions="Center"
@@ -30,7 +30,7 @@
                         SelectionMode="None">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="10,0">
+                    <StackLayout Padding="8,0">
                         <Label Text="{Binding Key}"
                                FontAttributes="Bold"
                                FontSize="18" />
@@ -78,13 +78,15 @@
                                        Grid.Column="0"
                                        Grid.Row="2"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding RiseTime, StringFormat={localization:Localize MoonRiseLabel}}" />
+                                       Text="{Binding RiseTime, StringFormat={localization:Localize MoonRiseLabel},
+                                    Converter={StaticResource TimeFormatConverter}}" />
 
                                 <Label x:Name="SetTime"
                                        Grid.Column="1"
                                        Grid.Row="2"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding SetTime, StringFormat={localization:Localize MoonSetLabel}}" />
+                                       Text="{Binding SetTime, StringFormat={localization:Localize MoonSetLabel},
+                                    Converter={StaticResource TimeFormatConverter}}" />
 
                                 <BoxView Grid.ColumnSpan="2"
                                          Grid.Row="3"

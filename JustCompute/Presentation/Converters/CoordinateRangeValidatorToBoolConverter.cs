@@ -6,7 +6,7 @@ namespace JustCompute.Presentation.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (double.TryParse(value?.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out double doubleValue))
+            if (double.TryParse(value?.ToString().Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double doubleValue))
             {
                 // Check if the value is within a valid range
                 if (parameter != null && parameter.ToString() == "latitude")

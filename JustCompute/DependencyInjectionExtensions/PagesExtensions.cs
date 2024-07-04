@@ -14,8 +14,10 @@ public static class PagesExtensions
         builder.Services.AddSingleton<MoonEclipsesPage>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<LocationsPage>();
-        builder.Services.AddTransient<AddLocationPage>();
+        builder.Services.AddTransient<InputLocationPage>();
         builder.Services.AddSingleton<TimeTravelPage>();
+        builder.Services.AddSingleton<SearchByCityPage>();
+        builder.Services.AddSingleton<SavedLocationsPage>();
 
         return builder;
     }

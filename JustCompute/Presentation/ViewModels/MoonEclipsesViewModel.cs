@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Compute.Core.Domain.Services;
+using Compute.Core.Domain.Services.Moon;
 using Compute.Core.Helpers;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
@@ -13,14 +13,14 @@ namespace JustCompute.Presentation.ViewModels
         private readonly IMoonService _moonService;
 
         [ObservableProperty]
-        List<Group<string, LunarEclipseDetails>> groupedEclipseList;
+        private List<Group<string, LunarEclipseDetails>> groupedEclipseList;
 
-        List<LunarEclipseDetails> eclipseList = new();
+        List<LunarEclipseDetails> eclipseList =[];
 
         public MoonEclipsesViewModel(IMoonService moonService)
         {
             _moonService = moonService;
-            GroupedEclipseList = new List<Group<string, LunarEclipseDetails>>();
+            GroupedEclipseList = [];
             Commands.Add("ToggleGroupCommand", new Command<Group<string, LunarEclipseDetails>>(ToggleGroup));
         }
 

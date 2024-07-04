@@ -1,22 +1,16 @@
-﻿using Compute.Core.Helpers;
-using Compute.Core.Services;
+﻿using Compute.Core.Common.Device;
+using Compute.Core.UI;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 
 namespace JustCompute.Services
 {
-    public class DevicePermissionsService : IDevicePermissionsService<PermissionStatus>
+    public class DevicePermissionsService(IStringLocalizer<AppStringsRes> localizer, IDialogService dialogService) : IDevicePermissionsService<PermissionStatus>
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer;
-        private readonly IDialogService _dialogService;
+        private readonly IStringLocalizer<AppStringsRes> _localizer = localizer;
+        private readonly IDialogService _dialogService = dialogService;
         private bool _isObtainingPermsInProgress;
         private TaskCompletionSource<PermissionStatus> _tcs;
-
-        public DevicePermissionsService(IStringLocalizer<AppStringsRes> localizer, IDialogService dialogService)
-        {
-            _localizer = localizer;
-            _dialogService = dialogService;
-        }
 
         public async Task<PermissionStatus> CheckPermissionAndRequestIfNeeded(
             Permission permission,
@@ -32,7 +26,7 @@ namespace JustCompute.Services
 
             PermissionStatus status = permission switch
             {
-                Permission.CurrentLocation => await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(),
+                Permission.DeviceLocation => await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>(),
                 _ => throw new ArgumentException("Unknown permission", nameof(permission))
             };
 

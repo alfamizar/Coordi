@@ -7,19 +7,23 @@ namespace JustCompute.Persistance.Repository
 {
     public class SavedLocationsDatabase : ISavedLocationsDatabase
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         static SQLiteAsyncConnection Database;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public static readonly AsyncLazy<SavedLocationsDatabase> Instance = new(async () =>
         {
             var instance = new SavedLocationsDatabase();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             await Database.ExecuteAsync(RepositoryConstants.CreateCitiesTableStatement);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             await Database.ExecuteAsync(RepositoryConstants.CreateLocationsTableStatement);
 
             return instance;
         });
 
-        public SavedLocationsDatabase()
+        private SavedLocationsDatabase()
         {
             Database = new SQLiteAsyncConnection(RepositoryConstants.DatabasePath, RepositoryConstants.Flags);
         }

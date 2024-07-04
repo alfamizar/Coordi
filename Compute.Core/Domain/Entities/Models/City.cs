@@ -1,11 +1,14 @@
-﻿namespace Compute.Core.Domain.Entities.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Compute.Core.Domain.Entities.Models
 {
-    public class City
+    public partial class City : ObservableObject
     {
-        public string? CityName { get; set; }
-
-        public string? CountryName { get; set; }
-
-        public int? Population { get; set; }
+        [ObservableProperty]
+        private string cityName = string.Empty;
+        [ObservableProperty]
+        private string countryName = string.Empty;
+        [ObservableProperty]
+        private int population;
     }
 }

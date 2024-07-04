@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Compute.Core.Domain.Services;
+using Compute.Core.Domain.Services.Sun;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
 using static Compute.Core.Helpers.GroupingHelper;
@@ -11,14 +11,13 @@ namespace JustCompute.Presentation.ViewModels
         private readonly ISunService _sunService;
 
         [ObservableProperty]
-        List<Group<string, SolarEclipseDetails>> groupedEclipseList;
+        private List<Group<string, SolarEclipseDetails>> groupedEclipseList = [];
 
-        List<SolarEclipseDetails> eclipseList = new();
+        List<SolarEclipseDetails> eclipseList = [];
 
         public SunEclipsesViewModel(ISunService sunService)
         {
             _sunService = sunService;
-            GroupedEclipseList = new List<Group<string, SolarEclipseDetails>>();         
             Commands.Add("ToggleGroupCommand", new Command<Group<string, SolarEclipseDetails>>(ToggleGroup));
         }
 

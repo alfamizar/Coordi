@@ -14,7 +14,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
 {
     public class CustomSwitchHandler : SwitchHandler
     {
-        private Drawable _originalThumbDrawable;
+        private Drawable? _originalThumbDrawable;
 
         protected override SwitchCompat CreatePlatformView()
         {
@@ -25,7 +25,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
         {
             base.ConnectHandler(platformView);
 
-            _originalThumbDrawable = platformView.ThumbDrawable;
+            _originalThumbDrawable = platformView?.ThumbDrawable;
 
             if (VirtualView is CustomSwitch customSwitch)
             {
@@ -44,7 +44,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
             base.DisconnectHandler(platformView);
         }
 
-        private void OnCheckedChanged(object sender, CompoundButton.CheckedChangeEventArgs e)
+        private void OnCheckedChanged(object? sender, CompoundButton.CheckedChangeEventArgs e)
         {
             if (VirtualView is CustomSwitch customSwitch)
             {
@@ -58,26 +58,26 @@ namespace JustCompute.Platforms.Android.UI.Handlers
         {
             if (color == null) return;
 
-            if (PlatformView.Checked)
+            if (PlatformView.Checked && BlendModeCompat.SrcAtop != null)
             {
-                PlatformView.ThumbDrawable.SetColorFilter(
+                PlatformView?.ThumbDrawable?.SetColorFilter(
                     BlendModeColorFilterCompat.CreateBlendModeColorFilterCompat(color.ToAndroid(), BlendModeCompat.SrcAtop));
             }
-            else
+            else if (BlendModeCompat.SrcAtop != null)
             {
-                PlatformView.ThumbDrawable.SetColorFilter(
+                PlatformView?.ThumbDrawable?.SetColorFilter(
                     BlendModeColorFilterCompat.CreateBlendModeColorFilterCompat(color.ToAndroid(), BlendModeCompat.SrcAtop));
             }
         }
 
         private void UpdateTrackColor(Microsoft.Maui.Graphics.Color color)
         {
-            if (color == null) return;
+            if (color == null || Looper.MainLooper == null || BlendModeCompat.SrcAtop == null) return;
 
             new Handler(Looper.MainLooper).Post(() =>
             {
-                PlatformView.TrackDrawable.ClearColorFilter();
-                PlatformView.TrackDrawable.SetColorFilter(
+                PlatformView?.TrackDrawable?.ClearColorFilter();
+                PlatformView?.TrackDrawable?.SetColorFilter(
                     BlendModeColorFilterCompat.CreateBlendModeColorFilterCompat(color.ToAndroid(), BlendModeCompat.SrcAtop));
             });
         }
@@ -99,7 +99,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
                     Text = text,
                     TextSize = 40
                 };
-                Drawable[] drawabless = { _originalThumbDrawable, textDrawable };
+                Drawable[] drawabless = [_originalThumbDrawable, textDrawable];
                 LayerDrawable layerDrawable = new(drawabless);
                 PlatformView.ThumbDrawable = layerDrawable;
             }
@@ -108,7 +108,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
         private class TextDrawable : Drawable
         {
             private readonly Paint _paint;
-            public string Text { get; set; }
+            public string Text { get; set; } = string.Empty;
             public float TextSize { get; set; }
 
             public TextDrawable()

@@ -9,7 +9,7 @@
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls">
 
-    <Grid>
+    <Grid Padding="4,0">
 
         <Label Text="{localization:Localize CannotGetLocationLabel}"
                VerticalOptions="Center"
@@ -29,7 +29,7 @@
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <StackLayout Margin="10,0">
+                    <StackLayout Padding="8,0">
                         <Label Text="{Binding Key}"
                                FontAttributes="Bold"
                                FontSize="18" />
@@ -81,14 +81,16 @@
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding PartialEclispeBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel}}" />
+                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="PartialEclispeEnd"
                                    Grid.Column="1"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeEnd, StringFormat={localization:Localize PartialSolarEclipseEndTimeLabel}}" />
+                                   IsVisible="{Binding PartialEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclipseEnd, StringFormat={localization:Localize PartialSolarEclipseEndTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="3"
@@ -99,14 +101,16 @@
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding MaximumEclipse, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel}}" />
+                                   Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="AorTDuration"
                                    Grid.Column="1"
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding AorTDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
-                                   Text="{Binding AorTDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel}}" />
+                                   Text="{Binding AorTDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="5"
@@ -117,14 +121,16 @@
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding AorTEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding AorTEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel}}" />
+                                   Text="{Binding AorTEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <Label x:Name="AorTEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding AorTEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding AorTEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel}}" />
+                                   Text="{Binding AorTEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel},
+                                Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="7"

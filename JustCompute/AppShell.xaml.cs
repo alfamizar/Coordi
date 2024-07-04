@@ -6,8 +6,7 @@ public partial class AppShell : Shell
 {
 	public AppShell()
 	{
-		InitializeComponent();
-        Routing.RegisterRoute("addlocation", typeof(AddLocationPage));
+		InitializeComponent();;
     }
 
     public void OnAppWindowCreated()

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCustomLocationLabel" xml:space="preserve">
+    <value>Add custom location</value>
+  </data>
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Add Location</value>
   </data>
@@ -124,10 +127,10 @@
     <value>Annular</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Annular or Total eclipse begin time: {0:hh:mm tt}</value>
+    <value>Annular or Total eclipse begin time: {0}</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Annular or Total eclipse end time: {0:hh:mm tt}</value>
+    <value>Annular or Total eclipse end time: {0}</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
     <value>Annular or Total eclipse duration: {0}</value>
@@ -213,6 +216,9 @@
   <data name="EclipsesLabel" xml:space="preserve">
     <value>Eclipses</value>
   </data>
+  <data name="EditSavedLocationsLabel" xml:space="preserve">
+    <value>Edit saved locations</value>
+  </data>
   <data name="FeetsAbbreviationLabel" xml:space="preserve">
     <value>ft</value>
   </data>
@@ -280,7 +286,7 @@
     <value>Longitude: {0:0.#####}</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Maximum eclipse time: {0:hh:mm tt}</value>
+    <value>Maximum eclipse time: {0}</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -307,7 +313,7 @@
     <value>MGRS Type: {0}</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Mid eclipse time: {0:hh:mm tt}</value>
+    <value>Mid eclipse time: {0}</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -334,10 +340,10 @@
     <value>Moonrise duration: {0}</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Moonrise: {0:hh:mm tt}</value>
+    <value>Moonrise: {0}</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Moonset: {0:hh:mm tt}</value>
+    <value>Moonset: {0}</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -358,25 +364,25 @@
     <value>Partial</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Partial eclipse begin time: {0:hh:mm tt}</value>
+    <value>Partial eclipse begin time: {0}</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Partial eclipse end time: {0:hh:mm tt}</value>
+    <value>Partial eclipse end time: {0}</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Partial eclipse begin time: {0:hh:mm tt}</value>
+    <value>Partial eclipse begin time: {0}</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Partial eclipse end time: {0:hh:mm tt}</value>
+    <value>Partial eclipse end time: {0}</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Penumbral</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Penumbral eclipse begin time: {0:hh:mm tt}</value>
+    <value>Penumbral eclipse begin time: {0}</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Penumbral eclipse end time: {0:hh:mm tt}</value>
+    <value>Penumbral eclipse end time: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>App needs location permission to operate. Go to app settings and grand permission or close the app</value>
@@ -393,6 +399,9 @@
   <data name="PlusAddLocationLabel" xml:space="preserve">
     <value>+ Add Location</value>
   </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Population: {0:N0}</value>
+  </data>
   <data name="SagittariusLabel" xml:space="preserve">
     <value>Sagittarius</value>
   </data>
@@ -404,6 +413,12 @@
   </data>
   <data name="ScorpioLabel" xml:space="preserve">
     <value>Scorpio</value>
+  </data>
+  <data name="SearchCityLabel" xml:space="preserve">
+    <value>Search city</value>
+  </data>
+  <data name="SearchPlaceholderLabel" xml:space="preserve">
+    <value>Search...</value>
   </data>
   <data name="SetsAndRisesLabel" xml:space="preserve">
     <value>Sets and Rises</value>
@@ -433,16 +448,16 @@
     <value>Sun</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Sunrise: {0:hh:mm tt}</value>
+    <value>Sunrise: {0}</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Sunset: {0:hh:mm tt}</value>
+    <value>Sunset: {0}</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Taurus</value>
   </data>
   <data name="TimeLabel" xml:space="preserve">
-    <value>Time: {0:hh:mm:ss tt}</value>
+    <value>Time: {0}</value>
   </data>
   <data name="TimeTravelLabel" xml:space="preserve">
     <value>Time Travel</value>
@@ -451,16 +466,22 @@
     <value>Total</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Total eclipse begin time: {0:hh:mm tt}</value>
+    <value>Total eclipse begin time: {0}</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Total eclipse end time: {0:hh:mm tt}</value>
+    <value>Total eclipse end time: {0}</value>
+  </data>
+  <data name="TwoValuesSeparatedByComa" xml:space="preserve">
+    <value>{}{0}, {1}</value>
   </data>
   <data name="TypeLabel" xml:space="preserve">
     <value>Type: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Unknown Location</value>
+  </data>
+  <data name="Use24HourTimeFormatLabel" xml:space="preserve">
+    <value>Use 24-hour format</value>
   </data>
   <data name="UTCTimeOffsetLabel" xml:space="preserve">
     <value>UTC Time Offset</value>

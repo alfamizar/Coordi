@@ -7,5 +7,7 @@
         Task<T> GetTheNearestCityByQueryAsync(double lat, double lng);
 
         Task<List<T>> GetCitiesInCountryAsync(string name);
+
+        Task<IEnumerable<T>> FilterByCity(string searchParam);
     }
 }

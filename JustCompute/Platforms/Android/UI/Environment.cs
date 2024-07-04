@@ -1,6 +1,6 @@
 ﻿using Android.OS;
 using AndroidX.Core.View;
-using Compute.Core.Helpers.UI;
+using Compute.Core.UI;
 using JustCompute.Platforms.Android.Extensions;
 
 namespace JustCompute.Platforms.Android.UI

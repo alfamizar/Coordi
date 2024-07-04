@@ -10,7 +10,8 @@
 
     <Grid Style="{StaticResource GridDialogContent}"
           ColumnDefinitions="350"
-          RowDefinitions="Auto,Auto,Auto">
+          RowDefinitions="Auto,Auto,Auto"
+          Padding="16, 8">
 
         <Label Grid.Row="0"
                Style="{StaticResource DialogTitle}"

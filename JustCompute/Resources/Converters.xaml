@@ -20,11 +20,17 @@
     <converters:RiseAndSetToDurationConverter x:Key="RiseAndSetToDurationConverter" />
     <converters:CoordinateToMoonPhaseConverter x:Key="CoordinateToMoonPhaseConverter" />
     <converters:MoonCycleToMoonPhaseConverter x:Key="MoonCycleToMoonPhaseConverter" />
+    <converters:TimeFormatConverter x:Key="TimeFormatConverter" />
+    <converters:SortDirectionToImageConverter x:Key="SortDirectionToImageConverter"
+                                              AscendingImage="arrow_upward_white.png"
+                                              DescendingImage="arrow_downward_white.png"/>
     <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
     <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
-    <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter" ConditionType="All" />
-    <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter" ConditionType="Any" />
+    <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter"
+                                         ConditionType="All" />
+    <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter"
+                                         ConditionType="Any" />
     <toolkit:IsNullConverter x:Key="IsNullConverter" />
     <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
 

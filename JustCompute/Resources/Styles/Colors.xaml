@@ -81,6 +81,7 @@
     <Color x:Key="DarkSwitchThumbColor">#BB86FC</Color>
     <Color x:Key="DarkTextOnDarkBackgroundColor">#FFFFFF</Color>
     <Color x:Key="DarkProgressBarHistoryColor">#BB86FC</Color>
+    <Color x:Key="DarkSelectedSortCriterionColor">#BB86FC</Color>
 
     <!--Light Theme colors-->
     <Color x:Key="LightPageBackgroundColor">#FFFFFF</Color>
@@ -121,5 +122,7 @@
     <Color x:Key="LightSwitchThumbColor">#018786</Color>
     <Color x:Key="LightTextOnDarkBackgroundColor">#FFFFFF</Color>
     <Color x:Key="LightProgressBarHistoryColor">#FFFFFF</Color>
+    <Color x:Key="LightSelectedSortCriterionColor">#03DAC6</Color>
+
 
 </ResourceDictionary>

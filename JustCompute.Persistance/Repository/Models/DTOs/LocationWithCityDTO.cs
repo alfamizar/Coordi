@@ -14,11 +14,11 @@
 
         public bool IsCurrent { get; set; }
 
-        public string? CityName { get; set; }
+        public string CityName { get; set; } = string.Empty;
 
-        public string? CountryName { get; set; }
+        public string CountryName { get; set; }  = string.Empty;
 
-        public int? Population { get; set; }
+        public int Population { get; set; }
 
         public int TimeZoneOffset { get; set; }
     }

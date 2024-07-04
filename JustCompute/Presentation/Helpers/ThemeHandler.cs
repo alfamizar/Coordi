@@ -1,15 +1,10 @@
-﻿using Compute.Core.Helpers.UI;
+﻿using Compute.Core.UI;
 
 namespace JustCompute.Presentation.Helpers;
 
-public class ThemeHandler
+public class ThemeHandler(IEnvironment environment)
 {
-    private readonly IEnvironment _environment;
-
-    public ThemeHandler(IEnvironment environment)
-    {
-        _environment = environment;
-    }
+    private readonly IEnvironment _environment = environment;
 
     public void SetTheme()
     {   
@@ -49,22 +44,22 @@ public class ThemeHandler
         if (Application.Current.Resources.TryGetValue(color, out var statusBarColor))
         {
             var mauiColor = (Color)statusBarColor;
-            _environment?.SetStatusBarColor(mauiColor.ColorMauiToSystem(), false);
+            _environment.SetStatusBarColor(mauiColor.ColorMauiToSystem(), false);
         }
     }
 
-    private void SetNavigationBarColor(string color)
+    private void SetNavigationBarColor(string? color)
     {
         if (color == null)
         {
-            _environment?.ResetNavigationBarColor();
+            _environment.ResetNavigationBarColor();
             return;
         }
 
         if (Application.Current.Resources.TryGetValue(color, out var navigationBarColor))
         {
             var mauiColor = (Color)navigationBarColor;
-            _environment?.SetNavigationBarColor(mauiColor.ColorMauiToSystem());
+            _environment.SetNavigationBarColor(mauiColor.ColorMauiToSystem());
         }
     }
 }

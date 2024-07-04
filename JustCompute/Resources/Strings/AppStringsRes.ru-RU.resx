@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddCustomLocationLabel" xml:space="preserve">
+    <value>Добавить вручную</value>
+  </data>
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Добавить местоположение</value>
   </data>
@@ -124,10 +127,10 @@
     <value>Кольцевой</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала кольцеобразного или полного затмения: {0:hh:mm tt}</value>
+    <value>Время начала кольцеобразного или полного затмения: {0:</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания кольцевого или полного затмения: {0:hh:mm tt}</value>
+    <value>Время окончания кольцевого или полного затмения: {0}</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
     <value>Продолжительность кольцеобразного или полного затмения: {0}</value>
@@ -213,6 +216,9 @@
   <data name="EclipsesLabel" xml:space="preserve">
     <value>Затмения</value>
   </data>
+  <data name="EditSavedLocationsLabel" xml:space="preserve">
+    <value>Редактировать сохранённые локации</value>
+  </data>
   <data name="FeetsAbbreviationLabel" xml:space="preserve">
     <value>футов</value>
   </data>
@@ -280,7 +286,7 @@
     <value>Долгота: {0:0.#####}</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Максимальное время затмения: {0:hh:mm tt}</value>
+    <value>Максимальное время затмения: {0}</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>м</value>
@@ -307,7 +313,7 @@
     <value>Тип MGRS: {0}</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Время середины затмения: {0:hh:mm tt}</value>
+    <value>Время середины затмения: {0}</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>ми</value>
@@ -334,10 +340,10 @@
     <value>Продолжительность восхода луны: {0}</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Восход луны: {0:hh:mm tt}</value>
+    <value>Восход луны: {0}</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Закат Луны: {0:hh:mm tt}</value>
+    <value>Закат Луны: {0}</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>НМИ</value>
@@ -358,25 +364,25 @@
     <value>Частичное</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала частичного затмения: {0:hh:mm tt}</value>
+    <value>Время начала частичного затмения: {0}</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания частичного затмения: {0:hh:mm tt}</value>
+    <value>Время окончания частичного затмения: {0}</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала частичного затмения: {0:hh:mm tt}</value>
+    <value>Время начала частичного затмения: {0}</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания частичного затмения: {0:hh:mm tt}</value>
+    <value>Время окончания частичного затмения: {0}</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Полутень</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала полутеневого затмения: {0:hh:mm tt}</value>
+    <value>Время начала полутеневого затмения: {0}</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания полутеневого затмения: {0:hh:mm tt}</value>
+    <value>Время окончания полутеневого затмения: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Для работы приложению требуется разрешение на определение местоположения. Перейдите к настройкам приложения и предоставьте доступ или закройте приложение.</value>
@@ -393,6 +399,9 @@
   <data name="PlusAddLocationLabel" xml:space="preserve">
     <value>+ Добавить местоположение</value>
   </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Популяция: {0:N0}</value>
+  </data>
   <data name="SagittariusLabel" xml:space="preserve">
     <value>Стрелец</value>
   </data>
@@ -404,6 +413,12 @@
   </data>
   <data name="ScorpioLabel" xml:space="preserve">
     <value>Скорпион</value>
+  </data>
+  <data name="SearchCityLabel" xml:space="preserve">
+    <value>Найти город</value>
+  </data>
+  <data name="SearchPlaceholderLabel" xml:space="preserve">
+    <value>Поиск...</value>
   </data>
   <data name="SetsAndRisesLabel" xml:space="preserve">
     <value>Закаты и Рассветы</value>
@@ -433,16 +448,16 @@
     <value>Солнце</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Восход солнца: {0:hh:mm tt}</value>
+    <value>Восход солнца: {0}</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Закат: {0:hh:mm tt}</value>
+    <value>Закат: {0}</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Телец</value>
   </data>
   <data name="TimeLabel" xml:space="preserve">
-    <value>Время: {0:hh:mm:ss tt}</value>
+    <value>Время: {0}</value>
   </data>
   <data name="TimeTravelLabel" xml:space="preserve">
     <value>Путешествие во времени</value>
@@ -451,16 +466,22 @@
     <value>Полное затмение</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала полного затмения: {0:hh:mm tt}</value>
+    <value>Время начала полного затмения: {0}</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Общее время окончания полного затмения: {0:hh:mm tt}</value>
+    <value>Общее время окончания полного затмения: {0}</value>
+  </data>
+  <data name="TwoValuesSeparatedByComa" xml:space="preserve">
+    <value>{}{0}, {1}</value>
   </data>
   <data name="TypeLabel" xml:space="preserve">
     <value>Тип: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Неизвестное местоположение</value>
+  </data>
+  <data name="Use24HourTimeFormatLabel" xml:space="preserve">
+    <value>24-часовой формат</value>
   </data>
   <data name="UTCTimeOffsetLabel" xml:space="preserve">
     <value>UTC пояс</value>

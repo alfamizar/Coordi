@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.SearchByCityPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             Shell.TabBarIsVisible="False"
+             x:DataType="ViewModels:SearchByCityViewModel"
+             Title="{localization:Localize SearchCityLabel}">
+
+    <Grid>
+        <Grid RowDefinitions="Auto, *"
+              ColumnDefinitions="*"
+              ColumnSpacing="8"
+              RowSpacing="8"
+              Margin="4,0">
+            <Grid ColumnDefinitions="*,Auto"
+                  Grid.Row="0">
+                <SearchBar x:Name="searchBar"
+                           Grid.Column="0"
+                           Text="{Binding SearchTerm}"
+                           Placeholder="{localization:Localize SearchPlaceholderLabel}"
+                           IsReadOnly="{Binding IsBusy}"
+                           HorizontalOptions="Start">
+                    <SearchBar.Behaviors>
+                        <toolkit:UserStoppedTypingBehavior Command="{Binding Commands[PerformSearchLocationCommand]}"
+                                                           CommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                                                           StoppedTypingTimeThreshold="1000"
+                                                           ShouldDismissKeyboardAutomatically="True" />
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                <ImageButton x:Name="sortButton"
+                             Grid.Column="1"
+                             Padding="4"
+                             Background="Transparent"
+                             WidthRequest="32"
+                             Source="sort_white.png"
+                             Command="{Binding Commands[ShowSortingPopupCommand]}"
+                             CommandParameter="{x:Reference sortButton}"
+                             IsEnabled="{Binding IsBusy, Converter={toolkit:InvertedBoolConverter}}"/>
+            </Grid>
+
+            <CollectionView Grid.Row="1"
+                            ItemsSource="{Binding LocationsSearchResult}"
+                            IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="models:Location">
+
+                        <Frame>
+
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                                  ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="8"
+                                  RowSpacing="8">
+
+                                <Label Grid.Column="0"
+                                       Grid.Row="0"
+                                       Style="{StaticResource CollectionViewLabel}">
+                                    <Label.FormattedText>
+                                        <MultiBinding StringFormat="{}{0}, {1}">
+                                            <Binding Path="City.CityName" />
+                                            <Binding Path="City.CountryName" />
+                                        </MultiBinding>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <BoxView Grid.ColumnSpan="2"
+                                         Grid.Row="1"
+                                         Style="{StaticResource DividerStyle}" />
+
+                                <Label Grid.Column="0"
+                                       Grid.Row="2"
+                                       Style="{StaticResource CollectionViewLabel}"
+                                       Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
+
+                                <Label Grid.Column="1"
+                                       Grid.Row="2"
+                                       Style="{StaticResource CollectionViewLabel}"
+                                       Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
+
+                                <BoxView Grid.ColumnSpan="2"
+                                         Grid.Row="3"
+                                         Style="{StaticResource DividerStyle}" />
+
+                                <Label Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Grid.Row="4"
+                                       Style="{StaticResource CollectionViewLabel}"
+                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationLabel}}" />
+
+                            </Grid>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand]}"
+                                                      CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
+    </Grid>
+
+</v1:BasePage>

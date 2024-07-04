@@ -1,20 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
-using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Presentation.ViewModels
 {
     public partial class TimeTravelViewModel : BaseViewModel
     {
         [ObservableProperty]
-        DateTime dateNow;
+        private DateTime dateNow = DateTime.Now;
 
         [ObservableProperty]
-        Coordinate coordinate;
-
-        [ObservableProperty]
-        Location location;
+        private Coordinate coordinate = new();
 
         public TimeTravelViewModel()
         {
@@ -28,19 +24,19 @@ namespace JustCompute.Presentation.ViewModels
 
         private async void InitDate()
         {
-            if (!_locationManager.GettingLocationFinished.Task.IsCompleted)
+            if (_locationManager.GettingDeviceLocationFinished?.Task != null && !_locationManager.GettingDeviceLocationFinished.Task.IsCompleted)
             {
-                await _locationManager.GettingLocationFinished.Task;
+                await _locationManager.GettingDeviceLocationFinished.Task.ConfigureAwait(false);
             }
-            Location = _locationManager.CurrentLocation;
 
-            if (Location == null)
+            var location = _locationManager.SelectedLocation;
+            if (location == null)
             {
                 IsBusy = false;
                 return;
             }
 
-            await CalculateDateInfo(Location.Latitude, Location.Longitude);
+            await CalculateDateInfo(location.LatitudeDouble, location.LongitudeDouble);
         }
 
         private async Task CalculateDateInfo(double lat, double lng)

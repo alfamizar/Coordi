@@ -15,13 +15,9 @@ using JustCompute.Platforms.Android.Extensions;
 
 namespace JustCompute.Platforms.Android.UI.Renderers
 {
-    public class ExtendedSwitchRenderer : SwitchRenderer
+    public class ExtendedSwitchRenderer(Context context) : SwitchRenderer(context)
     {
-        private ExtendedSwitch view;
-
-        public ExtendedSwitchRenderer(Context context) : base(context)
-        {
-        }
+        private ExtendedSwitch? view;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Switch> e)
         {
@@ -44,28 +40,32 @@ namespace JustCompute.Platforms.Android.UI.Renderers
             }
         }
 
-        private void OnCheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
+        private void OnCheckedChange(object? sender, CompoundButton.CheckedChangeEventArgs e)
         {
             Element.IsToggled = Control.Checked;
 
             if (Control.Checked)
             {
-                SetTrackColor(view.OnColor.ColorMauiToAndroid());
+                SetTrackColor(view?.OnColor.ColorMauiToAndroid());
             }
             else
             {
-                SetTrackColor(view.OffColor.ColorMauiToAndroid());
+                SetTrackColor(view?.OffColor.ColorMauiToAndroid());
             }
         }
 
-        private void SetTrackColor(AColor color)
+        private void SetTrackColor(AColor? color)
         {
-            new Handler(Looper.MainLooper).Post(() =>
+            if (Looper.MainLooper != null && color != null && BlendModeCompat.SrcAtop != null)
             {
-                Control.TrackDrawable.ClearColorFilter();
-                Control.TrackDrawable.SetColorFilter(
-                    BlendModeColorFilterCompat.CreateBlendModeColorFilterCompat(color, BlendModeCompat.SrcAtop));
-            });
+                new Handler(Looper.MainLooper).Post(() =>
+                {
+                    Control?.TrackDrawable?.ClearColorFilter();
+                    Control?.TrackDrawable?.SetColorFilter(
+                        BlendModeColorFilterCompat.CreateBlendModeColorFilterCompat(color.Value, BlendModeCompat.SrcAtop));
+                });
+            }
+
         }
 
         protected override void Dispose(bool disposing)

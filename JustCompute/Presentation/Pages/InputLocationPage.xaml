@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.InputLocationPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             x:DataType="ViewModels:InputLocationViewModel"
+             Shell.PresentationMode="Animated"
+             Shell.TabBarIsVisible="False"
+             Title="{localization:Localize AddLocationLabel}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Content>
+
+        <Grid RowDefinitions="*, 64"
+              Padding="4,0">
+
+            <ScrollView Grid.Row="0">
+
+                <StackLayout Padding="8"
+                             Spacing="16">
+
+                    <Label Text="{localization:Localize LocationNameLabel}" />
+                    <Entry x:Name="LocationNameEntry"
+                           Placeholder="{localization:Localize LocationNameLabel}"
+                           Text="{Binding Location.Name, Mode=TwoWay}">
+                    </Entry>
+
+                    <Label Text="{localization:Localize CountryLabel}" />
+                    <Entry x:Name="CountryEntry"
+                           Placeholder="{localization:Localize CountryLabel}"
+                           Text="{Binding Location.City.CountryName, Mode=TwoWay}" />
+
+                    <Label Text="{localization:Localize CityLabel}" />
+                    <Entry x:Name="CityEntry"
+                           Placeholder="{localization:Localize CityLabel}"
+                           Text="{Binding Location.City.CityName, Mode=TwoWay}" />
+
+                    <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
+                    <Picker Title="{Binding Location.TimeZoneOffset}"
+                            ItemsSource="{Binding TimeZoneOffsets}"
+                            SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
+
+                    <Label Text="{localization:Localize LatitudeLabel}" />
+                    <Entry x:Name="LatitudeEntry"
+                           Placeholder="{localization:Localize LatitudeLabel}"
+                           Text="{Binding Location.Latitude, Mode=TwoWay}"
+                           Keyboard="Numeric">
+                        <Entry.Triggers>
+                            <DataTrigger TargetType="Entry"
+                                         Binding="{Binding Location.Latitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='latitude'}"
+                                         Value="False">
+                                <Setter Property="TextColor"
+                                        Value="Red" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+
+                    <Label Text="{localization:Localize LongitudeLabel}" />
+                    <Entry x:Name="LongitudeEntry"
+                           Placeholder="{localization:Localize LongitudeLabel}"
+                           Text="{Binding Location.Longitude, Mode=TwoWay}"
+                           Keyboard="Numeric">
+                        <Entry.Triggers>
+                            <DataTrigger TargetType="Entry"
+                                         Binding="{Binding Location.Longitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='longitude'}"
+                                         Value="False">
+                                <Setter Property="TextColor"
+                                        Value="Red" />
+                            </DataTrigger>
+                        </Entry.Triggers>
+                    </Entry>
+
+                </StackLayout>
+
+            </ScrollView>
+
+            <Button x:Name="SaveLocationButton"
+                    Grid.Row="1"
+                    Text="{localization:Localize SaveLocationButtonText}"
+                    Command="{Binding Commands[SaveLocationCommand]}"
+                    Margin="8,8,8,8" />
+
+        </Grid>
+
+    </ContentPage.Content>
+
+</v1:BasePage>

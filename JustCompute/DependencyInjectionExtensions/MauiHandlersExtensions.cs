@@ -1,4 +1,5 @@
-﻿using JustCompute.Presentation.ExtendedControls;
+﻿using JustCompute.Handlers.ExtendedSearchBar;
+using JustCompute.Presentation.ExtendedControls;
 
 namespace JustCompute.DependencyInjectionExtensions
 {
@@ -8,6 +9,7 @@ namespace JustCompute.DependencyInjectionExtensions
         {
             builder.ConfigureMauiHandlers(collection =>
             {
+                collection.AddHandler<SearchBar, SearchBarExHandler>();
 #if __ANDROID__
                 collection.AddHandler(typeof(CustomSwitch), typeof(JustCompute.Platforms.Android.UI.Handlers.CustomSwitchHandler));
 #elif WINDOWS

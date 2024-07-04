@@ -18,10 +18,16 @@ public static class Settings
     {
         get
         {
-            Enum.TryParse<DistanceType>(Preferences.Get(nameof(DistanceType), nameof(DistanceType.Kilometers)), true, out var distanceType);
+            Enum.TryParse<DistanceType>(Preferences.Get(nameof(DistanceType), Enum.GetName(DistanceType.Kilometers)), true, out var distanceType);
             return distanceType;
         }
         set => Preferences.Set(nameof(DistanceType), value.ToString());
+    }
+
+    public static bool Is24HourTimeFormat
+    {
+        get => Preferences.Get(nameof(Is24HourTimeFormat), true);
+        set => Preferences.Set(nameof(Is24HourTimeFormat), value);
     }
 
     public static bool IsWifiOnlyEnabled
@@ -30,45 +36,9 @@ public static class Settings
         set => Preferences.Set(nameof(IsWifiOnlyEnabled), value);
     }
 
-    public static double CurrentPositionPlayer
+    public static DateTime Birthday
     {
-        get => Preferences.Get(nameof(CurrentPositionPlayer), 0.0);
-        set => Preferences.Set(nameof(CurrentPositionPlayer), value);
-    }
-
-    public static string EpisodeId
-    {
-        get => Preferences.Get(nameof(EpisodeId), null);
-        set => Preferences.Set(nameof(EpisodeId), value);
-    }
-
-    public static string EpisodeTitle
-    {
-        get => Preferences.Get(nameof(EpisodeTitle), null);
-        set => Preferences.Set(nameof(EpisodeTitle), value);
-    }
-
-    public static string EpisodeDescription
-    {
-        get => Preferences.Get(nameof(EpisodeDescription), null);
-        set => Preferences.Set(nameof(EpisodeDescription), value);
-    }
-
-    public static string EpisodeDuration
-    {
-        get => Preferences.Get(nameof(EpisodeDuration), null);
-        set => Preferences.Set(nameof(EpisodeDuration), value);
-    }
-
-    public static string EpisodeUrl
-    {
-        get => Preferences.Get(nameof(EpisodeUrl), null);
-        set => Preferences.Set(nameof(EpisodeUrl), value);
-    }
-
-    public static DateTime EpisodePublished
-    {
-        get => Preferences.Get(nameof(EpisodePublished), new DateTime());
-        set => Preferences.Set(nameof(EpisodePublished), value);
+        get => Preferences.Get(nameof(Birthday), new DateTime());
+        set => Preferences.Set(nameof(Birthday), value);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
-using Compute.Core.Services;
 using JustCompute.Services;
+using Compute.Core.Navigation;
+using Compute.Core.UI;
 using Compute.Core.Domain.Services;
-using Location = Compute.Core.Domain.Entities.Models.Location;
 
 
 namespace JustCompute.Presentation.ViewModels.Base
@@ -12,43 +12,44 @@ namespace JustCompute.Presentation.ViewModels.Base
     {
         protected readonly IDialogService _dialogService;
         protected readonly ILocationManager _locationManager;
+        protected readonly INavigationService _navigationService;
 
         public static readonly int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(DateTime.UtcNow.Year) ? 366 : 365;
 
         public Dictionary<string, ICommand> Commands { get; protected set; }
 
         [ObservableProperty]
-        bool isBusy;
+        private bool isBusy;
 
         [ObservableProperty]
-        string title;
-
-        [ObservableProperty]
-        Location location;
+        private string title = string.Empty;
 
         protected BaseViewModel()
         {
             Commands = [];
-            _dialogService = ServicesProvider.Current.GetService<IDialogService>();
-            _locationManager = ServicesProvider.Current.GetService<ILocationManager>();
+            _dialogService = ServicesProvider.GetService<IDialogService>();
+            _locationManager = ServicesProvider.GetService<ILocationManager>();
+            _navigationService = ServicesProvider.GetService<INavigationService>();
         }
 
-        protected async Task LoadItems()
+        protected virtual async Task LoadItems()
         {
-            if (_locationManager.IsGettingCurrentLocation)
+            if (_locationManager.IsGettingDeviceLocation && _locationManager.GettingDeviceLocationFinished is not null)
             {
-                await _locationManager.GettingLocationFinished.Task;
+                await _locationManager.GettingDeviceLocationFinished.Task;
             }
-            Location = _locationManager.CurrentLocation;
 
-            if (Location == null)
+            var location = _locationManager.SelectedLocation;
+
+            if (location == null)
             {
                 return;
             }
 
+
             IsBusy = true;
 
-            await GetData(Location.Latitude, Location.Longitude, Location.TimeZoneOffset);
+            await GetData(location.LatitudeDouble, location.LongitudeDouble, location.TimeZoneOffset.Hours);
 
             IsBusy = false;
         }
@@ -68,9 +69,10 @@ namespace JustCompute.Presentation.ViewModels.Base
             // Custom logic
         }
 
-        public virtual void OnBackButtonPressed()
+        public virtual bool OnBackButtonPressed()
         {
-            // Custom logic
+            _navigationService.NavigateToTheDefaultScreen();
+            return true;
         }
 
         public virtual void OnNavigatedFrom()

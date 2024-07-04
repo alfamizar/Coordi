@@ -61,6 +61,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add custom location.
+        /// </summary>
+        public static string AddCustomLocationLabel {
+            get {
+                return ResourceManager.GetString("AddCustomLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Location.
         /// </summary>
         public static string AddLocationLabel {
@@ -79,7 +88,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annular or Total eclipse begin time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Annular or Total eclipse begin time: {0}.
         /// </summary>
         public static string AorTEclipseBeginTimeLabel {
             get {
@@ -88,7 +97,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annular or Total eclipse end time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Annular or Total eclipse end time: {0}.
         /// </summary>
         public static string AorTEclipseEndTimeLabel {
             get {
@@ -349,6 +358,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit saved locations.
+        /// </summary>
+        public static string EditSavedLocationsLabel {
+            get {
+                return ResourceManager.GetString("EditSavedLocationsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ft.
         /// </summary>
         public static string FeetsAbbreviationLabel {
@@ -547,7 +565,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Maximum eclipse time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Maximum eclipse time: {0}.
         /// </summary>
         public static string MaximumSolarEclispseTimeLabel {
             get {
@@ -628,7 +646,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mid eclipse time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Mid eclipse time: {0}.
         /// </summary>
         public static string MidLunarEclipseTimeLabel {
             get {
@@ -709,7 +727,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moonrise: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Moonrise: {0}.
         /// </summary>
         public static string MoonRiseLabel {
             get {
@@ -718,7 +736,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moonset: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Moonset: {0}.
         /// </summary>
         public static string MoonSetLabel {
             get {
@@ -781,7 +799,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partial eclipse begin time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Partial eclipse begin time: {0}.
         /// </summary>
         public static string PartialLunarEclipseBeginTimeLabel {
             get {
@@ -790,7 +808,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partial eclipse end time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Partial eclipse end time: {0}.
         /// </summary>
         public static string PartialLunarEclipseEndTimeLabel {
             get {
@@ -799,7 +817,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partial eclipse begin time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Partial eclipse begin time: {0}.
         /// </summary>
         public static string PartialSolarEclipseBeginTimeLabel {
             get {
@@ -808,7 +826,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partial eclipse end time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Partial eclipse end time: {0}.
         /// </summary>
         public static string PartialSolarEclipseEndTimeLabel {
             get {
@@ -826,7 +844,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Penumbral eclipse begin time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Penumbral eclipse begin time: {0}.
         /// </summary>
         public static string PenumbralLunarEclipseBeginTimeLabel {
             get {
@@ -835,7 +853,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Penumbral eclipse end time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Penumbral eclipse end time: {0}.
         /// </summary>
         public static string PenumbralLunarEclipseEndTimeLabel {
             get {
@@ -889,6 +907,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Population: {0:N0}.
+        /// </summary>
+        public static string PopulationLabel {
+            get {
+                return ResourceManager.GetString("PopulationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sagittarius.
         /// </summary>
         public static string SagittariusLabel {
@@ -921,6 +948,24 @@ namespace JustCompute.Resources.Strings {
         public static string ScorpioLabel {
             get {
                 return ResourceManager.GetString("ScorpioLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search city.
+        /// </summary>
+        public static string SearchCityLabel {
+            get {
+                return ResourceManager.GetString("SearchCityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string SearchPlaceholderLabel {
+            get {
+                return ResourceManager.GetString("SearchPlaceholderLabel", resourceCulture);
             }
         }
         
@@ -1006,7 +1051,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sunrise: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Sunrise: {0}.
         /// </summary>
         public static string SunRiseLabel {
             get {
@@ -1015,7 +1060,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sunset: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Sunset: {0}.
         /// </summary>
         public static string SunSetLabel {
             get {
@@ -1033,7 +1078,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time: {0:hh:mm:ss tt}.
+        ///   Looks up a localized string similar to Time: {0}.
         /// </summary>
         public static string TimeLabel {
             get {
@@ -1060,7 +1105,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total eclipse begin time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Total eclipse begin time: {0}.
         /// </summary>
         public static string TotalLunarEclipseBeginTimeLabel {
             get {
@@ -1069,11 +1114,20 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total eclipse end time: {0:hh:mm tt}.
+        ///   Looks up a localized string similar to Total eclipse end time: {0}.
         /// </summary>
         public static string TotalLunarEclipseEndTimeLabel {
             get {
                 return ResourceManager.GetString("TotalLunarEclipseEndTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {}{0}, {1}.
+        /// </summary>
+        public static string TwoValuesSeparatedByComa {
+            get {
+                return ResourceManager.GetString("TwoValuesSeparatedByComa", resourceCulture);
             }
         }
         
@@ -1092,6 +1146,15 @@ namespace JustCompute.Resources.Strings {
         public static string UnknownLocationLabel {
             get {
                 return ResourceManager.GetString("UnknownLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use 24-hour format.
+        /// </summary>
+        public static string Use24HourTimeFormatLabel {
+            get {
+                return ResourceManager.GetString("Use24HourTimeFormatLabel", resourceCulture);
             }
         }
         

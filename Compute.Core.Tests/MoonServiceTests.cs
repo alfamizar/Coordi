@@ -1,6 +1,6 @@
-using Compute.Core.Services;
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Domain.Entities.Models;
+using Compute.Core.Domain.Services.Moon;
 
 namespace Compute.Core.Tests.Services
 {

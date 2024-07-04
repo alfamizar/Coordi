@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using Compute.Core.Domain.Errors;
-using Compute.Core.Services;
+using Compute.Core.UI;
 using JustCompute.Presentation.Pages.Dialogs;
 
 namespace JustCompute.Presentation.Dialogs

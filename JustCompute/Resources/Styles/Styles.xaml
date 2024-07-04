@@ -267,7 +267,7 @@
         <Setter Property="Background"
                 Value="{AppThemeBinding Light={StaticResource LightCollectionViewItemBackgroundColor}, Dark={StaticResource DarkCollectionViewItemBackgroundColor}}" />
         <Setter Property="Padding"
-                Value="16, 8" />
+                Value="8, 8" />
         <Setter Property="Margin"
                 Value="8, 4" />
     </Style>
@@ -683,7 +683,7 @@
         <Setter Property="HorizontalOptions"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Title" />
+                Value="Small" />
         <Setter Property="TextTransform"
                 Value="Uppercase" />
     </Style>
@@ -695,7 +695,7 @@
         <Setter Property="HorizontalOptions"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Body" />
+                Value="Header" />
         <Setter Property="LineBreakMode"
                 Value="WordWrap" />
     </Style>

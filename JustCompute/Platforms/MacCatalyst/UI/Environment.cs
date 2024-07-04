@@ -1,4 +1,4 @@
-﻿using Compute.Core.Helpers.UI;
+﻿using Compute.Core.UI;
 
 namespace JustCompute.Platforms.MacCatalyst.UI
 {

@@ -20,8 +20,8 @@ namespace JustCompute.Presentation.Pages
 
         protected override bool OnBackButtonPressed()
         {
-            ViewModel?.OnBackButtonPressed();
-            return base.OnBackButtonPressed();
+            // Check if the ViewModel has handled the back button press
+            return ViewModel?.OnBackButtonPressed() ?? base.OnBackButtonPressed();
         }
 
         protected override void OnNavigatedFrom(NavigatedFromEventArgs args)

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Core.Domain.Entities.Models.Moon;
-using Compute.Core.Domain.Services;
+using Compute.Core.Domain.Services.Moon;
 using JustCompute.Presentation.ViewModels.Base;
 using static Compute.Core.Helpers.GroupingHelper;
 
@@ -11,14 +11,13 @@ namespace JustCompute.Presentation.ViewModels
         private readonly IMoonService _moonService;
 
         [ObservableProperty]
-        List<Group<string, MoonCycle>> groupedMoonCycles;
+        private List<Group<string, MoonCycle>> groupedMoonCycles =[];
 
-        List<MoonCycle> moonCycleList = new();
+        List<MoonCycle> moonCycleList = [];
 
         public MoonViewModel(IMoonService moonService)
         {
             _moonService = moonService;
-            GroupedMoonCycles = new List<Group<string, MoonCycle>>();
             Commands.Add("ToggleGroupCommand", new Command<Group<string, MoonCycle>>(ToggleGroup));
         }
 

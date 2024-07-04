@@ -9,12 +9,16 @@ using Environment = JustCompute.Platforms.MacCatalyst.UI.Environment;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !ANDROID)
 using Environment = System.Object;
 #endif
-using Compute.Core.Domain.Services;
-using Compute.Core.Helpers.UI;
-using Compute.Core.Services;
 using JustCompute.Presentation.Dialogs;
 using JustCompute.Presentation.Helpers;
 using JustCompute.Services;
+using Compute.Core.Navigation;
+using JustCompute.Navigation;
+using Compute.Core.UI;
+using Compute.Core.Domain.Services.Moon;
+using Compute.Core.Domain.Services.Sun;
+using Compute.Core.Domain.Services;
+using Compute.Core.Common.Device;
 
 namespace JustCompute.DependencyInjectionExtensions;
 
@@ -30,6 +34,7 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<ISunService, SunService>();
         builder.Services.AddLocalization();
         builder.Services.AddTransient<IEnvironment, Environment>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         return builder;
     }

@@ -6,8 +6,8 @@ namespace Compute.Core.Domain.Entities.Models
 {
     public class BaseCelestialBodyCycle
     {
-        public static readonly IReadOnlyList<string> ZodiacSigns
-       = new ReadOnlyCollection<string>(new List<string> { "♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️" });
+        public static readonly IReadOnlyList<string> ZodiacSigns 
+            = new ReadOnlyCollection<string>(["♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️"]);
 
         public enum Hemisphere { Northern, Southern }
 

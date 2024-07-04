@@ -1,5 +1,4 @@
 ﻿using Compute.Core.Domain.Entities.Models;
-using Compute.Core.Domain.Services;
 using JustCompute.Persistance.Repository.Models;
 using JustCompute.Persistance.Repository;
 using System.Text;
@@ -13,6 +12,8 @@ using JustCompute.Persistance.Repository.Models.DTOs;
 using JustCompute.Persistance.Repository.Constants;
 using DotNext;
 using Compute.Core.Domain.Errors;
+using Compute.Core.Domain.Services;
+using Compute.Core.Common.Exceptions.Location;
 
 namespace JustCompute.Services.LocationService
 {
@@ -20,46 +21,63 @@ namespace JustCompute.Services.LocationService
     {
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IMapper _mapper;
+        private Timer? _timer;
 
-        private CancellationTokenSource _cancelTokenSource;
+        private CancellationTokenSource? _cancelTokenSource;
 
-        public TaskCompletionSource<bool> GettingLocationFinished { get; private set; }
-        public bool IsGettingCurrentLocation { get; private set; }
-        public Location CurrentLocation { get; set; }
+        public TaskCompletionSource<bool>? GettingDeviceLocationFinished { get; private set; }
+        public bool IsGettingDeviceLocation { get; private set; }
+        public Location? DeviceLocation { get; private set; }
+        public Location? SelectedLocation { get; set; }
 
         public LocationManager(IStringLocalizer<AppStringsRes> localizer, IMapper mapper)
         {
             _localizer = localizer;
             _mapper = mapper;
+            StartTimer();
         }
 
-        public async Task<Result<Location, FaultCode>> RequestCurrentLocation()
+        private void StartTimer()
+        {
+            _timer = new(
+                NullifyDeviceLocation,
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromMinutes(2)
+            );
+        }
+
+        private void NullifyDeviceLocation(object? state)
+        {
+            DeviceLocation = null;
+        }
+
+        public async Task<Result<Location, FaultCode>> GetDeviceLocation()
         {
             try
             {
-                GettingLocationFinished = new TaskCompletionSource<bool>();
+                GettingDeviceLocationFinished = new TaskCompletionSource<bool>();
 
-                IsGettingCurrentLocation = true;
+                IsGettingDeviceLocation = true;
 
                 GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
 
                 _cancelTokenSource = new CancellationTokenSource();
 
-                DeviceLocation deviceLocation = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
-
+                DeviceLocation? deviceLocation = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token)
+                    ?? throw new DeviceLocationUnavailableException("await Geolocation.Default.GetLocationAsync returned null");
                 var timeZoneInfo = TimeZoneInfo.Local;
                 var offset = timeZoneInfo.GetUtcOffset(DateTime.Now).Hours;
 
                 var city = await GetCity(deviceLocation.Latitude, deviceLocation.Longitude);
-                Location location = new Location()
+                Location location = new()
                 {
-                    Latitude = deviceLocation.Latitude,
-                    Longitude = deviceLocation.Longitude,
+                    Latitude = deviceLocation.Latitude.ToString(),
+                    Longitude = deviceLocation.Longitude.ToString(),
                     City = city,
-                    TimeZoneOffset = offset
                 };
 
-                CurrentLocation = location;
+                DeviceLocation = location;
 
                 return location;
             }
@@ -75,20 +93,29 @@ namespace JustCompute.Services.LocationService
             {
                 return new(FaultCode.PermissionException);
             }
+            catch (DeviceLocationUnavailableException)
+            {
+                return new(FaultCode.DeviceLocationUnavailable);
+            }
             catch (Exception)
             {
                 return new(FaultCode.GenericGetLocationException);
             }
             finally
             {
-                IsGettingCurrentLocation = false;
-                GettingLocationFinished.TrySetResult(true);
+                IsGettingDeviceLocation = false;
+                GettingDeviceLocationFinished?.TrySetResult(true);
             }
         }
 
-                public void CancelRequest()
+        public void ResetDeviceLocation()
         {
-            if (IsGettingCurrentLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
+            DeviceLocation = null;
+        }
+
+        public void CancelRequest()
+        {
+            if (IsGettingDeviceLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
                 _cancelTokenSource.Cancel();
         }
 
@@ -97,11 +124,11 @@ namespace JustCompute.Services.LocationService
             IWorldCitiesDatabase<WorldCityTable> database = await WorldCitiesDatabase.Instance;
 
             var worldCity = await database.GetTheNearestCityAsync(latitude, longitude);
-            City city = new City()
+            City city = new()
             {
-                CityName = worldCity.CityAscii ?? _localizer.GetString("UnknownLocationLabel"),
-                CountryName = worldCity.Country,
-                Population = worldCity.Population
+                CityName = worldCity?.CityAscii ?? _localizer.GetString("UnknownLocationLabel"),
+                CountryName = worldCity?.Country ?? _localizer.GetString("UnknownLocationLabel"),
+                Population = worldCity?.Population ?? 0
             };
 
             return city;
@@ -138,6 +165,14 @@ namespace JustCompute.Services.LocationService
             var cityDTO = _mapper.Map<CityTable>(location);
             // Thanks to ON DELETE CASCADE location will be deleted automatically
             await database.DeleteItemAsync(cityDTO);
+        }
+
+        public async Task<List<Location>> GetLocationsByCity(string searchParam)
+        {
+            IWorldCitiesDatabase<WorldCityTable> database = await WorldCitiesDatabase.Instance;
+
+            var locations = await database.FilterByCity(searchParam);
+            return _mapper.Map<List<Location>>(locations);
         }
     }
 }

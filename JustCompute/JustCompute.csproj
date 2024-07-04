@@ -10,6 +10,7 @@
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
     <!-- Display name -->
     <ApplicationTitle>Coordi</ApplicationTitle>
     <!-- App Identifier -->
@@ -48,9 +49,12 @@
     <None Remove="mylinker.xml" />
     <None Remove="Resources\Images\add_icon.svg" />
     <None Remove="Resources\Images\Black\add_icon_black.svg" />
+    <None Remove="Resources\Images\Black\arrow_downward_black.svg" />
+    <None Remove="Resources\Images\Black\arrow_upward_black.svg" />
     <None Remove="Resources\Images\Black\convert_icon_black.svg" />
     <None Remove="Resources\Images\Black\hide_icon_black.svg" />
     <None Remove="Resources\Images\Black\settings_icon_black.svg" />
+    <None Remove="Resources\Images\Black\sort_black.svg" />
     <None Remove="Resources\Images\Black\stars_icon_black.svg" />
     <None Remove="Resources\Images\celestial_icon.png" />
     <None Remove="Resources\Images\clock_icon.svg" />
@@ -62,22 +66,22 @@
     <None Remove="Resources\Images\semi_sun_icon.svg" />
     <None Remove="Resources\Images\stars_icon.svg" />
     <None Remove="Resources\Images\sun_icon.svg" />
+    <None Remove="Resources\Images\White\arrow_downward_white.svg" />
+    <None Remove="Resources\Images\White\arrow_upward_white.svg" />
     <None Remove="Resources\Images\White\clock_icon_white.svg" />
     <None Remove="Resources\Images\White\convert_icon_white.svg" />
     <None Remove="Resources\Images\White\hide_icon_white.svg" />
     <None Remove="Resources\Images\White\settings_icon_white.svg" />
     <None Remove="Resources\Images\00037-1047021098.png" />
+    <None Remove="Resources\Images\White\sort_white.svg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Database\geo_world.db" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.60" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.60" />
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
     <PackageReference Include="CommunityToolkit.Maui" Version="9.0.1" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="DotNext" Version="5.7.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
@@ -89,7 +93,7 @@
   <ItemGroup>
     <Folder Include="Platforms\Android\Services\" />
     <Folder Include="Platforms\Windows\Device\" />
-    <Folder Include="Presentation\Handlers\" />
+    <Folder Include="Presentation\Navigation\" />
     <Folder Include="Presentation\ViewModels\Dialogs\" />
   </ItemGroup>
   <ItemGroup>
@@ -97,18 +101,24 @@
   </ItemGroup>
   <ItemGroup>
     <MauiImage Include="Resources\Images\Black\add_icon_black.svg" />
+    <MauiImage Include="Resources\Images\Black\arrow_downward_black.svg" />
+    <MauiImage Include="Resources\Images\Black\arrow_upward_black.svg" />
     <MauiImage Include="Resources\Images\Black\clock_icon_black.svg" />
     <MauiImage Include="Resources\Images\Black\convert_icon_black.svg" />
     <MauiImage Include="Resources\Images\Black\hide_icon_black.svg" />
     <MauiImage Include="Resources\Images\Black\location_icon_black.svg" />
     <MauiImage Include="Resources\Images\Black\settings_icon_black.svg" />
+    <MauiImage Include="Resources\Images\Black\sort_black.svg" />
     <MauiImage Include="Resources\Images\Black\stars_icon_black.svg" />
     <MauiImage Include="Resources\Images\White\add_icon_white.svg" />
+    <MauiImage Include="Resources\Images\White\arrow_downward_white.svg" />
+    <MauiImage Include="Resources\Images\White\arrow_upward_white.svg" />
     <MauiImage Include="Resources\Images\White\clock_icon_white.svg" />
     <MauiImage Include="Resources\Images\White\convert_icon_white.svg" />
     <MauiImage Include="Resources\Images\White\hide_icon_white.svg" />
     <MauiImage Include="Resources\Images\White\location_icon_white.svg" />
     <MauiImage Include="Resources\Images\White\settings_icon_white.svg" />
+    <MauiImage Include="Resources\Images\White\sort_white.svg" />
     <MauiImage Include="Resources\Images\White\stars_icon_white.svg" />
   </ItemGroup>
   <ItemGroup>
@@ -136,14 +146,23 @@
     <Compile Update="Presentation\Pages\MoonPage.xaml.cs">
       <DependentUpon>MoonPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Presentation\Pages\AddLocationPage.xaml.cs">
-      <DependentUpon>AddLocationPage.xaml</DependentUpon>
+    <Compile Update="Presentation\Pages\InputLocationPage.xaml.cs">
+      <DependentUpon>InputLocationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Presentation\Pages\SearchByCityPage.xaml.cs">
+      <DependentUpon>SearchByCityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Presentation\Pages\SavedLocationsPage.xaml.cs">
+      <DependentUpon>SavedLocationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Presentation\Pages\TimeTravelPage.xaml.cs">
       <DependentUpon>TimeTravelPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Presentation\Pages\SunPage.xaml.cs">
       <DependentUpon>SunPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Presentation\Popups\Pages\SortOptionsPopup.xaml.cs">
+      <DependentUpon>SortOptionsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Update="Resources\Strings\AppStringsRes.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -179,13 +198,22 @@
     <MauiXaml Update="Presentation\Pages\MoonPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Presentation\Pages\AddLocationPage.xaml">
+    <MauiXaml Update="Presentation\Pages\InputLocationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Presentation\Pages\SearchByCityPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Presentation\Pages\SavedLocationsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Pages\TimeTravelPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Pages\SunPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Presentation\Popups\Pages\SortOptionsPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Views\FloatingActionButton.xaml">
@@ -201,6 +229,28 @@
   <ItemGroup>
     <BundleResource Include="Resources\Images\appshell_header.png" />
   </ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-android')) != true">
+		<Compile Remove="**\**\*.Android.cs" />
+		<None Include="**\**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\Android\**\*.cs" />
+		<None Include="**\Android\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-ios')) != true AND $(TargetFramework.Contains('-maccatalyst')) != true">
+		<Compile Remove="**\**\*.iOS.cs" />
+		<None Include="**\**\*.iOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\iOS\**\*.cs" />
+		<None Include="**\iOS\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
+		<Compile Remove="**\*.Windows.cs" />
+		<None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="**\Windows\**\*.cs" />
+		<None Include="**\Windows\**\*.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+	
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadDebuggerTimeoutExceptionJustComputeHideInfoBar="True" />
