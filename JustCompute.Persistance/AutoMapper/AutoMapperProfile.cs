@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Entities.Models.Time;
-using Compute.Core.Extensions;
 using JustCompute.Persistance.Repository.Models;
 using JustCompute.Persistance.Repository.Models.DTOs;
 
 namespace JustCompute.Persistance.AutoMapper
 {
-    // todo: deal with linker ("mylinker") that deletes methods that are required by mapper
+    // todo: deal with linker ("mylinker") that deletes methods which are required by mapper
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
@@ -36,26 +35,6 @@ namespace JustCompute.Persistance.AutoMapper
                 .ForMember(dest => dest.IsCurrent, x => x.MapFrom(source => source.IsCurrent))
                 .ForMember(dest => dest.TimeZoneOffset, x => x.MapFrom(source => source.TimeZoneOffset.Hours));
 
-            /*CreateMap<WorldCityTable, Location>()
-                .ForMember(dest => dest.Name, x => x.MapFrom(source => source.City))
-                .ForMember(dest => dest.Latitude, x => x.MapFrom(source => source.Lat))
-                .ForMember(dest => dest.Longitude, x => x.MapFrom(source => source.Lng))
-                .ForMember(dest => dest.Id, x => x.MapFrom(source => 2))
-                .ForMember(dest => dest.IsActive, x => x.MapFrom(source => true))
-                .ForMember(dest => dest.IsCurrent, x => x.MapFrom(source => true))
-                .ForMember(dest => dest.TimeZoneOffset, x => x.MapFrom(source => 2))
-                .ReverseMap();*/
-
-            /*CreateMap<WorldCityTable, Location>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore()) // Ignore Id mapping
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.City))
-            .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Lat))
-            .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Lng))
-            .ForMember(dest => dest.City, opt => opt.Ignore())
-            .ForMember(dest => dest.IsActive, opt => opt.Ignore()) // Set IsActive as needed
-            .ForMember(dest => dest.IsCurrent, opt => opt.Ignore()) // Set IsCurrent as needed
-            .ForMember(dest => dest.TimeZoneOffset, opt => opt.Ignore()); // Set TimeZoneOffset */
-
             CreateMap<WorldCityTable, Location>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.City))
                 .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Lat))
@@ -66,16 +45,10 @@ namespace JustCompute.Persistance.AutoMapper
                     CountryName = src.Country,
                     Population = src.Population
                 }))
-                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true)) // Assuming IsActive should default to true
-                .ForMember(dest => dest.IsCurrent, opt => opt.MapFrom(src => false)) // Assuming IsCurrent should default to false
-                .ForMember(dest => dest.TimeZoneOffset, opt => opt.Ignore()) // If you want to ignore the TimeZoneOffset field
-                .ForMember(dest => dest.Id, opt => opt.Ignore()); // Auto-generated Id should be ignored during mapping
-
-            /*TimeZoneOffset
-                .GetUtcOffsets()
-                .FirstOrDefault(offset => offset.DisplayName == TimeExtensions.GetTimeZoneId(src.Lat, src.Lng))
-                ?? TimeZoneOffset.DefaultTimeZoneOffset)*/
-
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true))
+                .ForMember(dest => dest.IsCurrent, opt => opt.MapFrom(src => false))
+                .ForMember(dest => dest.TimeZoneOffset, opt => opt.Ignore())
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }

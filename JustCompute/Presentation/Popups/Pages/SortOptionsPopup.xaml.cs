@@ -34,13 +34,6 @@ public partial class SortOptionsPopup : Popup
         }
     }
 
-    /*private void OnItemTapped(SelectableSortingCriterion selectedItem)
-    {
-        var viewModel = BindingContext as SortOptionsPopupViewModel;
-        viewModel?.Commands["SelectSortCriterionCommand"].Execute(selectedItem);
-        CloseAsync(selectedItem);
-    }*/
-
     private void OnAnchorChanged(object? sender, EventArgs e)
     {
         if (viewModel.Anchor != null)

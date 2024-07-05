@@ -6,9 +6,7 @@ using JustCompute.Presentation.ViewModels.Base;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Common.Sort;
 using JustCompute.Presentation.Popups.ViewModels;
-using JustCompute.Presentation.Models;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
 
 namespace JustCompute.Presentation.ViewModels
 {
@@ -57,7 +55,7 @@ namespace JustCompute.Presentation.ViewModels
                 SortCriterion.City => location => location.City.CityName,
                 SortCriterion.Country => location => location.City.CountryName,
                 SortCriterion.Population => location => location.City.Population,
-                _ => throw new Exception($"Not recognized enum value '{DefaultSortCriterion.Criterion}' for {nameof(DefaultSortCriterion.Criterion)}")
+                _ => throw new Exception($"Not existing enum value '{DefaultSortCriterion.Criterion}' for {nameof(DefaultSortCriterion.Criterion)}")
             };
 
             IOrderedEnumerable<Location>? sortedItems =
