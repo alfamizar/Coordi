@@ -439,7 +439,7 @@
         <Setter Property="CancelButtonColor"
                 Value="{StaticResource Gray500}" />
         <Setter Property="BackgroundColor"
-                Value="Transparent" />
+                Value="{StaticResource DarkPageBackgroundColor}" />
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"

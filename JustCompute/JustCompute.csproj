@@ -226,9 +226,6 @@
       <Generator></Generator>
     </MauiXaml>
   </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Images\appshell_header.png" />
-  </ItemGroup>
 
 	<ItemGroup Condition="$(TargetFramework.Contains('-android')) != true">
 		<Compile Remove="**\**\*.Android.cs" />

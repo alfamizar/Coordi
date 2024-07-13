@@ -40,7 +40,7 @@ namespace JustCompute.Presentation.ViewModels
             PropertyChanged += OnPropertyChanged;
         }
 
-        private async void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(DefaultSortCriterion))
             {

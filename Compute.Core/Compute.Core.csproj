@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -14,8 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="CoordinateSharp" Version="2.23.1.1" />
-    <PackageReference Include="CoordinateSharp.Magnetic" Version="1.1.13" />
+    <PackageReference Include="CoordinateSharp" Version="2.24.1.1" />
+    <PackageReference Include="CoordinateSharp.Magnetic" Version="1.1.14" />
     <PackageReference Include="DotNext" Version="5.7.0" />
     <PackageReference Include="GeoTimeZone" Version="5.3.0" />
     <PackageReference Include="NodaTime" Version="3.1.11" />
