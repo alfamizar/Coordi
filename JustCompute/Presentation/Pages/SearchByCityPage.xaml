@@ -46,6 +46,10 @@
             <CollectionView Grid.Row="1"
                             ItemsSource="{Binding LocationsSearchResult}"
                             IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="4" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
 
                     <DataTemplate x:DataType="models:Location">

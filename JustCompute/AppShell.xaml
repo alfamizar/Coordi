@@ -9,7 +9,7 @@
        FlyoutHeaderBehavior="CollapseOnScroll">
 
     <Shell.FlyoutHeader>
-        <Image Source="appshell_header.png"
+        <Image Source="appdrawer_header.png"
                WidthRequest="230"
                HeightRequest="230"/>
     </Shell.FlyoutHeader>

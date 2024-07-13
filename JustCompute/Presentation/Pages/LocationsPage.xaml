@@ -68,6 +68,16 @@
                           IndicatorView="indicatorView"
                           CurrentItemChangedCommand="{Binding Commands[UpdateSelectedLocationCommand]}"
                           CurrentItemChangedCommandParameter="{Binding Source={x:Reference carouselView}, Path=CurrentItem}">
+                <CarouselView.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS"
+                            Value="128" />
+                        <On Platform="Android"
+                            Value="-1" />
+                        <On Platform="WinUI"
+                            Value="-1" />
+                    </OnPlatform>
+                </CarouselView.HeightRequest>
                 <CarouselView.ItemTemplate>
                     <DataTemplate x:DataType="models:Location">
 
