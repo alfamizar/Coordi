@@ -59,7 +59,7 @@
                         <Frame>
 
                             <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                                  ColumnDefinitions="Auto,*"
+                                  ColumnDefinitions="*,*"
                                   ColumnSpacing="8"
                                   RowSpacing="8">
 

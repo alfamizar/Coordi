@@ -103,10 +103,11 @@
                                         </SwipeItems>
                                     </SwipeView.TopItems>
 
-                                    <Grid ColumnDefinitions="*,*"
+                                    <Grid ColumnDefinitions="*,Auto"
                                           ColumnSpacing="4">
 
-                                        <VerticalStackLayout VerticalOptions="Center">
+                                        <VerticalStackLayout Grid.Column="0"
+                                                             VerticalOptions="Center">
 
                                             <Label x:Name="LocationName"
                                                    HorizontalOptions="Center"
@@ -129,21 +130,20 @@
                                         </VerticalStackLayout>
 
                                         <Frame Grid.Column="1"
-                                               Grid.Row="0"
-                                               Padding="4">
+                                               Padding="8">
 
                                             <VerticalStackLayout VerticalOptions="Center">
 
                                                 <Label x:Name="Latitude"
                                                        VerticalOptions="Center"
                                                        VerticalTextAlignment="Center"
-                                                       HorizontalOptions="Center"
+                                                       HorizontalOptions="Start"
                                                        Text="{Binding LatitudeDouble, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
 
                                                 <Label x:Name="Longitude"
                                                        VerticalOptions="Center"
                                                        VerticalTextAlignment="Center"
-                                                       HorizontalOptions="Center"
+                                                       HorizontalOptions="Start"
                                                        Text="{Binding LongitudeDouble, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
 
                                             </VerticalStackLayout>
