@@ -37,7 +37,9 @@
                              Padding="4"
                              Background="Transparent"
                              WidthRequest="32"
-                             Source="sort_white.png"
+                             HeightRequest="32"
+                             CornerRadius="8"
+                             Source="sort_icon_light.png"
                              Command="{Binding Commands[ShowSortingPopupCommand]}"
                              CommandParameter="{x:Reference sortButton}"
                              IsEnabled="{Binding IsBusy, Converter={toolkit:InvertedBoolConverter}}"/>
@@ -94,7 +96,7 @@
                                        Grid.ColumnSpan="2"
                                        Grid.Row="4"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationLabel}}" />
+                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}" />
 
                             </Grid>
 

@@ -22,8 +22,8 @@
     <converters:MoonCycleToMoonPhaseConverter x:Key="MoonCycleToMoonPhaseConverter" />
     <converters:TimeFormatConverter x:Key="TimeFormatConverter" />
     <converters:SortDirectionToImageConverter x:Key="SortDirectionToImageConverter"
-                                              AscendingImage="arrow_upward_white.png"
-                                              DescendingImage="arrow_downward_white.png"/>
+                                              AscendingImage="arrow_upward_icon_light.png"
+                                              DescendingImage="arrow_downward_icon_light.png"/>
     <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
     <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
     <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />

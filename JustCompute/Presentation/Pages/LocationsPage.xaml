@@ -22,7 +22,7 @@
         <ToolbarItem Text="{localization:Localize SearchCityLabel}"
                      Command="{Binding Commands[GoToSearchByCityCommand]}"
                      Order="Secondary" />
-        <ToolbarItem Text="{localization:Localize EditSavedLocationsLabel}"
+        <ToolbarItem Text="{localization:Localize ManageSavedLocationsLabel}"
                      Command="{Binding Commands[GoToSavedLocationsCommand]}"
                      Order="Secondary" />
     </ContentPage.ToolbarItems>

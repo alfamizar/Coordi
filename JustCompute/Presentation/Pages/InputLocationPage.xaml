@@ -49,35 +49,61 @@
                             ItemsSource="{Binding TimeZoneOffsets}"
                             SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
 
-                    <Label Text="{localization:Localize LatitudeLabel}" />
-                    <Entry x:Name="LatitudeEntry"
-                           Placeholder="{localization:Localize LatitudeLabel}"
-                           Text="{Binding Location.Latitude, Mode=TwoWay}"
-                           Keyboard="Numeric">
-                        <Entry.Triggers>
-                            <DataTrigger TargetType="Entry"
-                                         Binding="{Binding Location.Latitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='latitude'}"
-                                         Value="False">
-                                <Setter Property="TextColor"
-                                        Value="Red" />
-                            </DataTrigger>
-                        </Entry.Triggers>
-                    </Entry>
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+                          ColumnDefinitions="*, Auto">
 
-                    <Label Text="{localization:Localize LongitudeLabel}" />
-                    <Entry x:Name="LongitudeEntry"
-                           Placeholder="{localization:Localize LongitudeLabel}"
-                           Text="{Binding Location.Longitude, Mode=TwoWay}"
-                           Keyboard="Numeric">
-                        <Entry.Triggers>
-                            <DataTrigger TargetType="Entry"
-                                         Binding="{Binding Location.Longitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='longitude'}"
-                                         Value="False">
-                                <Setter Property="TextColor"
-                                        Value="Red" />
-                            </DataTrigger>
-                        </Entry.Triggers>
-                    </Entry>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{localization:Localize LatitudeLabel}" />
+                        <Entry x:Name="LatitudeEntry"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               Placeholder="{localization:Localize LatitudeLabel}"
+                               Text="{Binding Location.Latitude, Mode=TwoWay}"
+                               Keyboard="Numeric">
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry"
+                                             Binding="{Binding Location.Latitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='latitude'}"
+                                             Value="False">
+                                    <Setter Property="TextColor"
+                                            Value="Red" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Text="{localization:Localize LongitudeLabel}" />
+                        <Entry x:Name="LongitudeEntry"
+                               Grid.Row="3"
+                               Grid.Column="0"
+                               Placeholder="{localization:Localize LongitudeLabel}"
+                               Text="{Binding Location.Longitude, Mode=TwoWay}"
+                               Keyboard="Numeric">
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry"
+                                             Binding="{Binding Location.Longitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='longitude'}"
+                                             Value="False">
+                                    <Setter Property="TextColor"
+                                            Value="Red" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+
+                        <ImageButton x:Name="useMyLocationButton"
+                                     Grid.Row="0"
+                                     Grid.Column="1"
+                                     Grid.RowSpan="4"
+                                     WidthRequest="32"
+                                     HeightRequest="32"
+                                     CornerRadius="16"
+                                     Margin="16"
+                                     Background="Transparent"
+                                     Source="my_location_icon_light.png"
+                                     VerticalOptions="Center"
+                                     Command="{Binding Commands[PrefillCoordinatesCommand]}"/>
+
+                    </Grid>
 
                 </StackLayout>
 

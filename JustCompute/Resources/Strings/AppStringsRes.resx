@@ -216,9 +216,6 @@
   <data name="EclipsesLabel" xml:space="preserve">
     <value>Eclipses</value>
   </data>
-  <data name="EditSavedLocationsLabel" xml:space="preserve">
-    <value>Edit saved locations</value>
-  </data>
   <data name="FeetsAbbreviationLabel" xml:space="preserve">
     <value>ft</value>
   </data>
@@ -284,6 +281,9 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Longitude: {0:0.#####}</value>
+  </data>
+  <data name="ManageSavedLocationsLabel" xml:space="preserve">
+    <value>Manage saved locations</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Maximum eclipse time: {0}</value>
@@ -399,8 +399,11 @@
   <data name="PlusAddLocationLabel" xml:space="preserve">
     <value>+ Add Location</value>
   </data>
-  <data name="PopulationLabel" xml:space="preserve">
+  <data name="PopulationFormattedLabel" xml:space="preserve">
     <value>Population: {0:N0}</value>
+  </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Population</value>
   </data>
   <data name="SagittariusLabel" xml:space="preserve">
     <value>Sagittarius</value>
@@ -428,6 +431,9 @@
   </data>
   <data name="SnowMoonLabel" xml:space="preserve">
     <value>Snow Moon</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>Sort by</value>
   </data>
   <data name="StrawberryMoonLabel" xml:space="preserve">
     <value>Strawberry Moon</value>

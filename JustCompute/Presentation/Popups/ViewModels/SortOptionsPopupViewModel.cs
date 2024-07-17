@@ -17,7 +17,7 @@ namespace JustCompute.Presentation.Popups.ViewModels
         private ObservableCollection<SelectableSortingCriterion> sortingCriteria;
 
         [ObservableProperty]
-        private SelectableSortingCriterion selectedSortCriterion;
+        private SelectableSortingCriterion? selectedSortCriterion;
 
         public SortOptionsPopupViewModel()
         {

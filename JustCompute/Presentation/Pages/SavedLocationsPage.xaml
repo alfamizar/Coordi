@@ -7,6 +7,7 @@
              xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Shell.TabBarIsVisible="False"
+             Title="{localization:Localize ManageSavedLocationsLabel}"
              x:DataType="ViewModels:SavedLocationsViewModel">
 
     <Grid>

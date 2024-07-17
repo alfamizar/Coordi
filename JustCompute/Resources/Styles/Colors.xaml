@@ -7,7 +7,7 @@
     <Color x:Key="Primary">#ffffff</Color>
     <!--<Color x:Key="Primary">#512BD4</Color>-->
     <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Tertiary">#BB86FC</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>
@@ -55,7 +55,7 @@
     <Color x:Key="DarkLinesDividerColor">#404040</Color>
 
     <Color x:Key="DarkPrimary">#BB86FC</Color>
-    <Color x:Key="DarkPrimaryVariant">#3700B3</Color>
+    <Color x:Key="DarkPrimaryVariant">#BB86FC</Color>
     <Color x:Key="DarkSecondary">#03DAC6</Color>
     <Color x:Key="DarkSecondaryVariant">#03DAC6</Color>
     <Color x:Key="DarkBackground">#121212</Color>
@@ -81,7 +81,7 @@
     <Color x:Key="DarkSwitchThumbColor">#BB86FC</Color>
     <Color x:Key="DarkTextOnDarkBackgroundColor">#FFFFFF</Color>
     <Color x:Key="DarkProgressBarHistoryColor">#BB86FC</Color>
-    <Color x:Key="DarkSelectedSortCriterionColor">#BB86FC</Color>
+    <Color x:Key="DarkSelectedSortCriterionColor">#B3E5FC</Color>
 
     <!--Light Theme colors-->
     <Color x:Key="LightPageBackgroundColor">#FFFFFF</Color>
@@ -96,7 +96,7 @@
     <Color x:Key="LightLinesDividerColor">#FFFFFF</Color>
 
     <Color x:Key="LightPrimary">#018786</Color>
-    <Color x:Key="LightPrimaryVariant">#3700B3</Color>
+    <Color x:Key="LightPrimaryVariant">#BB86FC</Color>
     <Color x:Key="LightSecondary">#03DAC6</Color>
     <Color x:Key="LightSecondaryVariant">#018786</Color>
     <Color x:Key="LightBackground">#FFFFFF</Color>

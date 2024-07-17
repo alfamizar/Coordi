@@ -16,7 +16,7 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize LocationsLabel}"
-                FlyoutIcon="{AppThemeBinding Light=location_icon_black.png, Dark=location_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=location_icon_dark.png, Dark=location_icon_light.png}">
 
         <ShellContent Title="{localization:Localize LocationsLabel}"
                       ContentTemplate="{DataTemplate pages:LocationsPage}" />
@@ -25,7 +25,7 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SetsAndRisesLabel}"
-                FlyoutIcon="{AppThemeBinding Light=stars_icon_black.png, Dark=stars_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=stars_icon_dark.png, Dark=stars_icon_light.png}">
 
         <ShellContent Title="{localization:Localize SunLabel}"
                       Icon="sun_icon.png"
@@ -45,7 +45,7 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize EclipsesLabel}"
-                FlyoutIcon="{AppThemeBinding Light=hide_icon_black.png, Dark=hide_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=hide_icon_dark.png, Dark=hide_icon_light.png}">
 
         <ShellContent Title="{localization:Localize SunEclipsesLabel}"
                       Icon="sun_icon.png"
@@ -60,7 +60,7 @@
     <FlyoutItem IsVisible="False"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize ConvertersLabel}"
-                FlyoutIcon="{AppThemeBinding Light=convert_icon_black.png, Dark=convert_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=convert_icon_dark.png, Dark=convert_icon_light.png}">
 
         <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
                       ContentTemplate="{DataTemplate pages:CoordinatesConverterPage}" />
@@ -71,7 +71,7 @@
     <FlyoutItem IsVisible="False"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize TimeTravelLabel}"
-                FlyoutIcon="{AppThemeBinding Light=clock_icon_black.png, Dark=clock_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=clock_icon_dark.png, Dark=clock_icon_light.png}">
 
         <ShellContent Title="{localization:Localize TimeTravelLabel}"
                       ContentTemplate="{DataTemplate pages:TimeTravelPage}" />
@@ -81,7 +81,7 @@
     <FlyoutItem IsVisible="True"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SettingsLabel}"
-                FlyoutIcon="{AppThemeBinding Light=settings_icon_black.png, Dark=settings_icon_white.png}">
+                FlyoutIcon="{AppThemeBinding Light=settings_icon_dark.png, Dark=settings_icon_light.png}">
 
         <ShellContent Title="{localization:Localize SettingsLabel}"
                       ContentTemplate="{DataTemplate pages:SettingsPage}" />

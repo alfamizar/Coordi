@@ -7,6 +7,9 @@ using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Common.Sort;
 using JustCompute.Presentation.Popups.ViewModels;
 using System.ComponentModel;
+using Microsoft.Extensions.Localization;
+using JustCompute.Resources.Strings;
+using JustCompute.Services;
 
 namespace JustCompute.Presentation.ViewModels
 {
@@ -14,6 +17,8 @@ namespace JustCompute.Presentation.ViewModels
     {
         private List<Sorting> _sortingCriteria;
         private readonly IPopupService _popupService;
+        private static readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
+
         [ObservableProperty]
         private List<Location>? locationsSearchResult;
 
@@ -21,20 +26,21 @@ namespace JustCompute.Presentation.ViewModels
         private string? searchTerm;
 
         [ObservableProperty]
-        private Sorting defaultSortCriterion = new(SortCriterion.City, "City");
+        private Sorting defaultSortCriterion = new(SortCriterion.City, _localizer.GetString("CityLabel"));
 
         public SearchByCityViewModel(IPopupService popupService)
         {
             _popupService = popupService;
+
             Commands.Add("PerformSearchLocationCommand", new AsyncRelayCommand<string>(OnPerformSearchLocation));
             Commands.Add("LocationSelectedCommand", new Command<Location>(OnLocationSelected));
             Commands.Add("ShowSortingPopupCommand", new AsyncRelayCommand<View>(OnShowSortingPopup));
 
             _sortingCriteria =
         [
-            new Sorting(SortCriterion.City, "City"),
-            new Sorting(SortCriterion.Country, "Country"),
-            new Sorting(SortCriterion.Population, "Population")
+            new Sorting(SortCriterion.City, _localizer.GetString("CityLabel")),
+            new Sorting(SortCriterion.Country, _localizer.GetString("CountryLabel")),
+            new Sorting(SortCriterion.Population, _localizer.GetString("PopulationLabel"))
         ];
 
             PropertyChanged += OnPropertyChanged;

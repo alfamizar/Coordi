@@ -216,9 +216,6 @@
   <data name="EclipsesLabel" xml:space="preserve">
     <value>Затмения</value>
   </data>
-  <data name="EditSavedLocationsLabel" xml:space="preserve">
-    <value>Редактировать сохранённые локации</value>
-  </data>
   <data name="FeetsAbbreviationLabel" xml:space="preserve">
     <value>футов</value>
   </data>
@@ -284,6 +281,9 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Долгота: {0:0.#####}</value>
+  </data>
+  <data name="ManageSavedLocationsLabel" xml:space="preserve">
+    <value>Управлять сохранёнными локациями</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Максимальное время затмения: {0}</value>
@@ -399,8 +399,11 @@
   <data name="PlusAddLocationLabel" xml:space="preserve">
     <value>+ Добавить местоположение</value>
   </data>
-  <data name="PopulationLabel" xml:space="preserve">
+  <data name="PopulationFormattedLabel" xml:space="preserve">
     <value>Популяция: {0:N0}</value>
+  </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Население</value>
   </data>
   <data name="SagittariusLabel" xml:space="preserve">
     <value>Стрелец</value>
@@ -428,6 +431,9 @@
   </data>
   <data name="SnowMoonLabel" xml:space="preserve">
     <value>Снежная Луна</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>Сортировать по</value>
   </data>
   <data name="StrawberryMoonLabel" xml:space="preserve">
     <value>Клубничная луна</value>

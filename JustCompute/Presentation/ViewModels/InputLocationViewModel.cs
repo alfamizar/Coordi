@@ -21,11 +21,13 @@ namespace JustCompute.Presentation.ViewModels
         private Location? location;
 
         public ICommand SaveLocationCommand => Commands[nameof(SaveLocationCommand)];
+        public ICommand PrefillCoordinatesCommand => Commands[nameof(GoBackCommand)];
         public ICommand GoBackCommand => Commands[nameof(GoBackCommand)];
 
         public InputLocationViewModel()
         {
             Commands[nameof(SaveLocationCommand)] = new Command(OnSaveLocation, CanSaveLocation);
+            Commands[nameof(PrefillCoordinatesCommand)] = new Command(OnPrefillCoordinates);
             Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
             selectedTimeZoneOffset = TimeZoneOffset.DefaultTimeZoneOffset;
@@ -90,6 +92,14 @@ namespace JustCompute.Presentation.ViewModels
         {
             _navigationService.NavigateBackAsync();
             return true;
+        }
+
+        public void OnPrefillCoordinates()
+        {
+            if (Location == null) return;
+
+            Location.Latitude = _locationManager.DeviceLocation?.LatitudeDouble.ToString() ?? string.Empty;
+            Location.Longitude = _locationManager.DeviceLocation?.LongitudeDouble.ToString() ?? string.Empty;
         }
 
         public void ApplyQueryParameter(object? parameter)

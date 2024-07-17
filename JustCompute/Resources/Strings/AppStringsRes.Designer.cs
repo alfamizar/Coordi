@@ -358,15 +358,6 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit saved locations.
-        /// </summary>
-        public static string EditSavedLocationsLabel {
-            get {
-                return ResourceManager.GetString("EditSavedLocationsLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ft.
         /// </summary>
         public static string FeetsAbbreviationLabel {
@@ -561,6 +552,15 @@ namespace JustCompute.Resources.Strings {
         public static string LongitudeStringFormatLabel {
             get {
                 return ResourceManager.GetString("LongitudeStringFormatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage saved locations.
+        /// </summary>
+        public static string ManageSavedLocationsLabel {
+            get {
+                return ResourceManager.GetString("ManageSavedLocationsLabel", resourceCulture);
             }
         }
         
@@ -909,6 +909,15 @@ namespace JustCompute.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Population: {0:N0}.
         /// </summary>
+        public static string PopulationFormattedLabel {
+            get {
+                return ResourceManager.GetString("PopulationFormattedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Population.
+        /// </summary>
         public static string PopulationLabel {
             get {
                 return ResourceManager.GetString("PopulationLabel", resourceCulture);
@@ -993,6 +1002,15 @@ namespace JustCompute.Resources.Strings {
         public static string SnowMoonLabel {
             get {
                 return ResourceManager.GetString("SnowMoonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort by.
+        /// </summary>
+        public static string SortByLabel {
+            get {
+                return ResourceManager.GetString("SortByLabel", resourceCulture);
             }
         }
         
