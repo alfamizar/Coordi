@@ -74,7 +74,6 @@
     <None Remove="Resources\Images\semi_sun_icon.svg" />
     <None Remove="Resources\Images\stars_icon.svg" />
     <None Remove="Resources\Images\sun_icon.svg" />
-    <None Remove="Resources\Images\00037-1047021098.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Database\geo_world.db" />
@@ -123,6 +122,9 @@
     <MauiImage Include="Resources\Images\Light\stars_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\my_location_icon_light.svg" />
   </ItemGroup>
+  <ItemGroup>
+    <MauiImage Update="Resources\Images\sun_icon.svg" BaseSize="30,30" />
+    <MauiImage Update="Resources\Images\moon_icon.svg" BaseSize="30,30" />  </ItemGroup>
   <ItemGroup>
     <Compile Update="Platforms\iOS\UI\Environment.cs">
       <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>

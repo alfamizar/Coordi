@@ -9,7 +9,6 @@
            BindingContext="{x:Reference this}">
 
     <Grid Style="{StaticResource GridDialogContent}"
-          ColumnDefinitions="350"
           RowDefinitions="Auto,Auto,Auto"
           Padding="16, 8">
 
@@ -31,21 +30,24 @@
             <Button Style="{StaticResource DialogButton}"
                     Clicked="NegativeButtonClicked"
                     Text="{Binding NegativeButtonText}"
-                    VerticalOptions="Center"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
                     HorizontalOptions="FillAndExpand"
                     IsVisible="{Binding NegativeButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
             <Button Style="{StaticResource DialogButton}"
                     Clicked="NeutralButtonClicked"
                     Text="{Binding NeutralButtonText}"
-                    VerticalOptions="Center"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
                     HorizontalOptions="FillAndExpand"
                     IsVisible="{Binding NeutralButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
             <Button Style="{StaticResource DialogButton}"
                     Clicked="PositiveButtonClicked"
                     Text="{Binding PositiveButtonText}"
-                    VerticalOptions="Center"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
                     HorizontalOptions="FillAndExpand"
                     IsVisible="{Binding PositiveButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 

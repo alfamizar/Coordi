@@ -403,7 +403,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go To Settings.
+        ///   Looks up a localized string similar to Go to settings.
         /// </summary>
         public static string GoToSettings {
             get {
