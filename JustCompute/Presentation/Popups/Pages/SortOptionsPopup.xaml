@@ -10,7 +10,7 @@
                CanBeDismissedByTappingOutsideOfPopup="True"
                Color="Transparent">
 
-    <Frame CornerRadius="30" WidthRequest="150">
+    <Frame CornerRadius="30">
         <VerticalStackLayout>
             <Label Text="{localization:Localize SortByLabel}"
                    FontSize="Medium"
