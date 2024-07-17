@@ -108,11 +108,6 @@ namespace JustCompute.Services.LocationService
             }
         }
 
-        public void ResetDeviceLocation()
-        {
-            DeviceLocation = null;
-        }
-
         public void CancelRequest()
         {
             if (IsGettingDeviceLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)

@@ -16,8 +16,6 @@ namespace Compute.Core.Domain.Services
 
         public TaskCompletionSource<bool>? GettingDeviceLocationFinished { get; }
 
-        void ResetDeviceLocation();
-
         Task<Result<Location, FaultCode>> GetDeviceLocation();
 
         Task<List<Location>> GetSavedLocations();

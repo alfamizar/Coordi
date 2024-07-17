@@ -94,9 +94,18 @@ namespace JustCompute.Presentation.ViewModels
             return true;
         }
 
-        public void OnPrefillCoordinates()
+        public async void OnPrefillCoordinates()
         {
-            if (Location == null) return;
+            if (Location == null || IsBusy) return;
+
+            if (_locationManager.DeviceLocation is null)
+            {
+                IsBusy = true;
+
+                await _locationManager.GetDeviceLocation();
+
+                IsBusy = false;
+            }
 
             Location.Latitude = _locationManager.DeviceLocation?.LatitudeDouble.ToString() ?? string.Empty;
             Location.Longitude = _locationManager.DeviceLocation?.LongitudeDouble.ToString() ?? string.Empty;
