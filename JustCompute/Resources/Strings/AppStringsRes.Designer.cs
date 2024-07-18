@@ -475,6 +475,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lat:.
+        /// </summary>
+        public static string LatLabel {
+            get {
+                return ResourceManager.GetString("LatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leo.
         /// </summary>
         public static string LeoLabel {
@@ -489,6 +498,15 @@ namespace JustCompute.Resources.Strings {
         public static string LibraLabel {
             get {
                 return ResourceManager.GetString("LibraLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lng:.
+        /// </summary>
+        public static string LngLabel {
+            get {
+                return ResourceManager.GetString("LngLabel", resourceCulture);
             }
         }
         

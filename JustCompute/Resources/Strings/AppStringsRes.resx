@@ -255,11 +255,17 @@
   <data name="LatitudeStringFormatLabel" xml:space="preserve">
     <value>Latitude: {0:0.#####}</value>
   </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Lat:</value>
+  </data>
   <data name="LeoLabel" xml:space="preserve">
     <value>Leo</value>
   </data>
   <data name="LibraLabel" xml:space="preserve">
     <value>Libra</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Lng:</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Location:</value>

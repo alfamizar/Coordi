@@ -13,7 +13,6 @@
 
     <Grid>
         <Grid RowDefinitions="Auto, *"
-              ColumnDefinitions="*"
               ColumnSpacing="8"
               RowSpacing="8"
               Margin="4,0">
@@ -45,7 +44,8 @@
                              IsEnabled="{Binding IsBusy, Converter={toolkit:InvertedBoolConverter}}"/>
             </Grid>
 
-            <CollectionView Grid.Row="1"
+            <CollectionView x:Name="locationsCollectionView"
+                            Grid.Row="1"
                             ItemsSource="{Binding LocationsSearchResult}"
                             IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
                 <CollectionView.ItemsLayout>

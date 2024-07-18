@@ -255,11 +255,17 @@
   <data name="LatitudeStringFormatLabel" xml:space="preserve">
     <value>Широта: {0:0.#####}</value>
   </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Шир:</value>
+  </data>
   <data name="LeoLabel" xml:space="preserve">
     <value>Лев</value>
   </data>
   <data name="LibraLabel" xml:space="preserve">
     <value>Весы</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Дол:</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Расположение:</value>
@@ -286,7 +292,7 @@
     <value>Управлять сохранёнными локациями</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Максимальное время затмения: {0}</value>
+    <value>Время максимального затмения: {0}</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>м</value>

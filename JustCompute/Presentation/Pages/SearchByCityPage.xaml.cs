@@ -8,6 +8,8 @@ namespace JustCompute.Presentation.Pages
         {
             InitializeComponent();
             BindingContext = vm;
+            // this is a workaround to fix wrong collection view width after device rotation
+            locationsCollectionView.ItemsLayout = new GridItemsLayout(ItemsLayoutOrientation.Vertical);
         }
 
         protected override void OnAppearing()
