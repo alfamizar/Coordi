@@ -333,6 +333,15 @@ namespace JustCompute.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Distance: {0:0.##} {1}.
         /// </summary>
+        public static string DistanceFormattedLabel {
+            get {
+                return ResourceManager.GetString("DistanceFormattedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
         public static string DistanceLabel {
             get {
                 return ResourceManager.GetString("DistanceLabel", resourceCulture);

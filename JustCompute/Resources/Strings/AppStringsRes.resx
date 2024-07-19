@@ -207,8 +207,11 @@
   <data name="DigraphLabel" xml:space="preserve">
     <value>Digraph (MGRS 100,000 Meter Square Identifier): {0}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
+  <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Distance: {0:0.##} {1}</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Distance</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Distance Unit</value>

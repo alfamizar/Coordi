@@ -17,7 +17,7 @@ namespace JustCompute.Presentation.Converters
                 Distance distance = new(distanceInKm);
                 DistanceType distanceType = Helpers.Settings.DistanceType;
 
-                string distanceLabelKey = "DistanceLabel";
+                string distanceLabelKey = "DistanceFormattedLabel";
                 string abbreviationLabelKey = distanceType switch
                 {
                     DistanceType.Meters => "MetersAbbreviationLabel",

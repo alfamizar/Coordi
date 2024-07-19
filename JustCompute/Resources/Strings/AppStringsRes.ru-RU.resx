@@ -207,8 +207,11 @@
   <data name="DigraphLabel" xml:space="preserve">
     <value>Диграф (идентификатор MGRS 100 000 квадратных метров): {0}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
+  <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Расстояние: {0:0.##} {1}</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Расстояние</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Единица расстояния</value>

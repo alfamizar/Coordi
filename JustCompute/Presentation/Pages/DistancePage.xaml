@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.DistancePage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
+             Shell.TabBarIsVisible="False"
+             HideSoftInputOnTapped="True"
+             x:DataType="ViewModels:DistanceViewModel">
+
+    <ScrollView>
+        
+        <Grid RowDefinitions="Auto,Auto,*"
+              RowSpacing="64"
+              Padding="12,16,12,16">
+
+            <views:PointEntry Grid.Row="0"
+                              Location="{Binding Location1}"
+                              PointTitle="Point 1"
+                              IsPointLabelVisible="True"
+                              ImageButtonIconSource="search_icon_light.png"
+                              ImageButtonClickedCommand="{Binding Commands[SearchLocation1Command]}"
+                              UserStoppedTypingCommand="{Binding Commands[InitLocation1Command]}"
+                              StoppedTypingTimeThreshold="500">
+                <views:PointEntry.IsPointCityCountryLabelVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                        <Binding Path="Location1.City.CityName"
+                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
+                        <Binding Path="Location1.City.CountryName"
+                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
+                    </MultiBinding>
+                </views:PointEntry.IsPointCityCountryLabelVisible>
+            </views:PointEntry>
+
+            <views:PointEntry Grid.Row="1"
+                              Location="{Binding Location2}"
+                              PointTitle="Point 2"
+                              IsPointLabelVisible="True"
+                              ImageButtonIconSource="search_icon_light.png"
+                              ImageButtonClickedCommand="{Binding Commands[SearchLocation2Command]}"
+                              UserStoppedTypingCommand="{Binding Commands[InitLocation2Command]}"
+                              StoppedTypingTimeThreshold="500">
+                <views:PointEntry.IsPointCityCountryLabelVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                        <Binding Path="Location1.City.CityName"
+                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
+                        <Binding Path="Location1.City.CountryName"
+                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
+                    </MultiBinding>
+                </views:PointEntry.IsPointCityCountryLabelVisible>
+            </views:PointEntry>
+
+            <Border Grid.Row="2"
+                    HeightRequest="64">
+
+                <Label Text="{Binding Distance.Kilometers}"
+                       FontSize="Large"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center" />
+
+            </Border>
+
+        </Grid>
+        
+    </ScrollView>
+    
+</v1:BasePage>

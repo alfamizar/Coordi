@@ -53,6 +53,8 @@
     <None Remove="Resources\Images\Dark\arrow_upward_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\convert_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\hide_icon_dark.svg" />
+    <None Remove="Resources\Images\Dark\ruler_icon_dark.svg" />
+    <None Remove="Resources\Images\Dark\search_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\settings_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\sort_icon_dark.svg" />
     <None Remove="Resources\Images\celestial_icon.png" />
@@ -64,6 +66,8 @@
     <None Remove="Resources\Images\Light\convert_icon_light.svg" />
     <None Remove="Resources\Images\Light\hide_icon_light.svg" />
     <None Remove="Resources\Images\Light\my_location_icon_light.svg" />
+    <None Remove="Resources\Images\Light\ruler_icon_light.svg" />
+    <None Remove="Resources\Images\Light\search_icon_light.svg" />
     <None Remove="Resources\Images\Light\settings_icon_light.svg" />
     <None Remove="Resources\Images\Light\sort_icon_light.svg" />
     <None Remove="Resources\Images\location_icon_black.svg" />
@@ -107,6 +111,8 @@
     <MauiImage Include="Resources\Images\Dark\convert_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\hide_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\location_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\ruler_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\search_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\settings_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\sort_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\stars_icon_dark.svg" />
@@ -117,6 +123,8 @@
     <MauiImage Include="Resources\Images\Light\convert_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\hide_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\location_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\ruler_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\search_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\settings_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\sort_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\stars_icon_light.svg" />
@@ -159,6 +167,9 @@
     <Compile Update="Presentation\Pages\SavedLocationsPage.xaml.cs">
       <DependentUpon>SavedLocationsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Presentation\Pages\DistancePage.xaml.cs">
+      <DependentUpon>DistancePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Presentation\Pages\TimeTravelPage.xaml.cs">
       <DependentUpon>TimeTravelPage.xaml</DependentUpon>
     </Compile>
@@ -167,6 +178,9 @@
     </Compile>
     <Compile Update="Presentation\Popups\Pages\SortOptionsPopup.xaml.cs">
       <DependentUpon>SortOptionsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Presentation\Views\PointEntry.xaml.cs">
+      <DependentUpon>PointEntry.xaml</DependentUpon>
     </Compile>
     <Compile Update="Resources\Strings\AppStringsRes.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -211,6 +225,9 @@
     <MauiXaml Update="Presentation\Pages\SavedLocationsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Presentation\Pages\DistancePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Presentation\Pages\TimeTravelPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -218,6 +235,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Popups\Pages\SortOptionsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Presentation\Views\PointEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Views\FloatingActionButton.xaml">

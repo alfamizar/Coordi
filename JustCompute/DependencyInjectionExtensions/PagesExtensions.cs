@@ -18,6 +18,7 @@ public static class PagesExtensions
         builder.Services.AddSingleton<TimeTravelPage>();
         builder.Services.AddSingleton<SearchByCityPage>();
         builder.Services.AddSingleton<SavedLocationsPage>();
+        builder.Services.AddSingleton<DistancePage>();
 
         return builder;
     }

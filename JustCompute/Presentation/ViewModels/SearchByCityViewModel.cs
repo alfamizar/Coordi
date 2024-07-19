@@ -10,11 +10,14 @@ using System.ComponentModel;
 using Microsoft.Extensions.Localization;
 using JustCompute.Resources.Strings;
 using JustCompute.Services;
+using Compute.Core.Navigation;
+using JustCompute.Presentation.ViewModels.Common;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class SearchByCityViewModel : BaseViewModel
+    public partial class SearchByCityViewModel : BaseViewModel, IQueryParameter
     {
+        private LocationInitialization? locationInitializationContext;
         private List<Sorting> _sortingCriteria;
         private readonly IPopupService _popupService;
         private static readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
@@ -77,10 +80,10 @@ namespace JustCompute.Presentation.ViewModels
             var result = await _popupService.ShowPopupAsync<SortOptionsPopupViewModel>(
                 onPresenting: viewModel => viewModel.ApplyParameters(_sortingCriteria, DefaultSortCriterion, view));
 
-            HandlePopupResult(result);
+            HandleSortingPopupResult(result);
         }
 
-        private void HandlePopupResult(object? result)
+        private void HandleSortingPopupResult(object? result)
         {
             if (result is Tuple<Sorting, List<Sorting>> resultTuple)
             {
@@ -113,13 +116,28 @@ namespace JustCompute.Presentation.ViewModels
 
         private void OnLocationSelected(Location selectedLocation)
         {
-            _navigationService.NavigateToAsync<InputLocationViewModel>(selectedLocation);
+            if (!locationInitializationContext.HasValue)
+                _navigationService.NavigateToAsync<InputLocationViewModel>(selectedLocation);
+            else
+            {
+                _navigationService.NavigateBackAsync(selectedLocation);
+                locationInitializationContext = null;
+            }
         }
 
         public override bool OnBackButtonPressed()
         {
+            locationInitializationContext = null;
             _navigationService.NavigateBackAsync();
             return true;
+        }
+
+        public void ApplyQueryParameter(object? parameter)
+        {
+            if (parameter is LocationInitialization initializationContext)
+            {
+                locationInitializationContext = initializationContext;
+            }
         }
     }
 }

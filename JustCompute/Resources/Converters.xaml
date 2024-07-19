@@ -33,5 +33,6 @@
                                          ConditionType="Any" />
     <toolkit:IsNullConverter x:Key="IsNullConverter" />
     <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
 
 </ResourceDictionary>

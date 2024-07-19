@@ -9,6 +9,7 @@
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
              x:DataType="ViewModels:InputLocationViewModel"
              Shell.PresentationMode="Animated"
              Shell.TabBarIsVisible="False"
@@ -50,59 +51,11 @@
                             ItemsSource="{Binding TimeZoneOffsets}"
                             SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
 
-                    <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
-                          ColumnSpacing="4">
-                        <Label Grid.Column="0"
-                               Text="{localization:Localize LatLabel}"
-                               VerticalOptions="Center"/>
-                        <Entry x:Name="LatitudeEntry"
-                               Grid.Column="1"
-                               VerticalOptions="Center"
-                               Placeholder="{localization:Localize LatitudeLabel}"
-                               Text="{Binding Location.Latitude, Mode=TwoWay}"
-                               Keyboard="Numeric">
-                            <Entry.Triggers>
-                                <DataTrigger TargetType="Entry"
-                                             Binding="{Binding Location.Latitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='latitude'}"
-                                             Value="False">
-                                    <Setter Property="TextColor"
-                                            Value="Red" />
-                                </DataTrigger>
-                            </Entry.Triggers>
-                        </Entry>
-
-                        <Label Grid.Column="2"
-                               VerticalOptions="Center"
-                               Text="{localization:Localize LngLabel}" />
-                        <Entry x:Name="LongitudeEntry"
-                               Grid.Column="3"
-                               VerticalOptions="Center"
-                               Placeholder="{localization:Localize LongitudeLabel}"
-                               Text="{Binding Location.Longitude, Mode=TwoWay}"
-                               Keyboard="Numeric">
-                            <Entry.Triggers>
-                                <DataTrigger TargetType="Entry"
-                                             Binding="{Binding Location.Longitude, Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, ConverterParameter='longitude'}"
-                                             Value="False">
-                                    <Setter Property="TextColor"
-                                            Value="Red" />
-                                </DataTrigger>
-                            </Entry.Triggers>
-                        </Entry>
-
-                        <ImageButton x:Name="useMyLocationButton"
-                                     Grid.Column="4"
-                                     WidthRequest="32"
-                                     HeightRequest="32"
-                                     CornerRadius="16"
-                                     Margin="8,0,8,0"
-                                     Background="Transparent"
-                                     Source="my_location_icon_light.png"
-                                     VerticalOptions="Center"
-                                     HorizontalOptions="End"
-                                     IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                                     Command="{Binding Commands[PrefillCoordinatesCommand]}" />
-                    </Grid>
+                    <views:PointEntry Location="{Binding Location}"
+                                      IsPointLabelVisible="False"
+                                      IsPointCityCountryLabelVisible="False"
+                                      ImageButtonIconSource="my_location_icon_light.png"
+                                      ImageButtonClickedCommand="{Binding Commands[PrefillCoordinatesCommand]}" />
 
                 </StackLayout>
 
