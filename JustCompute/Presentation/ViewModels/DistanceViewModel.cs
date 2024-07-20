@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Maui.Converters;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Navigation;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
@@ -26,8 +26,37 @@ namespace JustCompute.Presentation.ViewModels
         {
             Commands.Add("SearchLocation1Command", new Command(SearchLocation1));
             Commands.Add("SearchLocation2Command", new Command(SearchLocation2));
-            Commands.Add("InitLocation1Command", new Command(InitLocation1));
-            Commands.Add("InitLocation2Command", new Command(InitLocation2));
+            SubscribeToLocationChanges();
+        }
+
+        private void SubscribeToLocationChanges()
+        {
+            Location1.PropertyChanged += Location1_PropertyChanged;
+            Location2.PropertyChanged += Location2_PropertyChanged;
+        }
+
+        private void UnsubscribeFromLocationChanges()
+        {
+            Location1.PropertyChanged -= Location1_PropertyChanged;
+            Location2.PropertyChanged -= Location2_PropertyChanged;
+        }
+
+        private void Location1_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Location.Latitude) || e.PropertyName == nameof(Location.Longitude))
+            {
+                Location1.City = new City();
+                InitDistance();
+            }
+        }
+
+        private void Location2_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Location.Latitude) || e.PropertyName == nameof(Location.Longitude))
+            {
+                Location2.City = new City();
+                InitDistance();
+            }
         }
 
         partial void OnLocation1Changed(Location value)
@@ -45,24 +74,6 @@ namespace JustCompute.Presentation.ViewModels
             var point1 = new Coordinate(Location1.LatitudeDouble, Location1.LongitudeDouble);
             var point2 = new Coordinate(Location2.LatitudeDouble, Location2.LongitudeDouble);
             Distance = new Distance(point1, point2, Shape.Ellipsoid);
-        }
-
-        private void InitLocation1()
-        {
-            Location1 = new Location()
-            {
-                Latitude = Location1.LatitudeDouble.ToString(),
-                Longitude = Location1.LongitudeDouble.ToString(),
-            };
-        }
-
-        private void InitLocation2()
-        {
-            Location2 = new Location()
-            {
-                Latitude = Location2.LatitudeDouble.ToString(),
-                Longitude = Location2.LongitudeDouble.ToString(),
-            };
         }
 
         private async void SearchLocation1()
@@ -86,15 +97,16 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (result is Location location && currentInitialization.HasValue)
             {
-                switch (currentInitialization.Value)
+                UnsubscribeFromLocationChanges();
+                if (currentInitialization.Value == LocationInitialization.Point1)
                 {
-                    case LocationInitialization.Point1:
-                        Location1 = location;
-                        break;
-                    case LocationInitialization.Point2:
-                        Location2 = location;
-                        break;
+                    Location1 = location;
                 }
+                else if (currentInitialization.Value == LocationInitialization.Point2)
+                {
+                    Location2 = location;
+                }
+                SubscribeToLocationChanges();
             }
             currentInitialization = null;
         }

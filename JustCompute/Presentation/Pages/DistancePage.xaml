@@ -22,9 +22,7 @@
                               PointTitle="Point 1"
                               IsPointLabelVisible="True"
                               ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding Commands[SearchLocation1Command]}"
-                              UserStoppedTypingCommand="{Binding Commands[InitLocation1Command]}"
-                              StoppedTypingTimeThreshold="500">
+                              ImageButtonClickedCommand="{Binding Commands[SearchLocation1Command]}">
                 <views:PointEntry.IsPointCityCountryLabelVisible>
                     <MultiBinding Converter="{StaticResource AllTrueConverter}">
                         <Binding Path="Location1.City.CityName"
@@ -40,14 +38,12 @@
                               PointTitle="Point 2"
                               IsPointLabelVisible="True"
                               ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding Commands[SearchLocation2Command]}"
-                              UserStoppedTypingCommand="{Binding Commands[InitLocation2Command]}"
-                              StoppedTypingTimeThreshold="500">
+                              ImageButtonClickedCommand="{Binding Commands[SearchLocation2Command]}">
                 <views:PointEntry.IsPointCityCountryLabelVisible>
                     <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                        <Binding Path="Location1.City.CityName"
+                        <Binding Path="Location2.City.CityName"
                                  Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
-                        <Binding Path="Location1.City.CountryName"
+                        <Binding Path="Location2.City.CountryName"
                                  Converter="{StaticResource IsStringNotNullOrEmptyConverter}" />
                     </MultiBinding>
                 </views:PointEntry.IsPointCityCountryLabelVisible>
@@ -56,7 +52,7 @@
             <Border Grid.Row="2"
                     HeightRequest="64">
 
-                <Label Text="{Binding Distance.Kilometers}"
+                <Label Text="{Binding Distance.Kilometers, Converter={StaticResource KilometersToTargetDistanceTypeConverter}, FallbackValue='0'}"
                        FontSize="Large"
                        VerticalOptions="Center"
                        HorizontalOptions="Center" />

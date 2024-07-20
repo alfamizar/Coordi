@@ -10,6 +10,10 @@
              Shell.TabBarIsVisible="False"
              x:DataType="ViewModels:SearchByCityViewModel"
              Title="{localization:Localize SearchCityLabel}">
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}" />
+    </Shell.BackButtonBehavior>
 
     <Grid>
         <Grid RowDefinitions="Auto, *"

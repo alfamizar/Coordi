@@ -37,7 +37,8 @@ namespace JustCompute.Presentation.ViewModels
 
             Commands.Add("PerformSearchLocationCommand", new AsyncRelayCommand<string>(OnPerformSearchLocation));
             Commands.Add("LocationSelectedCommand", new Command<Location>(OnLocationSelected));
-            Commands.Add("ShowSortingPopupCommand", new AsyncRelayCommand<View>(OnShowSortingPopup));
+            Commands.Add("ShowSortingPopupCommand", new AsyncRelayCommand<View>(OnShowSortingPopup)); 
+            Commands.Add("GoBackCommand", new Command(() => OnBackButtonPressed()));
 
             _sortingCriteria =
         [
