@@ -200,7 +200,7 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (location == _locationManager.DeviceLocation)
             {
-                string text = "You cannot delete current location!";
+                string text = _localizer.GetString("CannotDeleteCurrentLocationToastMessage");
                 ToastDuration duration = ToastDuration.Short;
 
                 var toast = Toast.Make(text, duration);
