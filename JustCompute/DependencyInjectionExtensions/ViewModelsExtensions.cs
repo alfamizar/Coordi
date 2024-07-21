@@ -19,6 +19,7 @@ public static class ViewModelsExtensions
         builder.Services.AddSingleton<TimeTravelViewModel>();
         builder.Services.AddSingleton<SearchByCityViewModel>();
         builder.Services.AddSingleton<SavedLocationsViewModel>();
+        builder.Services.AddSingleton<DistanceViewModel>();
 
         return builder;
     }

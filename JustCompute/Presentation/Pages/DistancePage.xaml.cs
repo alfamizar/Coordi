@@ -2,24 +2,27 @@
 
 namespace JustCompute.Presentation.Pages
 {
-    public partial class SearchByCityPage : BasePage
+    public partial class DistancePage : BasePage
     {
-        public SearchByCityPage(SearchByCityViewModel vm)
+        public DistancePage(DistanceViewModel vm)
         {
             InitializeComponent();
-            BindingContext = vm; 
+            BindingContext = vm;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+        }
+
+        public override void OnAppWindowResumed()
+        {
+            base.OnAppWindowResumed();
         }
     }
 }

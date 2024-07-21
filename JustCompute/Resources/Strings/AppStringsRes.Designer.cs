@@ -178,6 +178,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot delete current location!.
+        /// </summary>
+        public static string CannotDeleteCurrentLocationToastMessage {
+            get {
+                return ResourceManager.GetString("CannotDeleteCurrentLocationToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not get your&apos;s current location, please, check app permissions and try again later.
         /// </summary>
         public static string CannotGetCurrentLocationError {
@@ -333,6 +342,15 @@ namespace JustCompute.Resources.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Distance: {0:0.##} {1}.
         /// </summary>
+        public static string DistanceFormattedLabel {
+            get {
+                return ResourceManager.GetString("DistanceFormattedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
         public static string DistanceLabel {
             get {
                 return ResourceManager.GetString("DistanceLabel", resourceCulture);
@@ -475,6 +493,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lat:.
+        /// </summary>
+        public static string LatLabel {
+            get {
+                return ResourceManager.GetString("LatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Leo.
         /// </summary>
         public static string LeoLabel {
@@ -489,6 +516,15 @@ namespace JustCompute.Resources.Strings {
         public static string LibraLabel {
             get {
                 return ResourceManager.GetString("LibraLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lng:.
+        /// </summary>
+        public static string LngLabel {
+            get {
+                return ResourceManager.GetString("LngLabel", resourceCulture);
             }
         }
         
@@ -903,6 +939,24 @@ namespace JustCompute.Resources.Strings {
         public static string PlusAddLocationLabel {
             get {
                 return ResourceManager.GetString("PlusAddLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point 1.
+        /// </summary>
+        public static string Point1Label {
+            get {
+                return ResourceManager.GetString("Point1Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Point 2.
+        /// </summary>
+        public static string Point2Label {
+            get {
+                return ResourceManager.GetString("Point2Label", resourceCulture);
             }
         }
         

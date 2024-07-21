@@ -34,6 +34,7 @@ namespace JustCompute.Presentation.ViewModels.Base
 
         protected virtual async Task LoadItems()
         {
+            IsBusy = true;
             if (_locationManager.IsGettingDeviceLocation && _locationManager.GettingDeviceLocationFinished is not null)
             {
                 await _locationManager.GettingDeviceLocationFinished.Task;
@@ -43,11 +44,9 @@ namespace JustCompute.Presentation.ViewModels.Base
 
             if (location == null)
             {
+                IsBusy = false;
                 return;
             }
-
-
-            IsBusy = true;
 
             await GetData(location.LatitudeDouble, location.LongitudeDouble, location.TimeZoneOffset.Hours);
 

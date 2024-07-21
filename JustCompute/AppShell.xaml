@@ -56,6 +56,15 @@
 
     </FlyoutItem>
 
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize DistanceLabel}"
+                FlyoutIcon="{AppThemeBinding Light=ruler_icon_dark.png, Dark=ruler_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize DistanceLabel}"
+                      ContentTemplate="{DataTemplate pages:DistancePage}" />
+
+    </FlyoutItem>
+
     <!--todo: make visible when implemented-->
     <FlyoutItem IsVisible="False"
                 FlyoutDisplayOptions="AsSingleItem"

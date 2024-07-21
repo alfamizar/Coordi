@@ -207,8 +207,11 @@
   <data name="DigraphLabel" xml:space="preserve">
     <value>Digraph (MGRS 100,000 Meter Square Identifier): {0}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
+  <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Distance: {0:0.##} {1}</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Distance</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Distance Unit</value>
@@ -255,11 +258,17 @@
   <data name="LatitudeStringFormatLabel" xml:space="preserve">
     <value>Latitude: {0:0.#####}</value>
   </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Lat:</value>
+  </data>
   <data name="LeoLabel" xml:space="preserve">
     <value>Leo</value>
   </data>
   <data name="LibraLabel" xml:space="preserve">
     <value>Libra</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Lng:</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Location:</value>
@@ -533,5 +542,14 @@
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
     <value>Zodiac: {0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Point 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Point 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>You cannot delete current location!</value>
   </data>
 </root>

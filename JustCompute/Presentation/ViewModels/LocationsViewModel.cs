@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Core.Common.Device;
 using Compute.Core.Helpers;
 using CoordinateSharp;
@@ -38,19 +40,36 @@ namespace JustCompute.Presentation.ViewModels
             _localizer = localizer;
             _devicePermissionsService = devicePermissionsService;
 
-            Commands.Add("GoToAddLocationCommand", new Command(OnGoToAddLocation));
-
-            Commands.Add("GoToSearchByCityCommand", new Command(OnGoSearchByCityLocation));
-
-            Commands.Add("GoToSavedLocationsCommand", new Command(OnGoToSavedLocations));
-
-            Commands.Add("UpdateSelectedLocationCommand", new Command<Location>(UpdateSelectedLocation));
-
-            Commands.Add("DeleteLocationCommand", new Command<Location>(async (location) => await OnDeleteLocation(location)));
-
-            Commands.Add("RefreshCommand", new Command(InitViewModel));
+            InitializeCommands();
 
             Locations.CollectionChanged += LocationsCollectionChanged;
+            _locationManager.DeviceLocationChanged += DeviceLocationChanged;          
+        }
+
+        private void InitializeCommands()
+        {
+            Commands.Add("GoToAddLocationCommand", new Command(OnGoToAddLocation));
+            Commands.Add("GoToSearchByCityCommand", new Command(OnGoSearchByCityLocation));
+            Commands.Add("GoToSavedLocationsCommand", new Command(OnGoToSavedLocations));
+            Commands.Add("SetSelectedLocationCommand", new Command<Location>(SetSelectedLocation));
+            Commands.Add("DeleteLocationCommand", new Command<Location>(async (location) => await OnDeleteLocation(location)));
+            Commands.Add("RefreshCommand", new Command(InitViewModel));
+        }
+
+        private void DeviceLocationChanged(object? sender, EventArgs e)
+        {
+            var deviceLocation = _locationManager.DeviceLocation;
+            if (deviceLocation != null)
+            {
+                if (Locations.Count > 0)
+                {
+                    Locations[0] = deviceLocation;
+                }
+                else
+                {
+                    Locations.Add(deviceLocation);
+                }
+            }
         }
 
         private void StartTimer(int offsetHours = 0)
@@ -80,10 +99,6 @@ namespace JustCompute.Presentation.ViewModels
         private void LocationsCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LocationsCount = Locations.Count;
-            if (LocationsCount == 0)
-            {
-                UpdateSelectedLocation(null);
-            }
         }
 
         private async Task InitDeviceLocation()
@@ -99,9 +114,9 @@ namespace JustCompute.Presentation.ViewModels
             IsBusy = true;
 
             var locationResult = await _locationManager.GetDeviceLocation();
+            _locationManager.OnStartListeningDeciveLocation();
 
             IsBusy = false;
-
 
             if (!locationResult.IsSuccessful)
             {
@@ -163,7 +178,6 @@ namespace JustCompute.Presentation.ViewModels
 
         public override void OnPageAppearing()
         {
-            //CarouselSelectedItem = _locationManager.SelectedLocation;
             InitViewModel();
         }
 
@@ -184,17 +198,37 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task OnDeleteLocation(Location location)
         {
+            if (location == _locationManager.DeviceLocation)
+            {
+                string text = "You cannot delete current location!";
+                ToastDuration duration = ToastDuration.Short;
+
+                var toast = Toast.Make(text, duration);
+
+                await toast.Show();
+
+                return;
+            }
+
             await _locationManager.DeleteLocation(location);
+
             Locations.Remove(location);
+            if (LocationsCount == 0)
+            {
+                _locationManager.SelectedLocation = null;
+                UpdateAtThisLocationInfo(null);
+            }
         }
 
-        private void UpdateSelectedLocation(Location? location)
-        {           
+        private void SetSelectedLocation(Location? location)
+        {
+            if (location == null) return;
+
             _locationManager.SelectedLocation = location;
-            UpdateAtThisCoordinate(location);
+            UpdateAtThisLocationInfo(location);
         }
 
-        private void UpdateAtThisCoordinate(Location? location)
+        private void UpdateAtThisLocationInfo(Location? location)
         {
             if (location is null)
             {
@@ -229,11 +263,8 @@ namespace JustCompute.Presentation.ViewModels
         private async void InitViewModel()
         {
             await InitDeviceLocation();
-            var deviceLocation = _locationManager.DeviceLocation;
-            if (deviceLocation != null)
-                await SaveLocationIfNotExists(deviceLocation);
             await GetSavedLocations();
-            UpdateAtThisCoordinate(_locationManager.SelectedLocation);
+            UpdateAtThisLocationInfo(_locationManager.SelectedLocation);
         }
 
         public override bool OnBackButtonPressed()

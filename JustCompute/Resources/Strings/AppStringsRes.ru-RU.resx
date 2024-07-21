@@ -207,8 +207,11 @@
   <data name="DigraphLabel" xml:space="preserve">
     <value>Диграф (идентификатор MGRS 100 000 квадратных метров): {0}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
+  <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Расстояние: {0:0.##} {1}</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Расстояние</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Единица расстояния</value>
@@ -255,11 +258,17 @@
   <data name="LatitudeStringFormatLabel" xml:space="preserve">
     <value>Широта: {0:0.#####}</value>
   </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Шир:</value>
+  </data>
   <data name="LeoLabel" xml:space="preserve">
     <value>Лев</value>
   </data>
   <data name="LibraLabel" xml:space="preserve">
     <value>Весы</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Дол:</value>
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Расположение:</value>
@@ -286,7 +295,7 @@
     <value>Управлять сохранёнными локациями</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Максимальное время затмения: {0}</value>
+    <value>Время максимального затмения: {0}</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>м</value>
@@ -533,5 +542,14 @@
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
     <value>Знак зодиака: {0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Точка 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Точка 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>Вы не можите удалить текущее местоположение!</value>
   </data>
 </root>
