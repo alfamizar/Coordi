@@ -7,9 +7,7 @@ namespace JustCompute.Presentation.Pages
         public SearchByCityPage(SearchByCityViewModel vm)
         {
             InitializeComponent();
-            BindingContext = vm;
-            // this is a workaround to fix wrong collection view width after device rotation
-            locationsCollectionView.ItemsLayout = new GridItemsLayout(ItemsLayoutOrientation.Vertical);
+            BindingContext = vm; 
         }
 
         protected override void OnAppearing()

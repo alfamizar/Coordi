@@ -543,4 +543,10 @@
   <data name="ZodiacSignLabel" xml:space="preserve">
     <value>Zodiac: {0}</value>
   </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Point 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Point 2</value>
+  </data>
 </root>

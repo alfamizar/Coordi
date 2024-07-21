@@ -110,5 +110,10 @@ namespace JustCompute.Presentation.ViewModels
             }
             currentInitialization = null;
         }
+
+        public override void OnNavigatedTo()
+        {
+            InitDistance();
+        }
     }
 }

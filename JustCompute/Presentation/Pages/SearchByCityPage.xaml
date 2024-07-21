@@ -10,9 +10,9 @@
              Shell.TabBarIsVisible="False"
              x:DataType="ViewModels:SearchByCityViewModel"
              Title="{localization:Localize SearchCityLabel}">
-    
+
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}" />
+        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}"/>
     </Shell.BackButtonBehavior>
 
     <Grid>
@@ -32,7 +32,7 @@
                         <toolkit:UserStoppedTypingBehavior Command="{Binding Commands[PerformSearchLocationCommand]}"
                                                            CommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                                                            StoppedTypingTimeThreshold="1000"
-                                                           ShouldDismissKeyboardAutomatically="True" />
+                                                           ShouldDismissKeyboardAutomatically="True"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
                 <ImageButton x:Name="sortButton"
@@ -53,8 +53,8 @@
                             ItemsSource="{Binding LocationsSearchResult}"
                             IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical"
-                                       ItemSpacing="4" />
+                    <GridItemsLayout Orientation="Vertical"
+                                     VerticalItemSpacing="4"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
 
@@ -72,41 +72,41 @@
                                        Style="{StaticResource CollectionViewLabel}">
                                     <Label.FormattedText>
                                         <MultiBinding StringFormat="{}{0}, {1}">
-                                            <Binding Path="City.CityName" />
-                                            <Binding Path="City.CountryName" />
+                                            <Binding Path="City.CityName"/>
+                                            <Binding Path="City.CountryName"/>
                                         </MultiBinding>
                                     </Label.FormattedText>
                                 </Label>
 
                                 <BoxView Grid.ColumnSpan="2"
                                          Grid.Row="1"
-                                         Style="{StaticResource DividerStyle}" />
+                                         Style="{StaticResource DividerStyle}"/>
 
                                 <Label Grid.Column="0"
                                        Grid.Row="2"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
+                                       Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}"/>
 
                                 <Label Grid.Column="1"
                                        Grid.Row="2"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
+                                       Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}"/>
 
                                 <BoxView Grid.ColumnSpan="2"
                                          Grid.Row="3"
-                                         Style="{StaticResource DividerStyle}" />
+                                         Style="{StaticResource DividerStyle}"/>
 
                                 <Label Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Grid.Row="4"
                                        Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}" />
+                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}"/>
 
                             </Grid>
 
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand]}"
-                                                      CommandParameter="{Binding .}" />
+                                                      CommandParameter="{Binding .}"/>
                             </Frame.GestureRecognizers>
                         </Frame>
 
@@ -121,7 +121,7 @@
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
                            IsVisible="{Binding IsBusy}"
-                           IsRunning="{Binding IsBusy}" />
+                           IsRunning="{Binding IsBusy}"/>
     </Grid>
 
 </v1:BasePage>
