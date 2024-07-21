@@ -25,5 +25,11 @@ namespace Compute.Core.Domain.Services
         Task DeleteLocation(Location location);
 
         Task<List<Location>> GetLocationsByCity(string searchParam);
+
+        public event EventHandler<EventArgs> DeviceLocationChanged;
+
+        public void OnStartListeningDeciveLocation();
+
+        public void OnStopListeningDeciveLocation();
     }
 }

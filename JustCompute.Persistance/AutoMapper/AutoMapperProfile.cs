@@ -6,7 +6,7 @@ using JustCompute.Persistance.Repository.Models.DTOs;
 
 namespace JustCompute.Persistance.AutoMapper
 {
-    // todo: deal with linker ("mylinker") that deletes methods which are required by mapper
+    // todo: deal with linker ("mylinker") that prevents deleting methods by shrinker which are required by mapper
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
@@ -49,6 +49,11 @@ namespace JustCompute.Persistance.AutoMapper
                 .ForMember(dest => dest.IsCurrent, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.TimeZoneOffset, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<WorldCityTable, City>()
+                .ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.CityAscii))
+                .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country))
+                .ForMember(dest => dest.Population, opt => opt.MapFrom(src => src.Population));
         }
     }
 }

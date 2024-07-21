@@ -549,4 +549,7 @@
   <data name="Point2Label" xml:space="preserve">
     <value>Point 2</value>
   </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>You cannot delete current location!</value>
+  </data>
 </root>

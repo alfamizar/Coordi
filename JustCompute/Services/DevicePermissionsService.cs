@@ -10,7 +10,7 @@ namespace JustCompute.Services
         private readonly IStringLocalizer<AppStringsRes> _localizer = localizer;
         private readonly IDialogService _dialogService = dialogService;
         private bool _isObtainingPermsInProgress;
-        private TaskCompletionSource<PermissionStatus> _tcs;
+        private TaskCompletionSource<PermissionStatus>? _tcs;
 
         public async Task<PermissionStatus> CheckPermissionAndRequestIfNeeded(
             Permission permission,
