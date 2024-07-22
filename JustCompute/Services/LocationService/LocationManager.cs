@@ -14,10 +14,10 @@ using Compute.Core.Common.Exceptions.Location;
 
 namespace JustCompute.Services.LocationService
 {
-    public class LocationManager : ILocationManager
+    public class LocationManager(IMapper mapper) : ILocationManager
     {
         private readonly WeakEventManager _eventManager = new();
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper = mapper;
 
         private CancellationTokenSource? _cancelTokenSource;
 
@@ -50,11 +50,6 @@ namespace JustCompute.Services.LocationService
             remove => _eventManager.RemoveEventHandler(value);
         }
 
-        public LocationManager(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
         private void OnDeviceLocationChanged()
         {
             _eventManager.HandleEvent(this, EventArgs.Empty, nameof(DeviceLocationChanged));
@@ -75,17 +70,9 @@ namespace JustCompute.Services.LocationService
                 DeviceLocation? deviceLocation = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token)
                     ?? throw new DeviceLocationUnavailableException("await Geolocation.Default.GetLocationAsync returned null");
 
-                var city = await GetCity(deviceLocation.Latitude, deviceLocation.Longitude);
-                Location location = new()
-                {
-                    Latitude = deviceLocation.Latitude.ToString(),
-                    Longitude = deviceLocation.Longitude.ToString(),
-                    City = city,
-                };
+                DeviceLocation = await GetLocationModel(deviceLocation.Latitude, deviceLocation.Longitude);
 
-                DeviceLocation = location;
-
-                return location;
+                return DeviceLocation;
             }
             catch (FeatureNotSupportedException)
             {
@@ -152,6 +139,20 @@ namespace JustCompute.Services.LocationService
             await database.SaveItemAsync(locationDTO);
         }
 
+        public async Task UpdateLocation(Location location)
+        {
+            ISavedLocationsDatabase database = await SavedLocationsDatabase.Instance;
+
+            var cityDTO = _mapper.Map<CityTable>(location);
+            var locationDTO = _mapper.Map<LocationTable>(location);
+
+            await database.UpdateItemAsync(cityDTO);
+
+            // update FOREIGN KEY
+            locationDTO.CityId = cityDTO.Id;
+            await database.UpdateItemAsync(locationDTO);
+        }
+
         public async Task DeleteLocation(Location location)
         {
             ISavedLocationsDatabase database = await SavedLocationsDatabase.Instance;
@@ -196,17 +197,23 @@ namespace JustCompute.Services.LocationService
             }
         }
 
-        private async void Geolocation_LocationChanged(object sender, GeolocationLocationChangedEventArgs e)
+        private async void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            var city = await GetCity(e.Location.Latitude, e.Location.Longitude);
+            DeviceLocation = await GetLocationModel(e.Location.Latitude, e.Location.Longitude);
+        }
+
+        private async Task<Location> GetLocationModel(double latitude, double longitude, int locationId = ILocationManager.DeviceLocationId)
+        {
+            var city = await GetCity(latitude, longitude);
             Location location = new()
             {
-                Latitude = e.Location.Latitude.ToString(),
-                Longitude = e.Location.Longitude.ToString(),
+                Id = locationId,
+                Latitude = latitude.ToString(),
+                Longitude = longitude.ToString(),
                 City = city,
             };
 
-            DeviceLocation = location;
+            return location;
         }
     }
 }

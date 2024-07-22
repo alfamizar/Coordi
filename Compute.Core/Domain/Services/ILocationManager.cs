@@ -8,6 +8,8 @@ namespace Compute.Core.Domain.Services
 {
     public interface ILocationManager
     {
+        public const int DeviceLocationId = -1;
+
         public Location? DeviceLocation { get; }
 
         public Location? SelectedLocation { get; set; }
@@ -21,6 +23,8 @@ namespace Compute.Core.Domain.Services
         Task<List<Location>> GetSavedLocations();
 
         Task SaveLocation(Location location);
+
+        Task UpdateLocation(Location location);
 
         Task DeleteLocation(Location location);
 

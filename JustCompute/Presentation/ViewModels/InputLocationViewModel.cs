@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Domain.Entities.Models.Time;
 using Compute.Core.Navigation;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
+using JustCompute.Presentation.ViewModels.Messages;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -11,6 +14,8 @@ namespace JustCompute.Presentation.ViewModels
 {
     public partial class InputLocationViewModel : BaseViewModel, IQueryParameter
     {
+        private LocationInputContext? _locationInputContext;
+
         [ObservableProperty]
         private TimeZoneOffset selectedTimeZoneOffset;
 
@@ -26,7 +31,7 @@ namespace JustCompute.Presentation.ViewModels
 
         public InputLocationViewModel()
         {
-            Commands[nameof(SaveLocationCommand)] = new Command(OnSaveLocation, CanSaveLocation);
+            Commands[nameof(SaveLocationCommand)] = new Command(OnSaveButtonClicked, CanSaveLocation);
             Commands[nameof(PrefillCoordinatesCommand)] = new Command(OnPrefillCoordinates);
             Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
@@ -64,11 +69,25 @@ namespace JustCompute.Presentation.ViewModels
             return longitude >= -180 && longitude <= 180;
         }
 
-        private async void OnSaveLocation()
+        private async void OnSaveButtonClicked()
         {
-            if (Location != null)
-                await SaveLocationIfNotExists(Location);
+            if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
 
+            switch (_locationInputContext.Value)
+            {
+                case LocationInputContext.Add:
+                    {
+                        if (Location != null)
+                            await SaveLocationIfNotExists(Location);
+                        break;
+                    }
+                case LocationInputContext.Edit:
+                    {
+                        if (Location != null)
+                            await UpdateLocation(Location);
+                        break;
+                    }
+            }
             await GoBack();
         }
 
@@ -81,10 +100,18 @@ namespace JustCompute.Presentation.ViewModels
             }
         }
 
+        private async Task UpdateLocation(Location location)
+        {
+            await _locationManager.UpdateLocation(location);
+
+            WeakReferenceMessenger.Default.Send(new LocationMessage(location, LocationInputContext.Edit));
+        }
+
         private async Task GoBack()
         {
             // just to simulate app processing something^^
             await Task.Delay(500);
+            _locationInputContext = null;
             await _navigationService.NavigateBackAsync();
         }
 
@@ -113,13 +140,25 @@ namespace JustCompute.Presentation.ViewModels
 
         public void ApplyQueryParameter(object? parameter)
         {
-            if (parameter is Location location)
+            if (parameter is Dictionary<LocationInputContext, Location> locationAndContext)
             {
                 if (Location != null)
+                {
                     Location.PropertyChanged -= OnPropertyChanged;
-                Location = location;
-                Location.PropertyChanged += OnPropertyChanged;
+                }
+
+                var kvp = locationAndContext.FirstOrDefault();
+                _locationInputContext = kvp.Key;
+                Location = kvp.Value ?? Location;
+
+
+                if (Location != null)
+                {
+                    Location.PropertyChanged += OnPropertyChanged;
+                }
             }
+
+            if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
         }
 
         protected override Task LoadItems()

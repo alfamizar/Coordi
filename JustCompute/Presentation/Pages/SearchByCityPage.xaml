@@ -7,6 +7,7 @@
              xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
              Shell.TabBarIsVisible="False"
              x:DataType="ViewModels:SearchByCityViewModel"
              Title="{localization:Localize SearchCityLabel}">
@@ -19,7 +20,7 @@
         <Grid RowDefinitions="Auto, *"
               ColumnSpacing="8"
               RowSpacing="8"
-              Margin="4,0">
+              Padding="4,0">
             <Grid ColumnDefinitions="*,Auto"
                   Grid.Row="0">
                 <SearchBar x:Name="searchBar"
@@ -60,55 +61,10 @@
 
                     <DataTemplate x:DataType="models:Location">
 
-                        <Frame>
-
-                            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-                                  ColumnDefinitions="*,*"
-                                  ColumnSpacing="8"
-                                  RowSpacing="8">
-
-                                <Label Grid.Column="0"
-                                       Grid.Row="0"
-                                       Style="{StaticResource CollectionViewLabel}">
-                                    <Label.FormattedText>
-                                        <MultiBinding StringFormat="{}{0}, {1}">
-                                            <Binding Path="City.CityName"/>
-                                            <Binding Path="City.CountryName"/>
-                                        </MultiBinding>
-                                    </Label.FormattedText>
-                                </Label>
-
-                                <BoxView Grid.ColumnSpan="2"
-                                         Grid.Row="1"
-                                         Style="{StaticResource DividerStyle}"/>
-
-                                <Label Grid.Column="0"
-                                       Grid.Row="2"
-                                       Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}"/>
-
-                                <Label Grid.Column="1"
-                                       Grid.Row="2"
-                                       Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}"/>
-
-                                <BoxView Grid.ColumnSpan="2"
-                                         Grid.Row="3"
-                                         Style="{StaticResource DividerStyle}"/>
-
-                                <Label Grid.Column="0"
-                                       Grid.ColumnSpan="2"
-                                       Grid.Row="4"
-                                       Style="{StaticResource CollectionViewLabel}"
-                                       Text="{Binding City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}"/>
-
-                            </Grid>
-
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand]}"
-                                                      CommandParameter="{Binding .}"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
+                        <views:LocationItem Location="{Binding .}"
+                                            IsButtonsVisible="False"
+                                            ItemClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand]}">
+                        </views:LocationItem>
 
                     </DataTemplate>
 

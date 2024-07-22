@@ -1,4 +1,4 @@
-﻿using Compute.Core.Domain.Entities.Models.AstroSign;
+﻿using CoordinateSharp;
 using System.Collections.ObjectModel;
 
 namespace Compute.Core.Domain.Entities.Models.Moon
@@ -7,7 +7,7 @@ namespace Compute.Core.Domain.Entities.Models.Moon
     {
 
         public static readonly IReadOnlyList<string> NorthernHemisphere
-       = new ReadOnlyCollection<string>(new List<string> { "🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘", "🌑" });
+       = new ReadOnlyCollection<string>(["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘", "🌑"]);
 
         public static readonly IReadOnlyList<string> SouthernHemisphere
             = NorthernHemisphere.Reverse().ToList().AsReadOnly();
@@ -41,8 +41,8 @@ namespace Compute.Core.Domain.Entities.Models.Moon
             }
         }
 
-        private AstroZodiacSign _moonInZodiacSign;
-        public AstroZodiacSign MoonInZodiacSign
+        private AstrologicalSignType _moonInZodiacSign;
+        public AstrologicalSignType MoonInZodiacSign
         {
             get => _moonInZodiacSign;
             set

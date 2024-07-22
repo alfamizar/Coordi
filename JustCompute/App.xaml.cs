@@ -21,7 +21,7 @@ public partial class App : Application
         }
     }
 
-    protected override Window CreateWindow(IActivationState activationState)
+    protected override Window CreateWindow(IActivationState? activationState)
     {
         Window window = base.CreateWindow(activationState);
 
@@ -29,37 +29,43 @@ public partial class App : Application
         {
             // Custom logic
             _themeHandler.SetTheme();
-            ((AppShell)window.Page).OnAppWindowCreated();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowCreated();
         };
 
         window.Activated += (s, e) =>
         {
             // Custom logic
-            ((AppShell)window.Page).OnAppWindowActivated();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowActivated(); 
         };
 
         window.Resumed += (s, e) =>
         {
             // Custom logic
-            ((AppShell)window.Page).OnAppWindowResumed();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowResumed();
         };
 
         window.Backgrounding += (s, e) =>
         {
             // Custom logic
-            ((AppShell)window.Page).OnAppWindowBackgrounding();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowBackgrounding();
         };
 
         window.Stopped += (s, e) =>
         {
             // Custom logic
-            ((AppShell)window.Page).OnAppWindowStopped();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowStopped();
         };
 
         window.Destroying += (s, e) =>
         {
             // Custom logic
-            ((AppShell)window.Page).OnAppWindowDestroying();
+            var appShell = window.Page as AppShell;
+            appShell?.OnAppWindowDestroying();
         };
 
         return window;
@@ -68,9 +74,9 @@ public partial class App : Application
     private static void InstallDatabase()
     {
         var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
-        using Stream stream = assembly.GetManifestResourceStream(RepositoryConstants.PreinstalledDatabasePath);
+        using Stream? stream = assembly.GetManifestResourceStream(RepositoryConstants.PreinstalledDatabasePath);
         using MemoryStream memoryStream = new();
-        stream.CopyTo(memoryStream);
+        stream?.CopyTo(memoryStream);
 
         File.WriteAllBytes(RepositoryConstants.DatabasePath, memoryStream.ToArray());
     }

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Views.LocationItem"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             x:Name="this">
+
+    <Frame BindingContext="{x:Reference this}">
+
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+              ColumnDefinitions="*,*,Auto"
+              ColumnSpacing="8"
+              RowSpacing="8">
+
+            <Label Grid.Column="0"
+                   Grid.Row="0"
+                   Style="{StaticResource CollectionViewLabel}">
+                <Label.FormattedText>
+                    <MultiBinding StringFormat="{}{0}, {1}">
+                        <Binding Path="Location.City.CityName" />
+                        <Binding Path="Location.City.CountryName" />
+                    </MultiBinding>
+                </Label.FormattedText>
+            </Label>
+
+            <BoxView Grid.ColumnSpan="2"
+                     Grid.Row="1"
+                     Style="{StaticResource DividerStyle}" />
+
+            <Label Grid.Column="0"
+                   Grid.Row="2"
+                   Style="{StaticResource CollectionViewLabel}"
+                   Text="{Binding Location.Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
+
+            <Label Grid.Column="1"
+                   Grid.Row="2"
+                   Style="{StaticResource CollectionViewLabel}"
+                   Text="{Binding Location.Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
+
+            <BoxView Grid.ColumnSpan="2"
+                     Grid.Row="3"
+                     Style="{StaticResource DividerStyle}" />
+
+            <Label Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="4"
+                   Style="{StaticResource CollectionViewLabel}"
+                   Text="{Binding Location.City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}" />
+
+            <Grid RowDefinitions="*,*"
+                  Grid.Column="2"
+                  Grid.RowSpan="5"
+                  IsVisible="{Binding IsButtonsVisible}">
+
+                <ImageButton Grid.Row="0"
+                             Source="edit_icon_light.png"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Command="{Binding EditButtonClickedCommand}"
+                             CommandParameter="{Binding Location}"
+                             WidthRequest="32"
+                             HeightRequest="32"
+                             Padding="4"
+                             CornerRadius="8"/>
+                <ImageButton Grid.Row="1"
+                             Source="delete_icon_light.png"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Command="{Binding DeleteButtonClickedCommand}"
+                             CommandParameter="{Binding Location}"
+                             WidthRequest="32"
+                             HeightRequest="32"
+                             Padding="4"
+                             CornerRadius="8" />
+
+            </Grid>
+
+        </Grid>
+
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ItemClickedCommand}"
+                                  CommandParameter="{Binding Location}" />
+        </Frame.GestureRecognizers>
+    </Frame>
+
+</ContentView>

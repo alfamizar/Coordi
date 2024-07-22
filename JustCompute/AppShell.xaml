@@ -25,7 +25,7 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SetsAndRisesLabel}"
-                FlyoutIcon="{AppThemeBinding Light=stars_icon_dark.png, Dark=stars_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=twilight_icon_dark.png, Dark=twilight_icon_light.png}">
 
         <ShellContent Title="{localization:Localize SunLabel}"
                       Icon="sun_icon.png"
@@ -45,7 +45,7 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize EclipsesLabel}"
-                FlyoutIcon="{AppThemeBinding Light=hide_icon_dark.png, Dark=hide_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=eclipses_icon_dark.png, Dark=eclipses_icon_light.png}">
 
         <ShellContent Title="{localization:Localize SunEclipsesLabel}"
                       Icon="sun_icon.png"

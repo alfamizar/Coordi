@@ -6,11 +6,59 @@
              xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
              Shell.TabBarIsVisible="False"
              Title="{localization:Localize ManageSavedLocationsLabel}"
              x:DataType="ViewModels:SavedLocationsViewModel">
 
-    <Grid>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}" />
+    </Shell.BackButtonBehavior>
+
+    <Grid Padding="4">
+
+        <Label Text="{localization:Localize NoSavedLocationsLabel}"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Padding="8">
+            <Label.IsVisible>
+                <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                    <Binding Path="SavedLocations"
+                             Converter="{StaticResource IsListNullOrEmptyConverter}" />
+                    <Binding Path="IsBusy"
+                             Converter="{StaticResource InvertedBoolConverter}" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <CollectionView x:Name="savedLocationsCollectionView"
+                        ItemsSource="{Binding SavedLocations}"
+                        IsVisible="{Binding SavedLocations, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                 VerticalItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate x:DataType="models:Location">
+
+                    <views:LocationItem Location="{Binding .}"
+                                        EditButtonClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SavedLocationsViewModel}}, Path=Commands[EditLocationCommand]}"
+                                        DeleteButtonClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SavedLocationsViewModel}}, Path=Commands[DeleteLocationCommand]}">
+                    </views:LocationItem>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
 
     </Grid>
 

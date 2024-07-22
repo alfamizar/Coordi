@@ -5,12 +5,12 @@ namespace JustCompute.Presentation.Converters
 {
     public class ResultToProgressConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            string totalVal = values[0] as string;
-            string subResultlVal = values[1] as string;
+            string? totalVal = values[0] as string;
+            string? subResultlVal = values[1] as string;
 
-            if (totalVal.IsSet() && subResultlVal.IsSet())
+            if (totalVal?.IsSet() == true && subResultlVal?.IsSet() == true)
             {
                 return CalculateProgress(float.Parse(totalVal), float.Parse(subResultlVal));
             }

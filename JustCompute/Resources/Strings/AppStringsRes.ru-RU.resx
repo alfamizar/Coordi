@@ -159,9 +159,6 @@
   <data name="CannotGetCurrentLocationError" xml:space="preserve">
     <value>Не удается определить ваше текущее местоположение. Проверьте разрешения приложения и повторите попытку позже.</value>
   </data>
-  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
-    <value>Не удается получить текущее местоположение. Пожалуйста, попробуйте позднее</value>
-  </data>
   <data name="CannotGetLocationLabel" xml:space="preserve">
     <value>Не удается получить местоположение</value>
   </data>
@@ -364,7 +361,7 @@
     <value>Новолуние</value>
   </data>
   <data name="NoSavedLocationsLabel" xml:space="preserve">
-    <value>У вас еще нет сохраненных мест, нажмите кнопку «+», чтобы добавить</value>
+    <value>Не удаётся получить текущее местоположение. Пожалуйста, попробуйте позже или добавьте локацию самостоятельно либо выберите из списка локаций, доступных в базе данных</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ок</value>

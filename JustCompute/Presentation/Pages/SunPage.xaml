@@ -13,14 +13,14 @@
             -->
 
     <Grid Padding="4,0">
-        <!-- TODO: fix it, as Location is no longer in BaseVM -->
-        <Label Text="{localization:Localize CannotGetLocationLabel}"
+        <Label Text="{localization:Localize NoSavedLocationsLabel}"
                VerticalOptions="Center"
-               HorizontalOptions="Center">
+               HorizontalOptions="Center"
+               Padding="8">
             <Label.IsVisible>
                 <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                    <Binding Path="Location" 
-                             Converter="{StaticResource IsNullConverter}" />
+                    <Binding Path="GroupedSunCycles"
+                             Converter="{StaticResource IsListNullOrEmptyConverter}" />
                     <Binding Path="IsBusy"
                              Converter="{StaticResource InvertedBoolConverter}" />
                 </MultiBinding>
