@@ -1,5 +1,5 @@
-﻿using Compute.Core.Domain.Entities.Models.AstroSign;
-using Compute.Core.Extensions;
+﻿using Compute.Core.Extensions;
+using CoordinateSharp;
 using System.Collections.ObjectModel;
 
 namespace Compute.Core.Domain.Entities.Models
@@ -34,8 +34,8 @@ namespace Compute.Core.Domain.Entities.Models
             }
         }
 
-        private AstroZodiacSign _zodiacSign;
-        public AstroZodiacSign ZodiacSign
+        private AstrologicalSignType _zodiacSign;
+        public AstrologicalSignType ZodiacSign
         {
             get => _zodiacSign;
             set

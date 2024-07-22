@@ -19,7 +19,7 @@ namespace JustCompute.Presentation.ViewModels
     public partial class SearchByCityViewModel : BaseViewModel, IQueryParameter
     {
         private LocationInitialization? _locationInitializationContext;
-        private List<Sorting> _sortingCriteria;
+        private List<Sorting> _sortingCriteria = [];
         private readonly IPopupService _popupService;
         private static readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
@@ -70,11 +70,8 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (LocationsSearchResult == null) return;
 
-            var sortedLocations = await Task.Run(() => SortLocations(LocationsSearchResult.ToList()));
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                LocationsSearchResult = new ObservableCollection<Location>(sortedLocations);
-            });
+            var sortedLocations = await Task.Run(() => SortLocations([.. LocationsSearchResult]));
+            LocationsSearchResult = new ObservableCollection<Location>(sortedLocations ?? []);
         }
 
         private List<Location>? SortLocations(List<Location>? locations)
@@ -151,7 +148,7 @@ namespace JustCompute.Presentation.ViewModels
             var sortedLocations = await Task.Run(() => SortLocations(locations));
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                LocationsSearchResult = new ObservableCollection<Location>(sortedLocations);
+                LocationsSearchResult = new ObservableCollection<Location>(sortedLocations ?? []);
             });
         }
 
@@ -164,7 +161,9 @@ namespace JustCompute.Presentation.ViewModels
             }
             else
             {
-                _navigationService.NavigateToAsync<InputLocationViewModel>(selectedLocation);
+                Dictionary<LocationInputContext, Location> locationAndContext = [];
+                locationAndContext[LocationInputContext.Add] = selectedLocation;
+                _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
             }
         }
 

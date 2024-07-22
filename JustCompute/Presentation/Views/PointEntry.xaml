@@ -5,36 +5,34 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
-             x:DataType="models:Location"
              x:Name="this">
 
     <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
           RowDefinitions="Auto,Auto,Auto"
           ColumnSpacing="4"
-          VerticalOptions="Center">
+          VerticalOptions="Center"
+          BindingContext="{x:Reference this}">
         <Label Grid.Row="0"
                Grid.Column="1"
                Grid.ColumnSpan="3"
-               Text="{Binding PointTitle, Source={x:Reference this}}"
+               Text="{Binding PointTitle}"
                FontSize="Large"
                HorizontalOptions="Center"
-               IsVisible="{Binding IsPointLabelVisible, Source={x:Reference this}}" />
+               IsVisible="{Binding IsPointLabelVisible}" />
         <Label Grid.Row="1"
                Grid.Column="1"
                Grid.ColumnSpan="3"
                FontSize="Medium"
                HorizontalOptions="Center"
-               IsVisible="{Binding IsPointCityCountryLabelVisible, Source={x:Reference this}}">
+               IsVisible="{Binding IsPointCityCountryLabelVisible}">
             <Label.FormattedText>
                 <FormattedString>
                     <FormattedString.Spans>
                         <Span>
                             <Span.Text>
                                 <MultiBinding StringFormat="{}{0}, {1}">
-                                    <Binding Path="Location.City.CityName"
-                                             Source="{x:Reference this}" />
-                                    <Binding Path="Location.City.CountryName"
-                                             Source="{x:Reference this}" />
+                                    <Binding Path="Location.City.CityName" />
+                                    <Binding Path="Location.City.CountryName" />
                                 </MultiBinding>
                             </Span.Text>
                         </Span>
@@ -51,19 +49,18 @@
                VerticalOptions="Center"
                Placeholder="{localization:Localize LatitudeLabel}"
                HorizontalTextAlignment="Center"
-               Text="{Binding Location.Latitude, Mode=TwoWay, Source={x:Reference this}}"
+               Text="{Binding Location.Latitude, Mode=TwoWay}"
                Keyboard="Numeric">
             <Entry.Behaviors>
-                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand, Source={x:Reference this}}"
-                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold, Source={x:Reference this}}"
+                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
+                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold}"
                                                    ShouldDismissKeyboardAutomatically="False" />
             </Entry.Behaviors>
             <Entry.Triggers>
                 <DataTrigger TargetType="Entry"
                              Binding="{Binding Location.Latitude, 
                     Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, 
-                    ConverterParameter='latitude', 
-                    Source={x:Reference this}}"
+                    ConverterParameter='latitude'}"
                              Value="False">
                     <Setter Property="TextColor"
                             Value="Red" />
@@ -80,19 +77,18 @@
                VerticalOptions="Center"
                Placeholder="{localization:Localize LongitudeLabel}"
                HorizontalTextAlignment="Center"
-               Text="{Binding Location.Longitude, Mode=TwoWay, Source={x:Reference this}}"
+               Text="{Binding Location.Longitude, Mode=TwoWay}"
                Keyboard="Numeric">
             <Entry.Behaviors>
-                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand, Source={x:Reference this}}"
-                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold, Source={x:Reference this}}"
+                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
+                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold}"
                                                    ShouldDismissKeyboardAutomatically="False" />
             </Entry.Behaviors>
             <Entry.Triggers>
                 <DataTrigger TargetType="Entry"
                              Binding="{Binding Location.Longitude, 
                     Converter={StaticResource CoordinateRangeValidatorToBoolConverter},
-                    ConverterParameter='longitude', 
-                    Source={x:Reference this}}"
+                    ConverterParameter='longitude'}"
                              Value="False">
                     <Setter Property="TextColor"
                             Value="Red" />
@@ -107,11 +103,11 @@
                      CornerRadius="16"
                      Margin="8,0,8,0"
                      Background="Transparent"
-                     Source="{Binding ImageButtonIconSource, Source={x:Reference this}}"
+                     Source="{Binding ImageButtonIconSource}"
                      VerticalOptions="Center"
                      HorizontalOptions="End"
-                     IsVisible="{Binding IsImageButtonVisible, Source={x:Reference this}}"
-                     Command="{Binding ImageButtonClickedCommand, Source={x:Reference this}}" />
+                     IsVisible="{Binding IsImageButtonVisible}"
+                     Command="{Binding ImageButtonClickedCommand}" />
     </Grid>
 
 </ContentView>

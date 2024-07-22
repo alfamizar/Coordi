@@ -6,10 +6,10 @@ namespace JustCompute.Presentation.Converters
 {
     public class SortDirectionToImageConverter : IValueConverter
     {
-        public ImageSource AscendingImage { get; set; }
-        public ImageSource DescendingImage { get; set; }
+        public ImageSource? AscendingImage { get; set; }
+        public ImageSource? DescendingImage { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is not SelectableSortingCriterion sortingCriterion) return null;
             if (sortingCriterion.IsSelected)
@@ -18,6 +18,7 @@ namespace JustCompute.Presentation.Converters
                 {
                     SortDirection.Ascending => AscendingImage,
                     SortDirection.Descending => DescendingImage,
+                    _ => AscendingImage,
                 };
             }
             else
@@ -26,6 +27,6 @@ namespace JustCompute.Presentation.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
     }
 }

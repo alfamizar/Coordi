@@ -7,7 +7,6 @@ using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using AndroidX.Core.Graphics;
 using Android.OS;
 using Android.Graphics.Drawables;
-using Android.Content;
 using Paint = Android.Graphics.Paint;
 
 namespace JustCompute.Platforms.Android.UI.Handlers
@@ -25,7 +24,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
         {
             base.ConnectHandler(platformView);
 
-            _originalThumbDrawable = platformView?.ThumbDrawable;
+            _originalThumbDrawable = platformView.ThumbDrawable;
 
             if (VirtualView is CustomSwitch customSwitch)
             {
@@ -99,9 +98,12 @@ namespace JustCompute.Platforms.Android.UI.Handlers
                     Text = text,
                     TextSize = 40
                 };
-                Drawable[] drawabless = [_originalThumbDrawable, textDrawable];
-                LayerDrawable layerDrawable = new(drawabless);
-                PlatformView.ThumbDrawable = layerDrawable;
+                if (_originalThumbDrawable != null)
+                {
+                    Drawable[] drawabless = [_originalThumbDrawable, textDrawable];
+                    LayerDrawable layerDrawable = new(drawabless);
+                    PlatformView.ThumbDrawable = layerDrawable;
+                }
             }
         }
 
@@ -134,7 +136,7 @@ namespace JustCompute.Platforms.Android.UI.Handlers
                 _paint.Alpha = alpha;
             }
 
-            public override void SetColorFilter(ColorFilter colorFilter)
+            public override void SetColorFilter(ColorFilter? colorFilter)
             {
                 _paint.SetColorFilter(colorFilter);
             }

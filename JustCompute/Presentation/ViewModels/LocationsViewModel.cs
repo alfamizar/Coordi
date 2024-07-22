@@ -1,17 +1,18 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Common.Device;
 using Compute.Core.Helpers;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
+using JustCompute.Presentation.ViewModels.Messages;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class LocationsViewModel : BaseViewModel
+    public partial class LocationsViewModel : BaseViewModel, IRecipient<LocationMessage>
     {
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
@@ -22,9 +23,6 @@ namespace JustCompute.Presentation.ViewModels
 
         [ObservableProperty]
         private RangeEnabledObservableCollection<Location> locations = [];
-
-        [ObservableProperty]
-        private Location? carouselSelectedItem;
 
         [ObservableProperty]
         private Coordinate? coordinate;
@@ -43,7 +41,9 @@ namespace JustCompute.Presentation.ViewModels
             InitializeCommands();
 
             Locations.CollectionChanged += LocationsCollectionChanged;
-            _locationManager.DeviceLocationChanged += DeviceLocationChanged;          
+            _locationManager.DeviceLocationChanged += DeviceLocationChanged;
+
+            WeakReferenceMessenger.Default.Register(this);
         }
 
         private void InitializeCommands()
@@ -52,7 +52,6 @@ namespace JustCompute.Presentation.ViewModels
             Commands.Add("GoToSearchByCityCommand", new Command(OnGoSearchByCityLocation));
             Commands.Add("GoToSavedLocationsCommand", new Command(OnGoToSavedLocations));
             Commands.Add("SetSelectedLocationCommand", new Command<Location>(SetSelectedLocation));
-            Commands.Add("DeleteLocationCommand", new Command<Location>(async (location) => await OnDeleteLocation(location)));
             Commands.Add("RefreshCommand", new Command(InitViewModel));
         }
 
@@ -124,18 +123,21 @@ namespace JustCompute.Presentation.ViewModels
             }
         }
 
-        private async Task GetSavedLocations()
+        private async Task UpdateSavedLocations()
         {
             // Retrieve saved locations from the location manager
             var savedLocations = await _locationManager.GetSavedLocations();
 
-            // Filter out locations that are already in the Locations list
-            var newLocations = savedLocations
-                .Where(newLoc => !Locations.Any(existingLoc => existingLoc.Name == newLoc.Name))
-                .ToList();
+            lock (Locations)
+            {
+                // Filter out locations that are already in the Locations list
+                var newLocations = savedLocations
+                    .Where(newLoc => !Locations.Any(existingLoc => existingLoc.Id == newLoc.Id))
+                    .ToList();
 
-            // Insert the new locations that are not already present
-            Locations.InsertRange(newLocations);
+                // Insert the new locations that are not already present
+                Locations.InsertRange(newLocations);
+            }
         }
 
         protected async Task<bool> HandlePermissions()
@@ -186,40 +188,6 @@ namespace JustCompute.Presentation.ViewModels
             base.OnPageDisappearing();
         }
 
-        private async Task SaveLocationIfNotExists(Location location)
-        {
-            var savedLocations = await _locationManager.GetSavedLocations();
-
-            if (!savedLocations.Any(x => x.Name == location.Name))
-            {
-                await _locationManager.SaveLocation(location);
-            }
-        }
-
-        private async Task OnDeleteLocation(Location location)
-        {
-            if (location == _locationManager.DeviceLocation)
-            {
-                string text = _localizer.GetString("CannotDeleteCurrentLocationToastMessage");
-                ToastDuration duration = ToastDuration.Short;
-
-                var toast = Toast.Make(text, duration);
-
-                await toast.Show();
-
-                return;
-            }
-
-            await _locationManager.DeleteLocation(location);
-
-            Locations.Remove(location);
-            if (LocationsCount == 0)
-            {
-                _locationManager.SelectedLocation = null;
-                UpdateAtThisLocationInfo(null);
-            }
-        }
-
         private void SetSelectedLocation(Location? location)
         {
             if (location == null) return;
@@ -247,7 +215,9 @@ namespace JustCompute.Presentation.ViewModels
 
         private async void OnGoToAddLocation()
         {
-            await _navigationService.NavigateToAsync<InputLocationViewModel>();
+            Dictionary<LocationInputContext, Location?> locationAndContext = [];
+            locationAndContext[LocationInputContext.Add] = null;
+            await _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
         }
 
         private async void OnGoSearchByCityLocation()
@@ -263,7 +233,7 @@ namespace JustCompute.Presentation.ViewModels
         private async void InitViewModel()
         {
             await InitDeviceLocation();
-            await GetSavedLocations();
+            await UpdateSavedLocations();
             UpdateAtThisLocationInfo(_locationManager.SelectedLocation);
         }
 
@@ -271,6 +241,31 @@ namespace JustCompute.Presentation.ViewModels
         {
             _navigationService.QuitApp();
             return true;
+        }
+
+        void IRecipient<LocationMessage>.Receive(LocationMessage message)
+        {
+            switch (message.LocationInputContext)
+            {
+                case LocationInputContext.Edit:
+                    {
+                        var locationToUpdate = Locations.First(location => location.Id == message.Location.Id);
+                        var locationToUpdateIndex = Locations.IndexOf(locationToUpdate);
+                        Locations[locationToUpdateIndex] = message.Location;
+                        break;
+                    }
+                case LocationInputContext.Delete:
+                    {
+                        var locationToDelete = Locations.First(location => location.Id == message.Location.Id);
+                        var locationToDeleteIndex = Locations.IndexOf(locationToDelete);
+                        Locations.RemoveAt(locationToDeleteIndex);
+                        if (Locations.Count == 0)
+                        {
+                            _locationManager.SelectedLocation = null;
+                        }
+                        break;
+                    }
+            }
         }
     }
 }

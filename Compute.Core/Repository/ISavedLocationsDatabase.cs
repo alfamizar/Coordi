@@ -8,6 +8,8 @@
 
         Task<int> SaveItemAsync<T>(T item) where T : class, new();
 
+        Task<int> UpdateItemAsync<T>(T item) where T : class, new();
+
         Task<int> DeleteItemAsync<T>(T item) where T : class, new();
 
         Task<int> ExecuteAsync(string query);

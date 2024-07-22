@@ -43,6 +43,11 @@ namespace JustCompute.Persistance.Repository
             return Database.InsertAsync(item);
         }
 
+        public Task<int> UpdateItemAsync<T>(T item) where T : class, new()
+        {
+            return Database.UpdateAsync(item);
+        }
+
         public Task<int> DeleteItemAsync<T>(T item) where T : class, new()
         {
             return Database.DeleteAsync(item);

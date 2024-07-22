@@ -5,7 +5,7 @@ namespace JustCompute.Presentation.Converters
 {
     public class TimeFormatConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is DateTime dateTime)
             {
@@ -23,7 +23,7 @@ namespace JustCompute.Presentation.Converters
             return string.Empty;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

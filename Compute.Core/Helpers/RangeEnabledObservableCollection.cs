@@ -20,5 +20,13 @@ namespace Compute.Core.Helpers
                 Items.Add(item);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
+
+        public void RemoveRange(IEnumerable<T> items)
+        {
+            CheckReentrancy();
+            foreach (var item in items)
+                Items.Remove(item);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
     }
 }

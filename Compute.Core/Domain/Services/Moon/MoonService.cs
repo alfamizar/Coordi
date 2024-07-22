@@ -1,5 +1,4 @@
 ﻿using Compute.Core.Domain.Entities.Models;
-using Compute.Core.Domain.Entities.Models.AstroSign;
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Extensions;
 using CoordinateSharp;
@@ -38,7 +37,7 @@ namespace Compute.Core.Domain.Services.Moon
                         Distance = new Distance(coordinate.CelestialInfo.MoonDistance.Kilometers),
                         PhaseName = (MoonPhase)coordinate.CelestialInfo.MoonIllum.PhaseNameEnum,
                         ZodiacSign = AstroExtensions.CalculateZodiacSign(coordinate.GeoDate),
-                        MoonInZodiacSign = (AstroZodiacSign)coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
+                        MoonInZodiacSign = (AstrologicalSignType)coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
                         MoonName = (Entities.Models.Moon.MoonName)coordinate.CelestialInfo.AlmanacMoonName.EName
                     };
                     moonCycles.Add(celestialInfo);

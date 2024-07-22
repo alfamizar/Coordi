@@ -53,6 +53,7 @@
     <None Remove="Resources\Images\Dark\arrow_upward_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\convert_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\delete_icon_dark.svg" />
+    <None Remove="Resources\Images\Dark\eclipses_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\edit_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\hide_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\ruler_icon_dark.svg" />
@@ -62,11 +63,13 @@
     <None Remove="Resources\Images\celestial_icon.png" />
     <None Remove="Resources\Images\clock_icon.svg" />
     <None Remove="Resources\Images\Dark\stars_icon_dark.svg" />
+    <None Remove="Resources\Images\Dark\twilight_icon_dark.svg" />
     <None Remove="Resources\Images\Light\arrow_downward_icon_light.svg" />
     <None Remove="Resources\Images\Light\arrow_upward_icon_light.svg" />
     <None Remove="Resources\Images\Light\clock_icon_light.svg" />
     <None Remove="Resources\Images\Light\convert_icon_light.svg" />
     <None Remove="Resources\Images\Light\delete_icon_light.svg" />
+    <None Remove="Resources\Images\Light\eclipses_icon_light.svg" />
     <None Remove="Resources\Images\Light\edit_icon_light.svg" />
     <None Remove="Resources\Images\Light\hide_icon_light.svg" />
     <None Remove="Resources\Images\Light\my_location_icon_light.svg" />
@@ -74,6 +77,7 @@
     <None Remove="Resources\Images\Light\search_icon_light.svg" />
     <None Remove="Resources\Images\Light\settings_icon_light.svg" />
     <None Remove="Resources\Images\Light\sort_icon_light.svg" />
+    <None Remove="Resources\Images\Light\twilight_icon_light.svg" />
     <None Remove="Resources\Images\location_icon_black.svg" />
     <None Remove="Resources\Images\location_icon_white.svg" />
     <None Remove="Resources\Images\moon_icon.svg" />
@@ -114,6 +118,7 @@
     <MauiImage Include="Resources\Images\Dark\clock_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\convert_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\delete_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\eclipses_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\edit_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\hide_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\location_icon_dark.svg" />
@@ -122,12 +127,14 @@
     <MauiImage Include="Resources\Images\Dark\settings_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\sort_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\stars_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\twilight_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Light\add_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\arrow_downward_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\arrow_upward_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\clock_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\convert_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\delete_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\eclipses_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\edit_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\hide_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\location_icon_light.svg" />
@@ -137,6 +144,7 @@
     <MauiImage Include="Resources\Images\Light\sort_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\stars_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\my_location_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\twilight_icon_light.svg" />
   </ItemGroup>
   <ItemGroup>
     <MauiImage Update="Resources\Images\sun_icon.svg" BaseSize="30,30" />
@@ -186,6 +194,9 @@
     </Compile>
     <Compile Update="Presentation\Popups\Pages\SortOptionsPopup.xaml.cs">
       <DependentUpon>SortOptionsPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Presentation\Views\LocationItem.xaml.cs">
+      <DependentUpon>LocationItem.xaml</DependentUpon>
     </Compile>
     <Compile Update="Presentation\Views\PointEntry.xaml.cs">
       <DependentUpon>PointEntry.xaml</DependentUpon>
@@ -243,6 +254,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Popups\Pages\SortOptionsPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Presentation\Views\LocationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Presentation\Views\PointEntry.xaml">
