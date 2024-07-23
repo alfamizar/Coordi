@@ -50,7 +50,7 @@ namespace JustCompute.Services.LocationService
             remove => _eventManager.RemoveEventHandler(value);
         }
 
-        public async Task<Result<Location, FaultCode>> GetDeviceLocation()
+        public async Task<Result<Location, FaultCode>> GetDeviceGeoLocation()
         {
             try
             {
@@ -102,7 +102,7 @@ namespace JustCompute.Services.LocationService
                 _cancelTokenSource.Cancel();
         }
 
-        public async void OnStartListeningDeciveLocation()
+        public async void OnStartListeningDeciveGeoLocation()
         {
             try
             {

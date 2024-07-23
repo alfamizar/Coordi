@@ -129,7 +129,7 @@ namespace JustCompute.Presentation.ViewModels
             {
                 IsBusy = true;
 
-                await _locationManager.GetDeviceLocation();
+                await _locationManager.GetDeviceGeoLocation();
 
                 IsBusy = false;
             }

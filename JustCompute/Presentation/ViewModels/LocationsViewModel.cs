@@ -104,16 +104,15 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (IsBusy) return;
 
-            var permissionsAllowed = await HandlePermissions();
-            if (!permissionsAllowed || _locationManager.DeviceLocation != null)
-            {
-                return;
-            }
+            if (!await HandlePermissions()) return;
+
+            _locationManager.OnStartListeningDeciveGeoLocation();
+
+            if (_locationManager.DeviceLocation != null) return;
 
             IsBusy = true;
 
-            var locationResult = await _locationManager.GetDeviceLocation();
-            _locationManager.OnStartListeningDeciveLocation();
+            var locationResult = await _locationManager.GetDeviceGeoLocation();
 
             IsBusy = false;
 
@@ -175,7 +174,7 @@ namespace JustCompute.Presentation.ViewModels
         public override void OnAppWindowResumed()
         {
             // to cover case when returned from settings after changing permission status
-            InitViewModel();
+            OnPageAppearing();
         }
 
         public override void OnPageAppearing()
@@ -185,7 +184,7 @@ namespace JustCompute.Presentation.ViewModels
 
         public override void OnPageDisappearing()
         {
-            base.OnPageDisappearing();
+            _locationManager.OnStopListeningDeciveLocation();
         }
 
         private void SetSelectedLocation(Location? location)
