@@ -57,7 +57,11 @@ namespace JustCompute.Presentation.ViewModels
         private async Task GetSavedLocations()
         {
             var savedLocations = await _locationManager.GetSavedLocations();
-            savedLocations.ForEach(SavedLocations.Add);
+            var newLocations = savedLocations
+                    .Where(newLoc => !SavedLocations.Any(existingLoc => existingLoc.Id == newLoc.Id))
+                    .ToList();
+
+            newLocations.ForEach(SavedLocations.Add);
         }
 
         public override bool OnBackButtonPressed()

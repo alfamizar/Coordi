@@ -18,7 +18,7 @@ namespace Compute.Core.Domain.Services
 
         public TaskCompletionSource<bool>? GettingDeviceLocationFinished { get; }
 
-        Task<Result<Location, FaultCode>> GetDeviceLocation();
+        Task<Result<Location, FaultCode>> GetDeviceGeoLocation();
 
         Task<List<Location>> GetSavedLocations();
 
@@ -32,7 +32,7 @@ namespace Compute.Core.Domain.Services
 
         public event EventHandler<EventArgs> DeviceLocationChanged;
 
-        public void OnStartListeningDeciveLocation();
+        public void OnStartListeningDeciveGeoLocation();
 
         public void OnStopListeningDeciveLocation();
     }
