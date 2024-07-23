@@ -11,7 +11,7 @@
 
     <Grid>
 
-        <Label Text="{localization:Localize NoSavedLocationsLabel}"
+        <Label Text="{localization:Localize CannotGetCurrentLocationLabel}"
                VerticalOptions="Center"
                HorizontalOptions="Center">
             <Label.IsVisible>

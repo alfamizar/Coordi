@@ -165,8 +165,8 @@
   <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
     <value>¡No puedes eliminar la ubicación actual!</value>
   </data>
-  <data name="CannotGetCurrentLocationError" xml:space="preserve">
-    <value>No puedo obtener tu ubicación actual. Verifica los permisos de la aplicación y vuelve a intentarlo más tarde.</value>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>No se puede obtener la ubicación actual. Vuelva a intentarlo más tarde, agregue una ubicación manualmente o seleccione una de la lista de ubicaciones disponibles en la base de datos.</value>
   </data>
   <data name="CannotGetLocationLabel" xml:space="preserve">
     <value>No puedo obtener ninguna ubicación</value>
@@ -370,7 +370,7 @@
     <value>Luna nueva</value>
   </data>
   <data name="NoSavedLocationsLabel" xml:space="preserve">
-    <value>No se puede obtener la ubicación actual. Vuelva a intentarlo más tarde, agregue una ubicación manualmente o seleccione una de la lista de ubicaciones disponibles en la base de datos.</value>
+    <value>Actualmente no tiene ubicaciones guardadas. Por favor, agregue una ubicación manualmente o seleccione una de la lista de ubicaciones disponibles en la base de datos en la pantalla de búsqueda</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>

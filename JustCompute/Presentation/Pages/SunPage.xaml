@@ -13,7 +13,7 @@
             -->
 
     <Grid Padding="4,0">
-        <Label Text="{localization:Localize NoSavedLocationsLabel}"
+        <Label Text="{localization:Localize CannotGetCurrentLocationLabel}"
                VerticalOptions="Center"
                HorizontalOptions="Center"
                Padding="8">

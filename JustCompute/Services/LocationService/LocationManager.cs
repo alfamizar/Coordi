@@ -1,7 +1,7 @@
 ﻿using Compute.Core.Domain.Entities.Models;
 using JustCompute.Persistance.Repository.Models;
 using JustCompute.Persistance.Repository;
-using DeviceLocation = Microsoft.Maui.Devices.Sensors.Location;
+using DeviceGeoLocation = Microsoft.Maui.Devices.Sensors.Location;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Repository;
 using AutoMapper;
@@ -50,11 +50,6 @@ namespace JustCompute.Services.LocationService
             remove => _eventManager.RemoveEventHandler(value);
         }
 
-        private void OnDeviceLocationChanged()
-        {
-            _eventManager.HandleEvent(this, EventArgs.Empty, nameof(DeviceLocationChanged));
-        }
-
         public async Task<Result<Location, FaultCode>> GetDeviceLocation()
         {
             try
@@ -63,11 +58,11 @@ namespace JustCompute.Services.LocationService
 
                 IsGettingDeviceLocation = true;
 
-                GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(30));
 
                 _cancelTokenSource = new CancellationTokenSource();
 
-                DeviceLocation? deviceLocation = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token)
+                DeviceGeoLocation? deviceLocation = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token)
                     ?? throw new DeviceLocationUnavailableException("await Geolocation.Default.GetLocationAsync returned null");
 
                 DeviceLocation = await GetLocationModel(deviceLocation.Latitude, deviceLocation.Longitude);
@@ -105,6 +100,56 @@ namespace JustCompute.Services.LocationService
         {
             if (IsGettingDeviceLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false)
                 _cancelTokenSource.Cancel();
+        }
+
+        public async void OnStartListeningDeciveLocation()
+        {
+            try
+            {
+                Geolocation.LocationChanged += Geolocation_LocationChanged;
+                var request = new GeolocationListeningRequest((GeolocationAccuracy.Best));
+                var success = await Geolocation.StartListeningForegroundAsync(request);
+            }
+            catch (Exception ex)
+            {
+                // Unable to start listening for location changes
+            }
+        }
+
+        public void OnStopListeningDeciveLocation()
+        {
+            try
+            {
+                Geolocation.LocationChanged -= Geolocation_LocationChanged;
+                Geolocation.StopListeningForeground();
+            }
+            catch (Exception ex)
+            {
+                // Unable to stop listening for location changes
+            }
+        }
+
+        private void OnDeviceLocationChanged()
+        {
+            _eventManager.HandleEvent(this, EventArgs.Empty, nameof(DeviceLocationChanged));
+        }
+
+        private async void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
+        {
+            DeviceLocation = await GetLocationModel(e.Location.Latitude, e.Location.Longitude);
+        }
+
+        private async Task<Location> GetLocationModel(double latitude, double longitude, int locationId = ILocationManager.DeviceLocationId)
+        {
+            var city = await GetCity(latitude, longitude);
+            Location location = new()
+            {
+                Id = locationId,
+                Latitude = latitude.ToString(),
+                Longitude = longitude.ToString(),
+                City = city,
+            };
+            return location;
         }
 
         private async Task<City> GetCity(double latitude, double longitude)
@@ -168,52 +213,6 @@ namespace JustCompute.Services.LocationService
 
             var locations = await database.FilterByCity(searchParam);
             return _mapper.Map<List<Location>>(locations);
-        }
-
-        public async void OnStartListeningDeciveLocation()
-        {
-            try
-            {
-                Geolocation.LocationChanged += Geolocation_LocationChanged;
-                var request = new GeolocationListeningRequest((GeolocationAccuracy.Best));
-                var success = await Geolocation.StartListeningForegroundAsync(request);
-            }
-            catch (Exception ex)
-            {
-                // Unable to start listening for location changes
-            }
-        }
-
-        public void OnStopListeningDeciveLocation()
-        {
-            try
-            {
-                Geolocation.LocationChanged -= Geolocation_LocationChanged;
-                Geolocation.StopListeningForeground();
-            }
-            catch (Exception ex)
-            {
-                // Unable to stop listening for location changes
-            }
-        }
-
-        private async void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
-        {
-            DeviceLocation = await GetLocationModel(e.Location.Latitude, e.Location.Longitude);
-        }
-
-        private async Task<Location> GetLocationModel(double latitude, double longitude, int locationId = ILocationManager.DeviceLocationId)
-        {
-            var city = await GetCity(latitude, longitude);
-            Location location = new()
-            {
-                Id = locationId,
-                Latitude = latitude.ToString(),
-                Longitude = longitude.ToString(),
-                City = city,
-            };
-
-            return location;
         }
     }
 }

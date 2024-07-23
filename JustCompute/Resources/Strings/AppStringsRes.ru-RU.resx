@@ -156,8 +156,8 @@
   <data name="CancerLabel" xml:space="preserve">
     <value>Рак</value>
   </data>
-  <data name="CannotGetCurrentLocationError" xml:space="preserve">
-    <value>Не удается определить ваше текущее местоположение. Проверьте разрешения приложения и повторите попытку позже.</value>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>Не удаётся получить текущее местоположение. Пожалуйста, попробуйте позже или добавьте локацию самостоятельно либо выберите из списка локаций, доступных в базе данных</value>
   </data>
   <data name="CannotGetLocationLabel" xml:space="preserve">
     <value>Не удается получить местоположение</value>
@@ -361,7 +361,7 @@
     <value>Новолуние</value>
   </data>
   <data name="NoSavedLocationsLabel" xml:space="preserve">
-    <value>Не удаётся получить текущее местоположение. Пожалуйста, попробуйте позже или добавьте локацию самостоятельно либо выберите из списка локаций, доступных в базе данных</value>
+    <value>На данный момент у вас нет сохраннёных местоположений, добавьте локацию самостоятельно либо выберите из списка локаций, доступных в базе данных на экране поиска</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ок</value>

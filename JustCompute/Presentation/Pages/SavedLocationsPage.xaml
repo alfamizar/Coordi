@@ -24,8 +24,8 @@
                Padding="8">
             <Label.IsVisible>
                 <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                    <Binding Path="SavedLocations"
-                             Converter="{StaticResource IsListNullOrEmptyConverter}" />
+                    <Binding Path="LocationsCount"
+                             Converter="{StaticResource IsIntEqualZeroConverter}" />
                     <Binding Path="IsBusy"
                              Converter="{StaticResource InvertedBoolConverter}" />
                 </MultiBinding>
@@ -33,8 +33,7 @@
         </Label>
 
         <CollectionView x:Name="savedLocationsCollectionView"
-                        ItemsSource="{Binding SavedLocations}"
-                        IsVisible="{Binding SavedLocations, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+                        ItemsSource="{Binding SavedLocations}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                                  VerticalItemSpacing="4" />

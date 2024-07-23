@@ -187,11 +187,11 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can not get your&apos;s current location, please, check app permissions and try again later.
+        ///   Looks up a localized string similar to Unable to get the current location. Please try again later or add a location manually, or select one from the list of locations available in the database.
         /// </summary>
-        public static string CannotGetCurrentLocationError {
+        public static string CannotGetCurrentLocationLabel {
             get {
-                return ResourceManager.GetString("CannotGetCurrentLocationError", resourceCulture);
+                return ResourceManager.GetString("CannotGetCurrentLocationLabel", resourceCulture);
             }
         }
         
@@ -799,7 +799,7 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to get the current location. Please try again later or add a location manually, or select one from the list of locations available in the database.
+        ///   Looks up a localized string similar to You currently have no saved locations. Please add a location manually or select one from the list of locations available in the database on the search screen.
         /// </summary>
         public static string NoSavedLocationsLabel {
             get {
