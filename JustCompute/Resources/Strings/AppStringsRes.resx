@@ -156,8 +156,8 @@
   <data name="CancerLabel" xml:space="preserve">
     <value>Cancer</value>
   </data>
-  <data name="CannotGetCurrentLocationError" xml:space="preserve">
-    <value>Can not get your's current location, please, check app permissions and try again later</value>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>Unable to get the current location. Please try again later or add a location manually, or select one from the list of locations available in the database</value>
   </data>
   <data name="CannotGetLocationLabel" xml:space="preserve">
     <value>Cannot get any location</value>
@@ -361,7 +361,7 @@
     <value>New Moon</value>
   </data>
   <data name="NoSavedLocationsLabel" xml:space="preserve">
-    <value>Unable to get the current location. Please try again later or add a location manually, or select one from the list of locations available in the database</value>
+    <value>You currently have no saved locations. Please add a location manually or select one from the list of locations available in the database on the search screen</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>

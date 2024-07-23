@@ -13,26 +13,35 @@ namespace JustCompute.Presentation.ViewModels
         [ObservableProperty]
         private ObservableCollection<Location> savedLocations = [];
 
+        [ObservableProperty]
+        private int locationsCount;
+
         public SavedLocationsViewModel()
         {
             InitializeCommands();
+            SavedLocations.CollectionChanged += SavedLocations_CollectionChanged; ;
+        }
+
+        private void SavedLocations_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            LocationsCount = SavedLocations.Count;
         }
 
         private void InitializeCommands()
         {
-            Commands.Add("EditLocationCommand", new Command<Location>(OnEditLocationClicked));
-            Commands.Add("DeleteLocationCommand", new Command<Location>(async (location) => await OnDeleteLocationClicked(location)));
+            Commands.Add("EditLocationCommand", new Command<Location>(OnEditLocation));
+            Commands.Add("DeleteLocationCommand", new Command<Location>(async (location) => await OnDeleteLocation(location)));
             Commands.Add("GoBackCommand", new Command(() => OnBackButtonPressed()));
         }
 
-        private async Task OnDeleteLocationClicked(Location location)
+        private async Task OnDeleteLocation(Location location)
         {
             await _locationManager.DeleteLocation(location);
             SavedLocations.Remove(location);
             WeakReferenceMessenger.Default.Send(new LocationMessage(location, LocationInputContext.Delete));
         }
 
-        private void OnEditLocationClicked(Location location)
+        private void OnEditLocation(Location location)
         {
             Dictionary<LocationInputContext, Location> locationAndContext = [];
             locationAndContext[LocationInputContext.Edit] = location;
@@ -48,7 +57,7 @@ namespace JustCompute.Presentation.ViewModels
         private async Task GetSavedLocations()
         {
             var savedLocations = await _locationManager.GetSavedLocations();
-            SavedLocations = new ObservableCollection<Location>(savedLocations);
+            savedLocations.ForEach(SavedLocations.Add);
         }
 
         public override bool OnBackButtonPressed()

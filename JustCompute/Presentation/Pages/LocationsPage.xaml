@@ -262,7 +262,7 @@
             </Grid>
 
             <Label Grid.RowSpan="5"
-                   Text="{localization:Localize NoSavedLocationsLabel}"
+                   Text="{localization:Localize CannotGetCurrentLocationLabel}"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
                    Margin="8">

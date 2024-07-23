@@ -40,8 +40,8 @@ namespace JustCompute.Presentation.ViewModels
 
             InitializeCommands();
 
-            Locations.CollectionChanged += LocationsCollectionChanged;
-            _locationManager.DeviceLocationChanged += DeviceLocationChanged;
+            Locations.CollectionChanged += Locations_CollectionChanged;
+            _locationManager.DeviceLocationChanged += Device_LocationChanged;
 
             WeakReferenceMessenger.Default.Register(this);
         }
@@ -55,7 +55,7 @@ namespace JustCompute.Presentation.ViewModels
             Commands.Add("RefreshCommand", new Command(InitViewModel));
         }
 
-        private void DeviceLocationChanged(object? sender, EventArgs e)
+        private void Device_LocationChanged(object? sender, EventArgs e)
         {
             var deviceLocation = _locationManager.DeviceLocation;
             if (deviceLocation != null)
@@ -95,7 +95,7 @@ namespace JustCompute.Presentation.ViewModels
             StartTimer(offsetHours);
         }
 
-        private void LocationsCollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Locations_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             LocationsCount = Locations.Count;
         }

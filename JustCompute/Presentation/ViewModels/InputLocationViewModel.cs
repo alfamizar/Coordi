@@ -31,7 +31,7 @@ namespace JustCompute.Presentation.ViewModels
 
         public InputLocationViewModel()
         {
-            Commands[nameof(SaveLocationCommand)] = new Command(OnSaveButtonClicked, CanSaveLocation);
+            Commands[nameof(SaveLocationCommand)] = new Command(OnSaveLocation, CanSaveLocation);
             Commands[nameof(PrefillCoordinatesCommand)] = new Command(OnPrefillCoordinates);
             Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
@@ -69,7 +69,7 @@ namespace JustCompute.Presentation.ViewModels
             return longitude >= -180 && longitude <= 180;
         }
 
-        private async void OnSaveButtonClicked()
+        private async void OnSaveLocation()
         {
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
 
