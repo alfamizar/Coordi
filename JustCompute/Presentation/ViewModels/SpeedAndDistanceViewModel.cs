@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Compute.Core.UI;
 using Compute.Core.Utils;
 using CoordinateSharp;
@@ -42,7 +43,7 @@ namespace JustCompute.Presentation.ViewModels
             _toastService = toastService;
             _localizer = localizer;
             _distanceCalculator = new();
-            Commands.Add("ActionCommand", new Command(OnAction));
+            Commands.Add("ActionCommand", new AsyncRelayCommand(OnAction));
         }
 
         private void StartTimer()
@@ -64,13 +65,26 @@ namespace JustCompute.Presentation.ViewModels
             _timer = null;
         }
 
-        private void OnAction()
+        private async Task OnAction()
         {
             HapticFeedback.Default.Perform(HapticFeedbackType.Click);
-            if (!_isListeningLocation) return;
+
+            StopListeningLocation();
+            var hasStartedListeningLocation = await StartListeningLocation();
+            if (hasStartedListeningLocation)
+            {
+                _isListeningLocation = true;
+            }
+            else
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
+                IsRunning = false;
+                StopTimer();
+                return;
+            }
 
             IsRunning = !IsRunning;
-            if (IsRunning) 
+            if (IsRunning)
             {
                 ResetState();
                 StartTimer();
@@ -133,14 +147,14 @@ namespace JustCompute.Presentation.ViewModels
         {
             DeviceDisplay.Current.KeepScreenOn = true;
 
-            var result = await _gpsLocationService
-                    .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (result.IsSuccessful)
+            var hasStartedListeningLocation = await StartListeningLocation();
+            if (hasStartedListeningLocation)
             {
                 _isListeningLocation = true;
             }
             else
             {
+                OnAction();
                 await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
             }
         }
@@ -149,9 +163,8 @@ namespace JustCompute.Presentation.ViewModels
         {
             DeviceDisplay.Current.KeepScreenOn = false;
 
-            var result = _gpsLocationService
-                    .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (result.IsSuccessful)
+            var hasStoppedListeningLocation = StopListeningLocation();
+            if (hasStoppedListeningLocation)
             {
                 _isListeningLocation = false;
             }
@@ -159,6 +172,22 @@ namespace JustCompute.Presentation.ViewModels
             {
                 _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
             }
+        }
+
+        private async Task<bool> StartListeningLocation()
+        {
+            var result = await _gpsLocationService
+                    .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
+            if (result.IsSuccessful) return true;
+            else return false;
+        }
+
+        private bool StopListeningLocation()
+        {
+            var result = _gpsLocationService
+                    .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
+            if (result.IsSuccessful) return true;
+            else return false;
         }
     }
 }

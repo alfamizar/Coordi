@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Common.Device;
 using Compute.Core.Common.Messaging;
 using Compute.Core.Helpers;
+using Compute.Core.UI;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
 using JustCompute.Presentation.ViewModels.Common;
@@ -18,6 +19,7 @@ namespace JustCompute.Presentation.ViewModels
     {
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
+        private readonly IToastService _toastService;
         private Timer? _timer;
 
         [ObservableProperty]
@@ -35,11 +37,13 @@ namespace JustCompute.Presentation.ViewModels
         public LocationsViewModel(
             IStringLocalizer<AppStringsRes> localizer,
             IDevicePermissionsService<PermissionStatus> devicePermissionsService,
-            IMessagingService messagerService
+            IMessagingService messagerService,
+            IToastService toastService
             )
         {
             _localizer = localizer;
             _devicePermissionsService = devicePermissionsService;
+            _toastService = toastService;
 
             InitializeCommands();
 
@@ -111,8 +115,12 @@ namespace JustCompute.Presentation.ViewModels
 
             if (!await HandlePermissions()) return;
 
-            await _gpsLocationService
+            var result = await _gpsLocationService
                 .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
+            if (!result.IsSuccessful)
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
+            }
 
             if (_gpsLocationService.DeviceLocation != null) return;
 
@@ -190,8 +198,12 @@ namespace JustCompute.Presentation.ViewModels
 
         public override void OnPageDisappearing()
         {
-            _gpsLocationService
+            var result = _gpsLocationService
                 .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
+            if (!result.IsSuccessful)
+            {
+                _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
+            }
         }
 
         private void SetSelectedLocation(Location? location)
