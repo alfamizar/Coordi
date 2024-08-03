@@ -279,6 +279,9 @@
   <data name="LocationLabel" xml:space="preserve">
     <value>Ubicación:</value>
   </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>Ingrese el nombre de la ubicación única</value>
+  </data>
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Nombre del lugar</value>
   </data>
@@ -548,5 +551,53 @@
   </data>
   <data name="WolfMoonLabel" xml:space="preserve">
     <value>Wolf Moon</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>No se puede empezar a escuchar la ubicación</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>No puedo dejar de escuchar la ubicación</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>La ubicación con ese nombre ya existe</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>Precisión</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>Altitud</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>Distancia en línea recta</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>Trepar</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} grados</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} m/s</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>Distanciómetro</value>
+  </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Velocidad y distancia</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Velocidad</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>Distancia viajada</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>Precisión vertical</value>
   </data>
 </root>

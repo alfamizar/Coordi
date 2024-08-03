@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Presentation.Pages"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Presentation.Pages.SpeedAndDistancelPage"
+             xmlns:localization="clr-namespace:JustCompute.Presentation.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Presentation.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.TabBarIsVisible="False"
+             xmlns:views="clr-namespace:JustCompute.Presentation.Views"
+             x:DataType="ViewModels:SpeedAndDistanceViewModel">
+
+    <Grid RowDefinitions="*, Auto"
+          Padding="8">
+
+        <ScrollView Grid.Row="0"
+                    VerticalScrollBarVisibility="Never">
+            <FlexLayout Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Stretch"
+                        AlignContent="Stretch"
+                        JustifyContent="Center">
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize SpeedLabel}"
+                                       ItemValue="{Binding Speed, StringFormat={localization:Localize FormattedSpeedLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize DirectionLabel}"
+                                       ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize AccuracyLabel}"
+                                       ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize VertialAccuracyLabel}"
+                                       ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize AltitudeLabel}"
+                                       ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize ElevationLabel}"
+                                       ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize TravelledDistanceLabel}"
+                                       ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem ItemTitle="{localization:Localize DirectDistanceLabel}"
+                                       ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+            </FlexLayout>
+        </ScrollView>
+
+        <Grid ColumnDefinitions="Auto,Auto,*"
+              ColumnSpacing="8"
+              Grid.Row="1">
+
+            <ImageButton Grid.Column="0"
+                         Command="{Binding Commands[ActionCommand]}"
+                         WidthRequest="50"
+                         HeightRequest="50"
+                         CornerRadius="32"
+                         Background="Transparent"
+                         VerticalOptions="Center"
+                         Margin="4">
+                <ImageButton.Source>
+                    <Binding Path="IsRunning">
+                        <Binding.Converter>
+                            <toolkit:BoolToObjectConverter TrueObject="stop_circle_icon_light.png"
+                                                           FalseObject="play_circle_icon_light.png" />
+                        </Binding.Converter>
+                    </Binding>
+                </ImageButton.Source>
+            </ImageButton>
+
+            <Label Grid.Column="1"
+                   VerticalOptions="Center"
+                   Margin="8"
+                   FontSize="28">
+                <Label.Text>
+                    <Binding Path="IsRunning">
+                        <Binding.Converter>
+                            <toolkit:BoolToObjectConverter TrueObject="Stop"
+                                                           FalseObject="Start" />
+                        </Binding.Converter>
+                    </Binding>
+                </Label.Text>
+            </Label>
+
+
+            <HorizontalStackLayout Grid.Column="2"
+                                   HorizontalOptions="End">
+
+                <Image Source="timer_icon_light"
+                       VerticalOptions="Center"
+                       WidthRequest="50"
+                       HeightRequest="50"/>
+
+                <Label VerticalOptions="Center"
+                       Margin="4"
+                       FontSize="26"
+                       Text="{Binding ElapsedTime, StringFormat='{0:HH:mm:ss}'}" />
+                
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+    </Grid>
+
+</v1:BasePage>

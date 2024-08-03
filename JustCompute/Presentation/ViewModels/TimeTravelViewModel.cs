@@ -24,12 +24,12 @@ namespace JustCompute.Presentation.ViewModels
 
         private async void InitDate()
         {
-            if (_locationManager.GettingDeviceLocationFinished?.Task != null && !_locationManager.GettingDeviceLocationFinished.Task.IsCompleted)
+            if (_gpsLocationService.GettingDeviceLocationFinished?.Task != null && !_gpsLocationService.GettingDeviceLocationFinished.Task.IsCompleted)
             {
-                await _locationManager.GettingDeviceLocationFinished.Task.ConfigureAwait(false);
+                await _gpsLocationService.GettingDeviceLocationFinished.Task.ConfigureAwait(false);
             }
 
-            var location = _locationManager.SelectedLocation;
+            var location = _gpsLocationService.SelectedLocation;
             if (location == null)
             {
                 IsBusy = false;

@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
+using Compute.Core.Common.Messaging;
 using Compute.Core.Domain.Entities.Models.Time;
 using Compute.Core.Navigation;
+using Compute.Core.UI;
 using JustCompute.Presentation.ViewModels.Base;
 using JustCompute.Presentation.ViewModels.Common;
 using JustCompute.Presentation.ViewModels.Messages;
+using JustCompute.Resources.Strings;
+using Microsoft.Extensions.Localization;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -14,6 +17,9 @@ namespace JustCompute.Presentation.ViewModels
 {
     public partial class InputLocationViewModel : BaseViewModel, IQueryParameter
     {
+        private readonly IStringLocalizer<AppStringsRes> _localizer;
+        private readonly IToastService _toastService;
+        private readonly IMessagingService _messagingService;
         private LocationInputContext? _locationInputContext;
 
         [ObservableProperty]
@@ -23,21 +29,30 @@ namespace JustCompute.Presentation.ViewModels
         private ObservableCollection<TimeZoneOffset> timeZoneOffsets;
 
         [ObservableProperty]
-        private Location? location;
+        private Location location = new();
 
         public ICommand SaveLocationCommand => Commands[nameof(SaveLocationCommand)];
         public ICommand PrefillCoordinatesCommand => Commands[nameof(GoBackCommand)];
         public ICommand GoBackCommand => Commands[nameof(GoBackCommand)];
 
-        public InputLocationViewModel()
+        public InputLocationViewModel(
+            IToastService toastService,
+            IMessagingService messagingService,
+            IStringLocalizer<AppStringsRes> localizer
+            )
         {
+            _toastService = toastService;
+            _messagingService = messagingService;
+            _localizer = localizer;
+
             Commands[nameof(SaveLocationCommand)] = new Command(OnSaveLocation, CanSaveLocation);
             Commands[nameof(PrefillCoordinatesCommand)] = new Command(OnPrefillCoordinates);
             Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
+
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
             selectedTimeZoneOffset = TimeZoneOffset.DefaultTimeZoneOffset;
+
             PropertyChanged += OnPropertyChanged;
-            Location = new();
             Location.PropertyChanged += OnPropertyChanged;
         }
 
@@ -88,54 +103,44 @@ namespace JustCompute.Presentation.ViewModels
                         break;
                     }
             }
-            await GoBack();
         }
 
         private async Task SaveLocationIfNotExists(Location location)
         {
-            var savedLocations = await _locationManager.GetSavedLocations();
+            var savedLocations = await _locationService.GetSavedLocations();
             if (!savedLocations.Any(x => x.Name == location.Name))
             {
-                await _locationManager.SaveLocation(location);
+                await _locationService.SaveLocation(location);
+                OnBackButtonPressed();
+            }
+            else
+            {
+                await _toastService.ShowToast(_localizer.GetString("DuplicatedLocationToastMessge"));
             }
         }
 
         private async Task UpdateLocation(Location location)
         {
-            await _locationManager.UpdateLocation(location);
+            await _locationService.UpdateLocation(location);
 
-            WeakReferenceMessenger.Default.Send(new LocationMessage(location, LocationInputContext.Edit));
-        }
+            _messagingService.Send(new LocationMessage(location, LocationInputContext.Edit));
 
-        private async Task GoBack()
-        {
-            // just to simulate app processing something^^
-            await Task.Delay(500);
-            _locationInputContext = null;
-            await _navigationService.NavigateBackAsync();
-        }
-
-        public override bool OnBackButtonPressed()
-        {
-            _navigationService.NavigateBackAsync();
-            return true;
+            OnBackButtonPressed();
         }
 
         public async void OnPrefillCoordinates()
         {
             if (Location == null || IsBusy) return;
 
-            if (_locationManager.DeviceLocation is null)
+            if (_gpsLocationService.DeviceLocation is null)
             {
                 IsBusy = true;
-
-                await _locationManager.GetDeviceGeoLocation();
-
+                await _gpsLocationService.GetDeviceGeoLocation();
                 IsBusy = false;
             }
 
-            Location.Latitude = _locationManager.DeviceLocation?.LatitudeDouble.ToString() ?? string.Empty;
-            Location.Longitude = _locationManager.DeviceLocation?.LongitudeDouble.ToString() ?? string.Empty;
+            Location.Latitude = _gpsLocationService.DeviceLocation?.LatitudeDouble.ToString() ?? Location.Latitude;
+            Location.Longitude = _gpsLocationService.DeviceLocation?.LongitudeDouble.ToString() ?? Location.Latitude;
         }
 
         public void ApplyQueryParameter(object? parameter)
@@ -149,8 +154,11 @@ namespace JustCompute.Presentation.ViewModels
 
                 var kvp = locationAndContext.FirstOrDefault();
                 _locationInputContext = kvp.Key;
-                Location = kvp.Value ?? Location;
 
+                if (kvp.Value != null)
+                {
+                    Location = kvp.Value;
+                }
 
                 if (Location != null)
                 {
@@ -159,11 +167,18 @@ namespace JustCompute.Presentation.ViewModels
             }
 
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
+
+            if (_locationInputContext.Value == LocationInputContext.Add && Location != null)
+            {
+                Location.Name = string.Empty;
+            }
         }
 
-        protected override Task LoadItems()
+        public override bool OnBackButtonPressed()
         {
-            return Task.CompletedTask;
+            _locationInputContext = null;
+            _navigationService.NavigateBackAsync();
+            return true;
         }
     }
 }

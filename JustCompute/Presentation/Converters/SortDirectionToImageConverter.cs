@@ -11,20 +11,17 @@ namespace JustCompute.Presentation.Converters
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is not SelectableSortingCriterion sortingCriterion) return null;
-            if (sortingCriterion.IsSelected)
-            {
-                return sortingCriterion.SortingCriterion.Direction switch
-                {
-                    SortDirection.Ascending => AscendingImage,
-                    SortDirection.Descending => DescendingImage,
-                    _ => AscendingImage,
-                };
-            }
-            else
+            if (value is not SelectableSortingCriterion sortingCriterion || !sortingCriterion.IsSelected)
             {
                 return null;
             }
+
+            return sortingCriterion.SortingCriterion.Direction switch
+            {
+                SortDirection.Ascending => AscendingImage,
+                SortDirection.Descending => DescendingImage,
+                _ => AscendingImage,
+            };
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

@@ -5,15 +5,15 @@ using SQLite;
 
 namespace JustCompute.Persistance.Repository
 {
-    public class SavedLocationsDatabase : ISavedLocationsDatabase
+    public class SavedLocationsRepository : ILocationsRepository
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         static SQLiteAsyncConnection Database;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-        public static readonly AsyncLazy<SavedLocationsDatabase> Instance = new(async () =>
+        public static readonly AsyncLazy<SavedLocationsRepository> Instance = new(async () =>
         {
-            var instance = new SavedLocationsDatabase();
+            var instance = new SavedLocationsRepository();
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             await Database.ExecuteAsync(RepositoryConstants.CreateCitiesTableStatement);
@@ -23,7 +23,7 @@ namespace JustCompute.Persistance.Repository
             return instance;
         });
 
-        private SavedLocationsDatabase()
+        private SavedLocationsRepository()
         {
             Database = new SQLiteAsyncConnection(RepositoryConstants.DatabasePath, RepositoryConstants.Flags);
         }

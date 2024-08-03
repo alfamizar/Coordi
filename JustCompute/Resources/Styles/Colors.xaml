@@ -124,5 +124,4 @@
     <Color x:Key="LightProgressBarHistoryColor">#FFFFFF</Color>
     <Color x:Key="LightSelectedSortCriterionColor">#03DAC6</Color>
 
-
 </ResourceDictionary>

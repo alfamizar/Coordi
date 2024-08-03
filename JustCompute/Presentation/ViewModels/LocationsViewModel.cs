@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Common.Device;
+using Compute.Core.Common.Messaging;
 using Compute.Core.Helpers;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
@@ -8,6 +9,7 @@ using JustCompute.Presentation.ViewModels.Common;
 using JustCompute.Presentation.ViewModels.Messages;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
+using System.Collections.Specialized;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Presentation.ViewModels
@@ -32,7 +34,8 @@ namespace JustCompute.Presentation.ViewModels
 
         public LocationsViewModel(
             IStringLocalizer<AppStringsRes> localizer,
-            IDevicePermissionsService<PermissionStatus> devicePermissionsService
+            IDevicePermissionsService<PermissionStatus> devicePermissionsService,
+            IMessagingService messagerService
             )
         {
             _localizer = localizer;
@@ -41,9 +44,7 @@ namespace JustCompute.Presentation.ViewModels
             InitializeCommands();
 
             Locations.CollectionChanged += Locations_CollectionChanged;
-            _locationManager.DeviceLocationChanged += Device_LocationChanged;
-
-            WeakReferenceMessenger.Default.Register(this);
+            messagerService.Subscribe<IRecipient<LocationMessage>, LocationMessage>(this);
         }
 
         private void InitializeCommands()
@@ -55,11 +56,15 @@ namespace JustCompute.Presentation.ViewModels
             Commands.Add("RefreshCommand", new Command(InitViewModel));
         }
 
-        private void Device_LocationChanged(object? sender, EventArgs e)
+        private async void OnDeviceLocationChangedCallback(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            var deviceLocation = _locationManager.DeviceLocation;
+            var deviceLocation =
+                await _locationService.GetLocationFromCoordinates(e.Location.Latitude, e.Location.Longitude);
+
             if (deviceLocation != null)
             {
+                _gpsLocationService.DeviceLocation = deviceLocation;
+
                 if (Locations.Count > 0)
                 {
                     Locations[0] = deviceLocation;
@@ -95,7 +100,7 @@ namespace JustCompute.Presentation.ViewModels
             StartTimer(offsetHours);
         }
 
-        private void Locations_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void Locations_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             LocationsCount = Locations.Count;
         }
@@ -106,13 +111,14 @@ namespace JustCompute.Presentation.ViewModels
 
             if (!await HandlePermissions()) return;
 
-            _locationManager.OnStartListeningDeciveGeoLocation();
+            await _gpsLocationService
+                .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
 
-            if (_locationManager.DeviceLocation != null) return;
+            if (_gpsLocationService.DeviceLocation != null) return;
 
             IsBusy = true;
 
-            var locationResult = await _locationManager.GetDeviceGeoLocation();
+            var locationResult = await _gpsLocationService.GetDeviceGeoLocation();
 
             IsBusy = false;
 
@@ -125,7 +131,7 @@ namespace JustCompute.Presentation.ViewModels
         private async Task UpdateSavedLocations()
         {
             // Retrieve saved locations from the location manager
-            var savedLocations = await _locationManager.GetSavedLocations();
+            var savedLocations = await _locationService.GetSavedLocations();
 
             lock (Locations)
             {
@@ -174,24 +180,25 @@ namespace JustCompute.Presentation.ViewModels
         public override void OnAppWindowResumed()
         {
             // to cover case when returned from settings after changing permission status
-            OnPageAppearing();
+            OnNavigatedTo();
         }
 
-        public override void OnPageAppearing()
+        public override void OnNavigatedTo()
         {
             InitViewModel();
         }
 
         public override void OnPageDisappearing()
         {
-            _locationManager.OnStopListeningDeciveLocation();
+            _gpsLocationService
+                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
         }
 
         private void SetSelectedLocation(Location? location)
         {
             if (location == null) return;
 
-            _locationManager.SelectedLocation = location;
+            _gpsLocationService.SelectedLocation = location;
             UpdateAtThisLocationInfo(location);
         }
 
@@ -221,7 +228,8 @@ namespace JustCompute.Presentation.ViewModels
 
         private async void OnGoSearchByCityLocation()
         {
-            await _navigationService.NavigateToAsync<SearchByCityViewModel>();
+            var searchLocationContext = SearchLocationContext.GoAhead;
+            await _navigationService.NavigateToAsync<SearchByCityViewModel>(searchLocationContext);
         }
 
         private async void OnGoToSavedLocations()
@@ -233,7 +241,7 @@ namespace JustCompute.Presentation.ViewModels
         {
             await InitDeviceLocation();
             await UpdateSavedLocations();
-            UpdateAtThisLocationInfo(_locationManager.SelectedLocation);
+            UpdateAtThisLocationInfo(_gpsLocationService.SelectedLocation);
         }
 
         public override bool OnBackButtonPressed()
@@ -260,7 +268,7 @@ namespace JustCompute.Presentation.ViewModels
                         Locations.RemoveAt(locationToDeleteIndex);
                         if (Locations.Count == 0)
                         {
-                            _locationManager.SelectedLocation = null;
+                            _gpsLocationService.SelectedLocation = null;
                         }
                         break;
                     }

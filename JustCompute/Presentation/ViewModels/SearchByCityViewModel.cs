@@ -12,19 +12,18 @@ using JustCompute.Resources.Strings;
 using JustCompute.Services;
 using Compute.Core.Navigation;
 using JustCompute.Presentation.ViewModels.Common;
-using System.Collections.ObjectModel;
 
 namespace JustCompute.Presentation.ViewModels
 {
     public partial class SearchByCityViewModel : BaseViewModel, IQueryParameter
     {
-        private LocationInitialization? _locationInitializationContext;
+        private SearchLocationContext? _searchLocationContext;
         private List<Sorting> _sortingCriteria = [];
         private readonly IPopupService _popupService;
         private static readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         [ObservableProperty]
-        private ObservableCollection<Location>? _locationsSearchResult;
+        private List<Location> _locationsSearchResult = [];
 
         [ObservableProperty]
         private string? _searchTerm;
@@ -62,22 +61,17 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (e.PropertyName == nameof(SelectedSortCriterion))
             {
-                await SortLocationsInBackground();
+                LocationsSearchResult = await SortLocationsInBackground(LocationsSearchResult);
             }
         }
 
-        private async Task SortLocationsInBackground()
+        private async Task<List<Location>> SortLocationsInBackground(List<Location> locations)
         {
-            if (LocationsSearchResult == null) return;
-
-            var sortedLocations = await Task.Run(() => SortLocations([.. LocationsSearchResult]));
-            LocationsSearchResult = new ObservableCollection<Location>(sortedLocations ?? []);
+            return await Task.Run(() => SortLocations(locations));
         }
 
-        private List<Location>? SortLocations(List<Location>? locations)
+        private List<Location> SortLocations(List<Location> locations)
         {
-            if (locations == null) return null;
-
             Func<Location, IComparable> keySelector = SelectedSortCriterion.Criterion switch
             {
                 SortCriterion.City => location => location.City.CityName,
@@ -112,16 +106,16 @@ namespace JustCompute.Presentation.ViewModels
 
         public override async void OnPageAppearing()
         {
-            base.OnPageAppearing();
-            if (!string.IsNullOrEmpty(SearchTerm))
-            {
-                LocationsSearchResult = null;
-                SearchTerm = string.Empty;
-            }
-            else
+            if (LocationsSearchResult.Count == 0)
             {
                 await OnPerformSearchLocation(string.Empty);
-            }
+            };
+        }
+
+        public override void OnPageDisappearing()
+        {
+            SearchTerm = string.Empty;
+            base.OnPageDisappearing();
         }
 
         private async Task OnPerformSearchLocation(string? searchTerm)
@@ -132,8 +126,8 @@ namespace JustCompute.Presentation.ViewModels
             {
                 IsBusy = true;
                 var searchQuery = searchTerm?.RemoveAccents() ?? string.Empty;
-                var unsortedLocations = await _locationManager.GetLocationsByCity(searchQuery);
-                await SortLocationsInBackground(unsortedLocations);
+                var unsortedLocations = await _locationService.SearchLocations(searchQuery);
+                LocationsSearchResult = await SortLocationsInBackground(unsortedLocations ?? []);
             }
             finally
             {
@@ -141,23 +135,12 @@ namespace JustCompute.Presentation.ViewModels
             }
         }
 
-        private async Task SortLocationsInBackground(List<Location>? locations)
-        {
-            if (locations == null) return;
-
-            var sortedLocations = await Task.Run(() => SortLocations(locations));
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                LocationsSearchResult = new ObservableCollection<Location>(sortedLocations ?? []);
-            });
-        }
-
         private void OnLocationSelected(Location selectedLocation)
         {
-            if (_locationInitializationContext.HasValue)
+            if (_searchLocationContext == SearchLocationContext.ReturnResult)
             {
                 _navigationService.NavigateBackAsync(selectedLocation);
-                _locationInitializationContext = null;
+                _searchLocationContext = null;
             }
             else
             {
@@ -169,16 +152,16 @@ namespace JustCompute.Presentation.ViewModels
 
         public override bool OnBackButtonPressed()
         {
-            _locationInitializationContext = null;
+            _searchLocationContext = null;
             _navigationService.NavigateBackAsync();
             return true;
         }
 
         public void ApplyQueryParameter(object? parameter)
         {
-            if (parameter is LocationInitialization initializationContext)
+            if (parameter is SearchLocationContext searchLocationContext)
             {
-                _locationInitializationContext = initializationContext;
+                _searchLocationContext = searchLocationContext;
             }
         }
     }

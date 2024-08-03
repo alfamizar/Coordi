@@ -2,11 +2,12 @@
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Domain.Services.Moon;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
 using static Compute.Core.Helpers.GroupingHelper;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class MoonViewModel : BaseViewModel
+    public partial class MoonViewModel : BaseViewModel, ICompute
     {
         private readonly IMoonService _moonService;
 

@@ -7,7 +7,8 @@
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
              x:Name="this">
 
-    <Frame BindingContext="{x:Reference this}">
+    <Frame BindingContext="{x:Reference this}"
+           BorderColor="Transparent">
 
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
               ColumnDefinitions="*,*,Auto"
@@ -24,6 +25,12 @@
                     </MultiBinding>
                 </Label.FormattedText>
             </Label>
+
+            <Label Grid.Column="1"
+                   Grid.Row="0"
+                   IsVisible="{Binding IsLocationNameVisible}"
+                   Style="{StaticResource CollectionViewLabel}"
+                   Text="{Binding Location.Name}" />
 
             <BoxView Grid.ColumnSpan="2"
                      Grid.Row="1"

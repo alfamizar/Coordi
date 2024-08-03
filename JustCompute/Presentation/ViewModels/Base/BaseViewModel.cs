@@ -4,6 +4,7 @@ using JustCompute.Services;
 using Compute.Core.Navigation;
 using Compute.Core.UI;
 using Compute.Core.Domain.Services;
+using JustCompute.Presentation.ViewModels.Common;
 
 
 namespace JustCompute.Presentation.ViewModels.Base
@@ -11,7 +12,8 @@ namespace JustCompute.Presentation.ViewModels.Base
     public abstract partial class BaseViewModel : ObservableObject
     {
         protected readonly IDialogService _dialogService;
-        protected readonly ILocationManager _locationManager;
+        protected readonly IGPSLocationService _gpsLocationService;
+        protected readonly ILocationService _locationService;
         protected readonly INavigationService _navigationService;
 
         public static readonly int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(DateTime.UtcNow.Year) ? 366 : 365;
@@ -28,19 +30,20 @@ namespace JustCompute.Presentation.ViewModels.Base
         {
             Commands = [];
             _dialogService = ServicesProvider.GetService<IDialogService>();
-            _locationManager = ServicesProvider.GetService<ILocationManager>();
+            _gpsLocationService = ServicesProvider.GetService<IGPSLocationService>();
+            _locationService = ServicesProvider.GetService<ILocationService>();
             _navigationService = ServicesProvider.GetService<INavigationService>();
         }
 
         protected virtual async Task LoadItems()
         {
             IsBusy = true;
-            if (_locationManager.IsGettingDeviceLocation && _locationManager.GettingDeviceLocationFinished is not null)
+            if (_gpsLocationService.IsGettingDeviceLocation && _gpsLocationService.GettingDeviceLocationFinished is not null)
             {
-                await _locationManager.GettingDeviceLocationFinished.Task;
+                await _gpsLocationService.GettingDeviceLocationFinished.Task;
             }
 
-            var location = _locationManager.SelectedLocation;
+            var location = _gpsLocationService.SelectedLocation;
 
             if (location == null)
             {
@@ -70,7 +73,7 @@ namespace JustCompute.Presentation.ViewModels.Base
 
         public virtual bool OnBackButtonPressed()
         {
-            _navigationService.NavigateToTheDefaultScreen();
+            _navigationService.NavigateToDefaultShellItem();
             return true;
         }
 
@@ -86,7 +89,10 @@ namespace JustCompute.Presentation.ViewModels.Base
 
         public virtual async void OnNavigatedTo()
         {
-            await LoadItems();
+            if (this is ICompute)
+            {
+                await LoadItems();
+            }
         }
 
         public virtual void OnAppWindowCreated()

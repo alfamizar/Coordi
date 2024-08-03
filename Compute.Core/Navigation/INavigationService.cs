@@ -4,7 +4,7 @@
     {
         Task NavigateToAsync<TViewModel>(object? parameter = null);
         Task NavigateBackAsync(object? result = null);
-        void NavigateToTheDefaultScreen();
+        void NavigateToDefaultShellItem();
         void QuitApp();
     }
 }

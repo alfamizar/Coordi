@@ -17,8 +17,9 @@ public static class PagesExtensions
         builder.Services.AddTransient<InputLocationPage>();
         builder.Services.AddSingleton<TimeTravelPage>();
         builder.Services.AddSingleton<SearchByCityPage>();
-        builder.Services.AddSingleton<SavedLocationsPage>();
+        builder.Services.AddTransient<SavedLocationsPage>();
         builder.Services.AddSingleton<DistancePage>();
+        builder.Services.AddSingleton<SpeedAndDistancelPage>();
 
         return builder;
     }

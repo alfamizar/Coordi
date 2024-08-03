@@ -12,9 +12,9 @@
 #elif ANDROID
 			IPlatformApplication.Current.Services;
 #elif IOS || MACCATALYST
-			MauiUIApplicationDelegate.Current.Services;
+            IPlatformApplication.Current.Services;
 #else
 			null;
 #endif
-	}
+    }
 }

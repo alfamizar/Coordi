@@ -2,11 +2,12 @@
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Services.Sun;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
 using static Compute.Core.Helpers.GroupingHelper;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class SunViewModel : BaseViewModel
+    public partial class SunViewModel : BaseViewModel, ICompute
     {
         private readonly ISunService _sunService;
 

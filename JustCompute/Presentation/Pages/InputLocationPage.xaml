@@ -32,7 +32,7 @@
 
                     <Label Text="{localization:Localize LocationNameLabel}" />
                     <Entry x:Name="LocationNameEntry"
-                           Placeholder="{localization:Localize LocationNameLabel}"
+                           Placeholder="{localization:Localize LocationNameInputPlaceholderLabel}"
                            Text="{Binding Location.Name, Mode=TwoWay}">
                     </Entry>
 

@@ -207,9 +207,6 @@
   <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Расстояние: {0:0.##} {1}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
-    <value>Расстояние</value>
-  </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Единица расстояния</value>
   </data>
@@ -269,6 +266,9 @@
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Расположение:</value>
+  </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>Введите уникальное название местоположения</value>
   </data>
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Название местоположения</value>
@@ -349,7 +349,7 @@
     <value>Восход луны: {0}</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Закат Луны: {0}</value>
+    <value>Закат луны: {0}</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>НМИ</value>
@@ -548,5 +548,53 @@
   </data>
   <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
     <value>Вы не можите удалить текущее местоположение!</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>Не удалось начать отслеживание местоположения</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>Не удалось прекратить отслеживание местоположения</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>Местоположение с таким названием уже существует</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>Точность</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>Высота</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>Расстояние по прямой</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>Направление</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>Подъем</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} градусов</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} м</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} м/с</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>Рулетка</value>
+  </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Скорость и расстояние</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>Пройденный путь</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>Вертикальная точность</value>
   </data>
 </root>

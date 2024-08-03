@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
+using Compute.Core.Common.Messaging;
 using JustCompute.Presentation.ViewModels.Base;
 using JustCompute.Presentation.ViewModels.Common;
 using JustCompute.Presentation.ViewModels.Messages;
@@ -10,14 +10,17 @@ namespace JustCompute.Presentation.ViewModels
 {
     public partial class SavedLocationsViewModel : BaseViewModel
     {
+        private readonly IMessagingService _messagingService;
+
         [ObservableProperty]
         private ObservableCollection<Location> savedLocations = [];
 
         [ObservableProperty]
         private int locationsCount;
 
-        public SavedLocationsViewModel()
+        public SavedLocationsViewModel(IMessagingService messagingService)
         {
+            _messagingService = messagingService;
             InitializeCommands();
             SavedLocations.CollectionChanged += SavedLocations_CollectionChanged; ;
         }
@@ -36,9 +39,9 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task OnDeleteLocation(Location location)
         {
-            await _locationManager.DeleteLocation(location);
+            await _locationService.DeleteLocation(location);
             SavedLocations.Remove(location);
-            WeakReferenceMessenger.Default.Send(new LocationMessage(location, LocationInputContext.Delete));
+            _messagingService.Send(new LocationMessage(location, LocationInputContext.Delete));
         }
 
         private void OnEditLocation(Location location)
@@ -56,7 +59,7 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task GetSavedLocations()
         {
-            var savedLocations = await _locationManager.GetSavedLocations();
+            var savedLocations = await _locationService.GetSavedLocations();
             var newLocations = savedLocations
                     .Where(newLoc => !SavedLocations.Any(existingLoc => existingLoc.Id == newLoc.Id))
                     .ToList();

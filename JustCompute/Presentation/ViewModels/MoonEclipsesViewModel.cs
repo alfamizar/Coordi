@@ -1,14 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Core.Domain.Services.Moon;
-using Compute.Core.Helpers;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
 using static Compute.Core.Helpers.GroupingHelper;
-using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class MoonEclipsesViewModel : BaseViewModel
+    public partial class MoonEclipsesViewModel : BaseViewModel, ICompute
     {
         private readonly IMoonService _moonService;
 

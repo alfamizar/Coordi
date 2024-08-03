@@ -9,6 +9,7 @@
              xmlns:views="clr-namespace:JustCompute.Presentation.Views"
              Shell.TabBarIsVisible="False"
              HideSoftInputOnTapped="True"
+             Shell.PresentationMode="Animated"
              x:DataType="ViewModels:DistanceViewModel">
 
     <ScrollView>
@@ -49,16 +50,17 @@
                 </views:PointEntry.IsPointCityCountryLabelVisible>
             </views:PointEntry>
 
-            <Border Grid.Row="2"
-                    MinimumHeightRequest="64"
-                    VerticalOptions="Center">
+            <Frame Grid.Row="2"
+                   BorderColor="Transparent"
+                   MinimumHeightRequest="64"                  
+                   VerticalOptions="Center">
 
                 <Label Text="{Binding Distance.Kilometers, Converter={StaticResource KilometersToTargetDistanceTypeConverter}, FallbackValue='0'}"
-                       FontSize="Large"
+                       FontSize="Title"
                        VerticalOptions="Center"
                        HorizontalOptions="Center"/>
 
-            </Border>
+            </Frame>
 
         </Grid>
 

@@ -12,16 +12,10 @@ namespace JustCompute.Presentation.Converters
         {
             if (value is bool valueBool)
             {
-                return valueBool switch
-                {
-                    true => TrueObject,
-                    false => FalseObject
-                };
+                return valueBool ? TrueObject : FalseObject;
             }
-            else
-            {
-                throw new ArgumentException($"Expected boolean value for {value?.ToString()}", nameof(value));
-            }
+
+            throw new ArgumentException($"Expected boolean value but received {value?.GetType().Name ?? "null"}", nameof(value));
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

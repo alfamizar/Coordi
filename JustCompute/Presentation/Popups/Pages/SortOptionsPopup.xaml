@@ -10,8 +10,18 @@
                CanBeDismissedByTappingOutsideOfPopup="True"
                Color="Transparent">
 
-    <Frame CornerRadius="25" WidthRequest="200">
+    <Border Stroke="Transparent"
+            StrokeShape="RoundRectangle 25" 
+            WidthRequest="200">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Offset="0.5,0.5"
+                    Radius="5"
+                    Opacity="0.5" />
+        </Border.Shadow>
+        
         <VerticalStackLayout>
+            
             <Label Text="{localization:Localize SortByLabel}"
                    FontSize="Medium"
                    HorizontalOptions="Center"
@@ -23,7 +33,9 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:SelectableSortingCriterion">
+                        
                         <Grid Padding="8" ColumnDefinitions="Auto, *">
+                            
                             <Label Grid.Column="0"
                                    HorizontalOptions="Start"
                                    VerticalOptions="Center"
@@ -39,19 +51,24 @@
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
+                            
                             <Image Grid.Column="1" 
                                    HorizontalOptions="End"
                                    VerticalOptions="Center"
                                    Source="{Binding ., Converter={StaticResource SortDirectionToImageConverter}}"/>
+                            
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnItemTapped"
                                                       CommandParameter="{Binding .}" />
                             </Grid.GestureRecognizers>
                         </Grid>
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            
         </VerticalStackLayout>
-    </Frame>
+        
+    </Border>
 
 </toolkit:Popup>

@@ -207,8 +207,8 @@
   <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Distance: {0:0.##} {1}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
-    <value>Distance</value>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Speed and Distance</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Distance Unit</value>
@@ -269,6 +269,9 @@
   </data>
   <data name="LocationLabel" xml:space="preserve">
     <value>Location:</value>
+  </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>Enter unique location name</value>
   </data>
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Location Name</value>
@@ -548,5 +551,50 @@
   </data>
   <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
     <value>You cannot delete current location!</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>Cannot start listening location</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>Location with such name already exists</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Cannot stop listening location</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>Direct distance</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>Elevation</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} degrees</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} m/s</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>Ruler</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>Travelled distance</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>Vertical accuracy</value>
   </data>
 </root>

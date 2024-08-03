@@ -15,6 +15,15 @@ namespace JustCompute.Presentation.Views
             set => SetValue(IsButtonsVisibleProperty, value);
         }
 
+        public static readonly BindableProperty IsLocationNameVisibleProperty = BindableProperty.Create(
+            nameof(IsLocationNameVisible), typeof(bool), typeof(LocationItem), true);
+
+        public bool IsLocationNameVisible
+        {
+            get => (bool)GetValue(IsLocationNameVisibleProperty);
+            set => SetValue(IsLocationNameVisibleProperty, value);
+        }
+
         public static readonly BindableProperty ItemClickedCommandProperty = BindableProperty.Create(
             nameof(ItemClickedCommand), typeof(ICommand), typeof(LocationItem));
 

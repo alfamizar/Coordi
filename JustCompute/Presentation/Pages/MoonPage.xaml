@@ -52,9 +52,9 @@
 
                 <DataTemplate x:DataType="models:MoonCycle">
 
-                    <Frame>
+                    <Frame BorderColor="Transparent">
 
-                            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                                   ColumnDefinitions="*,*"
                                   ColumnSpacing="8"
                                   RowSpacing="8">

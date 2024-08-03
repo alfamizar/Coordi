@@ -51,7 +51,7 @@
 
                 <DataTemplate x:DataType="models:SolarEclipseDetails">
 
-                    <Frame>
+                    <Frame BorderColor="Transparent">
 
                         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                               ColumnDefinitions="*,*"

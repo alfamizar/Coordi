@@ -61,6 +61,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accuracy.
+        /// </summary>
+        public static string AccuracyLabel {
+            get {
+                return ResourceManager.GetString("AccuracyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add custom location.
         /// </summary>
         public static string AddCustomLocationLabel {
@@ -75,6 +84,15 @@ namespace JustCompute.Resources.Strings {
         public static string AddLocationLabel {
             get {
                 return ResourceManager.GetString("AddLocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        public static string AltitudeLabel {
+            get {
+                return ResourceManager.GetString("AltitudeLabel", resourceCulture);
             }
         }
         
@@ -205,6 +223,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot start listening location.
+        /// </summary>
+        public static string CannotStartListeningLocationToastMessage {
+            get {
+                return ResourceManager.GetString("CannotStartListeningLocationToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Capricorn.
         /// </summary>
         public static string CapricornLabel {
@@ -331,20 +358,29 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direct distance.
+        /// </summary>
+        public static string DirectDistanceLabel {
+            get {
+                return ResourceManager.GetString("DirectDistanceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string DirectionLabel {
+            get {
+                return ResourceManager.GetString("DirectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distance: {0:0.##} {1}.
         /// </summary>
         public static string DistanceFormattedLabel {
             get {
                 return ResourceManager.GetString("DistanceFormattedLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Distance.
-        /// </summary>
-        public static string DistanceLabel {
-            get {
-                return ResourceManager.GetString("DistanceLabel", resourceCulture);
             }
         }
         
@@ -358,11 +394,29 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location with such name already exists.
+        /// </summary>
+        public static string DuplicatedLocationToastMessge {
+            get {
+                return ResourceManager.GetString("DuplicatedLocationToastMessge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eclipses.
         /// </summary>
         public static string EclipsesLabel {
             get {
                 return ResourceManager.GetString("EclipsesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elevation.
+        /// </summary>
+        public static string ElevationLabel {
+            get {
+                return ResourceManager.GetString("ElevationLabel", resourceCulture);
             }
         }
         
@@ -390,6 +444,33 @@ namespace JustCompute.Resources.Strings {
         public static string FirstQuarterLabel {
             get {
                 return ResourceManager.GetString("FirstQuarterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} degrees.
+        /// </summary>
+        public static string FormattedDegreesLabel {
+            get {
+                return ResourceManager.GetString("FormattedDegreesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} m.
+        /// </summary>
+        public static string FormattedDistanceLabel {
+            get {
+                return ResourceManager.GetString("FormattedDistanceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} m/s.
+        /// </summary>
+        public static string FormattedSpeedLabel {
+            get {
+                return ResourceManager.GetString("FormattedSpeedLabel", resourceCulture);
             }
         }
         
@@ -525,6 +606,15 @@ namespace JustCompute.Resources.Strings {
         public static string LocationLabel {
             get {
                 return ResourceManager.GetString("LocationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter unique location name.
+        /// </summary>
+        public static string LocationNameInputPlaceholderLabel {
+            get {
+                return ResourceManager.GetString("LocationNameInputPlaceholderLabel", resourceCulture);
             }
         }
         
@@ -970,6 +1060,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ruler.
+        /// </summary>
+        public static string RulerLabel {
+            get {
+                return ResourceManager.GetString("RulerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sagittarius.
         /// </summary>
         public static string SagittariusLabel {
@@ -1060,11 +1159,38 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Speed and Distance.
+        /// </summary>
+        public static string SpeedAndDistanceLabel {
+            get {
+                return ResourceManager.GetString("SpeedAndDistanceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        public static string SpeedLabel {
+            get {
+                return ResourceManager.GetString("SpeedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Strawberry Moon.
         /// </summary>
         public static string StrawberryMoonLabel {
             get {
                 return ResourceManager.GetString("StrawberryMoonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot stop listening location.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
@@ -1186,6 +1312,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Travelled distance.
+        /// </summary>
+        public static string TravelledDistanceLabel {
+            get {
+                return ResourceManager.GetString("TravelledDistanceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {}{0}, {1}.
         /// </summary>
         public static string TwoValuesSeparatedByComa {
@@ -1281,6 +1416,15 @@ namespace JustCompute.Resources.Strings {
         public static string UTMTypeLabel {
             get {
                 return ResourceManager.GetString("UTMTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical accuracy.
+        /// </summary>
+        public static string VertialAccuracyLabel {
+            get {
+                return ResourceManager.GetString("VertialAccuracyLabel", resourceCulture);
             }
         }
         

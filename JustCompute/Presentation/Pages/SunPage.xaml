@@ -53,7 +53,7 @@
 
                 <DataTemplate x:DataType="models:BaseCelestialBodyCycle">
 
-                    <Frame>
+                    <Frame BorderColor="Transparent">
 
                         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
                               ColumnDefinitions="*,*"

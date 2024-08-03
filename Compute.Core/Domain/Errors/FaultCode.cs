@@ -7,6 +7,10 @@
         FeatureNotEnabled,
         PermissionException,
         GenericGetLocationException,
-        DeviceLocationUnavailable
+        DeviceLocationUnavailable,
+
+        // Location listening
+        CouldNotStartListeningDeciveGeoLocation,
+        CouldNotStopListeningDeciveGeoLocation
     }
 }

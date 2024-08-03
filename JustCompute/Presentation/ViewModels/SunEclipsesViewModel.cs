@@ -2,11 +2,12 @@
 using Compute.Core.Domain.Services.Sun;
 using CoordinateSharp;
 using JustCompute.Presentation.ViewModels.Base;
+using JustCompute.Presentation.ViewModels.Common;
 using static Compute.Core.Helpers.GroupingHelper;
 
 namespace JustCompute.Presentation.ViewModels
 {
-    public partial class SunEclipsesViewModel : BaseViewModel
+    public partial class SunEclipsesViewModel : BaseViewModel, ICompute
     {
         private readonly ISunService _sunService;
 

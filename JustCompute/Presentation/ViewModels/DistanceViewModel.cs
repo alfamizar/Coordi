@@ -90,7 +90,8 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task NavigateToSearchViewModel()
         {
-            await _navigationService.NavigateToAsync<SearchByCityViewModel>(currentInitialization);
+            var searchLocationContext = SearchLocationContext.ReturnResult;
+            await _navigationService.NavigateToAsync<SearchByCityViewModel>(searchLocationContext);
         }
 
         public void ApplyResult(object? result)
@@ -111,9 +112,6 @@ namespace JustCompute.Presentation.ViewModels
             currentInitialization = null;
         }
 
-        public override void OnNavigatedTo()
-        {
-            InitDistance();
-        }
+        public override void OnNavigatedTo() => InitDistance();
     }
 }

@@ -10,7 +10,6 @@ namespace JustCompute.Navigation
 
         public NavigationService()
         {
-            Register<LocationsViewModel, LocationsPage>();
             Register<InputLocationViewModel, InputLocationPage>();
             Register<SavedLocationsViewModel, SavedLocationsPage>();
             Register<SearchByCityViewModel, SearchByCityPage>();
@@ -27,11 +26,16 @@ namespace JustCompute.Navigation
             if (_viewModelToViewMapping.TryGetValue(typeof(TViewModel), out var viewType))
             {
                 await Shell.Current.GoToAsync(viewType.Name);
-                var targetPage = Shell.Current.CurrentPage;
-                var viewmodel = targetPage.BindingContext;
+
+                var viewmodel = Shell.Current.CurrentPage.BindingContext;
+
                 if (parameter != null && viewmodel is IQueryParameter parameterReceiver)
                 {
                     parameterReceiver.ApplyQueryParameter(parameter);
+                }
+                else if (parameter == null && viewmodel is IQueryParameter)
+                {
+                    throw new Exception($"Parameter must be specified when navigate to {typeof(TViewModel)}.");
                 }
             }
         }
@@ -46,11 +50,11 @@ namespace JustCompute.Navigation
             }
         }
 
-        public void QuitApp() => Application.Current?.Quit();
-
-        public void NavigateToTheDefaultScreen()
+        public void NavigateToDefaultShellItem()
         {
             Shell.Current.CurrentItem = Shell.Current.Items.First();
         }
+
+        public void QuitApp() => Application.Current?.Quit();
     }
 }

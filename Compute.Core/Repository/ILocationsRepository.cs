@@ -1,6 +1,6 @@
 ﻿namespace Compute.Core.Repository
 {
-    public interface ISavedLocationsDatabase
+    public interface ILocationsRepository
     {
         Task<IEnumerable<T>> GetItemsAsync<T>() where T : class, new();
 

@@ -1,6 +1,6 @@
 ﻿namespace Compute.Core.Repository
 {
-    public interface IWorldCitiesDatabase<T>
+    public interface IWorldCitiesRepository<T>
     {
         Task<T> GetTheNearestCityAsync(double lat, double lng);
 

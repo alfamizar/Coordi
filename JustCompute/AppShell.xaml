@@ -57,11 +57,20 @@
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize DistanceLabel}"
+                Title="{localization:Localize RulerLabel}"
                 FlyoutIcon="{AppThemeBinding Light=ruler_icon_dark.png, Dark=ruler_icon_light.png}">
 
-        <ShellContent Title="{localization:Localize DistanceLabel}"
+        <ShellContent Title="{localization:Localize RulerLabel}"
                       ContentTemplate="{DataTemplate pages:DistancePage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SpeedAndDistanceLabel}"
+                FlyoutIcon="{AppThemeBinding Light=speed_icon_dark.png, Dark=speed_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize SpeedAndDistanceLabel}"
+                      ContentTemplate="{DataTemplate pages:SpeedAndDistancelPage}" />
 
     </FlyoutItem>
 
