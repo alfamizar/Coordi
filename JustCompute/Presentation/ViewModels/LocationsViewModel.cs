@@ -5,6 +5,7 @@ using Compute.Core.Common.Messaging;
 using Compute.Core.Helpers;
 using Compute.Core.UI;
 using CoordinateSharp;
+using DotNext;
 using JustCompute.Presentation.ViewModels.Base;
 using JustCompute.Presentation.ViewModels.Common;
 using JustCompute.Presentation.ViewModels.Messages;
@@ -20,6 +21,7 @@ namespace JustCompute.Presentation.ViewModels
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
+
         private Timer? _timer;
 
         [ObservableProperty]
@@ -80,6 +82,11 @@ namespace JustCompute.Presentation.ViewModels
             }
         }
 
+        private async void OnListeningDeviceLocationFailedCallback(object? sender, GeolocationListeningFailedEventArgs e)
+        {
+            await _toastService.ShowToast(_localizer.GetString("ListeningLocationFailedToastMessage"));
+        }
+
         private void StartTimer(int offsetHours = 0)
         {
             _timer?.Dispose();
@@ -115,12 +122,12 @@ namespace JustCompute.Presentation.ViewModels
 
             if (!await HandlePermissions()) return;
 
-            var result = await _gpsLocationService
-                .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (!result.IsSuccessful)
-            {
-                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
-            }
+            IsBusy = true;
+
+            await StopListeningLocation();
+            await StartListeningLocation();
+
+            IsBusy = false;
 
             if (_gpsLocationService.DeviceLocation != null) return;
 
@@ -196,14 +203,9 @@ namespace JustCompute.Presentation.ViewModels
             InitViewModel();
         }
 
-        public override void OnPageDisappearing()
+        public override async void OnPageDisappearing()
         {
-            var result = _gpsLocationService
-                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (!result.IsSuccessful)
-            {
-                _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
-            }
+            await StopListeningLocation();
         }
 
         private void SetSelectedLocation(Location? location)
@@ -260,6 +262,32 @@ namespace JustCompute.Presentation.ViewModels
         {
             _navigationService.QuitApp();
             return true;
+        }
+
+        private async Task<Result<bool>> StartListeningLocation()
+        {
+            var result = 
+                await _gpsLocationService.OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                    OnDeviceLocationChangedCallback,
+                    OnListeningDeviceLocationFailedCallback);
+            if (!result.IsSuccessful)
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
+            }
+            return result;
+        }
+
+        private async Task<Result<bool>> StopListeningLocation()
+        {
+            var result = await Task.FromResult(_gpsLocationService
+                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                    OnDeviceLocationChangedCallback,
+                    OnListeningDeviceLocationFailedCallback));
+            if (!result.IsSuccessful)
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
+            }
+            return result;
         }
 
         void IRecipient<LocationMessage>.Receive(LocationMessage message)

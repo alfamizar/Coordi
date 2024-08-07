@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Compute.Core.UI;
 using Compute.Core.Utils;
 using CoordinateSharp;
+using DotNext;
 using JustCompute.Presentation.ViewModels.Base;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
@@ -14,7 +15,6 @@ namespace JustCompute.Presentation.ViewModels
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly DistanceCalculator _distanceCalculator;
-        private bool _isListeningLocation;
         private Timer? _timer;
 
         [ObservableProperty]
@@ -38,12 +38,15 @@ namespace JustCompute.Presentation.ViewModels
         [ObservableProperty]
         private DateTime elapsedTime = DateTime.MinValue;
 
-        public SpeedAndDistanceViewModel(IToastService toastService, IStringLocalizer<AppStringsRes> localizer)
+        public SpeedAndDistanceViewModel(
+            IToastService toastService,
+            IStringLocalizer<AppStringsRes> localizer
+            )
         {
             _toastService = toastService;
             _localizer = localizer;
             _distanceCalculator = new();
-            Commands.Add("ActionCommand", new AsyncRelayCommand(OnAction));
+            Commands.Add("ToggleLocationTrackingCommand", new AsyncRelayCommand(OnToggleLocationTracking));
         }
 
         private void StartTimer()
@@ -65,19 +68,18 @@ namespace JustCompute.Presentation.ViewModels
             _timer = null;
         }
 
-        private async Task OnAction()
+        private async Task OnToggleLocationTracking()
         {
             HapticFeedback.Default.Perform(HapticFeedbackType.Click);
 
-            StopListeningLocation();
-            var hasStartedListeningLocation = await StartListeningLocation();
-            if (hasStartedListeningLocation)
+            if (IsBusy) return;
+
+            IsBusy = true;
+            await StopListeningLocation();
+            var startedListeningLocationResult = await StartListeningLocation();
+            IsBusy = false;
+            if (!startedListeningLocationResult.IsSuccessful)
             {
-                _isListeningLocation = true;
-            }
-            else
-            {
-                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
                 IsRunning = false;
                 StopTimer();
                 return;
@@ -143,51 +145,50 @@ namespace JustCompute.Presentation.ViewModels
             }
         }
 
+        private async void OnListeningDeviceLocationFailedCallback(object? sender, GeolocationListeningFailedEventArgs e)
+        {
+            await _toastService.ShowToast(_localizer.GetString("ListeningLocationFailedToastMessage"));
+        }
+
         public override async void OnNavigatedTo()
         {
-            DeviceDisplay.Current.KeepScreenOn = true;
-
-            var hasStartedListeningLocation = await StartListeningLocation();
-            if (hasStartedListeningLocation)
+            var startedListeningLocationResult = await StartListeningLocation();
+            if (startedListeningLocationResult.IsSuccessful)
             {
-                _isListeningLocation = true;
-            }
-            else
-            {
-                OnAction();
-                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
+                DeviceDisplay.Current.KeepScreenOn = true;
             }
         }
 
-        public override void OnPageDisappearing()
+        public override async void OnPageDisappearing()
         {
             DeviceDisplay.Current.KeepScreenOn = false;
-
-            var hasStoppedListeningLocation = StopListeningLocation();
-            if (hasStoppedListeningLocation)
-            {
-                _isListeningLocation = false;
-            }
-            else
-            {
-                _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
-            }
+            await StopListeningLocation();
         }
 
-        private async Task<bool> StartListeningLocation()
+        private async Task<Result<bool>> StartListeningLocation()
         {
             var result = await _gpsLocationService
-                    .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (result.IsSuccessful) return true;
-            else return false;
+                .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                    OnDeviceLocationChangedCallback,
+                    OnListeningDeviceLocationFailedCallback);
+            if (!result.IsSuccessful)
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
+            }
+            return result;
         }
 
-        private bool StopListeningLocation()
+        private async Task<Result<bool>> StopListeningLocation()
         {
-            var result = _gpsLocationService
-                    .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs>(OnDeviceLocationChangedCallback);
-            if (result.IsSuccessful) return true;
-            else return false;
+            var result = await Task.FromResult(_gpsLocationService
+                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                    OnDeviceLocationChangedCallback,
+                    OnListeningDeviceLocationFailedCallback));
+            if (!result.IsSuccessful)
+            {
+                await _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));
+            }
+            return result;
         }
     }
 }

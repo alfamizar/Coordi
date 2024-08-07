@@ -592,6 +592,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location listening failed.
+        /// </summary>
+        public static string ListeningLocationFailedToastMessage {
+            get {
+                return ResourceManager.GetString("ListeningLocationFailedToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lng:.
         /// </summary>
         public static string LngLabel {

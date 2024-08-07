@@ -597,4 +597,7 @@
   <data name="VertialAccuracyLabel" xml:space="preserve">
     <value>Вертикальная точность</value>
   </data>
+  <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
+    <value>Произошла ошибка при попытке получить местоположения</value>
+  </data>
 </root>
