@@ -18,8 +18,10 @@ namespace Compute.Core.Domain.Services
 
         event EventHandler<EventArgs> DeviceLocationChanged;
 
-        Task<Result<bool, FaultCode>> OnStartListeningDeciveGeoLocation<T>(EventHandler<T> locationChangedCallback) where T : class;    
+        Task<Result<bool, FaultCode>> OnStartListeningDeciveGeoLocation<T, U>(
+            EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class;
 
-        Result<bool, FaultCode> OnStopListeningDeciveGeoLocation<T>(EventHandler<T> locationChangedCallback) where T : class;
+        Result<bool, FaultCode> OnStopListeningDeciveGeoLocation<T, U>(
+            EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class;
     }
 }

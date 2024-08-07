@@ -597,4 +597,7 @@
   <data name="VertialAccuracyLabel" xml:space="preserve">
     <value>Vertical accuracy</value>
   </data>
+  <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
+    <value>Location listening failed</value>
+  </data>
 </root>

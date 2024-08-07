@@ -4,13 +4,15 @@ using DotNext;
 using Compute.Core.Domain.Errors;
 using Compute.Core.Domain.Services;
 using Compute.Core.Common.Exceptions.Location;
+using Polly.Retry;
 
 namespace JustCompute.Services.LocationService
 {
-    public class GPSLocationService(ILocationService locationService) : IGPSLocationService
+    public class GPSLocationService(ILocationService locationService, AsyncRetryPolicy retryPolicy) : IGPSLocationService
     {
         private readonly WeakEventManager _eventManager = new();
         private readonly ILocationService _locationService = locationService;
+        private readonly AsyncRetryPolicy _retryPolicy = retryPolicy;
 
         private CancellationTokenSource? _cancelTokenSource;
 
@@ -102,26 +104,35 @@ namespace JustCompute.Services.LocationService
                 _cancelTokenSource.Cancel();
         }
 
-        public async Task<Result<bool, FaultCode>> OnStartListeningDeciveGeoLocation<T>(EventHandler<T> locationChangedCallback) where T : class
+        public async Task<Result<bool, FaultCode>> OnStartListeningDeciveGeoLocation<T, U>(
+            EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class
         {
             try
             {
                 Geolocation.LocationChanged += locationChangedCallback as EventHandler<GeolocationLocationChangedEventArgs>;
+                Geolocation.ListeningFailed += listeningFailedCallback as EventHandler<GeolocationListeningFailedEventArgs>;
                 var request = new GeolocationListeningRequest((GeolocationAccuracy.Best));
-                var success = await Geolocation.StartListeningForegroundAsync(request);
+                var success = await _retryPolicy.ExecuteAsync(async () =>
+                {
+                    return await Geolocation.StartListeningForegroundAsync(request);
+                });
                 return success;
             }
             catch (Exception)
             {
+                Geolocation.LocationChanged -= locationChangedCallback as EventHandler<GeolocationLocationChangedEventArgs>;
+                Geolocation.ListeningFailed -= listeningFailedCallback as EventHandler<GeolocationListeningFailedEventArgs>;
                 return new(FaultCode.CouldNotStartListeningDeciveGeoLocation);
             }
         }
 
-        public Result<bool, FaultCode> OnStopListeningDeciveGeoLocation<T>(EventHandler<T> locationChangedCallback) where T : class
-        {
+        public Result<bool, FaultCode> OnStopListeningDeciveGeoLocation<T, U>(
+            EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class
+{
             try
             {
                 Geolocation.LocationChanged -= locationChangedCallback as EventHandler<GeolocationLocationChangedEventArgs>;
+                Geolocation.ListeningFailed -= listeningFailedCallback as EventHandler<GeolocationListeningFailedEventArgs>;
                 Geolocation.StopListeningForeground();
                 return true;
             }

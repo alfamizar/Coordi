@@ -26,8 +26,8 @@ public static class MauiProgram
                 essentials.UseVersionTracking();
             })
             .ConfigureMauiHandlers()
-            .ConfigurePopups();
-
+            .ConfigurePopups()
+            .ConfigurePolly();
 
 #if DEBUG
         builder.Logging.AddDebug();

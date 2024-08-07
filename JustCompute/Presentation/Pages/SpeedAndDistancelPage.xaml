@@ -53,7 +53,7 @@
               Grid.Row="1">
 
             <ImageButton Grid.Column="0"
-                         Command="{Binding Commands[ActionCommand]}"
+                         Command="{Binding Commands[ToggleLocationTrackingCommand]}"
                          WidthRequest="50"
                          HeightRequest="50"
                          CornerRadius="32"
@@ -102,6 +102,13 @@
 
 
         </Grid>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
 
     </Grid>
 
