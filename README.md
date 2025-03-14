@@ -2,4 +2,4 @@
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
       alt="Get it on Google Play"
-      height="80">]([https://play.google.com/store/apps/details?id=com.odnovolov.forgetmenot](https://img.shields.io/badge/Google_Play-Download-brightgreen)](https://play.google.com/store/apps/details?id=com.companyname.justcompute&hl=en))
+      height="80">](https://play.google.com/store/apps/details?id=com.companyname.justcompute)
