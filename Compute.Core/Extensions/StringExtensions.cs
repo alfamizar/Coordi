@@ -15,7 +15,7 @@ namespace Compute.Core.Extensions
             return s != null && s.Length != 0;
         }
 
-        public static bool IsSet(this string s)
+        public static bool IsSet(this string? s)
         {
             return !string.IsNullOrWhiteSpace(s);
         }

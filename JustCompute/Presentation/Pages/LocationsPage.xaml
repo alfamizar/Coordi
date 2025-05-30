@@ -13,8 +13,7 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:converters="clr-namespace:JustCompute.Presentation.Converters"
              x:DataType="ViewModels:LocationsViewModel"
-             Shell.PresentationMode="Animated"
-             Shell.TabBarIsVisible="False">
+             Shell.PresentationMode="Animated">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{localization:Localize AddCustomLocationLabel}"
@@ -51,11 +50,11 @@
             <CarouselView x:Name="carouselView"
                           Grid.Row="1"
                           Loop="False"
-                          HorizontalOptions="FillAndExpand"
                           ItemsSource="{Binding Locations}"
                           IndicatorView="indicatorView"
                           CurrentItemChangedCommand="{Binding Commands[SetSelectedLocationCommand]}"
-                          CurrentItemChangedCommandParameter="{Binding Source={x:Reference carouselView}, Path=CurrentItem}">
+                          CurrentItemChangedCommandParameter="{Binding Source={x:Reference carouselView}, Path=CurrentItem}"
+                          HorizontalScrollBarVisibility="Never">
                 <CarouselView.HeightRequest>
                     <OnPlatform x:TypeArguments="x:Double">
                         <On Platform="iOS"
@@ -73,12 +72,6 @@
 
                             <Border Stroke="Transparent"
                                     StrokeShape="RoundRectangle 10">
-                                <Border.Shadow>
-                                    <Shadow Brush="Black"
-                                            Offset="0.5,0.5"
-                                            Radius="10"
-                                            Opacity="0.5" />
-                                </Border.Shadow>
 
                                 <Grid ColumnDefinitions="*,Auto"
                                       ColumnSpacing="4">
@@ -111,12 +104,6 @@
                                             Background="#404040"
                                             Stroke="Transparent"
                                             StrokeShape="RoundRectangle 10">
-                                        <Border.Shadow>
-                                            <Shadow Brush="Black"
-                                                    Offset="0.5,0.5"
-                                                    Radius="10"
-                                                    Opacity="0.5" />
-                                        </Border.Shadow>
 
                                         <VerticalStackLayout VerticalOptions="Center">
 
@@ -172,13 +159,7 @@
                         <Border Padding="8"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 10">
-                            <Border.Shadow>
-                                <Shadow Brush="Black"
-                                        Offset="0.5,0.5"
-                                        Radius="10"
-                                        Opacity="0.5" />
-                            </Border.Shadow>
-                            
+
                             <StackLayout Padding="0"
                                          Spacing="8">
 
@@ -216,13 +197,7 @@
                         <Border Padding="8"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 10">
-                            <Border.Shadow>
-                                <Shadow Brush="Black"
-                                        Offset="0.5,0.5"
-                                        Radius="10"
-                                        Opacity="0.5" />
-                            </Border.Shadow>
-                            
+
                             <StackLayout Padding="0"
                                          Spacing="8">
 
@@ -272,13 +247,7 @@
                         <Border Padding="8"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 10">
-                            <Border.Shadow>
-                                <Shadow Brush="Black"
-                                        Offset="0.5,0.5"
-                                        Radius="10"
-                                        Opacity="0.5" />
-                            </Border.Shadow>
-                            
+
                             <StackLayout Padding="0"
                                          Spacing="8">
 
@@ -305,12 +274,6 @@
                         <Border Padding="8"
                                 Stroke="Transparent"
                                 StrokeShape="RoundRectangle 10">
-                            <Border.Shadow>
-                                <Shadow Brush="Black"
-                                        Offset="0.5,0.5"
-                                        Radius="10"
-                                        Opacity="0.5" />
-                            </Border.Shadow>
 
                             <StackLayout Padding="0"
                                          Spacing="8">

@@ -6,7 +6,7 @@ namespace Compute.Core.Domain.Services.Sun
 {
     public class SunService : ISunService
     {
-        public async Task<List<BaseCelestialBodyCycle>> GetSunCyclesAsync(double lat, double lng, DateTime date, int timeZoneOffset)
+        public async Task<List<BaseCelestialBodyCycle>> GetSunCyclesAsync(double lat, double lng, DateTime date)
         {
             return await Task.Run(() =>
             {
@@ -21,11 +21,13 @@ namespace Compute.Core.Domain.Services.Sun
                 int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(date.Year) ? 366 : 365;
 
                 var coordinate = new Coordinate(lat, lng, date, el);
-                coordinate.Offset += timeZoneOffset;
 
                 for (int index = 0; index < TotalNumberOfDaysInTheCurrentYear; index++)
                 {
                     coordinate.GeoDate = date + TimeSpan.FromDays(index);
+
+                    int offsetHours = coordinate.CalculateOffsetHours();
+                    coordinate.Offset = offsetHours;
 
                     BaseCelestialBodyCycle celestialInfo = new()
                     {
@@ -45,7 +47,7 @@ namespace Compute.Core.Domain.Services.Sun
         {
             return await Task.Run(() =>
             {
-                return Celestial.Get_Solar_Eclipse_Table(lat, lng, DateTime.Now);
+                return Celestial.Get_Solar_Eclipse_Table(lat, lng, date);
             });
         }
     }

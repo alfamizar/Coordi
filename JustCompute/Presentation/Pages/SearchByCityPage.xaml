@@ -31,7 +31,8 @@
                            IsReadOnly="{Binding IsBusy}"
                            HorizontalOptions="Start">
                     <SearchBar.Behaviors>
-                        <toolkit:UserStoppedTypingBehavior Command="{Binding Commands[PerformSearchLocationCommand]}"
+                        <toolkit:UserStoppedTypingBehavior BindingContext="{Binding Path=BindingContext, Source={x:Reference searchBar}, x:DataType=SearchBar}"
+                                                           Command="{Binding Commands[PerformSearchLocationCommand]}"
                                                            CommandParameter="{Binding Text, Source={x:Reference searchBar}}"
                                                            StoppedTypingTimeThreshold="1000"
                                                            ShouldDismissKeyboardAutomatically="True"/>

@@ -21,58 +21,22 @@ namespace JustCompute.Presentation.Converters
         {
             if (sign is AstrologicalSignType moonInZodiacSign)
             {
-                switch (moonInZodiacSign)
+                return moonInZodiacSign switch
                 {
-                    case AstrologicalSignType.Aries:
-                        {
-                            return _localizer.GetString("AriesLabel");
-                        }
-                    case AstrologicalSignType.Taurus:
-                        {
-                            return _localizer.GetString("TaurusLabel");
-                        }
-                    case AstrologicalSignType.Gemini:
-                        {
-                            return _localizer.GetString("GeminiLabel");
-                        }
-                    case AstrologicalSignType.Cancer:
-                        {
-                            return _localizer.GetString("CancerLabel");
-                        }
-                    case AstrologicalSignType.Leo:
-                        {
-                            return _localizer.GetString("LeoLabel");
-                        }
-                    case AstrologicalSignType.Virgo:
-                        {
-                            return _localizer.GetString("VirgoLabel");
-                        }
-                    case AstrologicalSignType.Libra:
-                        {
-                            return _localizer.GetString("LibraLabel");
-                        }
-                    case AstrologicalSignType.Scorpio:
-                        {
-                            return _localizer.GetString("ScorpioLabel");
-                        }
-                    case AstrologicalSignType.Sagittarius:
-                        {
-                            return _localizer.GetString("SagittariusLabel");
-                        }
-                    case AstrologicalSignType.Capricorn:
-                        {
-                            return _localizer.GetString("CapricornLabel");
-                        }
-                    case AstrologicalSignType.Aquarius:
-                        {
-                            return _localizer.GetString("AquariusLabel");
-                        }
-                    case AstrologicalSignType.Pisces:
-                        {
-                            return _localizer.GetString("PiscesLabel");
-                        }
-                }
-                return null;
+                    AstrologicalSignType.Aries => _localizer.GetString("AriesLabel"),
+                    AstrologicalSignType.Taurus => _localizer.GetString("TaurusLabel"),
+                    AstrologicalSignType.Gemini => _localizer.GetString("GeminiLabel"),
+                    AstrologicalSignType.Cancer => _localizer.GetString("CancerLabel"),
+                    AstrologicalSignType.Leo => _localizer.GetString("LeoLabel"),
+                    AstrologicalSignType.Virgo => _localizer.GetString("VirgoLabel"),
+                    AstrologicalSignType.Libra => _localizer.GetString("LibraLabel"),
+                    AstrologicalSignType.Scorpio => _localizer.GetString("ScorpioLabel"),
+                    AstrologicalSignType.Sagittarius => _localizer.GetString("SagittariusLabel"),
+                    AstrologicalSignType.Capricorn => _localizer.GetString("CapricornLabel"),
+                    AstrologicalSignType.Aquarius => _localizer.GetString("AquariusLabel"),
+                    AstrologicalSignType.Pisces => _localizer.GetString("PiscesLabel"),
+                    _ => null
+                };
             }
             else
             {

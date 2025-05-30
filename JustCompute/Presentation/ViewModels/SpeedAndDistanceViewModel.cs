@@ -168,7 +168,7 @@ namespace JustCompute.Presentation.ViewModels
         private async Task<Result<bool>> StartListeningLocation()
         {
             var result = await _gpsLocationService
-                .OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                .StartListeningForDeviceGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
                     OnDeviceLocationChangedCallback,
                     OnListeningDeviceLocationFailedCallback);
             if (!result.IsSuccessful)
@@ -180,10 +180,10 @@ namespace JustCompute.Presentation.ViewModels
 
         private async Task<Result<bool>> StopListeningLocation()
         {
-            var result = await Task.FromResult(_gpsLocationService
-                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
-                    OnDeviceLocationChangedCallback,
-                    OnListeningDeviceLocationFailedCallback));
+            var result = _gpsLocationService.StoptListeningForDeviceLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                OnDeviceLocationChangedCallback,
+                OnListeningDeviceLocationFailedCallback
+                );
             if (!result.IsSuccessful)
             {
                 await _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));

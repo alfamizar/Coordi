@@ -21,21 +21,13 @@
         <Setter Property="StrokeShape"
                 Value="RoundRectangle 10" />
         <Setter Property="StrokeThickness"
-                Value="1" />
+                Value="0" />
         <Setter Property="Background"
                 Value="{AppThemeBinding Light={StaticResource LightCollectionViewItemBackgroundColor}, Dark={StaticResource DarkCollectionViewItemBackgroundColor}}" />
         <Setter Property="Padding"
                 Value="16, 8" />
         <Setter Property="Margin"
                 Value="8, 4" />
-        <Setter Property="Shadow">
-            <Setter.Value>
-                <Shadow Brush="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
-                        Opacity="0.3"
-                        Radius="10"
-                        Offset="2,2" />
-            </Setter.Value>
-        </Setter>
 
     </Style>
 

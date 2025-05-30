@@ -12,12 +12,6 @@
             WidthRequest="150"
             HeightRequest="150"
             BindingContext="{x:Reference this}">
-        <Border.Shadow>
-            <Shadow Brush="Black"
-                    Offset="0.5,0.5"
-                    Radius="10"
-                    Opacity="0.5" />
-        </Border.Shadow>
         <Grid RowDefinitions="Auto,*">
             <Label x:Name="itemTitle"
                    Grid.Row="0"

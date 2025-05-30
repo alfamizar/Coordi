@@ -10,16 +10,9 @@
                CanBeDismissedByTappingOutsideOfPopup="True"
                Color="Transparent">
 
-    <Border Stroke="Transparent"
-            StrokeShape="RoundRectangle 25" 
+    <Border StrokeShape="RoundRectangle 25"
             WidthRequest="200">
-        <Border.Shadow>
-            <Shadow Brush="Black"
-                    Offset="0.5,0.5"
-                    Radius="5"
-                    Opacity="0.5" />
-        </Border.Shadow>
-        
+
         <VerticalStackLayout>
             
             <Label Text="{localization:Localize SortByLabel}"

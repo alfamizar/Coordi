@@ -7,8 +7,9 @@
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
              x:Name="this">
 
-    <Frame BindingContext="{x:Reference this}"
-           BorderColor="Transparent">
+    <Border BindingContext="{x:Reference this}"
+            Stroke="Transparent"
+            StrokeShape="RoundRectangle 10">
 
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
               ColumnDefinitions="*,*,Auto"
@@ -86,10 +87,10 @@
 
         </Grid>
 
-        <Frame.GestureRecognizers>
+        <Border.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ItemClickedCommand}"
                                   CommandParameter="{Binding Location}" />
-        </Frame.GestureRecognizers>
-    </Frame>
+        </Border.GestureRecognizers>
+    </Border>
 
 </ContentView>

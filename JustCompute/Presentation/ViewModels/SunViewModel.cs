@@ -24,9 +24,9 @@ namespace JustCompute.Presentation.ViewModels
 
         protected override async Task GetData(double lat, double lng, int timeZoneOffset)
         {
-            sunCycleList = await _sunService.GetSunCyclesAsync(lat, lng, DateTime.Now, timeZoneOffset);
+            sunCycleList = await _sunService.GetSunCyclesAsync(lat, lng, DateTime.Now);
 
-            GroupedSunCycles = GetGroupedData(sunCycleList, item => item.GeoDate.Value.ToString("MMMM yyyy")).ToList();
+            GroupedSunCycles = [.. GetGroupedData(sunCycleList, item => item.GeoDate.Value.ToString("MMMM yyyy"))];
         }
 
         private void ToggleGroup(Group<string, BaseCelestialBodyCycle> group)

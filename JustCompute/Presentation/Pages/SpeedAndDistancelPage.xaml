@@ -13,37 +13,46 @@
     <Grid RowDefinitions="*, Auto"
           Padding="8">
 
-        <ScrollView Grid.Row="0"
+        <ScrollView Grid.Row="0" 
+                    HorizontalOptions="Center"
                     VerticalScrollBarVisibility="Never">
             <FlexLayout Wrap="Wrap"
+                        HorizontalOptions="Center"
                         Direction="Row"
-                        AlignItems="Stretch"
-                        AlignContent="Stretch"
-                        JustifyContent="Center">
+                        AlignItems="Start"
+                        JustifyContent="Start">
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize SpeedLabel}"
-                                       ItemValue="{Binding Speed, StringFormat={localization:Localize FormattedSpeedLabel}}" />
+                                       ItemValue="{Binding Speed, StringFormat={localization:Localize FormattedSpeedLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize DirectionLabel}"
-                                       ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}" />
+                                           ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize AccuracyLabel}"
-                                       ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize VertialAccuracyLabel}"
-                                       ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize AltitudeLabel}"
-                                       ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize ElevationLabel}"
-                                       ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize TravelledDistanceLabel}"
-                                       ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize DirectDistanceLabel}"
-                                       ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+                                           ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                           Margin="8, 2, 8, 2"  />
 
             </FlexLayout>
         </ScrollView>
@@ -59,7 +68,7 @@
                          CornerRadius="32"
                          Background="Transparent"
                          VerticalOptions="Center"
-                         Margin="4">
+                         Margin="8">
                 <ImageButton.Source>
                     <Binding Path="IsRunning">
                         <Binding.Converter>
@@ -94,10 +103,10 @@
                        HeightRequest="50"/>
 
                 <Label VerticalOptions="Center"
-                       Margin="4"
+                       Margin="8"
                        FontSize="26"
                        Text="{Binding ElapsedTime, StringFormat='{0:HH:mm:ss}'}" />
-                
+
             </HorizontalStackLayout>
 
 

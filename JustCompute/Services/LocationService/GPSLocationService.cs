@@ -104,7 +104,7 @@ namespace JustCompute.Services.LocationService
                 _cancelTokenSource.Cancel();
         }
 
-        public async Task<Result<bool, FaultCode>> OnStartListeningDeciveGeoLocation<T, U>(
+        public async Task<Result<bool, FaultCode>> StartListeningForDeviceGeoLocation<T, U>(
             EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class
         {
             try
@@ -126,7 +126,7 @@ namespace JustCompute.Services.LocationService
             }
         }
 
-        public Result<bool, FaultCode> OnStopListeningDeciveGeoLocation<T, U>(
+        public Result<bool, FaultCode> StoptListeningForDeviceLocation<T, U>(
             EventHandler<T> locationChangedCallback, EventHandler<U> listeningFailedCallback) where T : class where U : class
 {
             try

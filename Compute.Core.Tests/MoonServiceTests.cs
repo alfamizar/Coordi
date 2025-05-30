@@ -12,13 +12,12 @@ namespace Compute.Core.Tests.Services
             // Arrange
             double latitude = 40.7128;
             double longitude = -74.0060;
-            int timeZoneOffset = -4;
             DateTime currentDate = new(2023, 3, 21);
             int expectedNumberOfDays = DateTime.IsLeapYear(currentDate.Year) ? 366 : 365;
             MoonService moonService = new();
 
             // Act
-            var result = await moonService.GetMoonCyclesAsync(latitude, longitude, currentDate, timeZoneOffset);
+            var result = await moonService.GetMoonCyclesAsync(latitude, longitude, currentDate);
 
             // Assert
             Assert.NotNull(result);

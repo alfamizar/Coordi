@@ -12,42 +12,20 @@ namespace JustCompute.Presentation.Converters
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            MoonPhase? moonPhase = (MoonPhase?)value;
-
-            switch (moonPhase)
+            if (value is MoonPhase moonPhase)
             {
-                case MoonPhase.NewMoon:
-                    {
-                        return _localizer.GetString("NewMoonLabel");
-                    }
-                case MoonPhase.WaxingCrescent:
-                    {
-                        return _localizer.GetString("WaxingCrescentLabel");
-                    }
-                case MoonPhase.FirstQuarter:
-                    {
-                        return _localizer.GetString("FirstQuarterLabel");
-                    }
-                case MoonPhase.WaxingGibbous:
-                    {
-                        return _localizer.GetString("WaxingGibbousLabel");
-                    }
-                case MoonPhase.FullMoon:
-                    {
-                        return _localizer.GetString("FullMoonLabel");
-                    }
-                case MoonPhase.WaningGibbous:
-                    {
-                        return _localizer.GetString("WaningGibbousLabel");
-                    }
-                case MoonPhase.LastQuarter:
-                    {
-                        return _localizer.GetString("LastQuarterLabel");
-                    }
-                case MoonPhase.WaningCrescent:
-                    {
-                        return _localizer.GetString("WaningCrescentLabel");
-                    }
+                return moonPhase switch
+                {
+                    MoonPhase.NewMoon => _localizer.GetString("NewMoonLabel"),
+                    MoonPhase.WaxingCrescent => _localizer.GetString("WaxingCrescentLabel"),
+                    MoonPhase.FirstQuarter => _localizer.GetString("FirstQuarterLabel"),
+                    MoonPhase.WaxingGibbous => _localizer.GetString("WaxingGibbousLabel"),
+                    MoonPhase.FullMoon => _localizer.GetString("FullMoonLabel"),
+                    MoonPhase.WaningGibbous => _localizer.GetString("WaningGibbousLabel"),
+                    MoonPhase.LastQuarter => _localizer.GetString("LastQuarterLabel"),
+                    MoonPhase.WaningCrescent => _localizer.GetString("WaningCrescentLabel"),
+                    _ => null
+                };
             }
             return null;
         }

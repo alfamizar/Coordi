@@ -24,7 +24,7 @@ namespace JustCompute.Presentation.ViewModels
 
         protected override async Task GetData(double lat, double lng, int timeZoneOffset)
         {
-            moonCycleList = await _moonService.GetMoonCyclesAsync(lat, lng, DateTime.Now, timeZoneOffset);
+            moonCycleList = await _moonService.GetMoonCyclesAsync(lat, lng, DateTime.Now);
 
             GroupedMoonCycles = GetGroupedData(moonCycleList, item => item.GeoDate.Value.ToString("MMMM yyyy")).ToList();
         }

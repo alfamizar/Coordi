@@ -26,7 +26,7 @@ namespace JustCompute.Presentation.ViewModels
         {
             eclipseList = await _sunService.GetSunEclipsesAsync(lat, lng, DateTime.Now);
 
-            GroupedEclipseList = GetGroupedData(eclipseList, item => item.Date.ToString("yyyy")).ToList();
+            GroupedEclipseList = [.. GetGroupedData(eclipseList, item => item.Date.ToString("yyyy"))];
         }
 
         private void ToggleGroup(Group<string, SolarEclipseDetails> group)

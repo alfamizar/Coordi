@@ -16,7 +16,8 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize LocationsLabel}"
-                FlyoutIcon="{AppThemeBinding Light=location_icon_dark.png, Dark=location_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=location_icon_dark.png, Dark=location_icon_light.png}"
+                Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize LocationsLabel}"
                       ContentTemplate="{DataTemplate pages:LocationsPage}" />
@@ -58,7 +59,8 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize RulerLabel}"
-                FlyoutIcon="{AppThemeBinding Light=ruler_icon_dark.png, Dark=ruler_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=ruler_icon_dark.png, Dark=ruler_icon_light.png}"
+                Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize RulerLabel}"
                       ContentTemplate="{DataTemplate pages:DistancePage}" />
@@ -67,7 +69,8 @@
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SpeedAndDistanceLabel}"
-                FlyoutIcon="{AppThemeBinding Light=speed_icon_dark.png, Dark=speed_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=speed_icon_dark.png, Dark=speed_icon_light.png}"
+                Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize SpeedAndDistanceLabel}"
                       ContentTemplate="{DataTemplate pages:SpeedAndDistancelPage}" />
@@ -99,7 +102,8 @@
     <FlyoutItem IsVisible="True"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SettingsLabel}"
-                FlyoutIcon="{AppThemeBinding Light=settings_icon_dark.png, Dark=settings_icon_light.png}">
+                FlyoutIcon="{AppThemeBinding Light=settings_icon_dark.png, Dark=settings_icon_light.png}"
+                Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize SettingsLabel}"
                       ContentTemplate="{DataTemplate pages:SettingsPage}" />

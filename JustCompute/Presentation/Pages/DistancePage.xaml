@@ -50,8 +50,7 @@
                 </views:PointEntry.IsPointCityCountryLabelVisible>
             </views:PointEntry>
 
-            <Frame Grid.Row="2"
-                   BorderColor="Transparent"
+            <Border Grid.Row="2"
                    MinimumHeightRequest="64"                  
                    VerticalOptions="Center">
 
@@ -60,7 +59,7 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Center"/>
 
-            </Frame>
+            </Border>
 
         </Grid>
 

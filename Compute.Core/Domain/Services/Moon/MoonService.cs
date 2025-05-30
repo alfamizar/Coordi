@@ -8,7 +8,7 @@ namespace Compute.Core.Domain.Services.Moon
 {
     public class MoonService : IMoonService
     {
-        public async Task<List<MoonCycle>> GetMoonCyclesAsync(double lat, double lng, DateTime date, int timeZoneOffset)
+        public async Task<List<MoonCycle>> GetMoonCyclesAsync(double lat, double lng, DateTime date)
         {
             return await Task.Run(() =>
             {
@@ -22,11 +22,13 @@ namespace Compute.Core.Domain.Services.Moon
                 int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(date.Year) ? 366 : 365;
 
                 var coordinate = new Coordinate(lat, lng, date, el);
-                coordinate.Offset += timeZoneOffset;
 
                 for (int index = 0; index < TotalNumberOfDaysInTheCurrentYear; index++)
                 {
                     coordinate.GeoDate = date + TimeSpan.FromDays(index);
+
+                    int offsetHours = coordinate.CalculateOffsetHours();
+                    coordinate.Offset = offsetHours;
 
                     var celestialInfo = new MoonCycle
                     {
@@ -50,7 +52,7 @@ namespace Compute.Core.Domain.Services.Moon
         {
             return await Task.Run(() =>
             {
-                return Celestial.Get_Lunar_Eclipse_Table(lat, lng, DateTime.Now);
+                return Celestial.Get_Lunar_Eclipse_Table(lat, lng, date);
             });
         }
     }

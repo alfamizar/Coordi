@@ -22,7 +22,6 @@ namespace Compute.Core.Utils
             var zonedDateTime = now.InZone(timeZone);
 
             var offset = zonedDateTime.Offset;
-            //var isDaylightSaving = zonedDateTime.IsDaylightSavingTime();
 
             var offsetHours = offset.Seconds / 3600;
 

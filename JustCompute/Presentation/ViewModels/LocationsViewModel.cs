@@ -166,25 +166,20 @@ namespace JustCompute.Presentation.ViewModels
                 .CheckPermissionAndRequestIfNeeded(Permission.DeviceLocation);
             if (permissionStatus == PermissionStatus.Denied)
             {
-                // Store the localized strings in variables
-                var closeString = _localizer.GetString("Close");
-                var goToSettingsString = _localizer.GetString("GoToSettings");
-
                 var result = await _dialogService.DisplayAlert(
                     _localizer.GetString("PermissionRequiredDialogTitle"),
                     _localizer.GetString("PermissionRequiredDialogMessage"),
-                    closeString,
-                    goToSettingsString
-                );
+                    _localizer.GetString("Close"),
+                    _localizer.GetString("GoToSettings")
+                    );
 
-                switch (result)
+                if (result == _localizer.GetString("Close"))
                 {
-                    case var str when str == closeString:
-                        Application.Current?.Quit();
-                        break;
-                    case var str when str == goToSettingsString:
-                        AppInfo.Current.ShowSettingsUI();
-                        break;
+                    Application.Current?.Quit();
+                }
+                else if (result == _localizer.GetString("GoToSettings"))
+                {
+                    AppInfo.Current.ShowSettingsUI();
                 }
 
                 return false;
@@ -267,7 +262,7 @@ namespace JustCompute.Presentation.ViewModels
         private async Task<Result<bool>> StartListeningLocation()
         {
             var result = 
-                await _gpsLocationService.OnStartListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                await _gpsLocationService.StartListeningForDeviceGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
                     OnDeviceLocationChangedCallback,
                     OnListeningDeviceLocationFailedCallback);
             if (!result.IsSuccessful)
@@ -280,7 +275,7 @@ namespace JustCompute.Presentation.ViewModels
         private async Task<Result<bool>> StopListeningLocation()
         {
             var result = await Task.FromResult(_gpsLocationService
-                .OnStopListeningDeciveGeoLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
+                .StoptListeningForDeviceLocation<GeolocationLocationChangedEventArgs, GeolocationListeningFailedEventArgs>(
                     OnDeviceLocationChangedCallback,
                     OnListeningDeviceLocationFailedCallback));
             if (!result.IsSuccessful)

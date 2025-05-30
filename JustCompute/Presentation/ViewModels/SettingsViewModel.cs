@@ -49,24 +49,15 @@ namespace JustCompute.Presentation.ViewModels
                 new DistanceUnitOfMeasure(DistanceType.NauticalMiles, _localizer.GetString("NauticalMilesLabel"))
         ];
             DistanceType distanceType = Settings.DistanceType;
-            switch (distanceType)
+            SelectedDistanceUnitOfMeasure = distanceType switch
             {
-                case DistanceType.Meters:
-                    SelectedDistanceUnitOfMeasure = new DistanceUnitOfMeasure(DistanceType.Meters, _localizer.GetString("MetersLabel"));
-                    break;
-                case DistanceType.Kilometers:
-                    SelectedDistanceUnitOfMeasure = new DistanceUnitOfMeasure(DistanceType.Kilometers, _localizer.GetString("KmLabel"));
-                    break;
-                case DistanceType.Miles:
-                    SelectedDistanceUnitOfMeasure = new DistanceUnitOfMeasure(DistanceType.Miles, _localizer.GetString("MilesLabel"));
-                    break;
-                case DistanceType.Feets:
-                    SelectedDistanceUnitOfMeasure = new DistanceUnitOfMeasure(DistanceType.Feets, _localizer.GetString("FeetsLabel"));
-                    break;
-                case DistanceType.NauticalMiles:
-                    SelectedDistanceUnitOfMeasure = new DistanceUnitOfMeasure(DistanceType.NauticalMiles, _localizer.GetString("NauticalMilesLabel"));
-                    break;
-            }
+                DistanceType.Meters => new DistanceUnitOfMeasure(DistanceType.Meters, _localizer.GetString("MetersLabel")),
+                DistanceType.Kilometers => new DistanceUnitOfMeasure(DistanceType.Kilometers, _localizer.GetString("KmLabel")),
+                DistanceType.Miles => new DistanceUnitOfMeasure(DistanceType.Miles, _localizer.GetString("MilesLabel")),
+                DistanceType.Feets => new DistanceUnitOfMeasure(DistanceType.Feets, _localizer.GetString("FeetsLabel")),
+                DistanceType.NauticalMiles => new DistanceUnitOfMeasure(DistanceType.NauticalMiles, _localizer.GetString("NauticalMilesLabel")),
+                _ => SelectedDistanceUnitOfMeasure
+            };
 
             Is24HourTimeFormat = Settings.Is24HourTimeFormat;
         }

@@ -51,7 +51,7 @@
 
                 <DataTemplate x:DataType="models:LunarEclipseDetails">
 
-                    <Frame BorderColor="Transparent">
+                    <Border>
 
                         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                               ColumnDefinitions="*,*"
@@ -179,7 +179,7 @@
 
                         </Grid>
 
-                    </Frame>
+                    </Border>
 
                 </DataTemplate>
 
