@@ -207,6 +207,9 @@
   <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Расстояние: {0:0.##} {1}</value>
   </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Скорость и расстояние</value>
+  </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Единица расстояния</value>
   </data>
@@ -552,9 +555,6 @@
   <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
     <value>Не удалось начать отслеживание местоположения</value>
   </data>
-  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
-    <value>Не удалось прекратить отслеживание местоположения</value>
-  </data>
   <data name="DuplicatedLocationToastMessge" xml:space="preserve">
     <value>Местоположение с таким названием уже существует</value>
   </data>
@@ -585,9 +585,6 @@
   <data name="RulerLabel" xml:space="preserve">
     <value>Рулетка</value>
   </data>
-  <data name="SpeedAndDistanceLabel" xml:space="preserve">
-    <value>Скорость и расстояние</value>
-  </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Скорость</value>
   </data>
@@ -599,5 +596,14 @@
   </data>
   <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
     <value>Произошла ошибка при попытке получить местоположения</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Дистанция</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>Не удалось прекратить отслеживание местоположения</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>Расчетная скорость</value>
   </data>
 </root>

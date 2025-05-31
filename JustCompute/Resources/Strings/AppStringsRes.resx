@@ -558,9 +558,6 @@
   <data name="DuplicatedLocationToastMessge" xml:space="preserve">
     <value>Location with such name already exists</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value>Cannot stop listening location</value>
-  </data>
   <data name="AccuracyLabel" xml:space="preserve">
     <value>Accuracy</value>
   </data>
@@ -599,5 +596,14 @@
   </data>
   <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
     <value>Location listening failed</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>Cannot stop listening location</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>Calculated speed</value>
   </data>
 </root>

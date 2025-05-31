@@ -44,5 +44,7 @@ namespace Compute.Core.Domain.Entities.Models
                 ZodiacSignUnicodeIcon = ZodiacSigns.ElementAt((int)value - 1);
             }
         }
+
+        public bool IsDaylightSavingTime { get; set; }
     }
 }

@@ -15,12 +15,16 @@ namespace JustCompute.Presentation.ViewModels
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly DistanceCalculator _distanceCalculator;
+        private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private Timer? _timer;
+        private DateTime _lastUpdate = DateTime.MinValue;
 
         [ObservableProperty]
         private bool _isRunning;
         [ObservableProperty]
         private double _speed = 0;
+        [ObservableProperty]
+        private double _calculatedSpeed = 0;
         [ObservableProperty]
         private double _direction = 0;
         [ObservableProperty]
@@ -55,7 +59,13 @@ namespace JustCompute.Presentation.ViewModels
             _timer = null;
 
             _timer = new Timer(
-                (_) => { ElapsedTime = ElapsedTime.AddSeconds(1); },
+                (_) =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        ElapsedTime = ElapsedTime.AddSeconds(1);
+                    });
+                },
                 null,
                 TimeSpan.FromSeconds(1),
                 TimeSpan.FromSeconds(1)
@@ -117,12 +127,17 @@ namespace JustCompute.Presentation.ViewModels
 
         private void OnDeviceLocationChangedCallback(object? sender, GeolocationLocationChangedEventArgs e)
         {
+            if (DateTime.Now - _lastUpdate < _updateInterval)
+                return;
+
+            _lastUpdate = DateTime.Now;
+
             var location = e.Location;
             _distanceCalculator.StartingPoint ??= new Coordinate(location.Latitude, location.Longitude);
 
             if (_distanceCalculator.LastPoint != null)
             {
-                _distanceCalculator.PreviousPoint = new Coordinate(_distanceCalculator.LastPoint.Latitude.ToDouble(), _distanceCalculator.LastPoint.Longitude.ToDouble());
+                _distanceCalculator.PreviousPoint = _distanceCalculator.LastPoint;
             }
             _distanceCalculator.LastPoint = new Coordinate(location.Latitude, location.Longitude);
 
@@ -141,7 +156,8 @@ namespace JustCompute.Presentation.ViewModels
             {
                 Elevation = Math.Round(_distanceCalculator.GetElevation(Altitude), 2);
                 TravelledDistance = Math.Round(_distanceCalculator.GetCurvedDistance(TravelledDistance));
-                DirectDistance = Math.Round(_distanceCalculator.GetDirectDistance());
+                DirectDistance = Math.Round(_distanceCalculator.GetDirectDistance()); 
+                CalculatedSpeed = Math.Round(_distanceCalculator.GetSpeed(), 2);
             }
         }
 

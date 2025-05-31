@@ -26,15 +26,16 @@ namespace Compute.Core.Domain.Services.Sun
                 {
                     coordinate.GeoDate = date + TimeSpan.FromDays(index);
 
-                    int offsetHours = coordinate.CalculateOffsetHours();
-                    coordinate.Offset = offsetHours;
+                    var zonedDateTime = coordinate.GetZonedDateTime();
+                    coordinate.Offset = zonedDateTime?.Offset.Seconds / 3600 ?? 0;
 
                     BaseCelestialBodyCycle celestialInfo = new()
                     {
                         GeoDate = coordinate.GeoDate,
                         RiseTime = coordinate.CelestialInfo.SunRise,
                         SetTime = coordinate.CelestialInfo.SunSet,
-                        ZodiacSign = AstroExtensions.CalculateZodiacSign(coordinate.GeoDate)
+                        ZodiacSign = AstroExtensions.CalculateZodiacSign(coordinate.GeoDate),
+                        IsDaylightSavingTime = zonedDateTime?.IsDaylightSavingTime() ?? false,
                     };
                     sunCycles.Add(celestialInfo);
                 }

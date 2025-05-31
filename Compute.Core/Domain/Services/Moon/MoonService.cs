@@ -2,6 +2,7 @@
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Extensions;
 using CoordinateSharp;
+using NodaTime;
 using Distance = Compute.Core.Domain.Entities.Models.Distance.Distance;
 
 namespace Compute.Core.Domain.Services.Moon
@@ -26,9 +27,8 @@ namespace Compute.Core.Domain.Services.Moon
                 for (int index = 0; index < TotalNumberOfDaysInTheCurrentYear; index++)
                 {
                     coordinate.GeoDate = date + TimeSpan.FromDays(index);
-
-                    int offsetHours = coordinate.CalculateOffsetHours();
-                    coordinate.Offset = offsetHours;
+                    var zonedDateTime = coordinate.GetZonedDateTime();
+                    coordinate.Offset = zonedDateTime?.Offset.Seconds / 3600 ?? 0;
 
                     var celestialInfo = new MoonCycle
                     {
@@ -40,7 +40,8 @@ namespace Compute.Core.Domain.Services.Moon
                         PhaseName = (MoonPhase)coordinate.CelestialInfo.MoonIllum.PhaseNameEnum,
                         ZodiacSign = AstroExtensions.CalculateZodiacSign(coordinate.GeoDate),
                         MoonInZodiacSign = (AstrologicalSignType)coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
-                        MoonName = (Entities.Models.Moon.MoonName)coordinate.CelestialInfo.AlmanacMoonName.EName
+                        MoonName = (Entities.Models.Moon.MoonName)coordinate.CelestialInfo.AlmanacMoonName.EName,
+                        IsDaylightSavingTime = zonedDateTime?.IsDaylightSavingTime() ?? false,
                     };
                     moonCycles.Add(celestialInfo);
                 }

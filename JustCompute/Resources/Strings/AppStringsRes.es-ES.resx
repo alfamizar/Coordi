@@ -129,12 +129,6 @@
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
     <value>Hora de inicio del eclipse anular o total: {0}</value>
   </data>
-  <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Zodíaco: {0}</value>
-  </data>
-  <data name="WormMoonLabel" xml:space="preserve">
-    <value>Luna de gusano</value>
-  </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
     <value>Hora de finalización del eclipse anular o total: {0}</value>
   </data>
@@ -161,9 +155,6 @@
   </data>
   <data name="CancerLabel" xml:space="preserve">
     <value>Cáncer</value>
-  </data>
-  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
-    <value>¡No puedes eliminar la ubicación actual!</value>
   </data>
   <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
     <value>No se puede obtener la ubicación actual. Vuelva a intentarlo más tarde, agregue una ubicación manualmente o seleccione una de la lista de ubicaciones disponibles en la base de datos.</value>
@@ -216,8 +207,8 @@
   <data name="DistanceFormattedLabel" xml:space="preserve">
     <value>Distancia: {0:0.##} {1}</value>
   </data>
-  <data name="DistanceLabel" xml:space="preserve">
-    <value>Distancia</value>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Velocidad y distancia</value>
   </data>
   <data name="DistanceUnitLabel" xml:space="preserve">
     <value>Unidad de distancia</value>
@@ -396,6 +387,12 @@
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Penumbral</value>
   </data>
+  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Penumbral eclipse begin time: {0}</value>
+  </data>
+  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Penumbral eclipse end time: {0}</value>
+  </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>La aplicación necesita permiso de ubicación para funcionar. Vaya a la configuración de la aplicación y gran permiso o cierre la aplicación</value>
   </data>
@@ -410,12 +407,6 @@
   </data>
   <data name="PlusAddLocationLabel" xml:space="preserve">
     <value>+ Agregar ubicación</value>
-  </data>
-  <data name="Point1Label" xml:space="preserve">
-    <value>Punto 1</value>
-  </data>
-  <data name="Point2Label" xml:space="preserve">
-    <value>Punto 2</value>
   </data>
   <data name="PopulationFormattedLabel" xml:space="preserve">
     <value>Población: {0:N0}</value>
@@ -537,12 +528,6 @@
   <data name="WaningGibbousLabel" xml:space="preserve">
     <value>Gibosa menguante</value>
   </data>
-  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Penumbral eclipse begin time: {0}</value>
-  </data>
-  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Penumbral eclipse end time: {0}</value>
-  </data>
   <data name="WaxingCrescentLabel" xml:space="preserve">
     <value>Waxing Crescent</value>
   </data>
@@ -552,11 +537,23 @@
   <data name="WolfMoonLabel" xml:space="preserve">
     <value>Wolf Moon</value>
   </data>
+  <data name="WormMoonLabel" xml:space="preserve">
+    <value>Luna de gusano</value>
+  </data>
+  <data name="ZodiacSignLabel" xml:space="preserve">
+    <value>Zodíaco: {0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Punto 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Punto 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>¡No puedes eliminar la ubicación actual!</value>
+  </data>
   <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
     <value>No se puede empezar a escuchar la ubicación</value>
-  </data>
-  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
-    <value>No puedo dejar de escuchar la ubicación</value>
   </data>
   <data name="DuplicatedLocationToastMessge" xml:space="preserve">
     <value>La ubicación con ese nombre ya existe</value>
@@ -588,9 +585,6 @@
   <data name="RulerLabel" xml:space="preserve">
     <value>Distanciómetro</value>
   </data>
-  <data name="SpeedAndDistanceLabel" xml:space="preserve">
-    <value>Velocidad y distancia</value>
-  </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Velocidad</value>
   </data>
@@ -602,5 +596,14 @@
   </data>
   <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
     <value>Error al escuchar la ubicación</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Distancia</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>No puedo dejar de escuchar la ubicación</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>Velocidad de diseño</value>
   </data>
 </root>

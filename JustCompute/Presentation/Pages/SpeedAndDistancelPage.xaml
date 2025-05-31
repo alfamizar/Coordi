@@ -26,33 +26,37 @@
                                        ItemValue="{Binding Speed, StringFormat={localization:Localize FormattedSpeedLabel}}"
                                        Margin="8, 2, 8, 2"  />
 
+                <views:DynamicInfoItem ItemTitle="{localization:Localize CalculatedSpeedLabel}"
+                                       ItemValue="{Binding CalculatedSpeed, StringFormat={localization:Localize FormattedSpeedLabel}}"
+                                       Margin="8, 2, 8, 2"/>
+
                 <views:DynamicInfoItem ItemTitle="{localization:Localize DirectionLabel}"
-                                           ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize AccuracyLabel}"
-                                           ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize VertialAccuracyLabel}"
-                                           ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize AltitudeLabel}"
-                                           ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize ElevationLabel}"
-                                           ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize TravelledDistanceLabel}"
-                                           ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
                 <views:DynamicInfoItem ItemTitle="{localization:Localize DirectDistanceLabel}"
-                                           ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
-                                           Margin="8, 2, 8, 2"  />
+                                       ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}"
+                                       Margin="8, 2, 8, 2"  />
 
             </FlexLayout>
         </ScrollView>

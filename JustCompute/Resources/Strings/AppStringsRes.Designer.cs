@@ -187,6 +187,15 @@ namespace JustCompute.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculated speed.
+        /// </summary>
+        public static string CalculatedSpeedLabel {
+            get {
+                return ResourceManager.GetString("CalculatedSpeedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancer.
         /// </summary>
         public static string CancerLabel {
@@ -228,6 +237,15 @@ namespace JustCompute.Resources.Strings {
         public static string CannotStartListeningLocationToastMessage {
             get {
                 return ResourceManager.GetString("CannotStartListeningLocationToastMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot stop listening location.
+        /// </summary>
+        public static string CannotStopListeningLocationToastMessage {
+            get {
+                return ResourceManager.GetString("CannotStopListeningLocationToastMessage", resourceCulture);
             }
         }
         
@@ -381,6 +399,15 @@ namespace JustCompute.Resources.Strings {
         public static string DistanceFormattedLabel {
             get {
                 return ResourceManager.GetString("DistanceFormattedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance.
+        /// </summary>
+        public static string DistanceLabel {
+            get {
+                return ResourceManager.GetString("DistanceLabel", resourceCulture);
             }
         }
         
@@ -1191,15 +1218,6 @@ namespace JustCompute.Resources.Strings {
         public static string StrawberryMoonLabel {
             get {
                 return ResourceManager.GetString("StrawberryMoonLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot stop listening location.
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
