@@ -24,8 +24,9 @@
               Padding="4,0">
             <Grid ColumnDefinitions="*,Auto"
                   Grid.Row="0">
-                <SearchBar x:Name="searchBar"
-                           Grid.Column="0"
+                  <HorizontalStackLayout 
+                    Grid.Column="0">
+                    <SearchBar x:Name="searchBar"      
                            Text="{Binding SearchTerm}"
                            Placeholder="{localization:Localize SearchPlaceholderLabel}"
                            IsReadOnly="{Binding IsBusy}"
@@ -38,6 +39,8 @@
                                                            ShouldDismissKeyboardAutomatically="True"/>
                     </SearchBar.Behaviors>
                 </SearchBar>
+                  </HorizontalStackLayout>
+                
                 <ImageButton x:Name="sortButton"
                              Grid.Column="1"
                              Padding="4"
