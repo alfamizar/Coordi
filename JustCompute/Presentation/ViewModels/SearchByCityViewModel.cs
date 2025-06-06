@@ -61,7 +61,9 @@ namespace JustCompute.Presentation.ViewModels
         {
             if (e.PropertyName == nameof(SelectedSortCriterion))
             {
+                IsBusy = true;
                 LocationsSearchResult = await SortLocationsInBackground(LocationsSearchResult);
+                IsBusy = false;
             }
         }
 
