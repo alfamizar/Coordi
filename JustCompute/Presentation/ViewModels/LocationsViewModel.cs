@@ -71,11 +71,11 @@ namespace JustCompute.Presentation.ViewModels
             {
                 _gpsLocationService.DeviceLocation = deviceLocation;
 
-                if (Locations.Count > 0)
+                if (Locations.Count > 0 && _gpsLocationService.SelectedLocation == Locations[0])
                 {
                     Locations[0] = deviceLocation;
                 }
-                else
+                else if (!Locations.Any(loc => loc.Id == deviceLocation.Id))
                 {
                     Locations.Add(deviceLocation);
                 }
@@ -150,14 +150,13 @@ namespace JustCompute.Presentation.ViewModels
 
             lock (Locations)
             {
-                // Filter out locations that are already in the Locations list
                 var newLocations = savedLocations
                     .Where(newLoc => !Locations.Any(existingLoc => existingLoc.Id == newLoc.Id))
                     .ToList();
 
-                // Insert the new locations that are not already present
-                Locations.InsertRange(newLocations);
-            }
+                if (newLocations.Count > 0)
+                    Locations.InsertRange(newLocations);
+                }
         }
 
         protected async Task<bool> HandlePermissions()

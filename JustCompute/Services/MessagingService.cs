@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Common.Messaging;
 
-namespace JustCompute.Presentation.Dialogs
+namespace JustCompute.Services
 {
     public class MessagingService : IMessagingService
     {
