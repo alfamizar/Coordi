@@ -1,11 +1,14 @@
 # Coordi — Google Play store-listing automation (fastlane)
 
-These lanes push **only localized store-listing text** (title / short description /
-full description) to Google Play. They never upload an APK/AAB, images, or
-screenshots. The localized copy lives in `fastlane/metadata/android/<locale>/`.
+Two groups of lanes:
+
+- **Store listing** — `upload_listing`, `upload_listing_and_screenshots`: push localized
+  listing text + screenshots from `fastlane/metadata/android/<locale>/`.
+- **App release** — `build_aab`, `release`, `ship`: build a signed AAB and upload it to a
+  Play track (see §7).
 
 > The in-app strings (`AppStringsRes.*.resx`) and the **store-listing** text are
-> different things. This folder is the store listing only.
+> different things. The `metadata/` folder is the store listing only.
 
 ## 1. Prerequisites
 
@@ -19,8 +22,11 @@ gem install fastlane           # or: brew install fastlane
 2. **Google Cloud Console → IAM & Admin → Service Accounts → Create service account.**
 3. On that service account: **Keys → Add key → Create new key → JSON** → a `*.json` downloads.
    **This file is the secret.**
-4. Back in **Play Console → API access → Grant access** to the service account, and give it
-   **least privilege** — only "Manage store presence" (store listing). Not Admin.
+4. Back in **Play Console → Users & permissions** (or **API access → Grant access**), invite the
+   service account and give it **least privilege** for what you'll automate:
+   - **Store listing only:** "Manage store presence."
+   - **Uploading the app (AAB):** also "Release apps to testing tracks" and "Release to
+     production" — required for `fastlane android release`. (Not full Admin.)
 5. (Permissions can take a few minutes to propagate.)
 
 ## 3. Protect the key
@@ -77,3 +83,50 @@ Each `metadata/android/<locale>/` has:
 
 The committed files are **placeholders** (`TODO: ...`). Replace them with real copy before
 running `upload_listing`. `upload_listing_dry_run` will validate length limits for you.
+
+## 7. Build & publish the app (AAB)
+
+Builds a **signed Android App Bundle** and uploads it. Needs an **upload key** (signing) in
+addition to the service-account key (auth from §2–3).
+
+### 7.1 Create the upload keystore (one time)
+
+Google Play uses **Play App Signing**: Google holds the real app-signing key; you sign uploads
+with your own *upload key*. Generate it once and **back it up** — keep it out of the repo:
+
+```bash
+keytool -genkeypair -v \
+  -keystore coordi-upload.keystore \
+  -alias coordi \
+  -keyalg RSA -keysize 2048 -validity 10000 \
+  -storetype pkcs12
+```
+
+### 7.2 Point env vars at the secrets (never commit these)
+
+```bash
+export COORDI_KEYSTORE="$HOME/.secrets/coordi-upload.keystore"
+export COORDI_KEYSTORE_PASS="…"
+export COORDI_KEY_ALIAS="coordi"
+export COORDI_KEY_PASS="…"
+export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"   # from §3
+```
+
+### 7.3 Build + upload
+
+```bash
+fastlane android build_aab   # dotnet publish -> signed *-Signed.aab (passwords are not logged)
+fastlane android release     # upload to the 'internal' track as a draft
+fastlane android ship        # = build_aab + release
+```
+
+Overrides (env): `COORDI_TRACK` (default `internal`), `COORDI_RELEASE_STATUS` (default `draft`),
+`COORDI_AAB` (upload a specific bundle instead of the freshly built one).
+
+### 7.4 First release of a NEW app — set it up in the Console first
+
+`supply` uploads the binary but **cannot fill the required legal/content forms.** For a brand-new
+listing, complete these in **Play Console** first: create the app under `com.cutecompute.coordi`,
+add a **privacy-policy URL**, the **Data safety** form, **content rating**, **target audience**,
+and the ads declaration. Then upload the first AAB (via the Console, or `fastlane android release`
+to **internal**), verify, and promote to production — don't push straight to prod.

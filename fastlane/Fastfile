@@ -1,13 +1,28 @@
 default_platform(:android)
 
-# Coordi store-listing automation.
+# Coordi — Google Play automation.
 #
-# These lanes push ONLY localized store-listing TEXT (title / short description /
-# full description) from fastlane/metadata/android/<locale>/. They never upload an
-# APK/AAB, images, or screenshots.
+#   * Store listing (check_play_key, upload_listing*): push localized listing TEXT /
+#     screenshots from fastlane/metadata/android/<locale>/.
+#   * App release (build_aab, release, ship): build a signed AAB and upload it to a track.
 #
-# The service-account key is read from $SUPPLY_JSON_KEY (see Appfile + README).
-# Run `bundle exec fastlane android check_play_key` first to confirm it works.
+# All secrets are read from the environment and NEVER committed (see fastlane/README.md):
+#   * SUPPLY_JSON_KEY  — Play service-account JSON (auth; needs Release permission for uploads)
+#   * COORDI_KEYSTORE / COORDI_KEYSTORE_PASS / COORDI_KEY_ALIAS / COORDI_KEY_PASS — upload signing
+# Run `bundle exec fastlane android check_play_key` first to confirm auth works.
+
+# fastlane/ lives one level below the repo root.
+def coordi_repo_root
+  File.expand_path("..", __dir__)
+end
+
+ANDROID_TFM = "net10.0-android36.0"
+
+# Newest signed AAB produced by `dotnet publish` (nil if none built yet).
+def coordi_signed_aab
+  Dir[File.join(coordi_repo_root, "JustCompute/bin/Release/#{ANDROID_TFM}/publish/*-Signed.aab")]
+    .max_by { |f| File.mtime(f) }
+end
 
 platform :android do
   desc "Validate the Google Play service-account key is present and authorized"
@@ -51,5 +66,54 @@ platform :android do
       skip_upload_images: true,        # icon / feature graphic — none provided here
       skip_upload_screenshots: false   # phone screenshots ARE uploaded
     )
+  end
+
+  # ---- App release (signed AAB) ----
+
+  desc "Build a signed release AAB (env: COORDI_KEYSTORE, COORDI_KEYSTORE_PASS, COORDI_KEY_ALIAS, COORDI_KEY_PASS)"
+  lane :build_aab do
+    %w[COORDI_KEYSTORE COORDI_KEYSTORE_PASS COORDI_KEY_ALIAS COORDI_KEY_PASS].each do |var|
+      UI.user_error!("Missing env #{var} — see fastlane/README.md") if ENV[var].to_s.empty?
+    end
+    UI.user_error!("Keystore not found: #{ENV['COORDI_KEYSTORE']}") unless File.exist?(ENV["COORDI_KEYSTORE"])
+
+    # log: false keeps the keystore passwords out of the fastlane output/logs.
+    sh("dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
+       "-f", ANDROID_TFM, "-c", "Release",
+       "-p:AndroidPackageFormat=aab",
+       "-p:AndroidKeyStore=true",
+       "-p:AndroidSigningKeyStore=#{ENV['COORDI_KEYSTORE']}",
+       "-p:AndroidSigningStorePass=#{ENV['COORDI_KEYSTORE_PASS']}",
+       "-p:AndroidSigningKeyAlias=#{ENV['COORDI_KEY_ALIAS']}",
+       "-p:AndroidSigningKeyPass=#{ENV['COORDI_KEY_PASS']}",
+       log: false)
+
+    aab = coordi_signed_aab
+    UI.user_error!("Publish finished but no *-Signed.aab was found under publish/") if aab.nil?
+    UI.success("Built signed AAB: #{aab}")
+    aab
+  end
+
+  desc "Upload a signed AAB to a Play track (env: COORDI_AAB?, COORDI_TRACK=internal, COORDI_RELEASE_STATUS=draft)"
+  lane :release do
+    aab = ENV["COORDI_AAB"].to_s.empty? ? coordi_signed_aab : ENV["COORDI_AAB"]
+    UI.user_error!("No AAB found — run `fastlane android build_aab` first or set COORDI_AAB.") if aab.nil? || !File.exist?(aab)
+
+    upload_to_play_store(
+      aab: aab,
+      track: ENV["COORDI_TRACK"] || "internal",
+      release_status: ENV["COORDI_RELEASE_STATUS"] || "draft",
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Build the signed AAB and upload it (build_aab + release)"
+  lane :ship do
+    build_aab
+    release
   end
 end

@@ -404,6 +404,9 @@ FodyWeavers.xsd
 /secrets/
 fastlane/*.json
 fastlane/.env*
+# Android upload/signing keystore — NEVER commit. Keep it OUTSIDE the repo too.
+*.keystore
+*.jks
 
 # fastlane generated artifacts
 fastlane/report.xml
