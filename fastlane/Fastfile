@@ -6,7 +6,7 @@ default_platform(:android)
 #     screenshots from fastlane/metadata/android/<locale>/.
 #   * App release (build_aab, release, ship): build a signed AAB and upload it to a track.
 #
-# All secrets are read from the environment and NEVER committed (see fastlane/README.md):
+# All secrets are read from the environment and NEVER committed (see docs/google-play-release.md):
 #   * SUPPLY_JSON_KEY  — Play service-account JSON (auth; needs Release permission for uploads)
 #   * COORDI_KEYSTORE / COORDI_KEYSTORE_PASS / COORDI_KEY_ALIAS / COORDI_KEY_PASS — upload signing
 # Run `bundle exec fastlane android check_play_key` first to confirm auth works.

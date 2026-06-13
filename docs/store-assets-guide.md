@@ -159,7 +159,7 @@ You'll be given the **current English short + full description**. Then:
 ## 6. Validate & upload
 
 The Google Play service-account key is a **secret** — never commit it. It's read from
-`$SUPPLY_JSON_KEY` (file kept outside the repo). Full key setup: `fastlane/README.md`.
+`$SUPPLY_JSON_KEY` (file kept outside the repo). Full key setup: `docs/google-play-release.md`.
 
 ```bash
 export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"

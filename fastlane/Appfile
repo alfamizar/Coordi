@@ -6,7 +6,7 @@
 #
 #   export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"
 #
-# See fastlane/README.md for how to create, scope, and rotate that key.
+# See docs/google-play-release.md for how to create, scope, and rotate that key.
 
 package_name(ENV["COORDI_PACKAGE_NAME"] || "com.cutecompute.coordi")
 
