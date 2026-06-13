@@ -28,7 +28,7 @@ platform :android do
   desc "Validate the Google Play service-account key is present and authorized"
   lane :check_play_key do
     key = ENV["SUPPLY_JSON_KEY"]
-    UI.user_error!("Set SUPPLY_JSON_KEY to the path of your Play service-account JSON (see fastlane/README.md)") if key.nil? || key.empty?
+    UI.user_error!("Set SUPPLY_JSON_KEY to the path of your Play service-account JSON (see docs/google-play-release.md)") if key.nil? || key.empty?
     UI.user_error!("SUPPLY_JSON_KEY points to a missing file: #{key}") unless File.exist?(key)
     validate_play_store_json_key(json_key: key)
     UI.success("Service-account key is valid.")
@@ -73,7 +73,7 @@ platform :android do
   desc "Build a signed release AAB (env: COORDI_KEYSTORE, COORDI_KEYSTORE_PASS, COORDI_KEY_ALIAS, COORDI_KEY_PASS)"
   lane :build_aab do
     %w[COORDI_KEYSTORE COORDI_KEYSTORE_PASS COORDI_KEY_ALIAS COORDI_KEY_PASS].each do |var|
-      UI.user_error!("Missing env #{var} — see fastlane/README.md") if ENV[var].to_s.empty?
+      UI.user_error!("Missing env #{var} — see docs/google-play-release.md") if ENV[var].to_s.empty?
     end
     UI.user_error!("Keystore not found: #{ENV['COORDI_KEYSTORE']}") unless File.exist?(ENV["COORDI_KEYSTORE"])
 
