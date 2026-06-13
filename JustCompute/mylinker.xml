@@ -1,0 +1,22 @@
+<linker>
+	<!-- AutoMapper builds type maps via reflection. Without preserve, trimming strips the metadata
+	     it walks at runtime and Map() throws missing-member errors. -->
+	<assembly fullname="AutoMapper" preserve="all" />
+
+	<!-- Persistence layer is small but heavily reflection-driven:
+	     - sqlite-net-pcl reflects over [Table]/[PrimaryKey]-attributed entity classes
+	     - AutoMapperProfile references DTOs that nothing else touches statically
+	     - DI-resolved repositories live here
+	     Cheaper to preserve the whole assembly than to chase down every missed reference. -->
+	<assembly fullname="JustCompute.Persistence" preserve="all" />
+
+	<!-- Compute.Core holds domain entities and time/timezone helpers reached by AutoMapper member
+	     expressions (TimeZoneOffset.GetUtcOffsets, City, Location, ...). Preserve wholesale;
+	     the assembly is small and trimming the wrong piece here breaks data load at runtime. -->
+	<assembly fullname="Compute.Core" preserve="all" />
+
+	<!-- Enum.ToString() / IFormattable paths need enum metadata that the linker would otherwise strip. -->
+	<assembly fullname="System.Runtime">
+		<type fullname="System.Enum" preserve="all" />
+	</assembly>
+</linker>

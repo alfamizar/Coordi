@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup x:Class="JustCompute.Shared.Popups.SortOptionsPopup"
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+               xmlns:viewModels="clr-namespace:JustCompute.Shared.Popups"
+               xmlns:models="clr-namespace:JustCompute.Shared.Models"
+               xmlns:popupModels="clr-namespace:JustCompute.Shared.Popups"
+               x:TypeArguments="popupModels:SortOptionsPopupResult"
+               x:DataType="viewModels:SortOptionsPopupViewModel"
+               CanBeDismissedByTappingOutsideOfPopup="True"
+               Padding="0"
+               Margin="0"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               BackgroundColor="Transparent">
+
+    <Border StrokeShape="RoundRectangle 25"
+            WidthRequest="220"
+            StrokeThickness="0"
+            Padding="16,12"
+            Margin="0"
+            Background="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}">
+
+        <VerticalStackLayout>
+            
+            <Label Text="{localization:Localize SortByLabel}"
+                   FontSize="Medium"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,20" />
+
+            <CollectionView ItemsSource="{Binding SortingCriteria}"
+                            SelectionMode="None"
+                            SelectedItem="{Binding SelectedSortCriterion, Mode=TwoWay}">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SelectableSortingCriterion">
+                        
+                        <Grid Padding="8" ColumnDefinitions="Auto, *">
+                            
+                            <Label Grid.Column="0"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   Text="{Binding SortingCriterion.DisplayName}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsSelected}"
+                                                 Value="True">
+                                        <Setter Property="TextColor"
+                                                Value="{AppThemeBinding
+                                            Light={StaticResource LightPrimaryVariant},
+                                            Dark={StaticResource DarkPrimary}}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            
+                            <Image Grid.Column="1" 
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"
+                                   Source="{Binding ., Converter={StaticResource SortDirectionToImageConverter}}"/>
+                            
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped"
+                                                      CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            
+        </VerticalStackLayout>
+        
+    </Border>
+
+</toolkit:Popup>

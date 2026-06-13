@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="JustCompute.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:sun="clr-namespace:JustCompute.Features.Sun"
+       xmlns:moon="clr-namespace:JustCompute.Features.Moon"
+       xmlns:sunEclipses="clr-namespace:JustCompute.Features.SunEclipses"
+       xmlns:moonEclipses="clr-namespace:JustCompute.Features.MoonEclipses"
+       xmlns:distance="clr-namespace:JustCompute.Features.Distance"
+       xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
+       xmlns:coordinatesConverter="clr-namespace:JustCompute.Features.CoordinatesConverter"
+       xmlns:timeTravel="clr-namespace:JustCompute.Features.TimeTravel"
+       xmlns:settings="clr-namespace:JustCompute.Features.Settings"
+       xmlns:locations="clr-namespace:JustCompute.Features.Locations"
+       xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+       Shell.TabBarIsVisible="True"
+       FlyoutWidth="230">
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Image Source="appdrawer_header.png"
+                   WidthRequest="230"
+                   HeightRequest="230"/>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize LocationsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=location_icon_light.png, Dark=location_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize LocationsLabel}"
+                      Route="locations"
+                      ContentTemplate="{DataTemplate locations:LocationsPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SetsAndRisesLabel}"
+                FlyoutIcon="{AppThemeBinding Light=twilight_icon_light.png, Dark=twilight_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize SunLabel}"
+                      Icon="sun_icon.png"
+                      Route="sun"
+                      ContentTemplate="{DataTemplate sun:SunPage}" />
+        <ShellContent Title="{localization:Localize MoonLabel}"
+                      Icon="moon_icon.png"
+                      Route="moon"
+                      ContentTemplate="{DataTemplate moon:MoonPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize EclipsesLabel}"
+                FlyoutIcon="{AppThemeBinding Light=eclipses_icon_light.png, Dark=eclipses_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize SunEclipsesLabel}"
+                      Icon="sun_icon.png"
+                      Route="sunEclipses"
+                      ContentTemplate="{DataTemplate sunEclipses:SunEclipsesPage}" />
+        <ShellContent Title="{localization:Localize MoonEclipsesLabel}"
+                      Icon="moon_icon.png"
+                      Route="moonEclipses"
+                      ContentTemplate="{DataTemplate moonEclipses:MoonEclipsesPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize RulerLabel}"
+                FlyoutIcon="{AppThemeBinding Light=ruler_icon_light.png, Dark=ruler_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize RulerLabel}"
+                      Route="ruler"
+                      ContentTemplate="{DataTemplate distance:DistancePage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SpeedAndDistanceLabel}"
+                FlyoutIcon="{AppThemeBinding Light=speed_icon_light.png, Dark=speed_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize SpeedAndDistanceLabel}"
+                      Route="speedAndDistance"
+                      ContentTemplate="{DataTemplate speedAndDistance:SpeedAndDistancelPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem IsVisible="False"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize ConvertersLabel}"
+                FlyoutIcon="{AppThemeBinding Light=convert_icon_light.png, Dark=convert_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
+                      ContentTemplate="{DataTemplate coordinatesConverter:CoordinatesConverterPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem IsVisible="False"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize TimeTravelLabel}"
+                FlyoutIcon="{AppThemeBinding Light=clock_icon_light.png, Dark=clock_icon_light.png}">
+
+        <ShellContent Title="{localization:Localize TimeTravelLabel}"
+                      ContentTemplate="{DataTemplate timeTravel:TimeTravelPage}" />
+
+    </FlyoutItem>
+    
+    <FlyoutItem IsVisible="True"
+                FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SettingsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=settings_icon_light.png, Dark=settings_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize SettingsLabel}"
+                      Route="settings"
+                      ContentTemplate="{DataTemplate settings:SettingsPage}" />
+
+    </FlyoutItem>
+
+</Shell>

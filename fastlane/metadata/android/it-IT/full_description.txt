@@ -1,0 +1,33 @@
+Scopri l'Universo con Coordi — il tuo calcolatore celeste offline!
+
+Coordi mette l'astronomia di precisione a portata di mano. Che tu sia un appassionato di stelle, un fotografo, un escursionista, un velista o semplicemente curioso del cielo, Coordi calcola i dati di Sole, Luna, eclissi e coordinate per qualsiasi luogo e data. E ora li mostra in modo chiaro con grafici, previsioni meteo a 7 giorni e il tema chiaro o scuro che preferisci.
+
+FUNZIONI PRINCIPALI
+
+* Sole e Luna: orari precisi di alba e tramonto, durata del giorno e un arco solare interattivo che mostra la posizione del Sole durante la giornata.
+* Fasi lunari: la fase attuale con illuminazione e i nomi tradizionali delle lune piene, oltre a una chiara linea temporale giorno/notte.
+* Eclissi: le prossime eclissi solari e lunari con inizio, culmine e fine.
+* Segni zodiacali: il segno del Sole e della Luna per qualsiasi data.
+* Durata del giorno: le ore di luce per ogni giorno e luogo.
+* Meteo: previsioni facoltative a 7 giorni per i tuoi luoghi salvati.
+* Convertitore di coordinate: ogni punto nei formati UTM e MGRS.
+* Righello: misura la distanza tra due punti sulla Terra con grande precisione.
+* Città più vicina: trova la città più vicina a qualsiasi coordinata con la formula dell'emisenoverso (Haversine).
+* Luoghi salvati: conserva i tuoi posti preferiti e scorrili con un tocco.
+
+A MODO TUO
+
+* Temi chiaro, scuro e di sistema.
+* Scegli le unità: chilometri o miglia, oltre a m/s, km/h o mph.
+* Formato a 12 o 24 ore.
+* Disponibile in molte lingue.
+
+PERCHÉ COORDI?
+
+* Funziona offline: ogni calcolo astronomico avviene sul tuo dispositivo, senza connessione. Solo le previsioni meteo facoltative usano internet.
+* Design pulito e intuitivo, facile da navigare.
+* Dati accurati e affidabili per ogni tua esigenza celeste.
+* Nessuna pubblicità.
+* Migliorato di continuo — i tuoi suggerimenti guidano le nuove funzioni.
+
+Esplora le meraviglie del cielo, ovunque tu sia. Scarica Coordi oggi stesso e fai il primo passo verso la padronanza dei calcoli celesti!

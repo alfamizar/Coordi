@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.InputLocation.InputLocationPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.InputLocation"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:views="clr-namespace:JustCompute.Shared.Controls"
+             x:DataType="ViewModels:InputLocationViewModel"
+             Shell.PresentationMode="Animated"
+             Shell.TabBarIsVisible="False"
+             Title="{localization:Localize AddLocationLabel}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Content>
+
+        <Grid RowDefinitions="*, 64"
+              Padding="4,0"
+              IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+
+            <ScrollView Grid.Row="0">
+
+                <StackLayout Padding="8"
+                             Spacing="16">
+
+                    <Label Text="{localization:Localize LocationNameLabel}" />
+                    <Entry x:Name="LocationNameEntry"
+                           Placeholder="{localization:Localize LocationNameInputPlaceholderLabel}"
+                           Text="{Binding Location.Name, Mode=TwoWay}">
+                    </Entry>
+
+                    <Label Text="{localization:Localize CountryLabel}" />
+                    <Entry x:Name="CountryEntry"
+                           Placeholder="{localization:Localize CountryLabel}"
+                           Text="{Binding Location.City.CountryName, Mode=TwoWay}" />
+
+                    <Label Text="{localization:Localize CityLabel}" />
+                    <Entry x:Name="CityEntry"
+                           Placeholder="{localization:Localize CityLabel}"
+                           Text="{Binding Location.City.CityName, Mode=TwoWay}" />
+
+                    <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
+                    <Picker Title="{Binding Location.TimeZoneOffset}"
+                            ItemsSource="{Binding TimeZoneOffsets}"
+                            SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
+
+                    <views:PointEntry Location="{Binding Location}"
+                                      IsPointLabelVisible="False"
+                                      IsPointCityCountryLabelVisible="False"
+                                      ImageButtonIconSource="{AppThemeBinding Light=my_location_icon_dark.png, Dark=my_location_icon_light.png}"
+                                      ImageButtonClickedCommand="{Binding Commands[PrefillCoordinatesCommand]}" />
+
+                </StackLayout>
+
+            </ScrollView>
+
+            <Button x:Name="SaveLocationButton"
+                    Grid.Row="1"
+                    Text="{localization:Localize SaveLocationButtonText}"
+                    Command="{Binding Commands[SaveLocationCommand]}"
+                    Margin="8" />
+
+            <ActivityIndicator HeightRequest="50"
+                               WidthRequest="50"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}" />
+
+        </Grid>
+
+    </ContentPage.Content>
+
+</v1:BasePage>

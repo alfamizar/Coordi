@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Shared.Controls.DynamicInfoItem"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:controls="clr-namespace:JustCompute.Shared.Controls"
+             x:Name="this">
+
+    <Border Stroke="Transparent"
+            StrokeShape="RoundRectangle 10"
+            MinimumWidthRequest="140"
+            MinimumHeightRequest="140"
+            Padding="12"
+            BindingContext="{x:Reference this}"
+            x:DataType="controls:DynamicInfoItem">
+
+        <Grid RowDefinitions="Auto,*">
+
+            <Label x:Name="itemTitle"
+                   Grid.Row="0"
+                   HorizontalOptions="Fill"
+                   HorizontalTextAlignment="Start"
+                   LineBreakMode="WordWrap"
+                   FontSize="16"
+                   Text="{Binding ItemTitle}" />
+
+            <Label x:Name="itemValue"
+                   Grid.Row="1"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   LineBreakMode="WordWrap"
+                   FontSize="18"
+                   Text="{Binding ItemValue}" />
+
+        </Grid>
+
+    </Border>
+
+</ContentView>

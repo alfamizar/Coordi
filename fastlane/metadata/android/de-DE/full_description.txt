@@ -1,0 +1,33 @@
+Entdecke das Universum mit Coordi – deinem astronomischen Rechner für unterwegs!
+
+Coordi bringt präzise Astronomie auf dein Smartphone. Ob Sternegucker, Fotograf, Wanderer, Segler oder einfach neugierig auf den Himmel – Coordi berechnet Daten zu Sonne, Mond, Finsternissen und Koordinaten für jeden Ort und jedes Datum. Und jetzt zeigt es alles übersichtlich mit Diagrammen, einer 7-Tage-Wettervorhersage und wahlweise hellem oder dunklem Design.
+
+FUNKTIONEN
+
+* Sonne & Mond: genaue Auf- und Untergangszeiten, Tageslänge und ein interaktiver Sonnenbogen, der den Stand der Sonne im Tagesverlauf zeigt.
+* Mondphasen: die aktuelle Phase mit Beleuchtungsgrad und traditionellen Vollmond-Namen sowie eine übersichtliche Tag/Nacht-Zeitleiste.
+* Finsternisse: kommende Sonnen- und Mondfinsternisse mit Beginn, Höhepunkt und Ende.
+* Sternzeichen: das Tierkreiszeichen von Sonne und Mond für jedes Datum.
+* Tageslänge: die Dauer des Tageslichts für jeden Tag und Ort.
+* Wetter: eine optionale 7-Tage-Vorhersage für deine gespeicherten Orte.
+* Koordinaten-Umrechner: jeden Punkt in den Formaten UTM und MGRS anzeigen.
+* Lineal: die Entfernung zwischen zwei Punkten auf der Erde hochpräzise messen.
+* Nächste Stadt: die nächstgelegene Stadt zu beliebigen Koordinaten per Haversine-Formel finden.
+* Gespeicherte Orte: deine Lieblingsorte sichern und bequem durchblättern.
+
+GANZ NACH DEINEM GESCHMACK
+
+* Helles, dunkles und systemabhängiges Design.
+* Wähle deine Einheiten: Kilometer oder Meilen sowie m/s, km/h oder mph.
+* 12- oder 24-Stunden-Format.
+* In vielen Sprachen verfügbar.
+
+WARUM COORDI?
+
+* Funktioniert offline: jede astronomische Berechnung läuft auf deinem Gerät, ganz ohne Verbindung. Nur die optionale Wettervorhersage nutzt das Internet.
+* Klares, intuitives Design, das sich einfach bedienen lässt.
+* Genaue, zuverlässige Daten für alle deine Himmelsfragen.
+* Keine Werbung.
+* Ständig verbessert – dein Feedback prägt neue Funktionen.
+
+Entdecke die Wunder des Himmels, wo immer du bist. Lade Coordi noch heute herunter und mach den ersten Schritt zum Meister der Himmelsberechnungen!

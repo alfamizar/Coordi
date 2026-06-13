@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.SpeedAndDistance.SpeedAndDistancelPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.SpeedAndDistance"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.TabBarIsVisible="False"
+             xmlns:views="clr-namespace:JustCompute.Shared.Controls"
+             x:DataType="ViewModels:SpeedAndDistanceViewModel">
+
+    <Grid RowDefinitions="*, Auto"
+          Padding="8">
+
+        <ScrollView Grid.Row="0"
+                    VerticalScrollBarVisibility="Never">
+
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                  ColumnSpacing="12"
+                  RowSpacing="12"
+                  Padding="2">
+
+                <views:DynamicInfoItem
+                    Grid.Row="0" Grid.Column="0"
+                    ItemTitle="{localization:Localize SpeedLabel}"
+                    ItemValue="{Binding FormattedSpeed}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="0" Grid.Column="1"
+                    ItemTitle="{localization:Localize CalculatedSpeedLabel}"
+                    ItemValue="{Binding FormattedCalculatedSpeed}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="1" Grid.Column="0"
+                    ItemTitle="{localization:Localize DirectionLabel}"
+                    ItemValue="{Binding Direction, StringFormat={localization:Localize FormattedDegreesLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="1" Grid.Column="1"
+                    ItemTitle="{localization:Localize AccuracyLabel}"
+                    ItemValue="{Binding Accuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="2" Grid.Column="0"
+                    ItemTitle="{localization:Localize VertialAccuracyLabel}"
+                    ItemValue="{Binding VerticalAccuracy, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="2" Grid.Column="1"
+                    ItemTitle="{localization:Localize AltitudeLabel}"
+                    ItemValue="{Binding Altitude, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="3" Grid.Column="0"
+                    ItemTitle="{localization:Localize ElevationLabel}"
+                    ItemValue="{Binding Elevation, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="3" Grid.Column="1"
+                    ItemTitle="{localization:Localize TravelledDistanceLabel}"
+                    ItemValue="{Binding TravelledDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+                <views:DynamicInfoItem
+                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    ItemTitle="{localization:Localize DirectDistanceLabel}"
+                    ItemValue="{Binding DirectDistance, StringFormat={localization:Localize FormattedDistanceLabel}}" />
+
+            </Grid>
+
+        </ScrollView>
+
+        <Grid ColumnDefinitions="Auto,Auto,*"
+              ColumnSpacing="8"
+              Grid.Row="1">
+
+            <ImageButton Grid.Column="0"
+                         Command="{Binding Commands[ToggleLocationTrackingCommand]}"
+                         WidthRequest="50"
+                         HeightRequest="50"
+                         CornerRadius="32"
+                         Background="Transparent"
+                         VerticalOptions="Center"
+                         Margin="8"
+                         Source="{AppThemeBinding Light=play_circle_light_dark.png, Dark=play_circle_icon_light.png}">
+                <ImageButton.Triggers>
+                    <DataTrigger TargetType="ImageButton"
+                                 Binding="{Binding IsRunning}"
+                                 Value="True">
+                        <Setter Property="Source"
+                                Value="{AppThemeBinding Light=stop_circle_light_dark.png, Dark=stop_circle_icon_light.png}" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
+
+            <Label Grid.Column="1"
+                   VerticalOptions="Center"
+                   Margin="8"
+                   FontSize="28">
+                <Label.Text>
+                    <Binding Path="IsRunning">
+                        <Binding.Converter>
+                            <toolkit:BoolToObjectConverter TrueObject="Stop"
+                                                           FalseObject="Start" />
+                        </Binding.Converter>
+                    </Binding>
+                </Label.Text>
+            </Label>
+
+
+            <HorizontalStackLayout Grid.Column="2"
+                                   HorizontalOptions="End">
+
+                <Image Source="{AppThemeBinding Light=timer_icon_dark.png, Dark=timer_icon_light.png}"
+                       VerticalOptions="Center"
+                       WidthRequest="50"
+                       HeightRequest="50"/>
+
+                <Label VerticalOptions="Center"
+                       Margin="8"
+                       FontSize="26"
+                       Text="{Binding ElapsedTime, StringFormat='{0:HH:mm:ss}'}" />
+
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}" />
+
+    </Grid>
+
+</v1:BasePage>

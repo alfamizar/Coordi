@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.SearchByCity.SearchByCityPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.SearchByCity"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:views="clr-namespace:JustCompute.Shared.Controls"
+             Shell.PresentationMode="Animated"
+             Shell.TabBarIsVisible="False"
+             x:DataType="ViewModels:SearchByCityViewModel"
+             Title="{localization:Localize SearchCityLabel}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}"/>
+    </Shell.BackButtonBehavior>
+
+    <Grid>
+        <Grid RowDefinitions="Auto, *"
+              RowSpacing="8"
+              Padding="12,8">
+            <Grid ColumnDefinitions="*,Auto"
+                  Grid.Row="0"
+                  ColumnSpacing="12">
+                <SearchBar x:Name="searchBar"
+                           Grid.Column="0"
+                           Text="{Binding SearchTerm}"
+                           Placeholder="{localization:Localize SearchPlaceholderLabel}"
+                           IsReadOnly="{Binding IsBusy}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           MinimumHeightRequest="44">
+                    <SearchBar.Behaviors>
+                        <toolkit:UserStoppedTypingBehavior BindingContext="{Binding Path=BindingContext, Source={x:Reference searchBar}, x:DataType=SearchBar}"
+                                                           Command="{Binding Commands[PerformSearchLocationCommand]}"
+                                                           CommandParameter="{Binding Text, Source={x:Reference searchBar}, x:DataType=SearchBar}"
+                                                           StoppedTypingTimeThreshold="1000"
+                                                           ShouldDismissKeyboardAutomatically="True"/>
+                    </SearchBar.Behaviors>
+                </SearchBar>
+                
+                <ImageButton x:Name="sortButton"
+                             Grid.Column="1"
+                             Padding="6"
+                             Background="Transparent"
+                             WidthRequest="44"
+                             HeightRequest="44"
+                             CornerRadius="8"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center"
+                             Source="{AppThemeBinding Light=sort_icon_dark.png, Dark=sort_icon_light.png}"
+                             Command="{Binding Commands[ShowSortingPopupCommand]}"
+                             CommandParameter="{x:Reference sortButton}"
+                             IsEnabled="{Binding IsBusy, Converter={toolkit:InvertedBoolConverter}}"/>
+            </Grid>
+
+            <CollectionView x:Name="locationsCollectionView"
+                            Grid.Row="1"
+                            ItemsSource="{Binding LocationsSearchResult}"
+                            IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     VerticalItemSpacing="4"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+
+                    <DataTemplate x:DataType="models:Location">
+
+                        <views:LocationItem Location="{Binding .}"
+                                            IsLocationNameVisible="False"
+                                            IsButtonsVisible="False"
+                                            ItemClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand], x:DataType=ViewModels:SearchByCityViewModel}">
+                        </views:LocationItem>
+
+                    </DataTemplate>
+
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"/>
+    </Grid>
+
+</v1:BasePage>

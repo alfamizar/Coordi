@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup x:Class="JustCompute.Shared.Popups.NoOutsideTapDismissPopup"
+           xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:dialogs="clr-namespace:JustCompute.Shared.Popups"
+           xmlns:core="clr-namespace:Compute.Core.UI;assembly=Compute.Core"
+           x:TypeArguments="core:DialogResult"
+           x:DataType="dialogs:NoOutsideTapDismissPopup"
+           x:Name="this"
+           Padding="0"
+           Margin="0"
+           BindingContext="{x:Reference this}">
+
+    <Grid Style="{StaticResource GridDialogContent}"
+          RowDefinitions="Auto,Auto,Auto"
+          Padding="16, 8">
+
+        <Label Grid.Row="0"
+               Style="{StaticResource DialogTitle}"
+               Text="{Binding DialogTitle}"
+               IsVisible="{Binding DialogTitle, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        <Label Grid.Row="1"
+               Text="{Binding DialogMessage}"
+               Style="{StaticResource DialogMessage}"
+               IsVisible="{Binding DialogMessage, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        <StackLayout  Grid.Row="2"
+                      Orientation="Horizontal"
+                      HorizontalOptions="Fill"
+                      Spacing="8">
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="NegativeButtonClicked"
+                    Text="{Binding NegativeButtonText}"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding NegativeButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="NeutralButtonClicked"
+                    Text="{Binding NeutralButtonText}"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding NeutralButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+            <Button Style="{StaticResource DialogButton}"
+                    Clicked="PositiveButtonClicked"
+                    Text="{Binding PositiveButtonText}"
+                    LineBreakMode="WordWrap"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding PositiveButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+        </StackLayout>
+
+    </Grid>
+
+</mct:Popup>

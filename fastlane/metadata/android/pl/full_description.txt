@@ -1,0 +1,33 @@
+Odkryj Wszechświat z Coordi — Twoim kalkulatorem zjawisk niebieskich offline!
+
+Coordi to precyzyjna astronomia w zasięgu ręki. Miłośnik gwiazd, fotograf, turysta, żeglarz czy po prostu ciekawy nieba — Coordi obliczy dane o Słońcu, Księżycu, zaćmieniach i współrzędnych dla dowolnego miejsca i daty. A teraz pokazuje to wszystko przejrzyście dzięki wykresom, prognozie pogody na 7 dni oraz jasnemu lub ciemnemu motywowi do wyboru.
+
+NAJWAŻNIEJSZE FUNKCJE
+
+* Słońce i Księżyc: dokładne godziny wschodu i zachodu, długość dnia oraz interaktywny łuk pokazujący położenie Słońca w ciągu dnia.
+* Fazy Księżyca: aktualna faza z oświetleniem i tradycyjnymi nazwami pełni, a także czytelna oś czasu dzień/noc.
+* Zaćmienia: nadchodzące zaćmienia Słońca i Księżyca z czasem początku, maksimum i końca.
+* Znaki zodiaku: znak Słońca i Księżyca dla dowolnej daty.
+* Długość dnia: czas trwania światła dziennego dla dowolnego dnia i miejsca.
+* Pogoda: opcjonalna prognoza na 7 dni dla zapisanych miejsc.
+* Konwerter współrzędnych: każdy punkt w formatach UTM i MGRS.
+* Linijka: pomiar odległości między dwoma punktami na Ziemi z wysoką precyzją.
+* Najbliższe miasto: znajdź najbliższe miasto dla podanych współrzędnych według wzoru haversine.
+* Zapisane miejsca: przechowuj ulubione punkty i przewijaj między nimi.
+
+PO TWOJEMU
+
+* Motyw jasny, ciemny i systemowy.
+* Wybierz jednostki: kilometry lub mile oraz m/s, km/h albo mph.
+* Format 12- lub 24-godzinny.
+* Dostępne w wielu językach.
+
+DLACZEGO COORDI?
+
+* Działa offline: każde obliczenie astronomiczne odbywa się na Twoim urządzeniu, bez połączenia. Tylko opcjonalna prognoza pogody korzysta z internetu.
+* Czysty, intuicyjny interfejs, po którym łatwo się poruszać.
+* Dokładne i wiarygodne dane do wszystkich Twoich niebieskich potrzeb.
+* Bez reklam.
+* Stale ulepszane — Twoje opinie kształtują nowe funkcje.
+
+Odkrywaj cuda nieba, gdziekolwiek jesteś. Pobierz Coordi już dziś i zrób pierwszy krok do mistrzostwa w obliczeniach niebieskich!

@@ -1,0 +1,33 @@
+Découvrez l'Univers avec Coordi — votre calculateur céleste hors ligne !
+
+Coordi met l'astronomie de précision au bout de vos doigts. Que vous soyez passionné d'étoiles, photographe, randonneur, navigateur ou simplement curieux du ciel, Coordi calcule les données du Soleil, de la Lune, des éclipses et des coordonnées pour tout lieu et toute date. Et désormais, tout s'affiche avec clarté grâce aux graphiques, à des prévisions météo sur 7 jours et au thème clair ou sombre de votre choix.
+
+FONCTIONNALITÉS
+
+* Soleil et Lune : heures précises de lever et de coucher, durée du jour et un arc solaire interactif montrant la position du Soleil tout au long de la journée.
+* Phases de la Lune : la phase actuelle avec son illumination et les noms traditionnels des pleines lunes, ainsi qu'une frise jour/nuit claire.
+* Éclipses : les prochaines éclipses solaires et lunaires avec début, maximum et fin.
+* Signes du zodiaque : le signe du Soleil et de la Lune pour n'importe quelle date.
+* Durée du jour : la durée d'ensoleillement pour chaque jour et chaque lieu.
+* Météo : des prévisions facultatives sur 7 jours pour vos lieux enregistrés.
+* Convertisseur de coordonnées : tout point affiché aux formats UTM et MGRS.
+* Règle : mesurez la distance entre deux points sur Terre avec une grande précision.
+* Ville la plus proche : trouvez la ville la plus proche de coordonnées données grâce à la formule de Haversine.
+* Lieux enregistrés : conservez vos endroits favoris et faites-les défiler d'un glissement.
+
+À VOTRE FAÇON
+
+* Thèmes clair, sombre et système.
+* Choisissez vos unités : kilomètres ou miles, ainsi que m/s, km/h ou mph.
+* Format 12 ou 24 heures.
+* Disponible en plusieurs langues.
+
+POURQUOI COORDI ?
+
+* Fonctionne hors ligne : chaque calcul astronomique s'effectue sur votre appareil, sans connexion. Seules les prévisions météo facultatives utilisent Internet.
+* Une interface épurée et intuitive, simple à parcourir.
+* Des données précises et fiables pour tous vos besoins célestes.
+* Sans publicité.
+* En amélioration continue — vos retours façonnent les nouveautés.
+
+Explorez les merveilles du ciel, où que vous soyez. Téléchargez Coordi dès aujourd'hui et faites le premier pas vers la maîtrise des calculs célestes !

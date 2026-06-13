@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCustomLocationLabel" xml:space="preserve">
+    <value>Ajouter un emplacement personnalisé</value>
+  </data>
+  <data name="AddLocationLabel" xml:space="preserve">
+    <value>Ajouter un emplacement</value>
+  </data>
+  <data name="LocationActionLabel" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AnnularEclipseLabel" xml:space="preserve">
+    <value>Annulaire</value>
+  </data>
+  <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Heure de début de l'éclipse annulaire ou totale : {0}</value>
+  </data>
+  <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
+    <value>Heure de fin de l'éclipse annulaire ou totale : {0}</value>
+  </data>
+  <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
+    <value>Durée de l'éclipse annulaire ou totale : {0}</value>
+  </data>
+  <data name="AquariusLabel" xml:space="preserve">
+    <value>Verseau</value>
+  </data>
+  <data name="AriesLabel" xml:space="preserve">
+    <value>Bélier</value>
+  </data>
+  <data name="AtTheseCoordinatesLabel" xml:space="preserve">
+    <value>À ces coordonnées :</value>
+  </data>
+  <data name="BeaverMoonLabel" xml:space="preserve">
+    <value>Lune du castor</value>
+  </data>
+  <data name="BlueMoonLabel" xml:space="preserve">
+    <value>Lune bleue</value>
+  </data>
+  <data name="BuckMoonLabel" xml:space="preserve">
+    <value>Lune du cerf</value>
+  </data>
+  <data name="CancerLabel" xml:space="preserve">
+    <value>Cancer</value>
+  </data>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>Impossible d'obtenir la position actuelle. Veuillez réessayer plus tard, ajouter un emplacement manuellement ou en sélectionner un dans la liste des emplacements disponibles dans la base de données.</value>
+  </data>
+  <data name="CannotGetLocationLabel" xml:space="preserve">
+    <value>Impossible d'obtenir une position</value>
+  </data>
+  <data name="CapricornLabel" xml:space="preserve">
+    <value>Capricorne</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>Ville</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="ColdMoonLabel" xml:space="preserve">
+    <value>Lune froide</value>
+  </data>
+  <data name="ConvertersLabel" xml:space="preserve">
+    <value>Convertisseurs</value>
+  </data>
+  <data name="CoordinatesConverterLabel" xml:space="preserve">
+    <value>Convertisseur de coordonnées</value>
+  </data>
+  <data name="CornMoonLabel" xml:space="preserve">
+    <value>Lune du maïs</value>
+  </data>
+  <data name="CountryLabel" xml:space="preserve">
+    <value>Pays</value>
+  </data>
+  <data name="DarkThemeLabel" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+  <data name="LightThemeLabel" xml:space="preserve">
+    <value>Clair</value>
+  </data>
+  <data name="SystemThemeLabel" xml:space="preserve">
+    <value>Système</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>Thème</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date : {0:dd MMMM yyyy}</value>
+  </data>
+  <data name="DateWithTimeLabel" xml:space="preserve">
+    <value>Date : {0:dd MMMM yyyy hh:mm:ss}</value>
+  </data>
+  <data name="DayDurationLabel" xml:space="preserve">
+    <value>Durée du jour : {0}</value>
+  </data>
+  <data name="DeleteLabel" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="DigraphLabel" xml:space="preserve">
+    <value>Digramme (identifiant de carré de 100 000 mètres MGRS) : {0}</value>
+  </data>
+  <data name="DistanceFormattedLabel" xml:space="preserve">
+    <value>Distance : {0:0.##} {1}</value>
+  </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Vitesse et distance</value>
+  </data>
+  <data name="DistanceUnitLabel" xml:space="preserve">
+    <value>Unité de distance</value>
+  </data>
+  <data name="EclipsesLabel" xml:space="preserve">
+    <value>Éclipses</value>
+  </data>
+  <data name="FeetsAbbreviationLabel" xml:space="preserve">
+    <value>ft</value>
+  </data>
+  <data name="FeetsLabel" xml:space="preserve">
+    <value>Pieds</value>
+  </data>
+  <data name="FirstQuarterLabel" xml:space="preserve">
+    <value>Premier quartier</value>
+  </data>
+  <data name="FullMoonLabel" xml:space="preserve">
+    <value>Pleine lune</value>
+  </data>
+  <data name="GeminiLabel" xml:space="preserve">
+    <value>Gémeaux</value>
+  </data>
+  <data name="GoToSettings" xml:space="preserve">
+    <value>Aller aux paramètres</value>
+  </data>
+  <data name="HuntersMoonLabel" xml:space="preserve">
+    <value>Lune du chasseur</value>
+  </data>
+  <data name="InverseFlatteningLabel" xml:space="preserve">
+    <value>Aplatissement inverse : {0}</value>
+  </data>
+  <data name="KilometersAbbreviationLabel" xml:space="preserve">
+    <value>km</value>
+  </data>
+  <data name="KmLabel" xml:space="preserve">
+    <value>Kilomètres</value>
+  </data>
+  <data name="LastQuarterLabel" xml:space="preserve">
+    <value>Dernier quartier</value>
+  </data>
+  <data name="LatitudeLabel" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="LatitudeStringFormatLabel" xml:space="preserve">
+    <value>Latitude : {0:0.#####}</value>
+  </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Lat :</value>
+  </data>
+  <data name="LeoLabel" xml:space="preserve">
+    <value>Lion</value>
+  </data>
+  <data name="LibraLabel" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Lng :</value>
+  </data>
+  <data name="LocationLabel" xml:space="preserve">
+    <value>Emplacement :</value>
+  </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>Saisissez un nom d'emplacement unique</value>
+  </data>
+  <data name="LocationNameLabel" xml:space="preserve">
+    <value>Nom de l'emplacement</value>
+  </data>
+  <data name="LocationPermissionDialogMessage" xml:space="preserve">
+    <value>L'application a besoin d'accéder à la position de l'appareil pour fonctionner</value>
+  </data>
+  <data name="LocationPermissionDialogTitle" xml:space="preserve">
+    <value>Autorisation de localisation</value>
+  </data>
+  <data name="LocationsLabel" xml:space="preserve">
+    <value>Emplacements</value>
+  </data>
+  <data name="LongitudeLabel" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="LongitudeStringFormatLabel" xml:space="preserve">
+    <value>Longitude : {0:0.#####}</value>
+  </data>
+  <data name="ManageSavedLocationsLabel" xml:space="preserve">
+    <value>Gérer les emplacements enregistrés</value>
+  </data>
+  <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
+    <value>Heure du maximum de l'éclipse : {0}</value>
+  </data>
+  <data name="MetersAbbreviationLabel" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="MetersLabel" xml:space="preserve">
+    <value>Mètres</value>
+  </data>
+  <data name="MGRSEastingLabel" xml:space="preserve">
+    <value>MGRS Est : {0}</value>
+  </data>
+  <data name="MGRSLabel" xml:space="preserve">
+    <value>MGRS</value>
+  </data>
+  <data name="MGRSLatZoneLabel" xml:space="preserve">
+    <value>Désignation de la zone de grille de la bande de latitude MGRS : {0}</value>
+  </data>
+  <data name="MGRSLonZoneLabel" xml:space="preserve">
+    <value>Désignation de la zone de grille de la bande de longitude MGRS : {0}</value>
+  </data>
+  <data name="MGRSNorthingLabel" xml:space="preserve">
+    <value>MGRS Nord : {0}</value>
+  </data>
+  <data name="MGRSTypeLabel" xml:space="preserve">
+    <value>Type MGRS : {0}</value>
+  </data>
+  <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
+    <value>Heure du milieu de l'éclipse : {0}</value>
+  </data>
+  <data name="MilesAbbreviationLabel" xml:space="preserve">
+    <value>mi</value>
+  </data>
+  <data name="MilesLabel" xml:space="preserve">
+    <value>Miles</value>
+  </data>
+  <data name="MoonEclipsesLabel" xml:space="preserve">
+    <value>Éclipses de lune</value>
+  </data>
+  <data name="MoonInZodiacSignLabel" xml:space="preserve">
+    <value>Lune en : {0}</value>
+  </data>
+  <data name="MoonLabel" xml:space="preserve">
+    <value>Lune</value>
+  </data>
+  <data name="MoonNameLabel" xml:space="preserve">
+    <value>Nom de la lune : </value>
+  </data>
+  <data name="MoonPhaseLabel" xml:space="preserve">
+    <value>Phase lunaire : </value>
+  </data>
+  <data name="MoonRiseDurationLabel" xml:space="preserve">
+    <value>Durée du lever de lune : {0}</value>
+  </data>
+  <data name="MoonRiseLabel" xml:space="preserve">
+    <value>Lever de la lune : {0}</value>
+  </data>
+  <data name="MoonSetLabel" xml:space="preserve">
+    <value>Coucher de la lune : {0}</value>
+  </data>
+  <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
+    <value>nmi</value>
+  </data>
+  <data name="NauticalMilesLabel" xml:space="preserve">
+    <value>Milles marins</value>
+  </data>
+  <data name="NewMoonLabel" xml:space="preserve">
+    <value>Nouvelle lune</value>
+  </data>
+  <data name="NoSavedLocationsLabel" xml:space="preserve">
+    <value>Vous n'avez actuellement aucun emplacement enregistré. Ajoutez un emplacement manuellement ou sélectionnez-en un dans la liste des emplacements disponibles dans la base de données sur l'écran de recherche.</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PartialEclipseLabel" xml:space="preserve">
+    <value>Partielle</value>
+  </data>
+  <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Heure de début de l'éclipse partielle : {0}</value>
+  </data>
+  <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Heure de fin de l'éclipse partielle : {0}</value>
+  </data>
+  <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Heure de début de l'éclipse partielle : {0}</value>
+  </data>
+  <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Heure de fin de l'éclipse partielle : {0}</value>
+  </data>
+  <data name="PenumbralEclipseLabel" xml:space="preserve">
+    <value>Pénombrale</value>
+  </data>
+  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Heure de début de l'éclipse pénombrale : {0}</value>
+  </data>
+  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Heure de fin de l'éclipse pénombrale : {0}</value>
+  </data>
+  <data name="PermissionRequiredDialogMessage" xml:space="preserve">
+    <value>L'application a besoin de l'autorisation de localisation pour fonctionner. Accédez aux paramètres de l'application et accordez l'autorisation, ou fermez l'application.</value>
+  </data>
+  <data name="PermissionRequiredDialogTitle" xml:space="preserve">
+    <value>Autorisation requise</value>
+  </data>
+  <data name="PinkMoonLabel" xml:space="preserve">
+    <value>Lune rose</value>
+  </data>
+  <data name="PiscesLabel" xml:space="preserve">
+    <value>Poissons</value>
+  </data>
+  <data name="PlusAddLocationLabel" xml:space="preserve">
+    <value>+ Ajouter un emplacement</value>
+  </data>
+  <data name="PopulationFormattedLabel" xml:space="preserve">
+    <value>Population : {0:N0}</value>
+  </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Population</value>
+  </data>
+  <data name="SagittariusLabel" xml:space="preserve">
+    <value>Sagittaire</value>
+  </data>
+  <data name="SavedLocationsLabel" xml:space="preserve">
+    <value>Emplacements enregistrés :</value>
+  </data>
+  <data name="SaveLocationButtonText" xml:space="preserve">
+    <value>Enregistrer l'emplacement</value>
+  </data>
+  <data name="ScorpioLabel" xml:space="preserve">
+    <value>Scorpion</value>
+  </data>
+  <data name="SearchCityLabel" xml:space="preserve">
+    <value>Rechercher une ville</value>
+  </data>
+  <data name="SearchPlaceholderLabel" xml:space="preserve">
+    <value>Rechercher...</value>
+  </data>
+  <data name="SetsAndRisesLabel" xml:space="preserve">
+    <value>Levers et couchers</value>
+  </data>
+  <data name="SettingsLabel" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="SnowMoonLabel" xml:space="preserve">
+    <value>Lune des neiges</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>Trier par</value>
+  </data>
+  <data name="StrawberryMoonLabel" xml:space="preserve">
+    <value>Lune des fraises</value>
+  </data>
+  <data name="SturgeonMoonLabel" xml:space="preserve">
+    <value>Lune de l'esturgeon</value>
+  </data>
+  <data name="SunAndMoonLabel" xml:space="preserve">
+    <value>Soleil et lune</value>
+  </data>
+  <data name="SunEclipsesLabel" xml:space="preserve">
+    <value>Éclipses de soleil</value>
+  </data>
+  <data name="SunEclispseTypeLabel" xml:space="preserve">
+    <value>Type : {0}</value>
+  </data>
+  <data name="SunLabel" xml:space="preserve">
+    <value>Soleil</value>
+  </data>
+  <data name="SunRiseLabel" xml:space="preserve">
+    <value>Lever du soleil : {0}</value>
+  </data>
+  <data name="SunSetLabel" xml:space="preserve">
+    <value>Coucher du soleil : {0}</value>
+  </data>
+  <data name="TaurusLabel" xml:space="preserve">
+    <value>Taureau</value>
+  </data>
+  <data name="TimeLabel" xml:space="preserve">
+    <value>Heure : {0}</value>
+  </data>
+  <data name="TimeTravelLabel" xml:space="preserve">
+    <value>Voyage dans le temps</value>
+  </data>
+  <data name="TotalEclipseLabel" xml:space="preserve">
+    <value>Totale</value>
+  </data>
+  <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Heure de début de l'éclipse totale : {0}</value>
+  </data>
+  <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Heure de fin de l'éclipse totale : {0}</value>
+  </data>
+  <data name="TwoValuesSeparatedByComa" xml:space="preserve">
+    <value>{}{0}, {1}</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Type : {0}</value>
+  </data>
+  <data name="UnknownLocationLabel" xml:space="preserve">
+    <value>Emplacement inconnu</value>
+  </data>
+  <data name="Use24HourTimeFormatLabel" xml:space="preserve">
+    <value>Format 24 heures</value>
+  </data>
+  <data name="UTCTimeOffsetLabel" xml:space="preserve">
+    <value>Décalage horaire UTC</value>
+  </data>
+  <data name="UTMEastingLabel" xml:space="preserve">
+    <value>UTM Est : {0}</value>
+  </data>
+  <data name="UTMLabel" xml:space="preserve">
+    <value>UTM</value>
+  </data>
+  <data name="UTMLatZoneLabel" xml:space="preserve">
+    <value>Désignation de la zone de grille de la bande de latitude UTM : {0}</value>
+  </data>
+  <data name="UTMLonZoneLabel" xml:space="preserve">
+    <value>Désignation de la zone de grille de la bande de longitude UTM : {0}</value>
+  </data>
+  <data name="UTMNorthingLabel" xml:space="preserve">
+    <value>UTM Nord : {0}</value>
+  </data>
+  <data name="UTMTypeLabel" xml:space="preserve">
+    <value>Type UTM : {0}</value>
+  </data>
+  <data name="VirgoLabel" xml:space="preserve">
+    <value>Vierge</value>
+  </data>
+  <data name="WaningCrescentLabel" xml:space="preserve">
+    <value>Dernier croissant</value>
+  </data>
+  <data name="WaningGibbousLabel" xml:space="preserve">
+    <value>Lune gibbeuse décroissante</value>
+  </data>
+  <data name="WeatherLabel" xml:space="preserve">
+    <value>Météo</value>
+  </data>
+  <data name="WaxingCrescentLabel" xml:space="preserve">
+    <value>Premier croissant</value>
+  </data>
+  <data name="WaxingGibbousLabel" xml:space="preserve">
+    <value>Lune gibbeuse croissante</value>
+  </data>
+  <data name="WolfMoonLabel" xml:space="preserve">
+    <value>Lune du loup</value>
+  </data>
+  <data name="WormMoonLabel" xml:space="preserve">
+    <value>Lune des vers</value>
+  </data>
+  <data name="ZodiacSignLabel" xml:space="preserve">
+    <value>Zodiaque : {0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Point 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Point 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>Vous ne pouvez pas supprimer l'emplacement actuel !</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>Impossible de démarrer le suivi de la position</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>Un emplacement portant ce nom existe déjà</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>Précision</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>Distance directe</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>Dénivelé</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} degrés</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} m/s</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>Règle</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Vitesse</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>Distance parcourue</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>Précision verticale</value>
+  </data>
+  <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
+    <value>Le suivi de la position a échoué</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>Impossible d'arrêter le suivi de la position</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>Vitesse calculée</value>
+  </data>
+  <data name="SpeedUnitLabel" xml:space="preserve">
+    <value>Unité de vitesse</value>
+  </data>
+  <data name="MetersPerSecondLabel" xml:space="preserve">
+    <value>m/s</value>
+  </data>
+  <data name="KilometersPerHourLabel" xml:space="preserve">
+    <value>km/h</value>
+  </data>
+  <data name="MilesPerHourLabel" xml:space="preserve">
+    <value>mph</value>
+  </data>
+</root>

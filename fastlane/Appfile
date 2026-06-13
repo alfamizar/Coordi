@@ -1,0 +1,15 @@
+# Coordi — Google Play (fastlane) configuration.
+#
+# The Google Play service-account JSON key is a SECRET. It is NEVER stored here
+# or anywhere in the repo. It is referenced only via an environment variable that
+# points at a file kept OUTSIDE the repository, e.g.:
+#
+#   export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"
+#
+# See fastlane/README.md for how to create, scope, and rotate that key.
+
+package_name(ENV["COORDI_PACKAGE_NAME"] || "com.cutecompute.coordi")
+
+# Only set the key path if provided, so commands fail with a clear message
+# (rather than referencing a missing file) when it is not configured.
+json_key_file(ENV["SUPPLY_JSON_KEY"]) if ENV["SUPPLY_JSON_KEY"] && !ENV["SUPPLY_JSON_KEY"].empty?

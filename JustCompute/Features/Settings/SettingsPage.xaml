@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extendedcontrols="clr-namespace:JustCompute.Shared.Controls"
+             x:Class="JustCompute.Features.Settings.SettingsPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.Settings"
+             x:DataType="ViewModels:SettingsViewModel"
+             xmlns:controls="clr-namespace:JustCompute.Shared.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="SegmentBorderStyle" TargetType="Border">
+            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style x:Key="SegmentLabelStyle" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Padding" Value="8,10" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Padding="8" HorizontalOptions="FillAndExpand" Spacing="4">
+
+        <Label Text="{localization:Localize ThemeLabel}" />
+        <Border StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                Padding="3"
+                Margin="0,0,0,4">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
+
+                <Border Grid.Column="0"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsSystemThemeSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
+                                              CommandParameter="Unspecified" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize SystemThemeLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsSystemThemeSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsLightThemeSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
+                                              CommandParameter="Light" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize LightThemeLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsLightThemeSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsDarkThemeSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
+                                              CommandParameter="Dark" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize DarkThemeLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsDarkThemeSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <Label Text="{localization:Localize DistanceUnitLabel}" />
+        <Picker x:Name="DistanceTypePicker"
+                Title="{Binding SelectedDistanceUnitOfMeasure.DistanceUomName}"
+                ItemsSource="{Binding DistanceUnitOfMeasures}"
+                SelectedItem="{Binding SelectedDistanceUnitOfMeasure}">
+            <Picker.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                Command="{Binding SaveSelectedDistanceTypeToSettingsCommand}">
+                </toolkit:EventToCommandBehavior>
+            </Picker.Behaviors>
+        </Picker>
+
+        <Label Text="{localization:Localize SpeedUnitLabel}" />
+        <Border StrokeShape="RoundRectangle 12"
+                StrokeThickness="0"
+                Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                Padding="3"
+                Margin="0,0,0,4">
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
+
+                <Border Grid.Column="0"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsMetersPerSecondSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                              CommandParameter="MetersPerSecond" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize MetersPerSecondLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsMetersPerSecondSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsKilometersPerHourSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                              CommandParameter="KilometersPerHour" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize KilometersPerHourLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsKilometersPerHourSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <Border Grid.Column="2"
+                        Style="{StaticResource SegmentBorderStyle}">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Binding="{Binding IsMilesPerHourSelected}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                              CommandParameter="MilesPerHour" />
+                    </Border.GestureRecognizers>
+                    <Label Style="{StaticResource SegmentLabelStyle}"
+                           Text="{localization:Localize MilesPerHourLabel}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Binding="{Binding IsMilesPerHourSelected}"
+                                         Value="True">
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+            </Grid>
+        </Border>
+
+        <Grid ColumnDefinitions="Auto, *">
+            <Label Grid.Column="0"
+                   Text="{localization:Localize Use24HourTimeFormatLabel}"
+                   VerticalOptions="Center" />
+            <CheckBox Grid.Column="1"
+                      IsChecked="{Binding Is24HourTimeFormat}"
+                      VerticalOptions="Center"
+                      HorizontalOptions="End">
+            </CheckBox>
+        </Grid>
+
+    </VerticalStackLayout>
+
+</v1:BasePage>

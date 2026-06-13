@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:converters="clr-namespace:JustCompute.Shared.Converters"
+                    xmlns:distance="clr-namespace:JustCompute.Features.Distance"
+                    xmlns:moon="clr-namespace:JustCompute.Features.Moon"
+                    xmlns:moonEclipses="clr-namespace:JustCompute.Features.MoonEclipses"
+                    xmlns:sunEclipses="clr-namespace:JustCompute.Features.SunEclipses"
+                    xmlns:timeTravel="clr-namespace:JustCompute.Features.TimeTravel"
+                    xmlns:coordinatesConverter="clr-namespace:JustCompute.Features.CoordinatesConverter"
+                    xmlns:weather="clr-namespace:JustCompute.Features.Weather"
+                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                    x:Class="JustCompute.Resources.Converters">
+
+    <converters:IsIntEqualZeroConverter x:Key="IsIntEqualZeroConverter" />
+    <converters:IsIntNotEqualZeroConverter x:Key="IsIntNotEqualZeroConverter" />
+    <converters:EmptyStringToBoolConverter x:Key="EmptyStringToBoolConverter" />
+    <moon:MoonPhaseToNameConverter x:Key="MoonPhaseToNameConverter" />
+    <sunEclipses:SunEclipseTypeToNameConverter x:Key="SunEclipseTypeToNameConverter" />
+    <moonEclipses:MoonEclipseTypeToNameConverter x:Key="MoonEclipseTypeToNameConverter" />
+    <converters:IsDateTimeSetConverter x:Key="IsDateTimeSetConverter" />
+    <converters:IsTimeSpanSetConverter x:Key="IsTimeSpanSetConverter" />
+    <distance:KilometersToTargetDistanceTypeConverter x:Key="KilometersToTargetDistanceTypeConverter" />
+    <moon:MoonNameEnumToStringConverter x:Key="MoonNameEnumToStringConverter" />
+    <timeTravel:ZodiacSignEnumToLocalizedStringConverter x:Key="ZodiacSignEnumToLocalizedStringConverter" />
+    <coordinatesConverter:CoordinateRangeValidatorToBoolConverter x:Key="CoordinateRangeValidatorToBoolConverter" />
+    <converters:RiseAndSetToDurationConverter x:Key="RiseAndSetToDurationConverter" />
+    <moon:CoordinateToMoonPhaseConverter x:Key="CoordinateToMoonPhaseConverter" />
+    <moon:MoonCycleToMoonPhaseConverter x:Key="MoonCycleToMoonPhaseConverter" />
+    <converters:TimeFormatConverter x:Key="TimeFormatConverter" />
+    <converters:SortDirectionToImageConverter x:Key="SortDirectionToImageConverter"
+                                              AscendingImage="arrow_upward_icon_light.png"
+                                              DescendingImage="arrow_downward_icon_light.png"/>
+    <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
+    <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
+    <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter"
+                                         ConditionType="All" />
+    <toolkit:VariableMultiValueConverter x:Key="AnyTrueConverter"
+                                         ConditionType="Any" />
+    <toolkit:IsNullConverter x:Key="IsNullConverter" />
+    <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+
+    <weather:WeatherConditionToIconConverter x:Key="WeatherConditionToIconConverter" />
+    <weather:DateOnlyToDayOfWeekConverter x:Key="DateOnlyToDayOfWeekConverter" />
+    <weather:DateOnlyToShortDateConverter x:Key="DateOnlyToShortDateConverter" />
+    <weather:TemperatureFormatConverter x:Key="TemperatureFormatConverter" />
+    <weather:TemperatureRangeConverter x:Key="TemperatureRangeConverter" />
+
+</ResourceDictionary>

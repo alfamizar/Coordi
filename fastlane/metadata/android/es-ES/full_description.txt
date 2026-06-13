@@ -1,0 +1,33 @@
+¡Descubre el Universo con Coordi, tu calculadora celeste sin conexión!
+
+Coordi pone la astronomía de precisión en la palma de tu mano. Tanto si eres aficionado a las estrellas, fotógrafo, senderista, navegante o simplemente sientes curiosidad por el cielo, Coordi calcula los datos del Sol, la Luna, los eclipses y las coordenadas para cualquier lugar y fecha. Y ahora lo muestra todo con claridad mediante gráficos, una previsión meteorológica de 7 días y el tema claro u oscuro que prefieras.
+
+FUNCIONES PRINCIPALES
+
+* Sol y Luna: horas exactas de salida y puesta, duración del día y un arco solar interactivo que muestra la posición del Sol a lo largo de la jornada.
+* Fases lunares: la fase actual con su iluminación y los nombres tradicionales de las lunas llenas, además de una línea de tiempo día/noche muy clara.
+* Eclipses: los próximos eclipses solares y lunares con inicio, máximo y fin.
+* Signos del zodiaco: el signo del Sol y de la Luna para cualquier fecha.
+* Duración del día: las horas de luz para cualquier día y lugar.
+* El tiempo: una previsión opcional de 7 días para tus lugares guardados.
+* Conversor de coordenadas: cualquier punto en los formatos UTM y MGRS.
+* Regla: mide la distancia entre dos puntos de la Tierra con gran precisión.
+* Ciudad más cercana: encuentra la ciudad más próxima a unas coordenadas mediante la fórmula del haversine.
+* Lugares guardados: conserva tus sitios favoritos y desliza entre ellos.
+
+A TU MANERA
+
+* Temas claro, oscuro y del sistema.
+* Elige tus unidades: kilómetros o millas, además de m/s, km/h o mph.
+* Formato de 12 o 24 horas.
+* Disponible en muchos idiomas.
+
+¿POR QUÉ COORDI?
+
+* Funciona sin conexión: todos los cálculos astronómicos se realizan en tu dispositivo, sin necesidad de conexión. Solo la previsión meteorológica opcional usa internet.
+* Diseño limpio e intuitivo, fácil de explorar.
+* Datos precisos y fiables para todas tus necesidades celestes.
+* Sin anuncios.
+* Mejora continua: tus comentarios dan forma a las nuevas funciones.
+
+Explora las maravillas del cielo estés donde estés. ¡Descarga Coordi hoy mismo y da el primer paso para dominar los cálculos celestes!

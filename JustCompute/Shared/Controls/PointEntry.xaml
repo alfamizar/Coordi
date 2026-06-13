@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Shared.Controls.PointEntry"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:controls="clr-namespace:JustCompute.Shared.Controls"
+             x:Name="this">
+
+    <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
+          RowDefinitions="Auto,Auto,Auto"
+          ColumnSpacing="4"
+          VerticalOptions="Center"
+          BindingContext="{x:Reference this}"
+          x:DataType="controls:PointEntry">
+        <Label Grid.Row="0"
+               Grid.Column="1"
+               Grid.ColumnSpan="3"
+               Text="{Binding PointTitle}"
+               FontSize="Large"
+               HorizontalOptions="Center"
+               IsVisible="{Binding IsPointLabelVisible}" />
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               Grid.ColumnSpan="3"
+               FontSize="Medium"
+               HorizontalOptions="Center"
+               IsVisible="{Binding IsPointCityCountryLabelVisible}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span>
+                            <Span.Text>
+                                <MultiBinding StringFormat="{}{0}, {1}">
+                                    <Binding Path="Location.City.CityName" />
+                                    <Binding Path="Location.City.CountryName" />
+                                </MultiBinding>
+                            </Span.Text>
+                        </Span>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label Grid.Row="2"
+               Grid.Column="0"
+               Text="{localization:Localize LatLabel}"
+               VerticalOptions="Center" />
+        <Entry Grid.Row="2"
+               Grid.Column="1"
+               VerticalOptions="Center"
+               Placeholder="{localization:Localize LatitudeLabel}"
+               HorizontalTextAlignment="Center"
+               Text="{Binding Location.Latitude, Mode=TwoWay}"
+               Keyboard="Numeric">
+            <Entry.Behaviors>
+                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
+                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold}"
+                                                   ShouldDismissKeyboardAutomatically="False" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry"
+                             Binding="{Binding Location.Latitude, 
+                    Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, 
+                    ConverterParameter='latitude'}"
+                             Value="False">
+                    <Setter Property="TextColor"
+                            Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+        <Label Grid.Column="2"
+               Grid.Row="2"
+               VerticalOptions="Center"
+               Text="{localization:Localize LngLabel}" />
+        <Entry Grid.Column="3"
+               Grid.Row="2"
+               VerticalOptions="Center"
+               Placeholder="{localization:Localize LongitudeLabel}"
+               HorizontalTextAlignment="Center"
+               Text="{Binding Location.Longitude, Mode=TwoWay}"
+               Keyboard="Numeric">
+            <Entry.Behaviors>
+                <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
+                                                   StoppedTypingTimeThreshold="{Binding StoppedTypingTimeThreshold}"
+                                                   ShouldDismissKeyboardAutomatically="False" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry"
+                             Binding="{Binding Location.Longitude, 
+                    Converter={StaticResource CoordinateRangeValidatorToBoolConverter},
+                    ConverterParameter='longitude'}"
+                             Value="False">
+                    <Setter Property="TextColor"
+                            Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+        <ImageButton Grid.Column="4"
+                     Grid.Row="2"
+                     WidthRequest="32"
+                     HeightRequest="32"
+                     CornerRadius="16"
+                     Margin="8,0,8,0"
+                     Background="Transparent"
+                     Source="{Binding ImageButtonIconSource}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="End"
+                     IsVisible="{Binding IsImageButtonVisible}"
+                     Command="{Binding ImageButtonClickedCommand}" />
+    </Grid>
+
+</ContentView>

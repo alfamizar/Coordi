@@ -1,0 +1,33 @@
+Descubra o Universo com o Coordi — a sua calculadora celeste offline!
+
+O Coordi coloca a astronomia de precisão na palma da mão. Seja você um apaixonado por estrelas, fotógrafo, trilheiro, velejador ou apenas curioso sobre o céu, o Coordi calcula os dados do Sol, da Lua, dos eclipses e das coordenadas para qualquer lugar e data. E agora mostra tudo com clareza por meio de gráficos, uma previsão do tempo de 7 dias e o tema claro ou escuro que você preferir.
+
+PRINCIPAIS RECURSOS
+
+* Sol e Lua: horários exatos do nascer e do pôr, duração do dia e um arco solar interativo que mostra a posição do Sol ao longo do dia.
+* Fases da Lua: a fase atual com a iluminação e os nomes tradicionais das luas cheias, além de uma linha do tempo dia/noite bem clara.
+* Eclipses: os próximos eclipses solares e lunares com início, máximo e fim.
+* Signos do zodíaco: o signo do Sol e da Lua para qualquer data.
+* Duração do dia: as horas de luz para qualquer dia e lugar.
+* Clima: uma previsão opcional de 7 dias para os seus lugares salvos.
+* Conversor de coordenadas: qualquer ponto nos formatos UTM e MGRS.
+* Régua: meça a distância entre dois pontos na Terra com alta precisão.
+* Cidade mais próxima: encontre a cidade mais próxima de quaisquer coordenadas usando a fórmula de Haversine.
+* Lugares salvos: guarde os seus lugares favoritos e deslize entre eles.
+
+DO SEU JEITO
+
+* Temas claro, escuro e do sistema.
+* Escolha as unidades: quilômetros ou milhas, além de m/s, km/h ou mph.
+* Formato de 12 ou 24 horas.
+* Disponível em vários idiomas.
+
+POR QUE O COORDI?
+
+* Funciona offline: todos os cálculos astronômicos são feitos no seu dispositivo, sem conexão. Apenas a previsão do tempo opcional usa a internet.
+* Design limpo e intuitivo, fácil de navegar.
+* Dados precisos e confiáveis para todas as suas necessidades celestes.
+* Sem anúncios.
+* Em melhoria contínua — seu feedback molda os novos recursos.
+
+Explore as maravilhas do céu onde quer que você esteja. Baixe o Coordi hoje mesmo e dê o primeiro passo para dominar os cálculos celestes!

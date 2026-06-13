@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:extendedcontrols="clr-namespace:JustCompute.Shared.Controls"
+             xmlns:views="clr-namespace:JustCompute.Shared.Controls"
+             x:Class="JustCompute.Features.Locations.LocationsPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.Locations"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:weather="clr-namespace:Compute.Core.Domain.Entities.Models.Weather;assembly=Compute.Core"
+             xmlns:weatherUi="clr-namespace:JustCompute.Features.Weather"
+             xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:converters="clr-namespace:JustCompute.Shared.Converters"
+             x:DataType="ViewModels:LocationsViewModel"
+             Shell.PresentationMode="Animated">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary"
+                     Priority="0"
+                     Text="{localization:Localize LocationActionLabel}"
+                     IconImageSource="{AppThemeBinding Light=more_vert_icon_light.png, Dark=more_vert_icon_light.png}"
+                     Command="{Binding Commands[ShowLocationActionsCommand]}" />
+    </ContentPage.ToolbarItems>
+
+    <AbsoluteLayout>
+
+        <RefreshView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     Command="{Binding Commands[RefreshCommand]}"
+                     IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
+
+            <ScrollView VerticalScrollBarVisibility="Never">
+
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                      ColumnDefinitions="*"
+                      IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                      Margin="4,4,4,4"
+                      RowSpacing="4">
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="1"
+                           Margin="8,2"
+                           FontSize="Large"
+                           Text="{Binding CurrentTime, StringFormat={localization:Localize TimeLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                    <CarouselView x:Name="carouselView"
+                                  Grid.Row="1"
+                                  Loop="False"
+                                  HeightRequest="128"
+                                  ItemsSource="{Binding Locations}"
+                                  IndicatorView="indicatorView"
+                                  CurrentItem="{Binding SelectedLocation, Mode=TwoWay}"
+                                  HorizontalScrollBarVisibility="Never">
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Location">
+
+                                <Grid>
+
+                                    <Border Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 10">
+
+                                        <Grid ColumnDefinitions="*,Auto"
+                                              ColumnSpacing="4">
+
+                                            <VerticalStackLayout Grid.Column="0"
+                                                                 VerticalOptions="Center">
+
+                                                <Label x:Name="LocationName"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding Name}"
+                                                       IsVisible="{Binding Name, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                                <Label x:Name="CityName"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding City.CityName}"
+                                                       IsVisible="{Binding City.CityName, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                                <Label x:Name="CountryName"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding City.CountryName}"
+                                                       IsVisible="{Binding City.CountryName, Converter={StaticResource EmptyStringToBoolConverter}}" />
+
+                                            </VerticalStackLayout>
+
+                                            <Border Grid.Column="1"
+                                                    Padding="8"
+                                                    Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}"
+                                                    Stroke="Transparent"
+                                                    StrokeShape="RoundRectangle 10">
+
+                                                <VerticalStackLayout VerticalOptions="Center">
+
+                                                    <Label x:Name="Latitude"
+                                                           VerticalOptions="Center"
+                                                           VerticalTextAlignment="Center"
+                                                           HorizontalOptions="Start"
+                                                           Text="{Binding LatitudeDouble, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
+
+                                                    <Label x:Name="Longitude"
+                                                           VerticalOptions="Center"
+                                                           VerticalTextAlignment="Center"
+                                                           HorizontalOptions="Start"
+                                                           Text="{Binding LongitudeDouble, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
+
+                                                </VerticalStackLayout>
+
+                                            </Border>
+
+                                        </Grid>
+
+                                    </Border>
+
+                                </Grid>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+
+                    <IndicatorView x:Name="indicatorView"
+                                   Grid.Row="2"
+                                   Margin="0,8"
+                                   IndicatorColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"
+                                   SelectedIndicatorColor="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"
+                                   HorizontalOptions="Center"
+                                   HideSingle="False" />
+
+                    <Label Grid.Row="3"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}"
+                           Text="{Binding Coordinate}"
+                           Style="{StaticResource TitleLabel}"
+                           FontSize="Large" />
+
+                    <VerticalStackLayout Grid.Row="4"
+                                         Spacing="8"
+                                         IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}">
+
+                        <Border Padding="8"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10"
+                                IsVisible="{Binding WeatherForecast, Converter={StaticResource IsNotNullConverter}}">
+
+                            <StackLayout Padding="0"
+                                         Spacing="8">
+
+                                <Label Text="{localization:Localize WeatherLabel}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Border Padding="0"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 10"
+                                        Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}">
+                                    <Grid ColumnDefinitions="*,1,*,1,*,1,*,1,*,1,*,1,*"
+                                          ColumnSpacing="0">
+
+                                        <weatherUi:WeatherDayCell Grid.Column="0"
+                                                                   Day="{Binding WeatherForecast.Days[0]}" />
+
+                                        <BoxView Grid.Column="1"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="2"
+                                                                   Day="{Binding WeatherForecast.Days[1]}" />
+
+                                        <BoxView Grid.Column="3"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="4"
+                                                                   Day="{Binding WeatherForecast.Days[2]}" />
+
+                                        <BoxView Grid.Column="5"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="6"
+                                                                   Day="{Binding WeatherForecast.Days[3]}" />
+
+                                        <BoxView Grid.Column="7"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="8"
+                                                                   Day="{Binding WeatherForecast.Days[4]}" />
+
+                                        <BoxView Grid.Column="9"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="10"
+                                                                   Day="{Binding WeatherForecast.Days[5]}" />
+
+                                        <BoxView Grid.Column="11"
+                                                 BackgroundColor="#44000000"
+                                                 VerticalOptions="Fill"
+                                                 WidthRequest="1" />
+
+                                        <weatherUi:WeatherDayCell Grid.Column="12"
+                                                                   Day="{Binding WeatherForecast.Days[6]}" />
+
+                                    </Grid>
+                                </Border>
+
+                            </StackLayout>
+
+                        </Border>
+
+                        <Border Padding="8"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10">
+
+                            <StackLayout Padding="0"
+                                         Spacing="8">
+
+                                <Label Text="{localization:Localize SunLabel}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Border Padding="0"
+                                        Stroke="Transparent"
+                                        StrokeShape="RoundRectangle 12">
+                                    <extendedcontrols:SunPathView RiseTime="{Binding Coordinate.CelestialInfo.SunRise}"
+                                                                  SetTime="{Binding Coordinate.CelestialInfo.SunSet}"
+                                                                  CurrentTime="{Binding CurrentTime}" />
+                                </Border>
+
+                                <Label>
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{localization:Localize DayDurationLabel}">
+                                            <MultiBinding.Converter>
+                                                <converters:RiseAndSetToDurationConverter CelestialBody="Sun" />
+                                            </MultiBinding.Converter>
+                                            <Binding Path="Coordinate.CelestialInfo.SunRise" />
+                                            <Binding Path="Coordinate.CelestialInfo.SunSet" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+
+                                <Label x:Name="RiseTime"
+                                       Text="{Binding Coordinate.CelestialInfo.SunRise, StringFormat={localization:Localize SunRiseLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                                <Label x:Name="SetTime"
+                                       Text="{Binding Coordinate.CelestialInfo.SunSet, StringFormat={localization:Localize SunSetLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                                <Label x:Name="ZodiacSign"
+                                       Text="{Binding Coordinate.CelestialInfo.AstrologicalSigns.EZodiacSign,
+                      Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
+                      StringFormat={localization:Localize ZodiacSignLabel}}" />
+                            </StackLayout>
+
+                        </Border>
+
+                        <Border Padding="8"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10">
+
+                            <StackLayout Padding="0"
+                                         Spacing="8">
+
+                                <Label Text="{localization:Localize MoonLabel}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Label>
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{localization:Localize MoonRiseDurationLabel}">
+                                            <MultiBinding.Converter>
+                                                <converters:RiseAndSetToDurationConverter CelestialBody="Moon" />
+                                            </MultiBinding.Converter>
+                                            <Binding Path="Coordinate.CelestialInfo.MoonRise" />
+                                            <Binding Path="Coordinate.CelestialInfo.MoonSet" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+
+                                <Label x:Name="MoonPhase">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{localization:Localize MoonPhaseLabel}" />
+                                            <Span Text="{Binding Coordinate, Converter={StaticResource CoordinateToMoonPhaseConverter}}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label x:Name="Distance"
+                                       Text="{Binding Coordinate.CelestialInfo.MoonDistance.Kilometers, Converter={StaticResource KilometersToTargetDistanceTypeConverter}}" />
+
+                                <Label x:Name="MoonRiseTime"
+                                       Text="{Binding Coordinate.CelestialInfo.MoonRise, StringFormat={localization:Localize MoonRiseLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                                <Label x:Name="MoonSetTime"
+                                       Text="{Binding Coordinate.CelestialInfo.MoonSet, StringFormat={localization:Localize MoonSetLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                                <Label x:Name="MoonZodiacSign"
+                                       Text="{Binding Coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
+                          Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
+                          StringFormat={localization:Localize MoonInZodiacSignLabel}}" />
+                            </StackLayout>
+
+                        </Border>
+
+                        <Border Padding="8"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10">
+
+                            <StackLayout Padding="0"
+                                         Spacing="8">
+
+                                <Label Text="{localization:Localize MGRSLabel}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.Digraph, StringFormat={localization:Localize DigraphLabel}}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.Easting, StringFormat={localization:Localize MGRSEastingLabel}}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.Northing, StringFormat={localization:Localize MGRSNorthingLabel}}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.LatZone, StringFormat={localization:Localize MGRSLatZoneLabel}}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.LongZone, StringFormat={localization:Localize MGRSLonZoneLabel}}" />
+
+                                <Label Text="{Binding Coordinate.MGRS.SystemType, StringFormat={localization:Localize MGRSTypeLabel}}" />
+
+                            </StackLayout>
+                        </Border>
+
+                        <Border Padding="8"
+                                Stroke="Transparent"
+                                StrokeShape="RoundRectangle 10">
+
+                            <StackLayout Padding="0"
+                                         Spacing="8">
+                                <Label Text="{localization:Localize UTMLabel}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Label Text="{Binding Coordinate.UTM.Inverse_Flattening, StringFormat={localization:Localize InverseFlatteningLabel}}" />
+
+                                <Label Text="{Binding Coordinate.UTM.Easting, StringFormat={localization:Localize UTMEastingLabel}}" />
+
+                                <Label Text="{Binding Coordinate.UTM.Northing, StringFormat={localization:Localize UTMNorthingLabel}}" />
+
+                                <Label Text="{Binding Coordinate.UTM.LatZone, StringFormat={localization:Localize UTMLatZoneLabel}}" />
+
+                                <Label Text="{Binding Coordinate.UTM.LongZone, StringFormat={localization:Localize UTMLonZoneLabel}}" />
+
+                                <Label Text="{Binding Coordinate.UTM.SystemType, StringFormat={localization:Localize UTMTypeLabel}}" />
+
+                            </StackLayout>
+
+                        </Border>
+
+                    </VerticalStackLayout>
+
+                    <Label Grid.RowSpan="5"
+                           Text="{localization:Localize CannotGetCurrentLocationLabel}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           Margin="8"
+                           IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntEqualZeroConverter}}" />
+
+                </Grid>
+
+            </ScrollView>
+
+        </RefreshView>
+
+        <ActivityIndicator HeightRequest="50"
+                           WidthRequest="50"
+                           AbsoluteLayout.LayoutFlags="All"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsRunning="{Binding IsBusy}">
+            <ActivityIndicator.IsVisible>
+                <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                    <Binding Path="IsBusy" />
+                    <Binding Path="IsRefreshing"
+                             Converter="{StaticResource InvertedBoolConverter}" />
+                </MultiBinding>
+            </ActivityIndicator.IsVisible>
+        </ActivityIndicator>
+
+    </AbsoluteLayout>
+
+</v1:BasePage>

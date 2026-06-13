@@ -1,0 +1,33 @@
+Descobre o Universo com o Coordi — a tua calculadora celeste offline!
+
+O Coordi coloca a astronomia de precisão na palma da mão. Quer sejas apaixonado por estrelas, fotógrafo, caminhante, velejador ou simplesmente curioso acerca do céu, o Coordi calcula os dados do Sol, da Lua, dos eclipses e das coordenadas para qualquer local e data. E agora mostra tudo com clareza através de gráficos, uma previsão meteorológica de 7 dias e o tema claro ou escuro à tua escolha.
+
+FUNCIONALIDADES PRINCIPAIS
+
+* Sol e Lua: horas exatas do nascer e do pôr, duração do dia e um arco solar interativo que mostra a posição do Sol ao longo do dia.
+* Fases da Lua: a fase atual com a iluminação e os nomes tradicionais das luas cheias, além de uma linha temporal dia/noite bem clara.
+* Eclipses: os próximos eclipses solares e lunares com início, máximo e fim.
+* Signos do zodíaco: o signo do Sol e da Lua para qualquer data.
+* Duração do dia: as horas de luz para qualquer dia e local.
+* Meteorologia: uma previsão opcional de 7 dias para os teus locais guardados.
+* Conversor de coordenadas: qualquer ponto nos formatos UTM e MGRS.
+* Régua: mede a distância entre dois pontos na Terra com grande precisão.
+* Cidade mais próxima: encontra a cidade mais próxima de quaisquer coordenadas através da fórmula de Haversine.
+* Locais guardados: guarda os teus sítios favoritos e desliza entre eles.
+
+À TUA MANEIRA
+
+* Temas claro, escuro e do sistema.
+* Escolhe as unidades: quilómetros ou milhas, além de m/s, km/h ou mph.
+* Formato de 12 ou 24 horas.
+* Disponível em vários idiomas.
+
+PORQUÊ O COORDI?
+
+* Funciona offline: todos os cálculos astronómicos são feitos no teu dispositivo, sem ligação. Apenas a previsão meteorológica opcional usa a internet.
+* Design limpo e intuitivo, fácil de explorar.
+* Dados precisos e fiáveis para todas as tuas necessidades celestes.
+* Sem anúncios.
+* Em melhoria contínua — as tuas sugestões moldam as novas funcionalidades.
+
+Explora as maravilhas do céu onde quer que estejas. Transfere o Coordi hoje mesmo e dá o primeiro passo para dominar os cálculos celestes!

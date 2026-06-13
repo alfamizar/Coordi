@@ -1,0 +1,33 @@
+Discover the Universe with Coordi — Your Offline Celestial Calculator!
+
+Coordi puts precise astronomy at your fingertips. Whether you're a stargazer, photographer, hiker, sailor, or simply curious about the sky, Coordi calculates Sun, Moon, eclipse and coordinate data for any location and date — and now shows it beautifully with charts, a 7-day weather forecast, and your choice of light or dark theme.
+
+KEY FEATURES
+
+* Sun & Moon: precise rise and set times, day length, and an interactive Sun-path arc showing the Sun's position throughout the day.
+* Moon phases: the current phase with illumination and traditional full-moon names, plus a clear day/night timeline.
+* Eclipses: upcoming solar and lunar eclipses with begin, peak and end times.
+* Zodiac signs: the Sun and Moon zodiac sign for any date.
+* Day duration: daylight length for any day and location.
+* Weather: an optional 7-day forecast for your saved locations.
+* Coordinate converter: view any point in UTM and MGRS formats.
+* Ruler: measure the distance between two points on Earth with high precision.
+* Nearest city locator: find the closest city to any coordinates using the Haversine formula.
+* Saved locations: keep your favourite places and swipe between them.
+
+MADE YOUR WAY
+
+* Light, dark and system themes.
+* Choose your units: kilometres or miles, plus m/s, km/h or mph.
+* 12- or 24-hour time format.
+* Available in many languages.
+
+WHY COORDI?
+
+* Works offline: every astronomy calculation runs on your device, no connection required. Only the optional weather forecast uses the internet.
+* Clean, intuitive design that is easy to navigate.
+* Accurate, reliable data for all your celestial needs.
+* No ads.
+* Continuously improved — your feedback shapes new features.
+
+Explore the wonders of the sky, wherever you are. Download Coordi today and take the first step toward mastering celestial calculations!

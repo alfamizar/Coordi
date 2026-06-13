@@ -1,0 +1,55 @@
+default_platform(:android)
+
+# Coordi store-listing automation.
+#
+# These lanes push ONLY localized store-listing TEXT (title / short description /
+# full description) from fastlane/metadata/android/<locale>/. They never upload an
+# APK/AAB, images, or screenshots.
+#
+# The service-account key is read from $SUPPLY_JSON_KEY (see Appfile + README).
+# Run `bundle exec fastlane android check_play_key` first to confirm it works.
+
+platform :android do
+  desc "Validate the Google Play service-account key is present and authorized"
+  lane :check_play_key do
+    key = ENV["SUPPLY_JSON_KEY"]
+    UI.user_error!("Set SUPPLY_JSON_KEY to the path of your Play service-account JSON (see fastlane/README.md)") if key.nil? || key.empty?
+    UI.user_error!("SUPPLY_JSON_KEY points to a missing file: #{key}") unless File.exist?(key)
+    validate_play_store_json_key(json_key: key)
+    UI.success("Service-account key is valid.")
+  end
+
+  desc "Dry-run: validate localized store-listing metadata against Google Play (no changes committed)"
+  lane :upload_listing_dry_run do
+    upload_to_play_store(
+      validate_only: true,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload localized store-listing text (title / short & full description) to Google Play"
+  lane :upload_listing do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload localized listing text AND phone screenshots (metadata/.../images/phoneScreenshots) to Google Play"
+  lane :upload_listing_and_screenshots do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,        # icon / feature graphic — none provided here
+      skip_upload_screenshots: false   # phone screenshots ARE uploaded
+    )
+  end
+end
