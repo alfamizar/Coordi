@@ -26,7 +26,7 @@ play_locale() {
     en)    echo en-US ;;
     ru-RU) echo ru-RU ;;
     uk)    echo uk ;;
-    pl)    echo pl ;;
+    pl)    echo pl-PL ;;
     fr)    echo fr-FR ;;
     it)    echo it-IT ;;
     de)    echo de-DE ;;

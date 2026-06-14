@@ -24,7 +24,7 @@
   | *(default, English)* | `en-US` |
   | `ru-RU` | `ru-RU` |
   | `uk` | `uk` |
-  | `pl` | `pl` |
+  | `pl` | `pl-PL` |
   | `fr` | `fr-FR` |
   | `it` | `it-IT` |
   | `de` | `de-DE` |
