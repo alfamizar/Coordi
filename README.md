@@ -79,17 +79,14 @@ light/dark theming.
 The solution is split into three projects with a deliberate dependency direction —
 presentation depends on the domain, never the reverse:
 
-```
-┌───────────────────────────┐
-│  JustCompute (.NET MAUI)   │  Pages, ViewModels, platform services, DI, localization
-│  net10.0-android / -ios    │
-└─────────────┬──────────────┘
-              │ references
-┌─────────────▼──────────────┐      ┌──────────────────────────────┐
-│  JustCompute.Persistence    │      │  Compute.Core                 │
-│  SQLite + AutoMapper        │─────▶│  Domain models, services,     │
-│  (saved & world cities)     │      │  interfaces — no UI/framework │
-└─────────────────────────────┘      └──────────────────────────────┘
+```mermaid
+flowchart TD
+    MAUI["JustCompute (.NET MAUI)<br/>net10.0-android / -ios<br/>Pages, ViewModels, platform services, DI, localization"]
+    PERS["JustCompute.Persistence<br/>SQLite + AutoMapper<br/>(saved + world-cities DB)"]
+    CORE["Compute.Core<br/>domain models, services, interfaces<br/>(no UI / framework)"]
+    MAUI --> PERS
+    MAUI --> CORE
+    PERS --> CORE
 ```
 
 - **`Compute.Core`** — framework-agnostic domain layer: entities, the sun/moon/weather
