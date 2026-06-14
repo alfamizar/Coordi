@@ -97,6 +97,29 @@ Handled by separate lanes (`upload_listing`, `upload_listing_and_screenshots`,
 locale mapping, character limits, screenshot staging — are in
 [store-assets-guide.md](store-assets-guide.md).
 
+```bash
+# descriptions + screenshots for all locales (see the COORDI_VERSION_CODE note below):
+COORDI_VERSION_CODE=<latest-versionCode> fastlane android upload_listing_and_screenshots
+# descriptions only:
+COORDI_VERSION_CODE=<latest-versionCode> fastlane android upload_listing
+```
+
+> **⚠️ `COORDI_VERSION_CODE` is required for the listing lanes.** This is a `supply` quirk
+> ([fastlane#21007](https://github.com/fastlane/fastlane/issues/21007)): it ignores
+> `skip_upload_changelogs` and still tries to reconcile a changelog against a release on the
+> track. The listing lanes target the **`internal`** track (overridable via `COORDI_TRACK`); if
+> that track has **more than one** release, supply can't pick one and errors with *"More than one
+> release found … specify with the :version_code option"*. Pass `COORDI_VERSION_CODE` = the
+> versionCode you want it associated with (e.g. your latest upload). With a single release on the
+> track, you can usually omit it. The cleaner long-term option is to upload listing assets **with**
+> the AAB (a build always carries an unambiguous version code) — see the `release`/`ship` lanes.
+
+> **⚠️ Play locale codes ≠ the app's resx cultures.** Google's listing codes are specific — e.g.
+> **Polish is `pl-PL`** (bare `pl` is rejected with a 400 *"Invalid request"*), while Ukrainian is
+> bare `uk`. The resx-culture → Play-locale mapping lives in `scripts/stage-store-screenshots.sh`
+> and the table in [store-assets-guide.md](store-assets-guide.md); keep them in sync with Google's
+> [supported-languages list](https://support.google.com/googleplay/android-developer/answer/9844778).
+
 ## 7. Tip: set a UTF-8 locale
 
 fastlane warns if your shell locale isn't UTF-8. Add to `~/.zshrc` to silence it:
