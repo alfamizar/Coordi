@@ -4,7 +4,8 @@ default_platform(:android)
 #
 #   * Store listing (check_play_key, upload_listing*): push localized listing TEXT /
 #     screenshots from fastlane/metadata/android/<locale>/.
-#   * App release (build_aab, release, ship): build a signed AAB and upload it to a track.
+#   * App release (build_aab, release, ship): build a signed AAB, upload it to a track, and
+#     attach localized release notes from metadata/android/<locale>/changelogs/<versionCode>.txt.
 #
 # All secrets are read from the environment and NEVER committed (see docs/google-play-release.md):
 #   * SUPPLY_JSON_KEY  — Play service-account JSON (auth; needs Release permission for uploads)
@@ -113,7 +114,10 @@ platform :android do
       skip_upload_metadata: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,
-      skip_upload_changelogs: true
+      # Release notes are read from metadata/android/<locale>/changelogs/<versionCode>.txt and
+      # attached to this release automatically — no more pasting them into the Play Console.
+      # Add a <newVersionCode>.txt per locale for each release (current: changelogs/2.txt).
+      skip_upload_changelogs: false
     )
   end
 

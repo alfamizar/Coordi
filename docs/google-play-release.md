@@ -114,6 +114,13 @@ COORDI_VERSION_CODE=<latest-versionCode> fastlane android upload_listing
 > track, you can usually omit it. The cleaner long-term option is to upload listing assets **with**
 > the AAB (a build always carries an unambiguous version code) — see the `release`/`ship` lanes.
 
+### Release notes (changelogs)
+
+Per-release "What's new" text lives in `fastlane/metadata/android/<PLAY_LOCALE>/changelogs/<versionCode>.txt`
+(e.g. `changelogs/2.txt`). The `release`/`ship` lanes upload it automatically alongside the AAB —
+no more pasting into the Play Console. For each new release, add a `<newVersionCode>.txt` per
+locale (copy the previous one and edit) before running `fastlane android ship`.
+
 > **⚠️ Play locale codes ≠ the app's resx cultures.** Google's listing codes are specific — e.g.
 > **Polish is `pl-PL`** (bare `pl` is rejected with a 400 *"Invalid request"*), while Ukrainian is
 > bare `uk`. The resx-culture → Play-locale mapping lives in `scripts/stage-store-screenshots.sh`
