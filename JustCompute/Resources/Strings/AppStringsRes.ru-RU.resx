@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>миль/ч</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Геолокация в фоне</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Чтобы отслеживать скорость, расстояние и высоту в поездке, когда Coordi свёрнут или экран выключен, приложению нужно собирать геолокацию в фоновом режиме. Трекинг работает с постоянным уведомлением и останавливается, как только вы завершаете поездку. Геолокация остаётся на этом устройстве и никому не передаётся.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
 </root>

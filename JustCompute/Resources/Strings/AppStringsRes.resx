@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>mph</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Background location</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>To track your trip's speed, distance and elevation while Coordi is minimized or the screen is off, the app needs to collect your location in the background. Tracking runs with an ongoing notification and stops as soon as you end the trip. Your location stays on this device and is never shared with anyone.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

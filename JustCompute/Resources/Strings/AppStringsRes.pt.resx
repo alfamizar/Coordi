@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>mph</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Localização em segundo plano</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Para registar a velocidade, a distância e a altitude da tua viagem enquanto o Coordi está minimizado ou o ecrã está desligado, a aplicação precisa de recolher a tua localização em segundo plano. O acompanhamento funciona com uma notificação permanente e para assim que terminares a viagem. A tua localização permanece neste dispositivo e nunca é partilhada com ninguém.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
 </root>

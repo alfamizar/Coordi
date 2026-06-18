@@ -54,6 +54,15 @@ public static class Settings
         set => Preferences.Set(nameof(IsWifiOnlyEnabled), value);
     }
 
+    // Whether the user has seen and accepted the prominent disclosure shown before the app starts
+    // collecting location in the background for trip tracking (Google Play location policy). Shown
+    // once; once accepted we don't prompt again.
+    public static bool HasAcceptedBackgroundLocationDisclosure
+    {
+        get => Preferences.Get(nameof(HasAcceptedBackgroundLocationDisclosure), false);
+        set => Preferences.Set(nameof(HasAcceptedBackgroundLocationDisclosure), value);
+    }
+
     public static DateTime Birthday
     {
         get => Preferences.Get(nameof(Birthday), new DateTime());

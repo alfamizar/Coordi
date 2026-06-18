@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>mph</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Lokalizacja w tle</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Aby rejestrować prędkość, dystans i wysokość podczas podróży, gdy Coordi jest zminimalizowane lub ekran jest wyłączony, aplikacja musi zbierać Twoją lokalizację w tle. Śledzenie działa z trwałym powiadomieniem i zatrzymuje się, gdy tylko zakończysz podróż. Twoja lokalizacja pozostaje na tym urządzeniu i nie jest nikomu udostępniana.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Kontynuuj</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
 </root>

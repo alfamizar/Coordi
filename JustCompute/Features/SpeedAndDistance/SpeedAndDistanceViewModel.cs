@@ -113,8 +113,29 @@ namespace JustCompute.Features.SpeedAndDistance
 
             if (IsBusy) return;
 
-            IsBusy = true;
             var willBeRunning = !IsRunning;
+
+            // Prominent disclosure (Google Play location policy): before the app starts collecting
+            // location in the background for trip tracking, the user must see a clear explanation and
+            // explicitly agree. Shown once; declining cancels the start so no background collection
+            // happens without consent.
+            if (willBeRunning && !global::JustCompute.Shared.Helpers.Settings.HasAcceptedBackgroundLocationDisclosure)
+            {
+                var consent = await _dialogService.DisplayAlert(
+                    _localizer.GetString("BackgroundLocationDisclosureTitle"),
+                    _localizer.GetString("BackgroundLocationDisclosureMessage"),
+                    _localizer.GetString("BackgroundLocationDisclosureContinue"),
+                    _localizer.GetString("BackgroundLocationDisclosureCancel"));
+
+                if (consent != DialogButton.Positive)
+                {
+                    return;
+                }
+
+                global::JustCompute.Shared.Helpers.Settings.HasAcceptedBackgroundLocationDisclosure = true;
+            }
+
+            IsBusy = true;
 
             await StopListeningLocation();
             var startedListeningLocationResult = await StartListeningLocation(backgroundCapable: willBeRunning);

@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>mph</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Standort im Hintergrund</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Um Geschwindigkeit, Distanz und Höhe deiner Fahrt zu erfassen, während Coordi minimiert oder der Bildschirm aus ist, muss die App deinen Standort im Hintergrund erfassen. Die Aufzeichnung läuft mit einer dauerhaften Benachrichtigung und stoppt, sobald du die Fahrt beendest. Dein Standort bleibt auf diesem Gerät und wird mit niemandem geteilt.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
 </root>

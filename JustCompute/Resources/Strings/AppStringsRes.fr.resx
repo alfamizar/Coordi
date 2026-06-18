@@ -633,4 +633,16 @@
   <data name="MilesPerHourLabel" xml:space="preserve">
     <value>mph</value>
   </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Localisation en arrière-plan</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Pour enregistrer la vitesse, la distance et l'altitude de votre trajet lorsque Coordi est réduit ou que l'écran est éteint, l'application doit collecter votre position en arrière-plan. Le suivi fonctionne avec une notification persistante et s'arrête dès que vous terminez le trajet. Votre position reste sur cet appareil et n'est jamais partagée avec qui que ce soit.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Continuer</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
 </root>
