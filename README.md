@@ -19,6 +19,7 @@ light/dark theming.
 
 ## Screenshots
 
+<p align="center"><strong>Android</strong></p>
 <p align="center">
   <img src="docs/screenshots/locations.png" width="200" alt="Location dashboard: local time, coordinates, weather, sun path, moon" />
   <img src="docs/screenshots/sun-dark.png" width="200" alt="Sun rise/set, day length and zodiac for a year" />
@@ -30,7 +31,18 @@ light/dark theming.
   <img src="docs/screenshots/settings.png" width="200" alt="Settings: theme, distance and speed units" />
 </p>
 
-<p align="center"><sub>Coordi ships in 11 languages and follows the system light/dark theme.</sub></p>
+<p align="center"><strong>iPhone</strong></p>
+<p align="center">
+  <img src="docs/screenshots/ios-locations.png" width="200" alt="iOS: location dashboard with time, coordinates, weather and sun path" />
+  <img src="docs/screenshots/ios-sun.png" width="200" alt="iOS: sun rise/set, day length and zodiac for a year" />
+  <img src="docs/screenshots/ios-speed-distance.png" width="200" alt="iOS: live GPS speed and distance tracking" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/ios-search-city.png" width="200" alt="iOS: search the offline city database" />
+  <img src="docs/screenshots/ios-add-location.png" width="200" alt="iOS: add a saved location by city or current GPS fix" />
+</p>
+
+<p align="center"><sub>The same .NET MAUI codebase on Android and iOS — Coordi ships in 11 languages and follows the system light/dark theme.</sub></p>
 
 ---
 
