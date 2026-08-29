@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Compute.Astro — a dependency-free astronomy/geodesy library for .NET.
+
+    C# port of the clean-room Kotlin Multiplatform `:astro` library from AstroClaw
+    (com.cutecompute.coordi.astro). Written from public algorithms (J. Meeus,
+    *Astronomical Algorithms*, 2nd ed.; Vincenty 1975; Snyder/USGS PP 1395), with no
+    third-party runtime dependencies — the licence-clean replacement for CoordinateSharp.
+  -->
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>false</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>CuteCompute.Astro</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>CuteCompute</Authors>
+    <Description>
+      Dependency-free astronomy and geodesy for .NET: sun/moon positions, rise and set,
+      moon phases and illumination, solar and lunar eclipses (including local circumstances),
+      planets, constellations, bright stars, tropical zodiac, Vincenty geodesics, UTM/MGRS
+      grid references, and coordinate formatting/parsing.
+    </Description>
+    <PackageTags>astronomy;ephemeris;sun;moon;eclipse;geodesy;vincenty;utm;mgrs;meeus</PackageTags>
+    <!--
+      Apache-2.0, deliberately permissive: this is a clean-room implementation written
+      from published algorithms, so it is not bound by the AGPL of the CoordinateSharp
+      dependency it replaces.
+    -->
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
