@@ -24,6 +24,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Compute.Core\Compute.Core.csproj" />
+    <!-- Covers the AutoMapper profile: the location/city id mapping is a convention trap. -->
+    <ProjectReference Include="..\JustCompute.Persistence\JustCompute.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

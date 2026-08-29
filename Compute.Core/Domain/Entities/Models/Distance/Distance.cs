@@ -7,7 +7,6 @@ namespace Compute.Core.Domain.Entities.Models.Distance
         private readonly double miles;
         private readonly double feet;
         private readonly double meters;
-        private readonly double bearing;
         private readonly double nauticalMiles;
 
         public double Kilometers => kilometers;
@@ -15,7 +14,6 @@ namespace Compute.Core.Domain.Entities.Models.Distance
         public double NauticalMiles => nauticalMiles;
         public double Meters => meters;
         public double Feet => feet;
-        public double Bearing => bearing;
 
         public Distance(double km)
         {
@@ -23,12 +21,11 @@ namespace Compute.Core.Domain.Entities.Models.Distance
             meters = km * 1000.0;
             feet = meters * 3.28084;
             miles = meters * 0.000621371;
-            nauticalMiles = meters * 0.0005399565;
+            nauticalMiles = meters * 0.000539957;
         }
 
         public Distance(double distance, DistanceType type)
         {
-            bearing = 0.0;
             switch (type)
             {
                 case DistanceType.Feets:
@@ -36,32 +33,32 @@ namespace Compute.Core.Domain.Entities.Models.Distance
                     meters = feet * 0.3048;
                     kilometers = meters / 1000.0;
                     miles = meters * 0.000621371;
-                    nauticalMiles = meters * 0.0005399565;
+                    nauticalMiles = meters * 0.000539957;
                     break;
                 case DistanceType.Kilometers:
                     kilometers = distance;
                     meters = kilometers * 1000.0;
                     feet = meters * 3.28084;
                     miles = meters * 0.000621371;
-                    nauticalMiles = meters * 0.0005399565;
+                    nauticalMiles = meters * 0.000539957;
                     break;
                 case DistanceType.Meters:
                     meters = distance;
                     kilometers = meters / 1000.0;
                     feet = meters * 3.28084;
                     miles = meters * 0.000621371;
-                    nauticalMiles = meters * 0.0005399565;
+                    nauticalMiles = meters * 0.000539957;
                     break;
                 case DistanceType.Miles:
                     miles = distance;
                     meters = miles * 1609.344;
                     feet = meters * 3.28084;
                     kilometers = meters / 1000.0;
-                    nauticalMiles = meters * 0.0005399565;
+                    nauticalMiles = meters * 0.000539957;
                     break;
                 case DistanceType.NauticalMiles:
                     nauticalMiles = distance;
-                    meters = nauticalMiles * 1852.001;
+                    meters = nauticalMiles * 1852.0;
                     feet = meters * 3.28084;
                     kilometers = meters / 1000.0;
                     miles = meters * 0.000621371;
@@ -71,7 +68,7 @@ namespace Compute.Core.Domain.Entities.Models.Distance
                     meters = distance * 1000.0;
                     feet = meters * 3.28084;
                     miles = meters * 0.000621371;
-                    nauticalMiles = meters * 0.0005399565;
+                    nauticalMiles = meters * 0.000539957;
                     break;
             }
         }

@@ -1,65 +1,65 @@
-﻿using CoordinateSharp;
+using Compute.Core.Domain.Entities.Models.AstroSign;
 
 namespace Compute.Core.Extensions
 {
     public static class AstroExtensions
     {
-        public static AstrologicalSignType CalculateZodiacSign(this DateTime date)
+        public static AstroZodiacSign CalculateZodiacSign(this DateTime date)
         {
             if (date >= new DateTime(date.Year, 1, 1) && date <= new DateTime(date.Year, 1, 19, 23, 59, 59))
             {
-                return AstrologicalSignType.Capricorn;
+                return AstroZodiacSign.Capricorn;
             }
             if (date >= new DateTime(date.Year, 1, 20) && date <= new DateTime(date.Year, 2, 18, 23, 59, 59))
             {
-                return AstrologicalSignType.Aquarius;
+                return AstroZodiacSign.Aquarius;
             }
             if (date >= new DateTime(date.Year, 2, 19) && date <= new DateTime(date.Year, 3, 20, 23, 59, 59))
             {
-                return AstrologicalSignType.Pisces;
+                return AstroZodiacSign.Pisces;
             }
             if (date >= new DateTime(date.Year, 3, 21) && date <= new DateTime(date.Year, 4, 19, 23, 59, 59))
             {
-                return AstrologicalSignType.Aries;
+                return AstroZodiacSign.Aries;
             }
             if (date >= new DateTime(date.Year, 4, 20) && date <= new DateTime(date.Year, 5, 20, 23, 59, 59))
             {
-                return AstrologicalSignType.Taurus;
+                return AstroZodiacSign.Taurus;
             }
             if (date >= new DateTime(date.Year, 5, 21) && date <= new DateTime(date.Year, 6, 20, 23, 59, 59))
             {
-                return AstrologicalSignType.Gemini;
+                return AstroZodiacSign.Gemini;
             }
             if (date >= new DateTime(date.Year, 6, 21) && date <= new DateTime(date.Year, 7, 22, 23, 59, 59))
             {
-                return AstrologicalSignType.Cancer;
+                return AstroZodiacSign.Cancer;
             }
             if (date >= new DateTime(date.Year, 7, 23) && date <= new DateTime(date.Year, 8, 22, 23, 59, 59))
             {
-                return AstrologicalSignType.Leo;
+                return AstroZodiacSign.Leo;
             }
             if (date >= new DateTime(date.Year, 8, 23) && date <= new DateTime(date.Year, 9, 22, 23, 59, 59))
             {
-                return AstrologicalSignType.Virgo;
+                return AstroZodiacSign.Virgo;
             }
             if (date >= new DateTime(date.Year, 9, 23) && date <= new DateTime(date.Year, 10, 22, 23, 59, 59))
             {
-                return AstrologicalSignType.Libra;
+                return AstroZodiacSign.Libra;
             }
             if (date >= new DateTime(date.Year, 10, 23) && date <= new DateTime(date.Year, 11, 21, 23, 59, 59))
             {
-                return AstrologicalSignType.Scorpio;
+                return AstroZodiacSign.Scorpio;
             }
             if (date >= new DateTime(date.Year, 11, 21) && date <= new DateTime(date.Year, 12, 21, 23, 59, 59))
             {
-                return AstrologicalSignType.Sagittarius;
+                return AstroZodiacSign.Sagittarius;
             }
             if (date >= new DateTime(date.Year, 12, 22) && date <= new DateTime(date.Year, 12, 31, 23, 59, 59))
             {
-                return AstrologicalSignType.Capricorn;
+                return AstroZodiacSign.Capricorn;
             }
 
-            return AstrologicalSignType.Capricorn;
+            return AstroZodiacSign.Capricorn;
         }
     }
 }

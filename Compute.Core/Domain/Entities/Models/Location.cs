@@ -1,12 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Compute.Astro;
 using Compute.Core.Domain.Entities.Models.Time;
 using Compute.Core.Utils;
-using System.Globalization;
 
 namespace Compute.Core.Domain.Entities.Models
 {
     public partial class Location : ObservableObject
     {
+        private string? _timeZoneId;
+        private bool _timeZoneIdResolved;
+
         public int Id { get; set; }
 
         [ObservableProperty]
@@ -14,52 +17,141 @@ namespace Compute.Core.Domain.Entities.Models
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TimeZoneOffset))]
-        private string latitude = "0";
-
-        public double LatitudeDouble
-        {
-            get
-            {
-                if (double.TryParse(Latitude.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double latValue) && latValue >= -90 && latValue <= 90)
-                {
-                    return Math.Round(latValue, 8);
-                }
-                return 0;
-            }
-        }
+        [NotifyPropertyChangedFor(nameof(LatitudeDms))]
+        private double latitude = 0;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(TimeZoneOffset))]
-        private string longitude = "0";
-
-        public double LongitudeDouble
-        {
-            get
-            {
-                if (double.TryParse(Longitude.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double lonValue) && lonValue >= -180 && lonValue <= 180)
-                {
-                    return Math.Round(lonValue, 8);
-                }
-                return 0;
-            }
-        }
+        [NotifyPropertyChangedFor(nameof(LongitudeDms))]
+        private double longitude = 0;
 
         [ObservableProperty]
         private City city = new();
+
+        /// <summary>
+        /// The placeholder the app falls back to before the user has chosen anywhere — so every
+        /// screen has real data to show instead of an error. Greenwich is the natural choice:
+        /// it is where the prime meridian is defined.
+        /// </summary>
+        public static Location CreatePlaceholder() => new()
+        {
+            Name = "London",
+            Latitude = 51.5074,
+            Longitude = -0.1278,
+            // Named outright so the placeholder never depends on a lookup, and so it observes
+            // British Summer Time like the real place does.
+            TimeZoneId = "Europe/London",
+        };
+
+        /// <summary>Latitude as degrees/minutes/seconds, e.g. <c>N 51° 30' 26.64"</c>.</summary>
+        public string LatitudeDms => GeoFormat.FormatDms(Latitude, GeoFormat.Axis.Latitude);
+
+        /// <summary>Longitude as degrees/minutes/seconds, e.g. <c>W 0° 7' 40.08"</c>.</summary>
+        public string LongitudeDms => GeoFormat.FormatDms(Longitude, GeoFormat.Axis.Longitude);
+
+        /// <summary>
+        /// True once this place exists as a row in the user's database. The device's own position
+        /// and the Greenwich placeholder are neither editable nor deletable, and both are told
+        /// apart by having no persisted id.
+        /// </summary>
+        public bool IsSaved => Id > 0;
 
         public bool IsActive { get; set; }
 
         public bool IsCurrent { get; set; }
 
-        public TimeZoneOffset TimeZoneOffset {
-            get 
+        /// <summary>
+        /// This location's time zone: an IANA id such as <c>Asia/Tokyo</c>, resolved from the
+        /// coordinates on first use, or a fixed <c>UTC±HH:MM</c> id when the user pinned the
+        /// offset by hand. Persisted, so a saved place keeps the zone it was created with.
+        /// </summary>
+        public string TimeZoneId
+        {
+            get
             {
-                var timeZoneId = TimeZoneUtils.GetTimeZoneId(LatitudeDouble, LongitudeDouble);
+                if (!_timeZoneIdResolved)
+                {
+                    _timeZoneId = TimeZoneUtils.GetTimeZoneId(Latitude, Longitude);
+                    _timeZoneIdResolved = true;
+                }
 
-                return TimeZoneOffset
-                    .GetUtcOffsets()
-                    .FirstOrDefault(offset => offset.DisplayName == timeZoneId) ?? TimeZoneOffset.DefaultTimeZoneOffset;
-            } 
+                return _timeZoneId ?? string.Empty;
+            }
+            set
+            {
+                _timeZoneId = value;
+                _timeZoneIdResolved = !string.IsNullOrEmpty(value);
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TimeZoneOffset));
+            }
+        }
+
+        /// <summary>
+        /// The UTC offset in force here at the given instant. Ask per date — the answer changes
+        /// across a daylight-saving boundary, which is exactly what time travel crosses.
+        /// </summary>
+        public TimeSpan GetUtcOffset(DateTime utc) =>
+            TimeZoneUtils.GetUtcOffset(TimeZoneId, utc, Longitude);
+
+        /// <summary>Same, in hours, for the astronomy layer.</summary>
+        public double GetUtcOffsetHours(DateTime utc) => GetUtcOffset(utc).TotalHours;
+
+        /// <summary>
+        /// The offset in force right now — what the UI displays. Assigning one (from the Add
+        /// Location picker) pins the location to that fixed offset, overriding the zone lookup.
+        /// </summary>
+        public TimeZoneOffset TimeZoneOffset
+        {
+            get => TimeZoneOffset.FromOffset(GetUtcOffset(DateTime.UtcNow));
+            set
+            {
+                if (value is null) return;
+
+                // A two-way picker writes its current value straight back when the screen loads.
+                // Pinning on that would replace the resolved zone — and its daylight saving —
+                // for every location merely opened in the editor. Only a genuine change pins.
+                if (value.Offset == GetUtcOffset(DateTime.UtcNow)) return;
+
+                TimeZoneId = TimeZoneUtils.ToFixedOffsetId(value.Offset);
+            }
+        }
+
+        /// <summary>
+        /// A detached copy. The edit screen binds straight to the object it is given, so without
+        /// this a cancelled edit would leave its changes in every list still holding that instance.
+        /// </summary>
+        public Location Clone() => new()
+        {
+            Id = Id,
+            Name = Name,
+            Latitude = Latitude,
+            Longitude = Longitude,
+            IsActive = IsActive,
+            IsCurrent = IsCurrent,
+            TimeZoneId = TimeZoneId,
+            City = new City
+            {
+                Id = City.Id,
+                CityName = City.CityName,
+                CountryName = City.CountryName,
+                Population = City.Population,
+            },
+        };
+
+        partial void OnLatitudeChanged(double value) => InvalidateResolvedTimeZone();
+
+        partial void OnLongitudeChanged(double value) => InvalidateResolvedTimeZone();
+
+        /// <summary>
+        /// Moving the pin invalidates a looked-up zone, but never an offset the user chose
+        /// deliberately — that override is the whole point of the picker.
+        /// </summary>
+        private void InvalidateResolvedTimeZone()
+        {
+            if (TimeZoneUtils.TryParseFixedOffset(_timeZoneId, out _)) return;
+
+            _timeZoneId = null;
+            _timeZoneIdResolved = false;
         }
     }
 }

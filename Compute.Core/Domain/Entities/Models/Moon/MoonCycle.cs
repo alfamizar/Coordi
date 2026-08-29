@@ -1,4 +1,4 @@
-﻿using CoordinateSharp;
+using Compute.Core.Domain.Entities.Models.AstroSign;
 using System.Collections.ObjectModel;
 
 namespace Compute.Core.Domain.Entities.Models.Moon
@@ -38,8 +38,8 @@ namespace Compute.Core.Domain.Entities.Models.Moon
             }
         }
 
-        private AstrologicalSignType _moonInZodiacSign;
-        public AstrologicalSignType MoonInZodiacSign
+        private AstroZodiacSign _moonInZodiacSign;
+        public AstroZodiacSign MoonInZodiacSign
         {
             get => _moonInZodiacSign;
             set

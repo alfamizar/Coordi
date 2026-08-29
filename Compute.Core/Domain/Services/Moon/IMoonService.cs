@@ -1,12 +1,11 @@
-﻿using Compute.Core.Domain.Entities.Models.Moon;
-using CoordinateSharp;
+using Compute.Core.Domain.Entities.Models;
+using Compute.Core.Domain.Entities.Models.Eclipses;
+using Compute.Core.Domain.Entities.Models.Moon;
 
 namespace Compute.Core.Domain.Services.Moon
 {
     public interface IMoonService
     {
-        Task<List<MoonCycle>> GetMoonCyclesAsync(double lat, double lng, DateTime date);
-
-        Task<List<LunarEclipseDetails>> GetMoonEclipsesAsync(double lat, double lng, DateTime date);
+        Task<List<LunarEclipseInfo>> GetMoonEclipsesAsync(Location location, DateTime date);
     }
 }

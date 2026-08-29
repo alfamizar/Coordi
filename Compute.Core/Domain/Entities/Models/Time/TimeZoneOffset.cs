@@ -1,43 +1,31 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
+using Compute.Core.Utils;
 
 namespace Compute.Core.Domain.Entities.Models.Time
 {
-    public record TimeZoneOffset(string DisplayName, int Hours)
+    /// <summary>
+    /// A UTC offset together with the way it is written. Carries a <see cref="TimeSpan"/> rather
+    /// than whole hours because plenty of zones are not on the hour — India is +5:30, Nepal +5:45.
+    /// </summary>
+    public record TimeZoneOffset(string DisplayName, TimeSpan Offset)
     {
         public override string ToString() => DisplayName;
 
-        public static readonly TimeZoneOffset DefaultTimeZoneOffset = new("UTC±0 (UTC)", 0);
+        public static readonly TimeZoneOffset DefaultTimeZoneOffset = FromOffset(TimeSpan.Zero);
 
-        public static ObservableCollection<TimeZoneOffset> GetUtcOffsets()
-        {
-            return
+        public static TimeZoneOffset FromOffset(TimeSpan offset) =>
+            new(TimeZoneUtils.FormatOffset(offset), offset);
+
+        /// <summary>
+        /// The whole-hour offsets shown in the manual picker on the Add Location screen. Real
+        /// places get their offset from the tz database instead — this list exists only so a
+        /// location can be pinned by hand when the lookup is wrong or the coordinates are made up.
+        /// </summary>
+        public static ObservableCollection<TimeZoneOffset> GetUtcOffsets() =>
         [
-            new("UTC-12", -12),
-            new("UTC-11", -11),
-            new("UTC-10", -10),
-            new("UTC-9", -9),
-            new("UTC-8", -8),
-            new("UTC-7", -7),
-            new("UTC-6", -6),
-            new("UTC-5", -5),
-            new("UTC-4", -4),
-            new("UTC-3", -3),
-            new("UTC-2", -2),
-            new("UTC-1", -1),
-            new("UTC±0 (UTC)", 0),
-            new("UTC+1", 1),
-            new("UTC+2", 2),
-            new("UTC+3", 3),
-            new("UTC+4", 4),
-            new("UTC+5", 5),
-            new("UTC+6", 6),
-            new("UTC+7", 7),
-            new("UTC+8", 8),
-            new("UTC+9", 9),
-            new("UTC+10", 10),
-            new("UTC+11", 11),
-            new("UTC+12", 12)
+            .. Enumerable
+                .Range(-12, 25)
+                .Select(hours => FromOffset(TimeSpan.FromHours(hours)))
         ];
-        }
     }
 }
