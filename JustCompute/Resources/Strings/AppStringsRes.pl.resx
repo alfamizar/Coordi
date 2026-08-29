@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,8 +123,8 @@
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Dodaj lokalizację</value>
   </data>
-  <data name="LocationActionLabel" xml:space="preserve">
-    <value>Akcje</value>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Edytuj lokalizację</value>
   </data>
   <data name="AnnularEclipseLabel" xml:space="preserve">
     <value>Obrączkowe</value>
@@ -288,8 +288,14 @@
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Nazwa lokalizacji</value>
   </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Wyszukiwanie niedostępne. Dotknij, aby spróbować ponownie.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>Nie znaleziono miast</value>
+  </data>
   <data name="LocationPermissionDialogMessage" xml:space="preserve">
-    <value>Aplikacja potrzebuje dostępu do lokalizacji urządzenia, aby działać</value>
+    <value>Dostęp do lokalizacji pozwala pokazać dane dla Twojego miejsca. Bez niego możesz wybrać miejsce ręcznie.</value>
   </data>
   <data name="LocationPermissionDialogTitle" xml:space="preserve">
     <value>Uprawnienie do lokalizacji</value>
@@ -302,9 +308,6 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Długość geograficzna: {0:0.#####}</value>
-  </data>
-  <data name="ManageSavedLocationsLabel" xml:space="preserve">
-    <value>Zarządzaj zapisanymi lokalizacjami</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Czas maksimum zaćmienia: {0}</value>
@@ -406,7 +409,7 @@
     <value>Czas końca zaćmienia półcieniowego: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
-    <value>Aplikacja potrzebuje uprawnienia do lokalizacji, aby działać. Przejdź do ustawień aplikacji i przyznaj uprawnienie lub zamknij aplikację.</value>
+    <value>Dostęp do lokalizacji pozwala pokazać dane dla Twojego miejsca. Bez niego możesz wybrać miejsce ręcznie.</value>
   </data>
   <data name="PermissionRequiredDialogTitle" xml:space="preserve">
     <value>Wymagane uprawnienie</value>
@@ -644,5 +647,119 @@
   </data>
   <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
     <value>Anuluj</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Dziś</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Tylko zaćmienia widoczne stąd</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>Aplikacja pokazuje {0} jako miejsce zastępcze. Ustaw swoją lokalizację, aby wschody, zachody, fazy Księżyca i zaćmienia były dokładne dla Twojego miejsca.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Ustaw lokalizację</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Pogoda niedostępna. Dotknij, aby spróbować ponownie.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Bieżąca lokalizacja</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Użyj mojej lokalizacji</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Strefa czasowa</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Niewidoczne stąd</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Optyka</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Obiektyw i matryca</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Aparat</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Ogniskowa (mm)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Przysłona (liczba f)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Odległość obiektu (m)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Szerokość obrazu (px)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Deklinacja (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Zapisz jako domyślne</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Głębia ostrości</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Odległość hiperfokalna</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Granica bliska</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Granica daleka</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Łącznie</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>Przed obiektem</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>Za obiektem</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Pole widzenia</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>Poziomo</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>Pionowo</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>Przekątna</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Ekspozycja gwiazd</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>Reguła 500</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>Reguła NPF</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Rozstaw pikseli</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Najdłuższa ekspozycja, zanim gwiazdy zostawią smugi. NPF to surowsza reguła uwzględniająca matrycę; deklinacja 0° to najgorszy przypadek.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Podaj ogniskową, przysłonę i odległość obiektu, aby zobaczyć głębię ostrości i pole widzenia.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Musi być liczbą dodatnią.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Podaj całkowitą liczbę pikseli.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Deklinacja musi mieścić się w zakresie od −90 do 90.</value>
   </data>
 </root>

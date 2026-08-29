@@ -76,7 +76,7 @@
               Grid.Row="1">
 
             <ImageButton Grid.Column="0"
-                         Command="{Binding Commands[ToggleLocationTrackingCommand]}"
+                         Command="{Binding ToggleLocationTrackingCommand}"
                          WidthRequest="50"
                          HeightRequest="50"
                          CornerRadius="32"

@@ -1,4 +1,4 @@
-﻿#if IOS
+#if IOS
 using Environment = JustCompute.Platforms.iOS.UI.Environment;
 #elif ANDROID
 using Environment = JustCompute.Platforms.Android.UI.Environment;
@@ -45,6 +45,8 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IMessagingService, MessagingService>();
         builder.Services.AddSingleton<ViewModelServices>();
+        // One connection for the file both repositories read; see AppDatabaseConnection.
+        builder.Services.AddSingleton<AppDatabaseConnection>();
         builder.Services.AddSingleton<ILocationsRepository, SavedLocationsRepository>();
         builder.Services.AddSingleton<IWorldCitiesRepository<WorldCityTable>, WorldCitiesRepository>();
 

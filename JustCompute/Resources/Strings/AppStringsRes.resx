@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,8 +123,8 @@
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Add Location</value>
   </data>
-  <data name="LocationActionLabel" xml:space="preserve">
-    <value>Actions</value>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Edit Location</value>
   </data>
   <data name="AnnularEclipseLabel" xml:space="preserve">
     <value>Annular</value>
@@ -288,8 +288,14 @@
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Location Name</value>
   </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Search unavailable. Tap to try again.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>No cities found</value>
+  </data>
   <data name="LocationPermissionDialogMessage" xml:space="preserve">
-    <value>App needs access device location to operate</value>
+    <value>Location access lets the app show data for where you are. Without it you can still pick a place manually.</value>
   </data>
   <data name="LocationPermissionDialogTitle" xml:space="preserve">
     <value>Location Permission</value>
@@ -302,9 +308,6 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Longitude: {0:0.#####}</value>
-  </data>
-  <data name="ManageSavedLocationsLabel" xml:space="preserve">
-    <value>Manage saved locations</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Maximum eclipse time: {0}</value>
@@ -406,7 +409,7 @@
     <value>Penumbral eclipse end time: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
-    <value>App needs location permission to operate. Go to app settings and grant permission or close the app</value>
+    <value>Location access lets the app show data for where you are. Without it you can still pick a place manually.</value>
   </data>
   <data name="PermissionRequiredDialogTitle" xml:space="preserve">
     <value>Permission required</value>
@@ -644,5 +647,119 @@
   </data>
   <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Only eclipses visible from here</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>The app is showing {0} as a placeholder. Set your location so sunrise, sunset, moon phases and eclipses are accurate for where you are.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Set your location</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Weather unavailable. Tap to try again.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Current location</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Use my location</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Time zone</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Not visible from here</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Optics</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Lens &amp; sensor</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Focal length (mm)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Aperture (f-number)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Subject distance (m)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Image width (px)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Declination (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Save as default</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Depth of field</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Hyperfocal distance</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Near limit</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Far limit</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>In front of subject</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>Behind subject</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Field of view</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>Diagonal</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Star exposure</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>500 rule</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>NPF rule</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Pixel pitch</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Longest exposure before stars trail. NPF is the stricter, sensor-aware rule; declination 0° is the worst case.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Enter focal length, aperture and subject distance to see depth of field and field of view.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Must be a positive number.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Enter a whole number of pixels.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Declination must be between −90 and 90.</value>
   </data>
 </root>

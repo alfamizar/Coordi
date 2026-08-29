@@ -1,4 +1,4 @@
-﻿using Compute.Core.Domain.Entities.Models.Distance;
+using Compute.Core.Domain.Entities.Models.Distance;
 using Compute.Core.Domain.Entities.Models.Speed;
 
 namespace JustCompute.Shared.Helpers;
@@ -25,6 +25,57 @@ public static class Settings
         set => Preferences.Set(nameof(DistanceType), value.ToString());
     }
 
+    /// <summary>
+    /// Whether the Optics calculator reopens with the kit last entered. Off by default: a
+    /// calculator that silently remembers is one that quietly hands you somebody else's answer.
+    /// </summary>
+    public static bool RememberOpticsInputs
+    {
+        get => Preferences.Get(nameof(RememberOpticsInputs), false);
+        set => Preferences.Set(nameof(RememberOpticsInputs), value);
+    }
+
+    /// <summary>
+    /// The Optics inputs, stored as the text the user typed rather than parsed numbers — a field
+    /// mid-edit is not always a valid number, and round-tripping through a double would rewrite
+    /// what they were in the middle of typing.
+    /// </summary>
+    public static string OpticsFocalLengthMm
+    {
+        get => Preferences.Get(nameof(OpticsFocalLengthMm), "50");
+        set => Preferences.Set(nameof(OpticsFocalLengthMm), value);
+    }
+
+    public static string OpticsAperture
+    {
+        get => Preferences.Get(nameof(OpticsAperture), "8");
+        set => Preferences.Set(nameof(OpticsAperture), value);
+    }
+
+    public static string OpticsSubjectDistanceMeters
+    {
+        get => Preferences.Get(nameof(OpticsSubjectDistanceMeters), "5");
+        set => Preferences.Set(nameof(OpticsSubjectDistanceMeters), value);
+    }
+
+    public static string OpticsSensorFormat
+    {
+        get => Preferences.Get(nameof(OpticsSensorFormat), "Full frame");
+        set => Preferences.Set(nameof(OpticsSensorFormat), value);
+    }
+
+    public static string OpticsImageWidthPixels
+    {
+        get => Preferences.Get(nameof(OpticsImageWidthPixels), "6000");
+        set => Preferences.Set(nameof(OpticsImageWidthPixels), value);
+    }
+
+    public static string OpticsDeclinationDeg
+    {
+        get => Preferences.Get(nameof(OpticsDeclinationDeg), "0");
+        set => Preferences.Set(nameof(OpticsDeclinationDeg), value);
+    }
+
     public static SpeedType SpeedType
     {
         get
@@ -46,6 +97,28 @@ public static class Settings
             _is24HourTimeFormatCache = value;
             Preferences.Set(nameof(Is24HourTimeFormat), value);
         }
+    }
+
+    /// <summary>
+    /// When true the eclipse screens list only eclipses actually observable from the selected
+    /// location; when false they show the whole century's catalogue with the unobservable ones
+    /// marked. Defaults to showing everything: knowing an eclipse exists but misses you is more
+    /// useful than the event silently not being there.
+    /// </summary>
+    public static bool ShowOnlyVisibleEclipses
+    {
+        get => Preferences.Get(nameof(ShowOnlyVisibleEclipses), false);
+        set => Preferences.Set(nameof(ShowOnlyVisibleEclipses), value);
+    }
+
+    /// <summary>
+    /// False until the user explicitly picks a location. While false the app is showing the
+    /// placeholder, and the onboarding card says so rather than pretending the data is theirs.
+    /// </summary>
+    public static bool HasUserSetLocation
+    {
+        get => Preferences.Get(nameof(HasUserSetLocation), false);
+        set => Preferences.Set(nameof(HasUserSetLocation), value);
     }
 
     public static bool IsWifiOnlyEnabled

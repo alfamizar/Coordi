@@ -1,11 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Navigation;
-using CoordinateSharp;
+using Compute.Astro;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Shared.ViewModels;
 using System.ComponentModel;
+using DistanceModel = Compute.Core.Domain.Entities.Models.Distance.Distance;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Features.Distance
@@ -21,13 +22,11 @@ namespace JustCompute.Features.Distance
         private Location location2 = new();
 
         [ObservableProperty]
-        private global::CoordinateSharp.Distance? distance;
+        private DistanceModel? distance;
 
         public DistanceViewModel(ViewModelServices services)
             : base(services)
         {
-            Commands.Add("SearchLocation1Command", new AsyncRelayCommand(SearchLocation1));
-            Commands.Add("SearchLocation2Command", new AsyncRelayCommand(SearchLocation2));
             SubscribeToLocationChanges();
         }
 
@@ -73,17 +72,20 @@ namespace JustCompute.Features.Distance
 
         private void InitDistance()
         {
-            var point1 = new Coordinate(Location1.LatitudeDouble, Location1.LongitudeDouble);
-            var point2 = new Coordinate(Location2.LatitudeDouble, Location2.LongitudeDouble);
-            Distance = new global::CoordinateSharp.Distance(point1, point2, Shape.Ellipsoid);
+            var meters = Geodesy.DistanceMeters(
+                Location1.Latitude, Location1.Longitude,
+                Location2.Latitude, Location2.Longitude);
+            Distance = new DistanceModel(meters / 1000.0);
         }
 
+        [RelayCommand]
         private async Task SearchLocation1()
         {
             currentInitialization = LocationInitialization.Point1;
             await NavigateToSearchViewModel();
         }
 
+        [RelayCommand]
         private async Task SearchLocation2()
         {
             currentInitialization = LocationInitialization.Point2;

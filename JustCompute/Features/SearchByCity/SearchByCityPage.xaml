@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -14,7 +14,7 @@
              Title="{localization:Localize SearchCityLabel}">
 
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding Commands[GoBackCommand]}"/>
+        <BackButtonBehavior Command="{Binding GoBackCommand}"/>
     </Shell.BackButtonBehavior>
 
     <Grid>
@@ -34,7 +34,7 @@
                            MinimumHeightRequest="44">
                     <SearchBar.Behaviors>
                         <toolkit:UserStoppedTypingBehavior BindingContext="{Binding Path=BindingContext, Source={x:Reference searchBar}, x:DataType=SearchBar}"
-                                                           Command="{Binding Commands[PerformSearchLocationCommand]}"
+                                                           Command="{Binding PerformSearchLocationCommand}"
                                                            CommandParameter="{Binding Text, Source={x:Reference searchBar}, x:DataType=SearchBar}"
                                                            StoppedTypingTimeThreshold="1000"
                                                            ShouldDismissKeyboardAutomatically="True"/>
@@ -51,7 +51,7 @@
                              HorizontalOptions="End"
                              VerticalOptions="Center"
                              Source="{AppThemeBinding Light=sort_icon_dark.png, Dark=sort_icon_light.png}"
-                             Command="{Binding Commands[ShowSortingPopupCommand]}"
+                             Command="{Binding ShowSortingPopupCommand}"
                              CommandParameter="{x:Reference sortButton}"
                              IsEnabled="{Binding IsBusy, Converter={toolkit:InvertedBoolConverter}}"/>
             </Grid>
@@ -71,13 +71,44 @@
                         <views:LocationItem Location="{Binding .}"
                                             IsLocationNameVisible="False"
                                             IsButtonsVisible="False"
-                                            ItemClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=Commands[LocationSelectedCommand], x:DataType=ViewModels:SearchByCityViewModel}">
+                                            ItemClickedCommand="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SearchByCityViewModel}}, Path=LocationSelectedCommand, x:DataType=ViewModels:SearchByCityViewModel}">
                         </views:LocationItem>
 
                     </DataTemplate>
 
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <!-- "Nothing matched", "the query failed" and "still loading" all used to render as
+                 the same blank page. Each now says which it is, and the failure offers a retry. -->
+            <Label Grid.Row="1"
+                   Text="{localization:Localize CitySearchFailedLabel}"
+                   IsVisible="{Binding HasSearchFailed}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Padding="24">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RetrySearchCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Grid.Row="1"
+                   Text="{localization:Localize NoCitiesFoundLabel}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="24">
+                <Label.IsVisible>
+                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                        <Binding Path="LocationsSearchResult"
+                                 Converter="{StaticResource IsListNullOrEmptyConverter}" />
+                        <Binding Path="IsBusy"
+                                 Converter="{StaticResource InvertedBoolConverter}" />
+                        <Binding Path="HasSearchFailed"
+                                 Converter="{StaticResource InvertedBoolConverter}" />
+                    </MultiBinding>
+                </Label.IsVisible>
+            </Label>
         </Grid>
 
         <ActivityIndicator HeightRequest="50"

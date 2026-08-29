@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Core.Navigation;
 using Compute.Core.UI;
 using Compute.Core.Domain.Services;
 using JustCompute.Shared.ViewModels;
+using Location = Compute.Core.Domain.Entities.Models.Location;
 
 
 namespace JustCompute.Shared.ViewModels
@@ -17,8 +17,6 @@ namespace JustCompute.Shared.ViewModels
 
         public static readonly int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(DateTime.UtcNow.Year) ? 366 : 365;
 
-        public Dictionary<string, ICommand> Commands { get; protected set; }
-
         [ObservableProperty]
         private bool isBusy;
 
@@ -27,7 +25,6 @@ namespace JustCompute.Shared.ViewModels
 
         protected BaseViewModel(ViewModelServices services)
         {
-            Commands = [];
             _dialogService = services.DialogService;
             _gpsLocationService = services.GpsLocationService;
             _locationService = services.LocationService;
@@ -36,27 +33,49 @@ namespace JustCompute.Shared.ViewModels
 
         protected virtual async Task LoadItems()
         {
-            IsBusy = true;
-            if (_gpsLocationService.IsGettingDeviceLocation && _gpsLocationService.GettingDeviceLocationFinished is not null)
+            await MainThread.InvokeOnMainThreadAsync(() => IsBusy = true);
+
+            // Every exit resets it, including the ones nobody plans for. Without this a throw
+            // anywhere below — a database read losing a race, a screen's own GetData failing —
+            // left IsBusy stuck true, and since BasePage swallows the exception the only
+            // symptom was a spinner turning forever over an empty screen.
+            try
             {
-                await _gpsLocationService.GettingDeviceLocationFinished.Task;
+                // Whichever screen loads first must not read the placeholder before the user's
+                // own choice has been read back from storage. Restoring runs once per launch.
+                await _gpsLocationService.RestorePersistedSelectedLocation();
+
+                if (_gpsLocationService.IsGettingDeviceLocation && _gpsLocationService.GettingDeviceLocationFinished is not null)
+                {
+                    await _gpsLocationService.GettingDeviceLocationFinished.Task;
+                }
+
+                var location = _gpsLocationService.SelectedLocation;
+
+                if (location == null)
+                {
+                    await MainThread.InvokeOnMainThreadAsync(ClearData);
+                    return;
+                }
+
+                // Started on the UI thread on purpose. Everything above can hand back on a
+                // background thread — a database read, or the device-fix task completing on the
+                // platform's own callback thread — and a GetData begun there resumes there too,
+                // so every property it sets would be raised off the UI thread and silently fail
+                // to reach the views. Starting here means its continuations come back here.
+                await MainThread.InvokeOnMainThreadAsync(() => GetData(location));
             }
-
-            var location = _gpsLocationService.SelectedLocation;
-
-            if (location == null)
+            finally
             {
-                ClearData();
-                IsBusy = false;
-                return;
+                await MainThread.InvokeOnMainThreadAsync(() => IsBusy = false);
             }
-
-            await GetData(location.LatitudeDouble, location.LongitudeDouble, location.TimeZoneOffset.Hours);
-
-            IsBusy = false;
         }
 
-        protected virtual Task GetData(double latitude, double longitude, int timeZoneOffset)
+        /// <summary>
+        /// Takes the location itself rather than a coordinate triple: a UTC offset is a function
+        /// of the date, so each screen has to ask for the one that matches what it is showing.
+        /// </summary>
+        protected virtual Task GetData(Location location)
         {
             return Task.CompletedTask;
         }

@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.Helpers;
 using Microsoft.Extensions.Localization;
@@ -44,17 +45,16 @@ namespace JustCompute.Features.Settings
         [ObservableProperty]
         private bool is24HourTimeFormat;
 
+
         [ObservableProperty]
         private ObservableCollection<DistanceUnitOfMeasure> distanceUnitOfMeasures = [];
 
         [ObservableProperty]
         private DistanceUnitOfMeasure selectedDistanceUnitOfMeasure = null!;
 
-        public ICommand SaveSelectedDistanceTypeToSettingsCommand => Commands[nameof(SaveSelectedDistanceTypeToSettingsCommand)];
-        public ICommand SelectThemeCommand => Commands[nameof(SelectThemeCommand)];
-        public ICommand SelectSpeedUnitCommand => Commands[nameof(SelectSpeedUnitCommand)];
 
         partial void OnIs24HourTimeFormatChanged(bool value) => global::JustCompute.Shared.Helpers.Settings.Is24HourTimeFormat = value;
+
 
         partial void OnSelectedThemeOptionChanged(ThemeOption value)
         {
@@ -90,9 +90,6 @@ namespace JustCompute.Features.Settings
             _themeHandler = themeHandler;
             _localizer = localizer;
 
-            Commands[nameof(SaveSelectedDistanceTypeToSettingsCommand)] = new Command(OnSaveSelectedDistanceTypeToSettings);
-            Commands[nameof(SelectThemeCommand)] = new Command<string>(OnSelectTheme);
-            Commands[nameof(SelectSpeedUnitCommand)] = new Command<string>(OnSelectSpeedUnit);
 
             ThemeOptions =
             [
@@ -134,12 +131,14 @@ namespace JustCompute.Features.Settings
             Is24HourTimeFormat = global::JustCompute.Shared.Helpers.Settings.Is24HourTimeFormat;
         }
 
-        private void OnSaveSelectedDistanceTypeToSettings()
+        [RelayCommand]
+        private void SaveSelectedDistanceTypeToSettings()
         {
             global::JustCompute.Shared.Helpers.Settings.DistanceType = SelectedDistanceUnitOfMeasure.DistanceType;
         }
 
-        private void OnSelectTheme(string? themeName)
+        [RelayCommand]
+        private void SelectTheme(string? themeName)
         {
             if (string.IsNullOrEmpty(themeName)) return;
             if (!Enum.TryParse<AppTheme>(themeName, true, out var theme)) return;
@@ -147,7 +146,8 @@ namespace JustCompute.Features.Settings
             if (option != null) SelectedThemeOption = option;
         }
 
-        private void OnSelectSpeedUnit(string? speedTypeName)
+        [RelayCommand]
+        private void SelectSpeedUnit(string? speedTypeName)
         {
             if (string.IsNullOrEmpty(speedTypeName)) return;
             if (!Enum.TryParse<SpeedType>(speedTypeName, true, out var speedType)) return;

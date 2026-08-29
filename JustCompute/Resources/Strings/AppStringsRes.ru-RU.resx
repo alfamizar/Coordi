@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,8 +123,8 @@
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Добавить местоположение</value>
   </data>
-  <data name="LocationActionLabel" xml:space="preserve">
-    <value>Действия</value>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Изменить местоположение</value>
   </data>
   <data name="AnnularEclipseLabel" xml:space="preserve">
     <value>Кольцевой</value>
@@ -288,8 +288,14 @@
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Название местоположения</value>
   </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Поиск недоступен. Нажмите, чтобы повторить.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>Города не найдены</value>
+  </data>
   <data name="LocationPermissionDialogMessage" xml:space="preserve">
-    <value>Приложению требуется доступ к местоположению устройства для работы</value>
+    <value>Доступ к геолокации нужен, чтобы показывать данные для вашего места. Без него можно выбрать место вручную.</value>
   </data>
   <data name="LocationPermissionDialogTitle" xml:space="preserve">
     <value>Разрешение на доступ к местоположению</value>
@@ -302,9 +308,6 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Долгота: {0:0.#####}</value>
-  </data>
-  <data name="ManageSavedLocationsLabel" xml:space="preserve">
-    <value>Управлять сохранёнными локациями</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Время максимального затмения: {0}</value>
@@ -406,7 +409,7 @@
     <value>Время окончания полутеневого затмения: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
-    <value>Для работы приложению требуется разрешение на определение местоположения. Перейдите к настройкам приложения и предоставьте доступ или закройте приложение.</value>
+    <value>Доступ к геолокации нужен, чтобы показывать данные для вашего места. Без него можно выбрать место вручную.</value>
   </data>
   <data name="PermissionRequiredDialogTitle" xml:space="preserve">
     <value>Требуется разрешение</value>
@@ -644,5 +647,119 @@
   </data>
   <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
     <value>Отмена</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Только затмения, видимые отсюда</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>Приложение показывает {0} как временное место. Укажите своё, чтобы восходы, закаты, фазы Луны и затмения были точными для вас.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Укажите своё местоположение</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Погода недоступна. Нажмите, чтобы повторить.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Текущее место</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Моё местоположение</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Часовой пояс</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Отсюда не видно</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Оптика</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Объектив и сенсор</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Камера</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Фокусное расстояние (мм)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Диафрагма (число f)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Расстояние до объекта (м)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Ширина снимка (пикс.)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Склонение (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Сохранить по умолчанию</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Глубина резкости</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Гиперфокальное расстояние</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Ближняя граница</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Дальняя граница</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Всего</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>Перед объектом</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>За объектом</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Поле зрения</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>По горизонтали</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>По вертикали</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>По диагонали</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Выдержка по звёздам</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>Правило 500</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>Правило NPF</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Размер пикселя</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Максимальная выдержка, пока звёзды не смазались. NPF — более строгое правило, учитывающее сенсор; склонение 0° — худший случай.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Введите фокусное расстояние, диафрагму и расстояние до объекта, чтобы увидеть глубину резкости и поле зрения.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Должно быть положительным числом.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Введите целое число пикселей.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Склонение должно быть от −90 до 90.</value>
   </data>
 </root>

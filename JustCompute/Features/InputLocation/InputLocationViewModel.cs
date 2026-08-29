@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Common.Messaging;
 using Compute.Core.Domain.Entities.Models.Time;
@@ -31,9 +31,13 @@ namespace JustCompute.Features.InputLocation
         [ObservableProperty]
         private Location location = new();
 
-        public ICommand SaveLocationCommand => Commands[nameof(SaveLocationCommand)];
-        public ICommand PrefillCoordinatesCommand => Commands[nameof(PrefillCoordinatesCommand)];
-        public ICommand GoBackCommand => Commands[nameof(GoBackCommand)];
+        /// <summary>
+        /// The same page serves both contexts, so the title has to say which one it is —
+        /// it read "Add Location" even when editing an existing place.
+        /// </summary>
+        [ObservableProperty]
+        private string pageTitle = string.Empty;
+
 
         public InputLocationViewModel(
             ViewModelServices services,
@@ -47,10 +51,8 @@ namespace JustCompute.Features.InputLocation
             _messagingService = messagingService;
             _localizer = localizer;
 
-            Commands[nameof(SaveLocationCommand)] = new AsyncRelayCommand(OnSaveLocation, CanSaveLocation);
-            Commands[nameof(PrefillCoordinatesCommand)] = new AsyncRelayCommand(OnPrefillCoordinates);
-            Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
 
+            pageTitle = localizer.GetString("AddLocationLabel");
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
             selectedTimeZoneOffset = TimeZoneOffset.DefaultTimeZoneOffset;
 
@@ -65,15 +67,15 @@ namespace JustCompute.Features.InputLocation
                 e.PropertyName == nameof(Location.Latitude) ||
                 e.PropertyName == nameof(Location.Longitude))
             {
-                (Commands[nameof(SaveLocationCommand)] as IRelayCommand)?.NotifyCanExecuteChanged();
+                SaveLocationCommand.NotifyCanExecuteChanged();
             }
         }
 
         private bool CanSaveLocation()
         {
             return !string.IsNullOrWhiteSpace(Location?.Name)
-                   && IsValidLatitude(Location.LatitudeDouble)
-                   && IsValidLongitude(Location.LongitudeDouble);
+                   && IsValidLatitude(Location.Latitude)
+                   && IsValidLongitude(Location.Longitude);
         }
 
         private static bool IsValidLatitude(double latitude)
@@ -86,7 +88,11 @@ namespace JustCompute.Features.InputLocation
             return longitude >= -180 && longitude <= 180;
         }
 
-        private async Task OnSaveLocation()
+        [RelayCommand]
+        private void GoBack() => OnBackButtonPressed();
+
+        [RelayCommand(CanExecute = nameof(CanSaveLocation))]
+        private async Task SaveLocation()
         {
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
 
@@ -113,7 +119,17 @@ namespace JustCompute.Features.InputLocation
             if (!savedLocations.Any(x => x.Name == location.Name))
             {
                 await _locationService.SaveLocation(location);
-                OnBackButtonPressed();
+
+                // Announce it like Edit and Delete already do. Without this the new place only
+                // surfaces on the next full re-init of the Locations screen, which is exactly the
+                // sort of thing that gets skipped while a device fix is still in flight.
+                _messagingService.Send(new LocationMessage(location, LocationInputContext.Add));
+
+                // The place is saved and now current, so going back one step to the city search
+                // the user has finished with is the wrong destination — return to Locations,
+                // where the result of what they just did is actually visible.
+                _locationInputContext = null;
+                await _navigationService.NavigateToShellRouteAsync("locations");
             }
             else
             {
@@ -130,7 +146,8 @@ namespace JustCompute.Features.InputLocation
             OnBackButtonPressed();
         }
 
-        public async Task OnPrefillCoordinates()
+        [RelayCommand]
+        private async Task PrefillCoordinates()
         {
             if (Location == null || IsBusy) return;
 
@@ -141,8 +158,8 @@ namespace JustCompute.Features.InputLocation
                 IsBusy = false;
             }
 
-            Location.Latitude = _gpsLocationService.DeviceLocation?.LatitudeDouble.ToString() ?? Location.Latitude;
-            Location.Longitude = _gpsLocationService.DeviceLocation?.LongitudeDouble.ToString() ?? Location.Latitude;
+            Location.Latitude = _gpsLocationService.DeviceLocation?.Latitude ?? Location.Latitude;
+            Location.Longitude = _gpsLocationService.DeviceLocation?.Longitude ?? Location.Longitude;
         }
 
         public void ApplyQueryParameter(object? parameter)
@@ -159,7 +176,12 @@ namespace JustCompute.Features.InputLocation
 
                 if (kvp.Value != null)
                 {
-                    Location = kvp.Value;
+                    // Edit works on a copy: the screen binds directly to this object, so editing
+                    // the caller's instance would push every keystroke into the lists that hold
+                    // it and leave the changes there even when the user backs out without saving.
+                    Location = _locationInputContext == LocationInputContext.Edit
+                        ? kvp.Value.Clone()
+                        : kvp.Value;
                 }
 
                 if (Location != null)
@@ -169,6 +191,10 @@ namespace JustCompute.Features.InputLocation
             }
 
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
+
+            PageTitle = _locationInputContext.Value == LocationInputContext.Edit
+                ? _localizer.GetString("EditLocationLabel")
+                : _localizer.GetString("AddLocationLabel");
 
             if (_locationInputContext.Value == LocationInputContext.Add && Location != null)
             {

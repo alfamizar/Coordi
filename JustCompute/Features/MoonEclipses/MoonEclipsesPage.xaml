@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,14 +6,40 @@
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.MoonEclipses"
              xmlns:helpers="clr-namespace:Compute.Core.Helpers;assembly=Compute.Core"
-             xmlns:models="clr-namespace:CoordinateSharp;assembly=CoordinateSharp"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models.Eclipses;assembly=Compute.Core"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="ViewModels:MoonEclipsesViewModel">
 
-    <Grid Padding="4,0">
+    <Grid Padding="4,0"
+          RowDefinitions="Auto,*">
 
-        <Label Text="{localization:Localize CannotGetCurrentLocationLabel}"
+        <!-- The filter belongs with the list it filters, not in Settings: it is a property of
+             what you are looking at, and the count says how much it is hiding. -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="8"
+              Padding="8,4">
+
+            <CheckBox Grid.Column="0"
+                      IsChecked="{Binding ShowOnlyVisible}"
+                      VerticalOptions="Center" />
+
+            <Label Grid.Column="1"
+                   Text="{localization:Localize OnlyVisibleEclipsesLabel}"
+                   VerticalOptions="Center" />
+
+            <Label Grid.Column="2"
+                   Text="{Binding FilterSummary}"
+                   FontSize="Small"
+                   Opacity="0.7"
+                   VerticalOptions="Center" />
+
+        </Grid>
+
+
+        <Label Grid.Row="1"
+               Text="{localization:Localize CannotGetCurrentLocationLabel}"
                VerticalOptions="Center"
                HorizontalOptions="Center"
                Padding="8">
@@ -27,7 +53,8 @@
             </Label.IsVisible>
         </Label>
 
-        <CollectionView x:Name="ItemsListView"
+        <CollectionView Grid.Row="1"
+                        x:Name="ItemsListView"
                         ItemsSource="{Binding GroupedEclipseList}"
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
@@ -38,7 +65,7 @@
                                FontSize="18" />
                         <BoxView Style="{StaticResource DividerStyle}" />
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:MoonEclipsesViewModel}}, Path=Commands[ToggleGroupCommand], x:DataType=ViewModels:MoonEclipsesViewModel}"
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:MoonEclipsesViewModel}}, Path=ToggleGroupCommand, x:DataType=ViewModels:MoonEclipsesViewModel}"
                                                   CommandParameter="{Binding .}" />
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
@@ -51,7 +78,7 @@
 
             <CollectionView.ItemTemplate>
 
-                <DataTemplate x:DataType="models:LunarEclipseDetails">
+                <DataTemplate x:DataType="models:LunarEclipseInfo">
 
                     <Border>
 
@@ -72,27 +99,27 @@
                                    Grid.Row="0"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding Type, Converter={StaticResource MoonEclipseTypeToNameConverter}, 
+                                   Text="{Binding ., Converter={StaticResource MoonEclipseTypeToNameConverter}, 
                                     StringFormat={localization:Localize TypeLabel}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="1"
                                      Style="{StaticResource DividerStyle}" />
 
-                            <Label x:Name="PartialEclispeBegin"
+                            <Label x:Name="PartialEclipseBegin"
                                    Grid.Column="0"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclispeBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialLunarEclipseBeginTimeLabel},
+                                   IsVisible="{Binding PartialEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclipseBegin, StringFormat={localization:Localize PartialLunarEclipseBeginTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
-                            <Label x:Name="PartialEclispeEnd"
+                            <Label x:Name="PartialEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeEnd, StringFormat={localization:Localize PartialLunarEclipseEndTimeLabel},
+                                   IsVisible="{Binding PartialEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclipseEnd, StringFormat={localization:Localize PartialLunarEclipseEndTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
@@ -100,10 +127,10 @@
                                      Style="{StaticResource DividerStyle}">
                                 <BoxView.IsVisible>
                                     <MultiBinding Converter="{StaticResource AnyTrueConverter}">
-                                        <Binding Source="{x:Reference PartialEclispeBegin}"
+                                        <Binding Source="{x:Reference PartialEclipseBegin}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
-                                        <Binding Source="{x:Reference PartialEclispeEnd}"
+                                        <Binding Source="{x:Reference PartialEclipseEnd}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
                                     </MultiBinding>
@@ -118,12 +145,12 @@
                                    Text="{Binding PenumbralEclipseBegin, StringFormat={localization:Localize PenumbralLunarEclipseBeginTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
-                            <Label x:Name="PenumbralEclispeEnd"
+                            <Label x:Name="PenumbralEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PenumbralEclispeEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PenumbralEclispeEnd, StringFormat={localization:Localize PenumbralLunarEclipseEndTimeLabel},
+                                   IsVisible="{Binding PenumbralEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PenumbralEclipseEnd, StringFormat={localization:Localize PenumbralLunarEclipseEndTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
@@ -134,7 +161,7 @@
                                         <Binding Source="{x:Reference PenumbralEclipseBegin}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
-                                        <Binding Source="{x:Reference PenumbralEclispeEnd}"
+                                        <Binding Source="{x:Reference PenumbralEclipseEnd}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
                                     </MultiBinding>
@@ -195,7 +222,10 @@
 
         </CollectionView>
 
-        <ActivityIndicator HeightRequest="50"
+        <!-- Row 1, over the list area: the century table takes a noticeable moment to
+             compute, and without this the screen is simply blank while it does. -->
+        <ActivityIndicator Grid.Row="1"
+                           HeightRequest="50"
                            WidthRequest="50"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"

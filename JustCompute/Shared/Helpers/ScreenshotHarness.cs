@@ -103,9 +103,9 @@ namespace JustCompute.Shared.Helpers
 
         private static void SeedLocation()
         {
-            string? lat = Pick(LatFromPlatform, LatEnv);
-            string? lon = Pick(LonFromPlatform, LonEnv);
-            if (lat is null || lon is null)
+            string? latStr = Pick(LatFromPlatform, LatEnv);
+            string? lonStr = Pick(LonFromPlatform, LonEnv);
+            if (!double.TryParse(latStr, out double lat) || !double.TryParse(lonStr, out double lon))
             {
                 return;
             }

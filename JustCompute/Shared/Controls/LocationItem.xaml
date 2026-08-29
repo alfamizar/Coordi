@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JustCompute.Shared.Controls.LocationItem"
@@ -65,7 +65,7 @@
                   IsVisible="{Binding IsButtonsVisible}">
 
                 <ImageButton Grid.Row="0"
-                             Source="edit_icon_light.png"
+                             Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}"
                              VerticalOptions="Center"
                              HorizontalOptions="Center"
                              Command="{Binding EditButtonClickedCommand}"
@@ -75,7 +75,7 @@
                              Padding="4"
                              CornerRadius="8"/>
                 <ImageButton Grid.Row="1"
-                             Source="delete_icon_light.png"
+                             Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
                              VerticalOptions="Center"
                              HorizontalOptions="Center"
                              Command="{Binding DeleteButtonClickedCommand}"

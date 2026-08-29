@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -6,14 +6,40 @@
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.SunEclipses"
              xmlns:helpers="clr-namespace:Compute.Core.Helpers;assembly=Compute.Core"
-             xmlns:models="clr-namespace:CoordinateSharp;assembly=CoordinateSharp"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models.Eclipses;assembly=Compute.Core"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="ViewModels:SunEclipsesViewModel">
 
-    <Grid Padding="4,0">
+    <Grid Padding="4,0"
+          RowDefinitions="Auto,*">
 
-        <Label Text="{localization:Localize CannotGetCurrentLocationLabel}"
+        <!-- The filter belongs with the list it filters, not in Settings: it is a property of
+             what you are looking at, and the count says how much it is hiding. -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="8"
+              Padding="8,4">
+
+            <CheckBox Grid.Column="0"
+                      IsChecked="{Binding ShowOnlyVisible}"
+                      VerticalOptions="Center" />
+
+            <Label Grid.Column="1"
+                   Text="{localization:Localize OnlyVisibleEclipsesLabel}"
+                   VerticalOptions="Center" />
+
+            <Label Grid.Column="2"
+                   Text="{Binding FilterSummary}"
+                   FontSize="Small"
+                   Opacity="0.7"
+                   VerticalOptions="Center" />
+
+        </Grid>
+
+
+        <Label Grid.Row="1"
+               Text="{localization:Localize CannotGetCurrentLocationLabel}"
                VerticalOptions="Center"
                HorizontalOptions="Center"
                Padding="8">
@@ -27,7 +53,8 @@
             </Label.IsVisible>
         </Label>
 
-        <CollectionView ItemsSource="{Binding GroupedEclipseList}"
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding GroupedEclipseList}"
                         SelectionMode="None"
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
@@ -38,7 +65,7 @@
                                FontSize="18" />
                         <BoxView Style="{StaticResource DividerStyle}" />
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SunEclipsesViewModel}}, Path=Commands[ToggleGroupCommand], x:DataType=ViewModels:SunEclipsesViewModel}"
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SunEclipsesViewModel}}, Path=ToggleGroupCommand, x:DataType=ViewModels:SunEclipsesViewModel}"
                                                   CommandParameter="{Binding .}" />
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
@@ -51,7 +78,7 @@
 
             <CollectionView.ItemTemplate>
 
-                <DataTemplate x:DataType="models:SolarEclipseDetails">
+                <DataTemplate x:DataType="models:SolarEclipseInfo">
 
                     <Border>
 
@@ -72,22 +99,22 @@
                                    Grid.Row="0"
                                    Style="{StaticResource CollectionViewLabel}"
                                    IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding Type, Converter={StaticResource SunEclipseTypeToNameConverter}, 
+                                   Text="{Binding ., Converter={StaticResource SunEclipseTypeToNameConverter}, 
                                     StringFormat={localization:Localize TypeLabel}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="1"
                                      Style="{StaticResource DividerStyle}" />
 
-                            <Label x:Name="PartialEclispeBegin"
+                            <Label x:Name="PartialEclipseBegin"
                                    Grid.Column="0"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclispeBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclispeBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel},
+                                   IsVisible="{Binding PartialEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding PartialEclipseBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
-                            <Label x:Name="PartialEclispeEnd"
+                            <Label x:Name="PartialEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="2"
                                    Style="{StaticResource CollectionViewLabel}"
@@ -107,32 +134,32 @@
                                    Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
-                            <Label x:Name="AorTDuration"
+                            <Label x:Name="CentralDuration"
                                    Grid.Column="1"
                                    Grid.Row="4"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding AorTDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
-                                   Text="{Binding AorTDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel},
+                                   IsVisible="{Binding CentralDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
+                                   Text="{Binding CentralDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
                                      Grid.Row="5"
                                      Style="{StaticResource DividerStyle}" />
 
-                            <Label x:Name="AorTEclipseBegin"
+                            <Label x:Name="CentralEclipseBegin"
                                    Grid.Column="0"
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding AorTEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding AorTEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel},
+                                   IsVisible="{Binding CentralEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding CentralEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
-                            <Label x:Name="AorTEclipseEnd"
+                            <Label x:Name="CentralEclipseEnd"
                                    Grid.Column="1"
                                    Grid.Row="6"
                                    Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding AorTEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding AorTEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel},
+                                   IsVisible="{Binding CentralEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                                   Text="{Binding CentralEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel},
                                 Converter={StaticResource TimeFormatConverter}}" />
 
                             <BoxView Grid.ColumnSpan="2"
@@ -140,10 +167,10 @@
                                      Style="{StaticResource DividerStyle}">
                                 <BoxView.IsVisible>
                                     <MultiBinding Converter="{StaticResource AnyTrueConverter}">
-                                        <Binding Source="{x:Reference AorTEclipseBegin}"
+                                        <Binding Source="{x:Reference CentralEclipseBegin}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
-                                        <Binding Source="{x:Reference AorTEclipseEnd}"
+                                        <Binding Source="{x:Reference CentralEclipseEnd}"
                                                  Path="IsVisible"
                                                  x:DataType="Label" />
                                     </MultiBinding>
@@ -160,7 +187,10 @@
 
         </CollectionView>
 
-        <ActivityIndicator HeightRequest="50"
+        <!-- Row 1, over the list area: the century table takes a noticeable moment to
+             compute, and without this the screen is simply blank while it does. -->
+        <ActivityIndicator Grid.Row="1"
+                           HeightRequest="50"
                            WidthRequest="50"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"

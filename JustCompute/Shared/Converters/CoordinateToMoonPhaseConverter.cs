@@ -1,20 +1,24 @@
 using Compute.Core.Domain.Entities.Models.Moon;
+using Compute.Core.Domain.Entities.Models;
 using JustCompute.Resources.Strings;
 using JustCompute.Services;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
+using static Compute.Core.Domain.Entities.Models.BaseCelestialBodyCycle;
 
-namespace JustCompute.Features.Moon
+namespace JustCompute.Shared.Converters
 {
-    public class MoonCycleToMoonPhaseConverter : IValueConverter
+    public class CoordinateToMoonPhaseConverter : IValueConverter
     {
         private readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null) return null;
 
-            MoonCycle moonCycle = (MoonCycle)value;
-            MoonPhase moonPhase = moonCycle.PhaseName;
+            if (value is not CelestialSnapshot snapshot) return null;
+
+            Hemisphere hemisphere = snapshot.Latitude > 0 ? Hemisphere.Northern : Hemisphere.Southern;
+            MoonPhase moonPhase = snapshot.MoonPhase;
 
             string localizedMoonPhaseName = moonPhase switch
             {
@@ -29,7 +33,14 @@ namespace JustCompute.Features.Moon
                 _ => throw new Exception($"MoonPhase {nameof(moonPhase)} does not exist!"),
             };
 
-            return $"{moonCycle.MoonPhaseUnicodeIcon} {localizedMoonPhaseName}";
+            if (hemisphere == Hemisphere.Northern)
+            {
+                return $"{MoonCycle.NorthernHemisphere.ElementAt((int)moonPhase)} {localizedMoonPhaseName}";
+            }
+            else
+            {
+                return $"{MoonCycle.SouthernHemisphere.ElementAt((int)moonPhase)} {localizedMoonPhaseName}";
+            }
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

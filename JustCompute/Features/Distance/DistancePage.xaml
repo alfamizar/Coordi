@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -23,7 +23,7 @@
                               PointTitle="{localization:Localize Point1Label}"
                               IsPointLabelVisible="True"
                               ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding Commands[SearchLocation1Command]}">
+                              ImageButtonClickedCommand="{Binding SearchLocation1Command}">
                 <views:PointEntry.IsPointCityCountryLabelVisible>
                     <MultiBinding Converter="{StaticResource AllTrueConverter}">
                         <Binding Path="Location1.City.CityName"
@@ -39,7 +39,7 @@
                               PointTitle="{localization:Localize Point2Label}"
                               IsPointLabelVisible="True"
                               ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding Commands[SearchLocation2Command]}">
+                              ImageButtonClickedCommand="{Binding SearchLocation2Command}">
                 <views:PointEntry.IsPointCityCountryLabelVisible>
                     <MultiBinding Converter="{StaticResource AllTrueConverter}">
                         <Binding Path="Location2.City.CityName"

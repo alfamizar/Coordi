@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -13,7 +13,7 @@
              x:DataType="ViewModels:InputLocationViewModel"
              Shell.PresentationMode="Animated"
              Shell.TabBarIsVisible="False"
-             Title="{localization:Localize AddLocationLabel}">
+             Title="{Binding PageTitle}">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding GoBackCommand}" />
@@ -55,7 +55,7 @@
                                       IsPointLabelVisible="False"
                                       IsPointCityCountryLabelVisible="False"
                                       ImageButtonIconSource="{AppThemeBinding Light=my_location_icon_dark.png, Dark=my_location_icon_light.png}"
-                                      ImageButtonClickedCommand="{Binding Commands[PrefillCoordinatesCommand]}" />
+                                      ImageButtonClickedCommand="{Binding PrefillCoordinatesCommand}" />
 
                 </StackLayout>
 
@@ -64,7 +64,7 @@
             <Button x:Name="SaveLocationButton"
                     Grid.Row="1"
                     Text="{localization:Localize SaveLocationButtonText}"
-                    Command="{Binding Commands[SaveLocationCommand]}"
+                    Command="{Binding SaveLocationCommand}"
                     Margin="8" />
 
             <ActivityIndicator HeightRequest="50"

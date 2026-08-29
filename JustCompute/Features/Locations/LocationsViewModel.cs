@@ -1,17 +1,16 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Compute.Core.Common.Device;
 using Compute.Core.Common.Messaging;
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Entities.Models.Weather;
 using Compute.Core.Domain.Services;
 using Compute.Core.Domain.Services.Weather;
 using Compute.Core.Helpers;
 using Compute.Core.UI;
-using CoordinateSharp;
 using DotNext;
 using JustCompute.Features.InputLocation;
-using JustCompute.Features.SavedLocations;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.ViewModels.Messages;
@@ -25,13 +24,6 @@ namespace JustCompute.Features.Locations
 {
     public partial class LocationsViewModel : BaseViewModel, IRecipient<LocationMessage>
     {
-        private enum LocationAction
-        {
-            AddCustomLocation,
-            SearchCity,
-            ManageSavedLocations
-        }
-
         private const int ForecastDays = 7;
 
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
@@ -44,6 +36,8 @@ namespace JustCompute.Features.Locations
         private CancellationTokenSource? _weatherCancellationTokenSource;
         private readonly SemaphoreSlim _initializationSemaphore = new(1, 1);
         private bool _permissionDialogOpen;
+        private bool _isFetchingDeviceLocation;
+        private bool _initializationPending;
 
         // Suppresses the SelectedLocation write-back while we restore the selection ourselves.
         // Mutating Locations makes the CarouselView snap CurrentItem to index 0, which would
@@ -52,6 +46,13 @@ namespace JustCompute.Features.Locations
 
         [ObservableProperty]
         private int locationsCount;
+
+        /// <summary>
+        /// True while the app is still on the placeholder location, i.e. the user has not chosen
+        /// anywhere yet. Drives the onboarding card at the top of the screen.
+        /// </summary>
+        [ObservableProperty]
+        private bool isPlaceholderLocation = !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation;
 
         [ObservableProperty]
         private bool isRefreshing;
@@ -63,7 +64,7 @@ namespace JustCompute.Features.Locations
         private Location? selectedLocation;
 
         [ObservableProperty]
-        private Coordinate? coordinate;
+        private CelestialSnapshot? coordinate;
 
         [ObservableProperty]
         private DateTime currentTime = DateTime.Now;
@@ -88,8 +89,6 @@ namespace JustCompute.Features.Locations
             _toastService = toastService;
             _weatherService = weatherService;
 
-            InitializeCommands();
-
             Locations.CollectionChanged += Locations_CollectionChanged;
             messagerService.Subscribe<IRecipient<LocationMessage>, LocationMessage>(this);
             _permissionGate.LocationPermissionStateChanged += OnLocationPermissionStateChanged;
@@ -103,45 +102,9 @@ namespace JustCompute.Features.Locations
             }
         }
 
-        private void InitializeCommands()
-        {
-            Commands.Add("ShowLocationActionsCommand", new AsyncRelayCommand(OnShowLocationActions));
-            Commands.Add("GoToAddLocationCommand", new AsyncRelayCommand(OnGoToAddLocation));
-            Commands.Add("GoToSearchByCityCommand", new AsyncRelayCommand(OnGoSearchByCityLocation));
-            Commands.Add("GoToSavedLocationsCommand", new AsyncRelayCommand(OnGoToSavedLocations));
-            Commands.Add("RefreshCommand", new AsyncRelayCommand(OnRefresh));
-        }
 
-        private async Task OnShowLocationActions()
-        {
-            var addCustomLocation = _localizer.GetString("AddCustomLocationLabel");
-            var searchCity = _localizer.GetString("SearchCityLabel");
-            var manageSavedLocations = _localizer.GetString("ManageSavedLocationsLabel");
-            var close = _localizer.GetString("Close");
 
-            var selectedAction = await _dialogService.DisplayActionSheet(
-                _localizer.GetString("AddLocationLabel"),
-                close,
-                string.Empty,
-                new DialogAction<LocationAction>(LocationAction.AddCustomLocation, addCustomLocation),
-                new DialogAction<LocationAction>(LocationAction.SearchCity, searchCity),
-                new DialogAction<LocationAction>(LocationAction.ManageSavedLocations, manageSavedLocations));
-
-            if (selectedAction == LocationAction.AddCustomLocation)
-            {
-                await OnGoToAddLocation();
-            }
-            else if (selectedAction == LocationAction.SearchCity)
-            {
-                await OnGoSearchByCityLocation();
-            }
-            else if (selectedAction == LocationAction.ManageSavedLocations)
-            {
-                await OnGoToSavedLocations();
-            }
-        }
-
-        private void StartTimer(int offsetHours = 0)
+        private void StartTimer(double offsetHours = 0)
         {
             StopTimer();
 
@@ -166,7 +129,7 @@ namespace JustCompute.Features.Locations
             _timerCancellationTokenSource = null;
         }
 
-        public void RestartTimer(int offsetHours = 0)
+        public void RestartTimer(double offsetHours = 0)
         {
             StopTimer();
             StartTimer(offsetHours);
@@ -179,24 +142,32 @@ namespace JustCompute.Features.Locations
 
         private async Task<bool> InitDeviceLocation(bool forceRefresh = false)
         {
-            if (IsBusy) return false;
+            if (_isFetchingDeviceLocation) return false;
 
             if (!await HandlePermissions()) return false;
 
             if (!forceRefresh && _gpsLocationService.DeviceLocation != null) return true;
 
-            IsBusy = true;
+            // Deliberately not IsBusy: the list is already on screen by now and the fix takes up
+            // to 30s (forever, on an emulator with no provider). A blocking spinner over usable
+            // content would be the only thing that ever showed.
+            _isFetchingDeviceLocation = true;
 
-            var locationResult = await _gpsLocationService.GetDeviceGeoLocation();
-
-            IsBusy = false;
-
-            if (!locationResult.IsSuccessful)
+            try
             {
-                return _gpsLocationService.DeviceLocation != null;
-            }
+                var locationResult = await _gpsLocationService.GetDeviceGeoLocation();
 
-            return true;
+                if (!locationResult.IsSuccessful)
+                {
+                    return _gpsLocationService.DeviceLocation != null;
+                }
+
+                return true;
+            }
+            finally
+            {
+                _isFetchingDeviceLocation = false;
+            }
         }
 
         private async Task UpdateSavedLocations()
@@ -289,8 +260,8 @@ namespace JustCompute.Features.Locations
                 return true;
             }
 
-            return Math.Abs(left.LatitudeDouble - right.LatitudeDouble) < 0.000001
-                && Math.Abs(left.LongitudeDouble - right.LongitudeDouble) < 0.000001
+            return Math.Abs(left.Latitude - right.Latitude) < 0.000001
+                && Math.Abs(left.Longitude - right.Longitude) < 0.000001
                 && string.Equals(left.Name, right.Name, StringComparison.Ordinal);
         }
 
@@ -316,11 +287,9 @@ namespace JustCompute.Features.Locations
                         _localizer.GetString("GoToSettings")
                         );
 
-                    if (result == DialogButton.Positive)
-                    {
-                        Application.Current?.Quit();
-                    }
-                    else if (result == DialogButton.Negative)
+                    // "Close" used to quit the app, from when a location fix was mandatory.
+                    // It no longer is — there is always a placeholder — so dismissing is enough.
+                    if (result == DialogButton.Negative)
                     {
                         AppInfo.Current.ShowSettingsUI();
                     }
@@ -355,6 +324,13 @@ namespace JustCompute.Features.Locations
         partial void OnSelectedLocationChanged(Location? value)
         {
             if (_suppressSelectionWriteBack) return;
+
+            // A CollectionView clears SelectedItem whenever the selected row leaves the
+            // collection — while the list is rebuilt, for instance. That is not the user
+            // choosing "nowhere", and writing it back erased the location they had picked,
+            // along with the preference that remembers it across launches.
+            if (value is null) return;
+
             if (ReferenceEquals(value, _gpsLocationService.SelectedLocation)) return;
 
             _gpsLocationService.SelectedLocation = value;
@@ -363,6 +339,8 @@ namespace JustCompute.Features.Locations
 
         private void UpdateAtThisLocationInfo(Location? location)
         {
+            IsPlaceholderLocation = !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation;
+
             if (location is null)
             {
                 Coordinate = null;
@@ -372,13 +350,16 @@ namespace JustCompute.Features.Locations
                 return;
             }
 
-            Coordinate = new Coordinate(location.LatitudeDouble, location.LongitudeDouble, DateTime.Now)
-            {
-                Offset = location.TimeZoneOffset.Hours
-            };
+            var offsetHours = location.GetUtcOffsetHours(DateTime.UtcNow);
 
-            RestartTimer(location.TimeZoneOffset.Hours);
-            _ = LoadWeatherForecastAsync(location.LatitudeDouble, location.LongitudeDouble);
+            Coordinate = CelestialSnapshot.For(
+                location.Latitude,
+                location.Longitude,
+                DateTime.UtcNow.AddHours(offsetHours),
+                offsetHours);
+
+            RestartTimer(offsetHours);
+            _ = LoadWeatherForecastAsync(location.Latitude, location.Longitude);
         }
 
         private async Task LoadWeatherForecastAsync(double latitude, double longitude)
@@ -409,25 +390,55 @@ namespace JustCompute.Features.Locations
             _weatherCancellationTokenSource = null;
         }
 
-        private async Task OnGoToAddLocation()
+        [RelayCommand]
+        private async Task GoToAddLocation()
         {
             Dictionary<LocationInputContext, Location?> locationAndContext = [];
             locationAndContext[LocationInputContext.Add] = null;
             await _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
         }
 
-        private async Task OnGoSearchByCityLocation()
+        [RelayCommand]
+        private async Task GoToSearchByCity()
         {
             var searchLocationContext = SearchLocationContext.GoAhead;
             await _navigationService.NavigateToAsync<SearchByCityViewModel>(searchLocationContext);
         }
 
-        private async Task OnGoToSavedLocations()
+        /// <summary>
+        /// Edits a saved place in place of the old management screen. The edit screen works on a
+        /// copy, so backing out leaves this list untouched.
+        /// </summary>
+        [RelayCommand]
+        private async Task EditLocation(Location? location)
         {
-            await _navigationService.NavigateToAsync<SavedLocationsViewModel>();
+            if (location is null || !location.IsSaved) return;
+
+            Dictionary<LocationInputContext, Location?> locationAndContext = [];
+            locationAndContext[LocationInputContext.Edit] = location;
+            await _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
         }
 
-        private async Task OnRefresh()
+        [RelayCommand]
+        private async Task DeleteLocation(Location? location)
+        {
+            if (location is null || !location.IsSaved) return;
+
+            // Removing the place every other screen is currently reading would leave the app
+            // deciding where the user is on their behalf; ask them to switch away first.
+            if (ReferenceEquals(location, SelectedLocation) || location.Id == SelectedLocation?.Id)
+            {
+                await _toastService.ShowToast(
+                    _localizer.GetString("CannotDeleteCurrentLocationToastMessage"));
+                return;
+            }
+
+            await _locationService.DeleteLocation(location);
+            Locations.Remove(location);
+        }
+
+        [RelayCommand]
+        private async Task Refresh()
         {
             try
             {
@@ -439,49 +450,77 @@ namespace JustCompute.Features.Locations
             }
         }
 
+        /// <summary>
+        /// Pushes the service's notion of the current location into the UI without letting the
+        /// two-way binding echo it straight back.
+        /// </summary>
+        private Task ApplySelection(Location? selected) =>
+            MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                _suppressSelectionWriteBack = true;
+                EnsureKnownLocationsVisible();
+                SelectedLocation = selected;
+
+                var dispatcher = Application.Current?.Dispatcher;
+                if (dispatcher is not null)
+                {
+                    dispatcher.Dispatch(() => _suppressSelectionWriteBack = false);
+                }
+                else
+                {
+                    _suppressSelectionWriteBack = false;
+                }
+
+                UpdateAtThisLocationInfo(selected);
+            });
+
         private async Task InitViewModelAsync(bool forceRefreshDeviceLocation = false)
         {
             if (!await _initializationSemaphore.WaitAsync(0))
             {
+                // An init can sit on a device fix for up to 30s. Dropping the request outright
+                // meant anything that happened meanwhile — a location added, edited, deleted —
+                // stayed invisible until the next navigation. Queue one re-run instead.
+                _initializationPending = true;
                 return;
             }
 
             try
             {
-                if (!await InitDeviceLocation(forceRefreshDeviceLocation))
-                {
-                    return;
-                }
-
-                await UpdateSavedLocations();
-
-                await _gpsLocationService.RestorePersistedSelectedLocation();
-                _gpsLocationService.SelectedLocation ??= _gpsLocationService.DeviceLocation ?? Locations.FirstOrDefault();
-
-                var selected = _gpsLocationService.SelectedLocation;
-
+                // Put something on screen before the permission dance, which can block on a
+                // dialog: the service always hands back at least a placeholder, and an empty
+                // Locations screen is never the right answer.
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     _suppressSelectionWriteBack = true;
                     EnsureKnownLocationsVisible();
-                    SelectedLocation = selected;
-
-                    var dispatcher = Application.Current?.Dispatcher;
-                    if (dispatcher is not null)
-                    {
-                        dispatcher.Dispatch(() => _suppressSelectionWriteBack = false);
-                    }
-                    else
-                    {
-                        _suppressSelectionWriteBack = false;
-                    }
+                    SelectedLocation ??= _gpsLocationService.SelectedLocation;
+                    _suppressSelectionWriteBack = false;
                 });
 
-                UpdateAtThisLocationInfo(selected);
+                // Saved locations are a local database read, so they go up first. They used to sit
+                // behind the device fix below, which meant a place the user had just added stayed
+                // invisible for the 30 seconds that fix takes to give up.
+                await UpdateSavedLocations();
+                await _gpsLocationService.RestorePersistedSelectedLocation();
+
+                await ApplySelection(_gpsLocationService.SelectedLocation);
+
+                // A denied or unavailable device fix is not fatal — the app falls back to a
+                // placeholder — so it runs last and only adds to what is already on screen.
+                await InitDeviceLocation(forceRefreshDeviceLocation);
+
+                await ApplySelection(_gpsLocationService.SelectedLocation);
             }
             finally
             {
                 _initializationSemaphore.Release();
+
+                if (_initializationPending)
+                {
+                    _initializationPending = false;
+                    _ = InitViewModelAsync();
+                }
             }
         }
 
@@ -495,6 +534,14 @@ namespace JustCompute.Features.Locations
         {
             switch (message.LocationInputContext)
             {
+                case LocationInputContext.Add:
+                    {
+                        // Adding a place is a statement of intent, so make it current rather than
+                        // leaving the user to find it in the list and tap it a second time.
+                        UpsertLocation(message.Location);
+                        SelectedLocation = message.Location;
+                        break;
+                    }
                 case LocationInputContext.Edit:
                     {
                         var locationToUpdate = Locations.FirstOrDefault(location => location.Id == message.Location.Id);
@@ -517,13 +564,6 @@ namespace JustCompute.Features.Locations
                         break;
                     }
             }
-        }
-
-        private void Dispose()
-        {
-            StopTimer();
-            CancelWeatherLoad();
-            Locations.CollectionChanged -= Locations_CollectionChanged;
         }
     }
 }

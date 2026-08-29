@@ -178,6 +178,7 @@
     <MauiImage Include="Resources\Images\Dark\play_arrow_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\play_circle_light_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\ruler_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\photo_camera_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\search_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\settings_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\sort_icon_dark.svg" />
@@ -201,6 +202,7 @@
     <MauiImage Include="Resources\Images\Light\play_arrow_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\play_circle_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\ruler_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\photo_camera_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\search_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\settings_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\sort_icon_light.svg" />
@@ -243,9 +245,6 @@
     </Compile>
     <Compile Update="Features\SearchByCity\SearchByCityPage.xaml.cs">
       <DependentUpon>SearchByCityPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Features\SavedLocations\SavedLocationsPage.xaml.cs">
-      <DependentUpon>SavedLocationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Features\Distance\DistancePage.xaml.cs">
       <DependentUpon>DistancePage.xaml</DependentUpon>
@@ -309,9 +308,6 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Features\SearchByCity\SearchByCityPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Features\SavedLocations\SavedLocationsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Features\Distance\DistancePage.xaml">

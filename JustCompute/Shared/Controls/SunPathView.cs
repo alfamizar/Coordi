@@ -42,9 +42,28 @@ namespace JustCompute.Shared.Controls
             HeightRequest = 160;
             Push();
 
+            // Application.Current outlives every page, so a subscription taken in the constructor
+            // and never released roots the control for the life of the app. Tie it to the visual
+            // tree instead: today this control is a singleton page's only instance, but that is
+            // not a property worth depending on.
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
+        private void OnLoaded(object? sender, EventArgs e)
+        {
             if (Application.Current is { } app)
             {
+                app.RequestedThemeChanged -= OnAppThemeChanged;
                 app.RequestedThemeChanged += OnAppThemeChanged;
+            }
+        }
+
+        private void OnUnloaded(object? sender, EventArgs e)
+        {
+            if (Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnAppThemeChanged;
             }
         }
 
@@ -95,9 +114,9 @@ namespace JustCompute.Shared.Controls
                 canvas.StrokeSize = 1f;
                 canvas.DrawLine(0, horizonY, w, horizonY);
 
-                if (RiseTime is not { } rise ||
-                    SetTime is not { } set ||
-                    CurrentTime is not { } now)
+                // The arc depends only on the date's rise/set; the sun marker depends on "now".
+                // Keep them separate so a date other than today still draws its path.
+                if (RiseTime is not { } rise || SetTime is not { } set)
                 {
                     return;
                 }
@@ -161,14 +180,18 @@ namespace JustCompute.Shared.Controls
                 canvas.StrokeLineCap = LineCap.Round;
                 canvas.DrawPath(BuildPath(riseH, setH));
 
-                var nowH = WindowHour(now);
-                var sunX = (float)(nowH / 24.0) * w;
-                var sunY = YForHour(nowH);
-                var aboveHorizon = nowH >= riseH && nowH <= setH;
+                // No "now" marker when the chart is showing some other day.
+                if (CurrentTime is { } now)
+                {
+                    var nowH = WindowHour(now);
+                    var sunX = (float)(nowH / 24.0) * w;
+                    var sunY = YForHour(nowH);
+                    var aboveHorizon = nowH >= riseH && nowH <= setH;
 
-                canvas.SaveState();
-                DrawSun(canvas, sunX, sunY, palette.Sun, aboveHorizon);
-                canvas.RestoreState();
+                    canvas.SaveState();
+                    DrawSun(canvas, sunX, sunY, palette.Sun, aboveHorizon);
+                    canvas.RestoreState();
+                }
             }
 
             private static void DrawSun(ICanvas canvas, float x, float y, Color sunColor, bool aboveHorizon)

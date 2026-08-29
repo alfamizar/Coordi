@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models.Speed;
 using Compute.Core.Domain.Services;
 using Compute.Core.UI;
 using Compute.Core.Utils;
-using CoordinateSharp;
+using Compute.Core.Domain.Entities.Models;
 using DotNext;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Resources.Strings;
@@ -79,7 +79,6 @@ namespace JustCompute.Features.SpeedAndDistance
             _localizer = localizer;
             _distanceCalculator = new();
             _speedType = global::JustCompute.Shared.Helpers.Settings.SpeedType;
-            Commands.Add("ToggleLocationTrackingCommand", new AsyncRelayCommand(OnToggleLocationTracking));
         }
 
         private void StartTimer()
@@ -107,7 +106,8 @@ namespace JustCompute.Features.SpeedAndDistance
             _timer = null;
         }
 
-        private async Task OnToggleLocationTracking()
+        [RelayCommand]
+        private async Task ToggleLocationTracking()
         {
             HapticFeedback.Default.Perform(HapticFeedbackType.Click);
 
@@ -140,6 +140,7 @@ namespace JustCompute.Features.SpeedAndDistance
             await StopListeningLocation();
             var startedListeningLocationResult = await StartListeningLocation(backgroundCapable: willBeRunning);
             IsBusy = false;
+
             if (!startedListeningLocationResult.IsSuccessful)
             {
                 IsRunning = false;
@@ -171,10 +172,7 @@ namespace JustCompute.Features.SpeedAndDistance
             DirectDistance = 0;
             ElapsedTime = DateTime.MinValue;
 
-            _distanceCalculator.StartAltitude = -1;
-            _distanceCalculator.StartingPoint = null;
-            _distanceCalculator.PreviousPoint = null;
-            _distanceCalculator.LastPoint = null;
+            _distanceCalculator.Reset();
         }
 
         private void OnDeviceLocationUpdated(object? sender, DeviceLocationUpdate update)
@@ -191,9 +189,9 @@ namespace JustCompute.Features.SpeedAndDistance
             if (!IsRunning || !IsTrustedFix(update))
                 return;
 
-            var point = new Coordinate(update.Latitude, update.Longitude);
+            var point = new GeoPoint(update.Latitude, update.Longitude);
+            var fixTime = update.Timestamp.UtcDateTime;
 
-            _distanceCalculator.StartingPoint ??= point;
             if (_distanceCalculator.StartAltitude == -1)
             {
                 _distanceCalculator.StartAltitude = update.Altitude ?? 0;
@@ -201,13 +199,17 @@ namespace JustCompute.Features.SpeedAndDistance
 
             if (_distanceCalculator.LastPoint is { } previousPoint)
             {
-                if (IsImplausibleJump(previousPoint, point, sinceLastUpdate))
-                    return;
+                // Judge the jump against the gap between the fixes themselves; the gap between
+                // callbacks can be stretched by anything happening on the UI thread.
+                var sinceLastFix = _distanceCalculator.LastFixTimestampUtc is { } lastFix
+                    ? fixTime - lastFix
+                    : sinceLastUpdate;
 
-                _distanceCalculator.PreviousPoint = previousPoint;
+                if (IsImplausibleJump(previousPoint, point, sinceLastFix))
+                    return;
             }
 
-            _distanceCalculator.LastPoint = point;
+            _distanceCalculator.AddFix(point, fixTime);
 
             Elevation = Math.Round(_distanceCalculator.GetElevation(Altitude), 2);
             TravelledDistance = Math.Round(_distanceCalculator.GetCurvedDistance(TravelledDistance));
@@ -230,12 +232,12 @@ namespace JustCompute.Features.SpeedAndDistance
             return accuracy > 0 && accuracy <= MaxTrustedFixAccuracyMeters;
         }
 
-        private static bool IsImplausibleJump(Coordinate from, Coordinate to, TimeSpan elapsed)
+        private static bool IsImplausibleJump(GeoPoint from, GeoPoint to, TimeSpan elapsed)
         {
             if (elapsed.TotalSeconds <= 0)
                 return false;
 
-            var metersMoved = new CoordinateSharp.Distance(from, to).Meters;
+            var metersMoved = from.DistanceMetersTo(to);
             return metersMoved / elapsed.TotalSeconds > MaxPlausibleGroundSpeedMps;
         }
 
