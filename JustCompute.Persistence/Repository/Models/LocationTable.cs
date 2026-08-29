@@ -26,6 +26,13 @@ namespace JustCompute.Persistence.Repository.Models
 
         public int IsCurrent { get; set; }
 
+        /// <summary>
+        /// Legacy whole-hour offset. Still written so an older build reading this database keeps
+        /// working, but <see cref="TimeZoneId"/> is what the app resolves times from.
+        /// </summary>
         public int TimeZoneOffset { get; set; }
+
+        /// <summary>IANA zone id, or a fixed <c>UTC±HH:MM</c> id when the user pinned the offset.</summary>
+        public string? TimeZoneId { get; set; }
     }
 }

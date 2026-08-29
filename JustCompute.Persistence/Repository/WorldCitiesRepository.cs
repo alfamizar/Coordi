@@ -1,4 +1,4 @@
-﻿using Compute.Core.Repository;
+using Compute.Core.Repository;
 using Compute.Core.Utils;
 using JustCompute.Persistence.Repository.Constants;
 using JustCompute.Persistence.Repository.Models;
@@ -10,9 +10,9 @@ namespace JustCompute.Persistence.Repository
     {
         private readonly SQLiteAsyncConnection _database;
 
-        public WorldCitiesRepository()
+        public WorldCitiesRepository(AppDatabaseConnection connection)
         {
-            _database = new SQLiteAsyncConnection(RepositoryConstants.DatabasePath, RepositoryConstants.Flags);
+            _database = connection.Database;
         }
 
         public async Task<WorldCityTable> GetTheNearestCityAsync(double currentLat, double currentLng)
@@ -54,17 +54,22 @@ namespace JustCompute.Persistence.Repository
                 name);
         }
 
-        public async Task<IEnumerable<WorldCityTable>> FilterByCity(string name)
+        public async Task<IEnumerable<WorldCityTable>> FilterByCity(string name, int limit)
         {
             var searchPattern = $"%{name}%";
 
+            // Capped, and ordered by population so the cap keeps the places a person is most
+            // likely to be looking for. An empty term used to match all 42,905 rows, which the
+            // search screen then mapped and sorted in full on every single visit.
             return await _database
                 .QueryAsync<WorldCityTable>(
                 @"SELECT * FROM worldcities
                   WHERE CityAscii LIKE ? OR Country LIKE ?
-                  ORDER BY CityAscii ASC",
+                  ORDER BY Population DESC
+                  LIMIT ?",
                 searchPattern,
-                searchPattern
+                searchPattern,
+                limit
                 ).ConfigureAwait(false);
         }
     }

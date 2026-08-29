@@ -1,4 +1,4 @@
-﻿namespace JustCompute.Persistence.Repository.Constants
+namespace JustCompute.Persistence.Repository.Constants
 {
     public class RepositoryConstants
     {
@@ -9,7 +9,7 @@
         public const string CitiesTable = "cities";
 
         public const string LocationWithCityQuery =
-            $"SELECT l.*, c.CityName as CityName, c.CountryName, c.Population " +
+            $"SELECT l.*, c.Id as CityRowId, c.CityName as CityName, c.CountryName, c.Population " +
             $"FROM {LocationsTable} l JOIN {CitiesTable} c ON l.CityId = c.Id";
 
         public const string CreateCitiesTableStatement =
@@ -20,7 +20,19 @@
             $"CREATE TABLE IF NOT EXISTS {LocationsTable} " +
             $"(Id INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(255), Latitude REAL, Longitude REAL, " +
             $"CityId INTEGER, IsActive INTEGER, IsCurrent INTEGER, TimeZoneOffset INTEGER, " +
+            $"TimeZoneId VARCHAR(64), " +
             $"FOREIGN KEY(CityId) REFERENCES cities(Id) ON DELETE CASCADE);";
+
+        /// <summary>
+        /// Adds the zone column to databases created before locations stored one. Rows left with
+        /// a NULL id fall back to resolving the zone from their coordinates, which is how they
+        /// pick up the daylight saving the old whole-hour <c>TimeZoneOffset</c> column never had.
+        /// </summary>
+        public const string AddTimeZoneIdColumnStatement =
+            $"ALTER TABLE {LocationsTable} ADD COLUMN TimeZoneId VARCHAR(64);";
+
+        public const string LocationsTableColumnsQuery =
+            $"PRAGMA table_info({LocationsTable});";
 
         public const SQLite.SQLiteOpenFlags Flags =
             SQLite.SQLiteOpenFlags.ReadWrite |

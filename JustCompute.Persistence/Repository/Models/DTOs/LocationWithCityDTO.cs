@@ -1,4 +1,4 @@
-﻿namespace JustCompute.Persistence.Repository.Models.DTOs
+namespace JustCompute.Persistence.Repository.Models.DTOs
 {
     public class LocationWithCityDTO
     {
@@ -21,5 +21,10 @@
         public int Population { get; set; }
 
         public int TimeZoneOffset { get; set; }
+
+        public string? TimeZoneId { get; set; }
+
+        /// <summary>Aliased in the query so it does not collide with the location's own CityId.</summary>
+        public int CityRowId { get; set; }
     }
 }

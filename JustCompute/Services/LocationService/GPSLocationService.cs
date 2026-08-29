@@ -24,13 +24,30 @@ namespace JustCompute.Services.LocationService
         public bool IsGettingDeviceLocation { get; private set; }
 
         private Location? _selectedLocation;
+        private Location? _placeholderLocation;
+        private Task? _restoreTask;
+
+        /// <summary>
+        /// Never null: until the user picks somewhere (or the device fix arrives) this returns a
+        /// placeholder, so screens show real data instead of an error. Pair with
+        /// <c>Settings.HasUserSetLocation</c> to tell the two apart.
+        /// </summary>
         public Location? SelectedLocation
         {
-            get => _selectedLocation;
+            get => _selectedLocation ??= _placeholderLocation ??= Location.CreatePlaceholder();
             set
             {
                 _selectedLocation = value;
                 PersistSelectedLocationId(value?.Id);
+
+                // Only count it once we are genuinely off the placeholder. Every screen assigns
+                // this property during its own load, so treating any assignment as "the user
+                // chose somewhere" dismissed the onboarding card on the very first run and left
+                // London sitting in the list as though it were a place they had picked.
+                if (value != null && !ReferenceEquals(value, _placeholderLocation))
+                {
+                    global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation = true;
+                }
             }
         }
 
@@ -46,9 +63,22 @@ namespace JustCompute.Services.LocationService
             }
         }
 
-        public async Task RestorePersistedSelectedLocation()
+        /// <summary>
+        /// Restores the location the user last chose. Runs at most once per launch and is safe to
+        /// await from anywhere, so every screen can gate its first read on it rather than relying
+        /// on the user happening to open the Locations screen.
+        /// </summary>
+        public Task RestorePersistedSelectedLocation() => _restoreTask ??= RestorePersistedSelectedLocationCore();
+
+        private async Task RestorePersistedSelectedLocationCore()
         {
-            if (_selectedLocation != null) return;
+            // Reading the property hands back a placeholder and caches it, so "already set" is not
+            // the same as "chosen by the user" — any screen that asked first would otherwise block
+            // the restore and the app would forget the user's location on every cold start.
+            if (_selectedLocation != null && !ReferenceEquals(_selectedLocation, _placeholderLocation))
+            {
+                return;
+            }
 
             var id = Preferences.Default.Get(SelectedLocationIdKey, -1);
             if (id <= 0) return;
@@ -96,7 +126,12 @@ namespace JustCompute.Services.LocationService
         {
             try
             {
-                GettingDeviceLocationFinished = new TaskCompletionSource<bool>();
+                // RunContinuationsAsynchronously, deliberately: without it TrySetResult runs
+                // every awaiting continuation inline on whichever thread the platform delivered
+                // the fix on. Screens awaiting this then carried on off the UI thread, and their
+                // property changes stopped reaching the views — a spinner that never stopped.
+                GettingDeviceLocationFinished =
+                    new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
                 IsGettingDeviceLocation = true;
 
@@ -253,6 +288,6 @@ namespace JustCompute.Services.LocationService
         }
 
         private static DeviceLocationUpdate ToDomainUpdate(DeviceGeoLocation l) =>
-            new(l.Latitude, l.Longitude, l.Speed, l.Course, l.Accuracy, l.VerticalAccuracy, l.Altitude);
+            new(l.Latitude, l.Longitude, l.Speed, l.Course, l.Accuracy, l.VerticalAccuracy, l.Altitude, l.Timestamp);
     }
 }
