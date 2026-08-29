@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.Optics.OpticsPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.Optics"
+             xmlns:optics="clr-namespace:Compute.Core.Utils;assembly=Compute.Core"
+             xmlns:bodies="clr-namespace:Compute.Core.Domain.Entities.Models.Optics;assembly=Compute.Core"
+             x:DataType="ViewModels:OpticsViewModel">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <VerticalStackLayout Margin="4"
+                             Spacing="8">
+
+            <!-- Inputs. The camera picker comes first because choosing a body writes two of the
+                 fields below it, and the pixel pitch is the input nobody knows off the top of
+                 their head. Everything stays editable underneath — it is a shortcut, not a mode. -->
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10">
+
+                <StackLayout Padding="0"
+                             Spacing="8">
+
+                    <Label Text="{localization:Localize OpticsLensSensorLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Label Text="{localization:Localize OpticsCameraLabel}" />
+                    <Picker ItemsSource="{Binding Bodies}"
+                            ItemDisplayBinding="{Binding Label}"
+                            SelectedItem="{Binding SelectedBody, Mode=TwoWay}"
+                            Title="{localization:Localize OpticsCameraLabel}" />
+
+                    <Label Text="{Binding BodyName}"
+                           FontAttributes="Italic"
+                           IsVisible="{Binding IsBodyNameVisible}" />
+
+                    <Label Text="{localization:Localize OpticsFocalLengthLabel}" />
+                    <Entry Text="{Binding FocalLengthMm, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+                    <Label Text="{localization:Localize OpticsErrPositiveLabel}"
+                           IsVisible="{Binding HasFocalLengthError}"
+                           FontSize="Small"
+                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+
+                    <Label Text="{localization:Localize OpticsApertureLabel}" />
+                    <Entry Text="{Binding Aperture, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+                    <Label Text="{localization:Localize OpticsErrPositiveLabel}"
+                           IsVisible="{Binding HasApertureError}"
+                           FontSize="Small"
+                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+
+                    <Label Text="{localization:Localize OpticsSubjectDistanceLabel}" />
+                    <Entry Text="{Binding SubjectDistanceMeters, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+                    <Label Text="{localization:Localize OpticsErrPositiveLabel}"
+                           IsVisible="{Binding HasSubjectDistanceError}"
+                           FontSize="Small"
+                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+
+                    <Picker ItemsSource="{Binding Formats}"
+                            ItemDisplayBinding="{Binding Label}"
+                            SelectedItem="{Binding SelectedFormat, Mode=TwoWay}" />
+
+                    <!-- Sensor width plus these pixels give the pitch the NPF rule needs;
+                         declination sets how fast the target drifts. Star card only. -->
+                    <Label Text="{localization:Localize OpticsImageWidthLabel}" />
+                    <Entry Text="{Binding ImageWidthPixels, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+                    <Label Text="{localization:Localize OpticsErrImageWidthLabel}"
+                           IsVisible="{Binding HasImageWidthError}"
+                           FontSize="Small"
+                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+
+                    <Label Text="{localization:Localize OpticsDeclinationLabel}" />
+                    <Entry Text="{Binding DeclinationDeg, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+                    <Label Text="{localization:Localize OpticsErrDeclinationLabel}"
+                           IsVisible="{Binding HasDeclinationError}"
+                           FontSize="Small"
+                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+
+                    <!-- Last, under everything it would keep. Off by default: a calculator that
+                         silently remembers is one that quietly hands you someone else's answer. -->
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="8"
+                          Margin="0,4,0,0">
+                        <CheckBox Grid.Column="0"
+                                  IsChecked="{Binding RememberInputs, Mode=TwoWay}"
+                                  VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="{localization:Localize OpticsSaveDefaultLabel}"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                </StackLayout>
+
+            </Border>
+
+            <Label Text="{localization:Localize OpticsHintLabel}"
+                   IsVisible="{Binding HasResults, Converter={StaticResource InvertedBoolConverter}}"
+                   HorizontalTextAlignment="Center"
+                   Padding="16" />
+
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="8">
+                    <Label Text="{localization:Localize OpticsDofTitle}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsHyperfocalLabel}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding HyperfocalText}" FontAttributes="Bold" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsNearLimitLabel}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding NearLimitText}" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="{localization:Localize OpticsFarLimitLabel}" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding FarLimitText}" />
+                        <Label Grid.Row="3" Grid.Column="0" Text="{localization:Localize OpticsTotalLabel}" />
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding TotalText}" />
+                        <Label Grid.Row="4" Grid.Column="0" Text="{localization:Localize OpticsInFrontLabel}" />
+                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding InFrontText}" />
+                        <Label Grid.Row="5" Grid.Column="0" Text="{localization:Localize OpticsBehindLabel}" />
+                        <Label Grid.Row="5" Grid.Column="1" Text="{Binding BehindText}" />
+                    </Grid>
+                </StackLayout>
+            </Border>
+
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="8">
+                    <Label Text="{localization:Localize OpticsStarsTitle}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                        <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsRule500Label}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Rule500Text}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsRuleNpfLabel}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding NpfText}" FontAttributes="Bold" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="{localization:Localize OpticsPixelPitchLabel}" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding PixelPitchText}" />
+                    </Grid>
+
+                    <Label Text="{localization:Localize OpticsStarsHintLabel}"
+                           FontSize="Small"
+                           Opacity="0.7" />
+                </StackLayout>
+            </Border>
+
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="8">
+                    <Label Text="{localization:Localize OpticsFovTitle}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                        <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsHorizontalLabel}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding HorizontalText}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsVerticalLabel}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding VerticalText}" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="{localization:Localize OpticsDiagonalLabel}" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding DiagonalText}" />
+                    </Grid>
+                </StackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</v1:BasePage>
