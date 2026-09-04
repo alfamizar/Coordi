@@ -1,6 +1,7 @@
 Coordi is an offline field toolkit for astronomy, navigation and photography: Sun and Moon ephemeris, a century of solar and lunar eclipses, MGRS and UTM coordinates, geodesic route measurement, a GPS speedometer, and an optics calculator for astrophotography. Everything is computed on your device — no connection, no account, no ads.
 
 SUN, MOON AND EPHEMERIS
+• Tonight at a glance: clear, partly cloudy or overcast, the average cloud cover, and the hours of real astronomical darkness.
 • Sunrise, sunset and day length for any place and any date, on an interactive Sun-path arc with a live marker for the current moment.
 • Civil, nautical and astronomical twilight, from first light to last light, with the stages that never arrive at your latitude simply left out.
 • Moon phase and illumination, moonrise and moonset, and the Moon's distance in kilometers or miles.

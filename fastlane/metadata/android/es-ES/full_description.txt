@@ -1,6 +1,7 @@
 Coordi es una caja de herramientas sin conexión para astronomía, navegación y fotografía: efemérides del Sol y la Luna, un siglo de eclipses solares y lunares, coordenadas MGRS y UTM, medición geodésica de rutas, velocímetro GPS y calculadora óptica para astrofotografía. Todo se calcula en tu dispositivo: sin conexión, sin cuenta y sin anuncios.
 
 SOL, LUNA Y EFEMÉRIDES
+• La noche de un vistazo: despejado, parcialmente nublado o cubierto, la nubosidad media y las horas de verdadera oscuridad astronómica.
 • Amanecer, atardecer y duración del día para cualquier lugar y fecha, sobre un arco solar interactivo con un marcador en vivo del momento actual.
 • Crepúsculo civil, náutico y astronómico, de la primera a la última luz; las etapas que no llegan a tu latitud simplemente se omiten.
 • Fase e iluminación de la Luna, salida y puesta de la Luna, y la distancia lunar en kilómetros o millas.

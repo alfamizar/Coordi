@@ -1,6 +1,7 @@
 Coordi to offline'owy zestaw narzędzi do astronomii, nawigacji i fotografii: efemerydy Słońca i Księżyca, stulecie zaćmień Słońca i Księżyca, współrzędne MGRS i UTM, geodezyjny pomiar tras, prędkościomierz GPS oraz kalkulator optyczny do astrofotografii. Wszystko liczone jest na Twoim urządzeniu — bez połączenia, bez konta, bez reklam.
 
 SŁOŃCE, KSIĘŻYC I EFEMERYDY
+• Noc na pierwszy rzut oka: bezchmurnie, częściowe zachmurzenie lub pochmurno, średnie zachmurzenie i godziny prawdziwej ciemności astronomicznej.
 • Wschód, zachód i długość dnia dla dowolnego miejsca i daty, na interaktywnym łuku drogi Słońca ze znacznikiem bieżącej chwili.
 • Świt i zmierzch cywilny, żeglarski i astronomiczny — od pierwszego do ostatniego światła; etapy, które na Twojej szerokości nie występują, są pomijane.
 • Faza i oświetlenie Księżyca, wschód i zachód Księżyca oraz odległość Księżyca w kilometrach lub milach.

@@ -1,6 +1,7 @@
 Coordi je offline sada nástrojů pro astronomii, navigaci a fotografii: efemeridy Slunce a Měsíce, století slunečních a měsíčních zatmění, souřadnice MGRS a UTM, geodetické měření tras, GPS tachometr a optická kalkulačka pro astrofotografii. Vše se počítá přímo ve vašem zařízení — bez připojení, bez účtu, bez reklam.
 
 SLUNCE, MĚSÍC A EFEMERIDY
+• Noc na první pohled: jasno, polojasno nebo zataženo, průměrná oblačnost a hodiny skutečné astronomické tmy.
 • Východ, západ a délka dne pro libovolné místo a datum, na interaktivním oblouku dráhy Slunce se živou značkou aktuálního okamžiku.
 • Občanské, nautické a astronomické svítání a soumrak, od prvního po poslední světlo; fáze, které se na vaší šířce nevyskytují, se neuvádějí.
 • Fáze a osvětlení Měsíce, východ a západ Měsíce a vzdálenost Měsíce v kilometrech nebo mílích.

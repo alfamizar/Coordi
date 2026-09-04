@@ -1,6 +1,7 @@
 Coordi ist ein Offline-Werkzeugkasten für Astronomie, Navigation und Fotografie: Sonnen- und Mondephemeriden, ein Jahrhundert an Sonnen- und Mondfinsternissen, MGRS- und UTM-Koordinaten, geodätische Streckenmessung, ein GPS-Tachometer und ein Optikrechner für die Astrofotografie. Alles wird auf Ihrem Gerät berechnet — ohne Verbindung, ohne Konto, ohne Werbung.
 
 SONNE, MOND UND EPHEMERIDEN
+• Die Nacht auf einen Blick: klar, teils bewölkt oder bedeckt, die mittlere Bewölkung und die Stunden echter astronomischer Dunkelheit.
 • Sonnenaufgang, Sonnenuntergang und Tageslänge für jeden Ort und jedes Datum, auf einem interaktiven Sonnenbogen mit Live-Markierung für den aktuellen Moment.
 • Bürgerliche, nautische und astronomische Dämmerung, vom ersten bis zum letzten Licht — Stufen, die es in Ihrer Breite nicht gibt, werden weggelassen.
 • Mondphase und Beleuchtung, Mondaufgang und Monduntergang sowie die Entfernung des Mondes in Kilometern oder Meilen.

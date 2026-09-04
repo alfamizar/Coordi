@@ -1,6 +1,7 @@
 Coordi; astronomi, navigasyon ve fotoğrafçılık için çevrimdışı bir saha araç setidir: Güneş ve Ay efemerisi, bir yüzyıllık Güneş ve Ay tutulmaları, MGRS ve UTM koordinatları, jeodezik rota ölçümü, GPS hız göstergesi ve astrofotoğrafçılık için optik hesaplayıcı. Her şey cihazınızda hesaplanır — bağlantı yok, hesap yok, reklam yok.
 
 GÜNEŞ, AY VE EFEMERİS
+• Gece bir bakışta: açık, parçalı bulutlu ya da kapalı; ortalama bulutluluk ve gerçek astronomik karanlığın saatleri.
 • Herhangi bir yer ve tarih için gün doğumu, gün batımı ve gün uzunluğu; şu anı canlı gösteren işaretçiyle etkileşimli Güneş yayı üzerinde.
 • Sivil, denizcilik ve astronomik alacakaranlık: ilk ışıktan son ışığa. Enleminizde hiç gerçekleşmeyen aşamalar listeye alınmaz.
 • Ay'ın evresi ve aydınlanması, Ay'ın doğuşu ve batışı, Ay'ın kilometre veya mil cinsinden uzaklığı.

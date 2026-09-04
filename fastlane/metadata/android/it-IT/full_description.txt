@@ -1,6 +1,7 @@
 Coordi è una cassetta degli attrezzi offline per astronomia, navigazione e fotografia: effemeridi di Sole e Luna, un secolo di eclissi solari e lunari, coordinate MGRS e UTM, misurazione geodetica dei percorsi, tachimetro GPS e calcolatore ottico per l'astrofotografia. Tutto viene calcolato sul tuo dispositivo — senza connessione, senza account, senza pubblicità.
 
 SOLE, LUNA ED EFFEMERIDI
+• La notte a colpo d'occhio: sereno, parzialmente nuvoloso o coperto, la nuvolosità media e le ore di vero buio astronomico.
 • Alba, tramonto e durata del giorno per qualsiasi luogo e data, su un arco solare interattivo con un indicatore in tempo reale per l'istante presente.
 • Crepuscolo civile, nautico e astronomico, dalla prima all'ultima luce; le fasi che alla tua latitudine non avvengono vengono semplicemente omesse.
 • Fase e illuminazione della Luna, sorgere e tramontare della Luna, e la distanza della Luna in chilometri o miglia.
