@@ -1,0 +1,5 @@
+Neuer Heute-Bildschirm: Sonnenauf- und -untergang, Tageslänge und Sonnenbogen für jedes Datum, mit Mondphase und optionaler 7-Tage-Vorhersage.
+Neuer Optikrechner: Schärfentiefe, Bildwinkel und längste Belichtung ohne Sternspuren (500er- und NPF-Regel).
+Finsterniszeiten nutzen die Zeitzone des Ortes; der Sichtbarkeitsfilter sitzt jetzt dort.
+Zeitzonen folgen echten Grenzen und der Sommerzeit.
+Gespeicherte Orte direkt in der Liste bearbeiten und löschen.

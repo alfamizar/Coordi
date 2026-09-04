@@ -39,12 +39,12 @@
                     <Label Text="{localization:Localize CountryLabel}" />
                     <Entry x:Name="CountryEntry"
                            Placeholder="{localization:Localize CountryLabel}"
-                           Text="{Binding Location.City.CountryName, Mode=TwoWay}" />
+                           Text="{Binding Location.CountryName, Mode=TwoWay}" />
 
                     <Label Text="{localization:Localize CityLabel}" />
                     <Entry x:Name="CityEntry"
                            Placeholder="{localization:Localize CityLabel}"
-                           Text="{Binding Location.City.CityName, Mode=TwoWay}" />
+                           Text="{Binding Location.CityName, Mode=TwoWay}" />
 
                     <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
                     <Picker Title="{Binding Location.TimeZoneOffset}"

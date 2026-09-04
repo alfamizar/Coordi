@@ -5,64 +5,220 @@
              x:Class="JustCompute.Features.Distance.DistancePage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.Distance"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:views="clr-namespace:JustCompute.Shared.Controls"
              Shell.TabBarIsVisible="False"
              HideSoftInputOnTapped="True"
              Shell.PresentationMode="Animated"
              x:DataType="ViewModels:DistanceViewModel">
 
-    <ScrollView>
+    <!-- The summary is pinned: it is the answer, and scrolling a long route away from it left
+         the reader hunting for the number they came for. The pins and the inputs scroll under it. -->
+    <Grid RowDefinitions="*,Auto">
 
-        <Grid RowDefinitions="Auto,Auto,*"
-              RowSpacing="64"
-              Padding="12,16,12,16">
+    <ScrollView Grid.Row="0"
+                VerticalScrollBarVisibility="Never">
 
-            <views:PointEntry Grid.Row="0"
-                              Location="{Binding Location1}"
-                              PointTitle="{localization:Localize Point1Label}"
-                              IsPointLabelVisible="True"
-                              ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding SearchLocation1Command}">
-                <views:PointEntry.IsPointCityCountryLabelVisible>
-                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                        <Binding Path="Location1.City.CityName"
-                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
-                        <Binding Path="Location1.City.CountryName"
-                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
-                    </MultiBinding>
-                </views:PointEntry.IsPointCityCountryLabelVisible>
-            </views:PointEntry>
+        <VerticalStackLayout Margin="4"
+                             Spacing="8">
 
-            <views:PointEntry Grid.Row="1"
-                              Location="{Binding Location2}"
-                              PointTitle="{localization:Localize Point2Label}"
-                              IsPointLabelVisible="True"
-                              ImageButtonIconSource="search_icon_light.png"
-                              ImageButtonClickedCommand="{Binding SearchLocation2Command}">
-                <views:PointEntry.IsPointCityCountryLabelVisible>
-                    <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                        <Binding Path="Location2.City.CityName"
-                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
-                        <Binding Path="Location2.City.CountryName"
-                                 Converter="{StaticResource IsStringNotNullOrEmptyConverter}"/>
-                    </MultiBinding>
-                </views:PointEntry.IsPointCityCountryLabelVisible>
-            </views:PointEntry>
+            <!-- Ways to add a pin. Paired two to a row so the four read as one set of choices
+                 rather than a column of unrelated buttons. -->
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10">
 
-            <Border Grid.Row="2"
-                   MinimumHeightRequest="64"                  
-                   VerticalOptions="Center">
+                <StackLayout Spacing="8">
 
-                <Label Text="{Binding Distance.Kilometers, Converter={StaticResource KilometersToTargetDistanceTypeConverter}, FallbackValue='0'}"
-                       FontSize="Title"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center"/>
+                    <Label Text="{localization:Localize RouteLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
 
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <Button Grid.Column="0"
+                                Text="{localization:Localize SearchCityLabel}"
+                                Command="{Binding AddFromSearchCommand}" />
+                        <Button Grid.Column="1"
+                                Text="{localization:Localize UseMyLocationLabel}"
+                                Command="{Binding AddCurrentLocationCommand}" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <Button Grid.Column="0"
+                                Text="{localization:Localize UndoLabel}"
+                                Command="{Binding UndoCommand}"
+                                IsEnabled="{Binding HasStops}" />
+                        <Button Grid.Column="1"
+                                Text="{localization:Localize ClearLabel}"
+                                Command="{Binding ClearCommand}"
+                                IsEnabled="{Binding HasStops}" />
+                    </Grid>
+
+                </StackLayout>
             </Border>
 
-        </Grid>
+            <!-- The pins, each carrying the leg that leaves it. Tap a row to correct its
+                 coordinates by hand; the last pin has no leg, which is why HasLeg gates it. -->
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasStops}">
+
+                <StackLayout Spacing="4"
+                             BindableLayout.ItemsSource="{Binding Stops}">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="ViewModels:RouteStop">
+                            <StackLayout Spacing="2">
+
+                                <Grid ColumnDefinitions="32,*,44"
+                                      ColumnSpacing="4"
+                                      Padding="0,6">
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:DistanceViewModel}}, Path=ToggleEditorCommand, x:DataType=ViewModels:DistanceViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Number}"
+                                           FontAttributes="Bold"
+                                           TextColor="{DynamicResource ThemePrimary}"
+                                           VerticalOptions="Center" />
+
+                                    <StackLayout Grid.Column="1"
+                                                 Spacing="0">
+                                        <Label Text="{Binding Name}"
+                                               FontAttributes="Bold"
+                                               IsVisible="{Binding Name, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
+                                        <Label Text="{Binding Coordinates}"
+                                               FontSize="13" />
+                                        <Label Text="{Binding Leg}"
+                                               FontSize="13"
+                                               TextColor="{DynamicResource ThemePrimary}"
+                                               IsVisible="{Binding HasLeg}" />
+                                    </StackLayout>
+
+                                    <!-- Padding, not a size request: the implicit ImageButton
+                                         style sets a 44dp minimum for the touch target, which
+                                         silently wins over HeightRequest and leaves the glyph
+                                         filling it. Keep the target and inset the icon. -->
+                                    <ImageButton Grid.Column="2"
+                                                 Source="{AppThemeBinding Light=delete_icon_dark.png, Dark=delete_icon_light.png}"
+                                                 Padding="11"
+                                                 BackgroundColor="Transparent"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:DistanceViewModel}}, Path=RemoveCommand, x:DataType=ViewModels:DistanceViewModel}"
+                                                 CommandParameter="{Binding .}" />
+                                </Grid>
+
+                                <views:PointEntry Location="{Binding Editable}"
+                                                  IsVisible="{Binding IsEditing}"
+                                                  IsPointLabelVisible="False"
+                                                  IsPointCityCountryLabelVisible="False"
+                                                  IsImageButtonVisible="False" />
+
+                                <BoxView Style="{StaticResource DividerStyle}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </StackLayout>
+            </Border>
+
+            <!-- Nothing to measure yet. -->
+            <Label Text="{localization:Localize RouteHintLabel}"
+                   Margin="12,8"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="{Binding HasRoute, Converter={StaticResource InvertedBoolConverter}}" />
+
+            <!-- What the route costs to drive. Volume and money are left unitless on purpose:
+                 the app does not know whether the reader thinks in litres or gallons, euros or
+                 forints, and a wrong currency symbol is worse than none. -->
+            <Border Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasRoute}">
+
+                <StackLayout Spacing="8">
+
+                    <Label Text="{localization:Localize FuelLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <!-- The convention comes before the number, because the number means
+                         nothing without it: 7 and 34 can describe the same car. -->
+                    <Label Text="{localization:Localize FuelUnitLabel}" />
+                    <Picker ItemsSource="{Binding FuelUnits}"
+                            SelectedItem="{Binding SelectedFuelUnit, Mode=TwoWay}"
+                            Title="{localization:Localize FuelUnitLabel}" />
+
+                    <Label Text="{localization:Localize FuelConsumptionLabel}" />
+                    <Entry Text="{Binding FuelConsumption, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+
+                    <Label Text="{localization:Localize FuelPriceLabel}" />
+                    <Entry Text="{Binding FuelPrice, Mode=TwoWay}"
+                           Keyboard="Numeric" />
+
+                    <Label Text="{localization:Localize FuelHintLabel}"
+                           FontSize="13"
+                           IsVisible="{Binding HasFuelEstimate, Converter={StaticResource InvertedBoolConverter}}" />
+
+                </StackLayout>
+            </Border>
+
+        </VerticalStackLayout>
 
     </ScrollView>
+
+            <!-- What the route adds up to. Direct carries its bearing, because the straight line
+                 is the one you would actually point at. -->
+        <Border Grid.Row="1"
+                Padding="8"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 10"
+                    IsVisible="{Binding HasRoute}">
+
+                <StackLayout Spacing="8">
+
+                    <Label Text="{localization:Localize DistanceLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="{localization:Localize TotalDistanceLabel}" />
+                        <Label Grid.Column="1" Text="{Binding TotalDistance}" FontAttributes="Bold" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="{localization:Localize DirectDistanceLabel}" />
+                        <Label Grid.Column="1" Text="{Binding DirectDistance}" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          IsVisible="{Binding HasDetour}">
+                        <Label Grid.Column="0" Text="{localization:Localize DetourRatioLabel}" />
+                        <Label Grid.Column="1" Text="{Binding DetourRatio}" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          IsVisible="{Binding HasFuelEstimate}">
+                        <Label Grid.Column="0" Text="{localization:Localize FuelNeededLabel}" />
+                        <Label Grid.Column="1" Text="{Binding FuelNeeded}" />
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          IsVisible="{Binding HasFuelCost}">
+                        <Label Grid.Column="0" Text="{localization:Localize FuelCostLabel}" />
+                        <Label Grid.Column="1" Text="{Binding FuelCost}" FontAttributes="Bold" />
+                    </Grid>
+
+                </StackLayout>
+            </Border>
+
+
+    </Grid>
 
 </v1:BasePage>

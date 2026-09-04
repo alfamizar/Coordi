@@ -1,0 +1,5 @@
+Nová obrazovka Dnes: východ, západ, délka dne a živý oblouk Slunce pro libovolné datum, s fází Měsíce a volitelnou předpovědí na 7 dní.
+Nová optická kalkulačka: hloubka ostrosti, zorné pole a nejdelší expozice bez rozmazání hvězd (pravidla 500 a NPF).
+Zatmění v časovém pásmu daného místa; filtr viditelnosti je nyní tam.
+Časová pásma se skutečnými hranicemi a letním časem.
+Uložená místa lze upravit a smazat přímo v seznamu.

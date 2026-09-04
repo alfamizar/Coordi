@@ -50,7 +50,7 @@ namespace Compute.Core.Extensions
             {
                 return AstroZodiacSign.Scorpio;
             }
-            if (date >= new DateTime(date.Year, 11, 21) && date <= new DateTime(date.Year, 12, 21, 23, 59, 59))
+            if (date >= new DateTime(date.Year, 11, 22) && date <= new DateTime(date.Year, 12, 21, 23, 59, 59))
             {
                 return AstroZodiacSign.Sagittarius;
             }

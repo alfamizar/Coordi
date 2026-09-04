@@ -11,6 +11,194 @@
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="ViewModels:SunEclipsesViewModel">
 
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="VisibleSolarEclipseTemplate" x:DataType="models:SolarEclipseInfo">
+
+            <Border>
+
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                      ColumnDefinitions="*,*"
+                      ColumnSpacing="8"
+                      RowSpacing="8">
+
+                    <Label x:Name="Date"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding Date, StringFormat={localization:Localize DateLabel}}" />
+
+                    <Label x:Name="Type"
+                           Grid.Column="1"
+                           Grid.Row="0"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding ., Converter={StaticResource SunEclipseTypeToNameConverter}, 
+                            StringFormat={localization:Localize TypeLabel}}" />
+
+                    <BoxView Grid.ColumnSpan="2"
+                             Grid.Row="1"
+                             Style="{StaticResource DividerStyle}">
+                        <BoxView.IsVisible>
+                            <Binding Source="{x:Reference Magnitude}"
+                                     Path="IsVisible"
+                                     x:DataType="Label" />
+                        </BoxView.IsVisible>
+                    </BoxView>
+
+                    <Label x:Name="Magnitude"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="2"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding Magnitude, Converter={StaticResource IsPositiveDoubleConverter}}"
+                           Text="{Binding Magnitude, Converter={StaticResource MagnitudeConverter},
+                        StringFormat={localization:Localize SolarEclipseMagnitudeLabel}}" />
+
+                    <BoxView Grid.ColumnSpan="2"
+                             Grid.Row="3"
+                             Style="{StaticResource DividerStyle}">
+                        <BoxView.IsVisible>
+                            <Binding Source="{x:Reference Magnitude}"
+                                     Path="IsVisible"
+                                     x:DataType="Label" />
+                        </BoxView.IsVisible>
+                    </BoxView>
+
+                    <Label x:Name="PartialEclipseBegin"
+                           Grid.Column="0"
+                           Grid.Row="4"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding PartialEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding PartialEclipseBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel},
+                        Converter={StaticResource TimeFormatConverter}}" />
+
+                    <Label x:Name="PartialEclipseEnd"
+                           Grid.Column="1"
+                           Grid.Row="4"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding PartialEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding PartialEclipseEnd, StringFormat={localization:Localize PartialSolarEclipseEndTimeLabel},
+                        Converter={StaticResource TimeFormatConverter}}" />
+
+                    <BoxView Grid.ColumnSpan="2"
+                             Grid.Row="5"
+                             Style="{StaticResource DividerStyle}">
+                        <BoxView.IsVisible>
+                            <MultiBinding Converter="{StaticResource AnyTrueConverter}">
+                                <Binding Source="{x:Reference MaximumEclipse}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                                <Binding Source="{x:Reference CentralDuration}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                            </MultiBinding>
+                        </BoxView.IsVisible>
+                    </BoxView>
+
+                    <Label x:Name="MaximumEclipse"
+                           Grid.Column="0"
+                           Grid.Row="6"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding MaximumEclipse, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel},
+                         Converter={StaticResource TimeFormatConverter}}" />
+
+                    <Label x:Name="CentralDuration"
+                           Grid.Column="1"
+                           Grid.Row="6"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding CentralDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
+                           Text="{Binding CentralDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel},
+                         Converter={StaticResource TimeFormatConverter}}" />
+
+                    <BoxView Grid.ColumnSpan="2"
+                             Grid.Row="7"
+                             Style="{StaticResource DividerStyle}">
+                        <BoxView.IsVisible>
+                            <MultiBinding Converter="{StaticResource AnyTrueConverter}">
+                                <Binding Source="{x:Reference CentralEclipseBegin}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                                <Binding Source="{x:Reference CentralEclipseEnd}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                            </MultiBinding>
+                        </BoxView.IsVisible>
+                    </BoxView>
+
+                    <Label x:Name="CentralEclipseBegin"
+                           Grid.Column="0"
+                           Grid.Row="8"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding CentralEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding CentralEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel},
+                         Converter={StaticResource TimeFormatConverter}}" />
+
+                    <Label x:Name="CentralEclipseEnd"
+                           Grid.Column="1"
+                           Grid.Row="8"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding CentralEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding CentralEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel},
+                         Converter={StaticResource TimeFormatConverter}}" />
+
+                    <BoxView Grid.ColumnSpan="2"
+                             Grid.Row="9"
+                             Style="{StaticResource DividerStyle}">
+                        <BoxView.IsVisible>
+                            <MultiBinding Converter="{StaticResource AnyTrueConverter}">
+                                <Binding Source="{x:Reference CentralEclipseBegin}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                                <Binding Source="{x:Reference CentralEclipseEnd}"
+                                         Path="IsVisible"
+                                         x:DataType="Label" />
+                            </MultiBinding>
+                        </BoxView.IsVisible>
+                    </BoxView>
+
+                </Grid>
+
+            </Border>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="NotVisibleSolarEclipseTemplate" x:DataType="models:SolarEclipseInfo">
+
+            <Border Opacity="0.75"
+                    StrokeThickness="1"
+                    Stroke="{DynamicResource ThemeOutline}">
+
+                <Grid ColumnDefinitions="*, *"
+                      ColumnSpacing="8"
+                      Padding="0, 4"
+                      VerticalOptions="Center">
+
+                    <Label Grid.Column="0"
+                           Style="{StaticResource CollectionViewLabel}"
+                           IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
+                           Text="{Binding Date, StringFormat={localization:Localize DateLabel}}" />
+
+                    <Label Grid.Column="1"
+                           Style="{StaticResource CollectionViewLabel}"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray400}}"
+                           Text="{Binding ., Converter={StaticResource SunEclipseTypeToNameConverter}, 
+                            StringFormat={localization:Localize TypeLabel}}" />
+
+                </Grid>
+
+            </Border>
+
+        </DataTemplate>
+
+        <ViewModels:SolarEclipseTemplateSelector x:Key="SolarEclipseTemplateSelector"
+                                                 VisibleTemplate="{StaticResource VisibleSolarEclipseTemplate}"
+                                                 NotVisibleTemplate="{StaticResource NotVisibleSolarEclipseTemplate}" />
+
+    </ContentPage.Resources>
+
     <Grid Padding="4,0"
           RowDefinitions="Auto,*">
 
@@ -38,6 +226,9 @@
         </Grid>
 
 
+        <!-- Two different empties: nothing computed because there is no location, and nothing
+             matching because the filter hid it all. Saying the first when it is the second tells
+             the reader their GPS failed when the honest answer is "none from here". -->
         <Label Grid.Row="1"
                Text="{localization:Localize CannotGetCurrentLocationLabel}"
                VerticalOptions="Center"
@@ -45,8 +236,21 @@
                Padding="8">
             <Label.IsVisible>
                 <MultiBinding Converter="{StaticResource AllTrueConverter}">
-                    <Binding Path="GroupedEclipseList"
-                             Converter="{StaticResource IsListNullOrEmptyConverter}" />
+                    <Binding Path="HasNoLocation" />
+                    <Binding Path="IsBusy"
+                             Converter="{StaticResource InvertedBoolConverter}" />
+                </MultiBinding>
+            </Label.IsVisible>
+        </Label>
+
+        <Label Grid.Row="1"
+               Text="{localization:Localize NoVisibleEclipsesLabel}"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Padding="8">
+            <Label.IsVisible>
+                <MultiBinding Converter="{StaticResource AllTrueConverter}">
+                    <Binding Path="HasNoVisibleMatches" />
                     <Binding Path="IsBusy"
                              Converter="{StaticResource InvertedBoolConverter}" />
                 </MultiBinding>
@@ -56,6 +260,7 @@
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding GroupedEclipseList}"
                         SelectionMode="None"
+                        ItemTemplate="{StaticResource SolarEclipseTemplateSelector}"
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="helpers:IGroupHeader">
@@ -75,115 +280,6 @@
                 <LinearItemsLayout Orientation="Vertical"
                                    ItemSpacing="4" />
             </CollectionView.ItemsLayout>
-
-            <CollectionView.ItemTemplate>
-
-                <DataTemplate x:DataType="models:SolarEclipseInfo">
-
-                    <Border>
-
-                        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
-                              ColumnDefinitions="*,*"
-                              ColumnSpacing="8"
-                              RowSpacing="8">
-
-                            <Label x:Name="Date"
-                                   Grid.Column="0"
-                                   Grid.Row="0"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding Date, StringFormat={localization:Localize DateLabel}}" />
-
-                            <Label x:Name="Type"
-                                   Grid.Column="1"
-                                   Grid.Row="0"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding Date, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding ., Converter={StaticResource SunEclipseTypeToNameConverter}, 
-                                    StringFormat={localization:Localize TypeLabel}}" />
-
-                            <BoxView Grid.ColumnSpan="2"
-                                     Grid.Row="1"
-                                     Style="{StaticResource DividerStyle}" />
-
-                            <Label x:Name="PartialEclipseBegin"
-                                   Grid.Column="0"
-                                   Grid.Row="2"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclipseBegin, StringFormat={localization:Localize PartialSolarEclipseBeginTimeLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <Label x:Name="PartialEclipseEnd"
-                                   Grid.Column="1"
-                                   Grid.Row="2"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding PartialEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding PartialEclipseEnd, StringFormat={localization:Localize PartialSolarEclipseEndTimeLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <BoxView Grid.ColumnSpan="2"
-                                     Grid.Row="3"
-                                     Style="{StaticResource DividerStyle}" />
-
-                            <Label x:Name="MaximumEclipse"
-                                   Grid.Column="0"
-                                   Grid.Row="4"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding MaximumEclipse, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding MaximumEclipse, StringFormat={localization:Localize MaximumSolarEclispseTimeLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <Label x:Name="CentralDuration"
-                                   Grid.Column="1"
-                                   Grid.Row="4"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding CentralDuration, Converter={StaticResource IsTimeSpanSetConverter}}"
-                                   Text="{Binding CentralDuration, StringFormat={localization:Localize AorTSolarEclipseDurationLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <BoxView Grid.ColumnSpan="2"
-                                     Grid.Row="5"
-                                     Style="{StaticResource DividerStyle}" />
-
-                            <Label x:Name="CentralEclipseBegin"
-                                   Grid.Column="0"
-                                   Grid.Row="6"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding CentralEclipseBegin, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding CentralEclipseBegin, StringFormat={localization:Localize AorTEclipseBeginTimeLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <Label x:Name="CentralEclipseEnd"
-                                   Grid.Column="1"
-                                   Grid.Row="6"
-                                   Style="{StaticResource CollectionViewLabel}"
-                                   IsVisible="{Binding CentralEclipseEnd, Converter={StaticResource IsDateTimeSetConverter}}"
-                                   Text="{Binding CentralEclipseEnd, StringFormat={localization:Localize AorTEclipseEndTimeLabel},
-                                Converter={StaticResource TimeFormatConverter}}" />
-
-                            <BoxView Grid.ColumnSpan="2"
-                                     Grid.Row="7"
-                                     Style="{StaticResource DividerStyle}">
-                                <BoxView.IsVisible>
-                                    <MultiBinding Converter="{StaticResource AnyTrueConverter}">
-                                        <Binding Source="{x:Reference CentralEclipseBegin}"
-                                                 Path="IsVisible"
-                                                 x:DataType="Label" />
-                                        <Binding Source="{x:Reference CentralEclipseEnd}"
-                                                 Path="IsVisible"
-                                                 x:DataType="Label" />
-                                    </MultiBinding>
-                                </BoxView.IsVisible>
-                            </BoxView>
-
-                        </Grid>
-
-                    </Border>
-
-                </DataTemplate>
-
-            </CollectionView.ItemTemplate>
 
         </CollectionView>
 

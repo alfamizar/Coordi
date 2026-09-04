@@ -1,6 +1,6 @@
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Domain.Errors;
-using DotNext;
+using Compute.Core.Common.Results;
 
 namespace Compute.Core.Domain.Services
 {

@@ -5,6 +5,7 @@ using Compute.Core.Domain.Entities.Models.Weather;
 using Compute.Core.Domain.Services.Weather;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
+using JustCompute.Shared.Helpers;
 
 namespace JustCompute.Features.Today
 {
@@ -18,12 +19,19 @@ namespace JustCompute.Features.Today
         private const int ForecastDays = 7;
 
         private readonly IWeatherService _weatherService;
-        private CancellationTokenSource? _weatherCancellationTokenSource;
+        private readonly SupersedingTask _weather = new();
 
         // Set once the user moves off "now" — after that the date is theirs and a location change
         // must not silently drag it somewhere else.
         private bool _hasUserChosenDate;
         private bool _syncingDateToLocation;
+
+        /// <summary>
+        /// Keeps the sun-path "now" marker moving. It was computed once per load, so the marker
+        /// sat still while the sun did not — half an hour on this screen and it was visibly wrong.
+        /// Half a minute is plenty: the marker crosses about a pixel a minute.
+        /// </summary>
+        private CancellationTokenSource? _clockCancellation;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsShowingToday))]
@@ -182,12 +190,17 @@ namespace JustCompute.Features.Today
 
             // The snapshot is pure computation, so keep it off the UI thread — a year of
             // timezone lookups plus the lunar series is not free.
-            Snapshot = await Task.Run(
+            var snapshot = await Task.Run(
                 () => CelestialSnapshot.For(latitude, longitude, date, offsetHours));
 
             // Stepping the date fires a fresh load without waiting for the previous one, so two
             // can overlap; anything computed for a date the user has already left is dropped.
+            // Checked before publishing, not after: assigning first meant a slow load for an
+            // abandoned date could still overwrite the one the user is looking at, and the guard
+            // below would then return having already put the wrong day on screen.
             if (SelectedDate.Date != date) return;
+
+            Snapshot = snapshot;
 
             if (IsDateWithinForecast)
             {
@@ -195,7 +208,7 @@ namespace JustCompute.Features.Today
             }
             else
             {
-                CancelWeatherLoad();
+                _weather.Cancel();
                 WeatherForecast = null;
                 IsWeatherLoading = false;
                 IsWeatherFailed = false;
@@ -204,7 +217,7 @@ namespace JustCompute.Features.Today
 
         protected override void ClearData()
         {
-            CancelWeatherLoad();
+            _weather.Cancel();
             Snapshot = null;
             WeatherForecast = null;
             LocationName = string.Empty;
@@ -222,10 +235,6 @@ namespace JustCompute.Features.Today
 
         private async Task LoadWeatherForecastAsync(double latitude, double longitude, DateTime forDate)
         {
-            CancelWeatherLoad();
-            var cts = new CancellationTokenSource();
-            _weatherCancellationTokenSource = cts;
-
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 IsWeatherFailed = false;
@@ -236,11 +245,10 @@ namespace JustCompute.Features.Today
 
             try
             {
-                var forecast = await _weatherService
-                    .GetDailyForecastAsync(latitude, longitude, ForecastDays, cts.Token)
-                    .ConfigureAwait(false);
+                var (superseded, forecast) = await _weather.RunAsync(
+                    token => _weatherService.GetDailyForecastAsync(latitude, longitude, ForecastDays, token));
 
-                if (cts.IsCancellationRequested || SelectedDate.Date != forDate) return;
+                if (superseded || SelectedDate.Date != forDate) return;
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -249,13 +257,9 @@ namespace JustCompute.Features.Today
                     IsWeatherFailed = forecast == null;
                 });
             }
-            catch (OperationCanceledException)
-            {
-                // Superseded by a newer request or a location change — nothing to report.
-            }
             catch (Exception)
             {
-                if (cts.IsCancellationRequested || SelectedDate.Date != forDate) return;
+                if (SelectedDate.Date != forDate) return;
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
@@ -266,13 +270,44 @@ namespace JustCompute.Features.Today
             }
         }
 
-        private void CancelWeatherLoad()
+        public override Task OnNavigatedToAsync() => LoadItems();
+
+        public override Task OnPageAppearingAsync()
         {
-            _weatherCancellationTokenSource?.Cancel();
-            _weatherCancellationTokenSource?.Dispose();
-            _weatherCancellationTokenSource = null;
+            StartClock();
+            return base.OnPageAppearingAsync();
         }
 
-        public override Task OnNavigatedToAsync() => LoadItems();
+        public override Task OnPageDisappearingAsync()
+        {
+            StopClock();
+            return base.OnPageDisappearingAsync();
+        }
+
+        private void StartClock()
+        {
+            StopClock();
+
+            var cancellation = new CancellationTokenSource();
+            _clockCancellation = cancellation;
+
+            Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(30), () =>
+            {
+                if (cancellation.IsCancellationRequested) return false;
+
+                // Both are derived from the clock: the marker's position, and whether the date on
+                // screen is still "today" at the location once midnight passes there.
+                OnPropertyChanged(nameof(CurrentTime));
+                OnPropertyChanged(nameof(IsShowingToday));
+                return true;
+            });
+        }
+
+        private void StopClock()
+        {
+            _clockCancellation?.Cancel();
+            _clockCancellation?.Dispose();
+            _clockCancellation = null;
+        }
     }
 }

@@ -33,8 +33,8 @@
                         <Span>
                             <Span.Text>
                                 <MultiBinding StringFormat="{}{0}, {1}">
-                                    <Binding Path="Location.City.CityName" />
-                                    <Binding Path="Location.City.CountryName" />
+                                    <Binding Path="Location.CityName" />
+                                    <Binding Path="Location.CountryName" />
                                 </MultiBinding>
                             </Span.Text>
                         </Span>

@@ -7,7 +7,7 @@
         PermissionException,
         GenericGetLocationException,
         DeviceLocationUnavailable,
-        CouldNotStartListeningDeciveGeoLocation,
-        CouldNotStopListeningDeciveGeoLocation
+        CouldNotStartListeningDeviceGeoLocation,
+        CouldNotStopListeningDeviceGeoLocation
     }
 }

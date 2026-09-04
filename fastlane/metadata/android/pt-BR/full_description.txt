@@ -1,33 +1,45 @@
-Descubra o Universo com o Coordi — a sua calculadora celeste offline!
+O Coordi é uma caixa de ferramentas offline para astronomia, navegação e fotografia: efemérides do Sol e da Lua, um século de eclipses solares e lunares, coordenadas MGRS e UTM, medição geodésica de rotas, velocímetro GPS e calculadora óptica para astrofotografia. Tudo é calculado no seu aparelho — sem conexão, sem conta, sem anúncios.
 
-O Coordi coloca a astronomia de precisão na palma da mão. Seja você um apaixonado por estrelas, fotógrafo, trilheiro, velejador ou apenas curioso sobre o céu, o Coordi calcula os dados do Sol, da Lua, dos eclipses e das coordenadas para qualquer lugar e data. E agora mostra tudo com clareza por meio de gráficos, uma previsão do tempo de 7 dias e o tema claro ou escuro que você preferir.
+SOL, LUA E EFEMÉRIDES
+• Nascer e pôr do Sol e duração do dia para qualquer lugar e data, em um arco solar interativo com um marcador ao vivo do momento atual.
+• Crepúsculo civil, náutico e astronômico, da primeira à última luz; as fases que não acontecem na sua latitude são simplesmente omitidas.
+• Fase e iluminação da Lua, nascer e pôr da Lua, e a distância da Lua em quilômetros ou milhas.
+• O signo do zodíaco do Sol e da Lua.
+• Viagem no tempo: vá para qualquer data, uma semana à frente ou um século atrás, e tudo é recalculado.
+• Previsão do tempo opcional de 7 dias para os locais salvos.
 
-PRINCIPAIS RECURSOS
+UM SÉCULO DE ECLIPSES
+• Todos os eclipses solares e lunares do século atual, de 2000 a 2099.
+• Os instantes de contato — primeiro contato, máximo e último contato — no fuso horário do local.
+• Filtro de visibilidade: mostrar apenas os eclipses visíveis de onde você está, ou todos.
+• A magnitude de cada eclipse e o tipo que você verá de fato da sua posição, que nem sempre é o tipo do eclipse para o planeta inteiro.
 
-* Sol e Lua: horários exatos do nascer e do pôr, duração do dia e um arco solar interativo que mostra a posição do Sol ao longo do dia.
-* Fases da Lua: a fase atual com a iluminação e os nomes tradicionais das luas cheias, além de uma linha do tempo dia/noite bem clara.
-* Eclipses: os próximos eclipses solares e lunares com início, máximo e fim.
-* Signos do zodíaco: o signo do Sol e da Lua para qualquer data.
-* Duração do dia: as horas de luz para qualquer dia e lugar.
-* Clima: uma previsão opcional de 7 dias para os seus lugares salvos.
-* Conversor de coordenadas: qualquer ponto nos formatos UTM e MGRS.
-* Régua: meça a distância entre dois pontos na Terra com alta precisão.
-* Cidade mais próxima: encontre a cidade mais próxima de quaisquer coordenadas usando a fórmula de Haversine.
-* Lugares salvos: guarde os seus lugares favoritos e deslize entre eles.
+MGRS, UTM E GEODÉSIA
+• Qualquer ponto em MGRS — zona da grade, dígrafo de 100 km, este e norte — e em UTM.
+• Distâncias WGS-84 pela fórmula inversa de Vincenty.
+• Busca offline em 42.900 cidades do mundo.
 
-DO SEU JEITO
+RÉGUA DE ROTAS E CUSTO DE COMBUSTÍVEL
+• Rotas com várias paradas: coloque vários pontos e meça a viagem inteira.
+• Distância e azimute inicial de cada trecho, distância total, distância em linha reta e a razão de desvio.
+• Calculadora de combustível: volume e custo da viagem a partir do seu consumo — l/100 km, km/l, MPG US ou MPG imperial — e do seu preço.
 
-* Temas claro, escuro e do sistema.
-* Escolha as unidades: quilômetros ou milhas, além de m/s, km/h ou mph.
-* Formato de 12 ou 24 horas.
-* Disponível em vários idiomas.
+VELOCÍMETRO E ODÔMETRO GPS
+• Velocidade atual e velocidade calculada em km/h, mph ou m/s.
+• Distância percorrida ao longo do trajeto, distância direta desde o início, altitude e desnível.
+• Um cronômetro de viagem que continua além das 24 horas em vez de recomeçar.
+• Continua registrando com a tela desligada.
 
-POR QUE O COORDI?
+ÓPTICA E ASTROFOTOGRAFIA
+• Profundidade de campo: distância hiperfocal, limites próximo e distante, e quanto fica à frente e atrás do motivo.
+• Campo de visão: ângulos horizontal, vertical e diagonal, e a cobertura real na distância do motivo.
+• Rastros de estrelas: a exposição mais longa antes de as estrelas deixarem rastro, pela regra dos 500 e pela regra NPF, a partir do passo de pixel da sua câmera.
+• Predefinições de sensor para full frame, APS-C, APS-C Canon, Micro 4/3, 1 polegada e médio formato, além de uma biblioteca de corpos de câmera.
 
-* Funciona offline: todos os cálculos astronômicos são feitos no seu dispositivo, sem conexão. Apenas a previsão do tempo opcional usa a internet.
-* Design limpo e intuitivo, fácil de navegar.
-* Dados precisos e confiáveis para todas as suas necessidades celestes.
-* Sem anúncios.
-* Em melhoria contínua — seu feedback molda os novos recursos.
-
-Explore as maravilhas do céu onde quer que você esteja. Baixe o Coordi hoje mesmo e dê o primeiro passo para dominar os cálculos celestes!
+FEITO PARA SER EXATO
+• Fusos horários reais: cada horário é a hora local do lugar que você está vendo, incluindo horário de verão.
+• Funciona offline — só a previsão do tempo opcional precisa de conexão.
+• Sem anúncios, sem rastreamento, sem conta.
+• Cinco temas: Ocean e Blossom são claros, Midnight e Ember escuros, e System segue o seu aparelho.
+• Quilômetros, milhas, milhas náuticas, metros ou pés; m/s, km/h ou mph; formato de 12 ou 24 horas.
+• Disponível em muitos idiomas.

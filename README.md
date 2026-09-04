@@ -5,7 +5,7 @@ Sun and Moon rise and set, when the next eclipse is, the local weather and time,
 distance between two coordinates, and live GPS speed/distance tracking — for any city in the
 world or your current location.
 
-Built with **.NET MAUI** for Android and iOS, fully localized into **11 languages**, with
+Built with **.NET MAUI** for Android and iOS, fully localized into **17 locales**, with
 light/dark theming.
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="64">](https://play.google.com/store/apps/details?id=com.cutecompute.coordi)
@@ -42,7 +42,7 @@ light/dark theming.
   <img src="docs/screenshots/ios-add-location.png" width="200" alt="iOS: add a saved location by city or current GPS fix" />
 </p>
 
-<p align="center"><sub>The same .NET MAUI codebase on Android and iOS — Coordi ships in 11 languages and follows the system light/dark theme.</sub></p>
+<p align="center"><sub>The same .NET MAUI codebase on Android and iOS — Coordi ships in 17 locales and follows the system light/dark theme.</sub></p>
 
 ---
 
@@ -138,7 +138,10 @@ surfaced in XAML through a custom `Localize` markup extension. A
 [unit test](Compute.Core.Tests/Localization/AppStringsResourceConsistencyTests.cs) enforces
 **key parity** across every locale and verifies that .NET format placeholders (`{0}`, `{0:N0}`,
 date specifiers) are preserved in every translation, so a missing or malformed translation
-fails the build rather than shipping.
+fails the build rather than shipping. A second
+[test](Compute.Core.Tests/Localization/StoreLocaleCoverageTests.cs) checks the other direction:
+every locale with a Play Store listing must resolve, through the culture fallback chain, to a
+resx the app actually ships — so a translated listing never leads to an English app.
 
 A debug-only culture override (`DebugCulture`) and a deep-link screenshot harness
 (`ScreenshotHarness`) make it possible to drive the app into any screen, locale and theme for

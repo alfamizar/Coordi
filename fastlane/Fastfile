@@ -18,6 +18,7 @@ def coordi_repo_root
 end
 
 ANDROID_TFM = "net10.0-android36.0"
+IOS_TFM = "net10.0-ios"
 
 # Newest signed AAB produced by `dotnet publish` (nil if none built yet).
 def coordi_signed_aab
@@ -33,6 +34,46 @@ platform :android do
     UI.user_error!("SUPPLY_JSON_KEY points to a missing file: #{key}") unless File.exist?(key)
     validate_play_store_json_key(json_key: key)
     UI.success("Service-account key is valid.")
+  end
+
+  desc "Check every locale's listing text against Google Play's limits before uploading"
+  lane :validate_metadata do
+    limits = { "title.txt" => 30, "short_description.txt" => 80, "full_description.txt" => 4000 }
+    root = File.join(coordi_repo_root, "fastlane/metadata/android")
+    locales = Dir.children(root).select { |d| File.directory?(File.join(root, d)) }.sort
+    UI.user_error!("No locales found under #{root}") if locales.empty?
+
+    problems = []
+    locales.each do |loc|
+      limits.each do |file, limit|
+        path = File.join(root, loc, file)
+        next problems << "#{loc}/#{file} is missing" unless File.exist?(path)
+
+        # Play counts characters, not bytes, and trailing newlines do not count.
+        length = File.read(path).strip.length
+        problems << "#{loc}/#{file} is #{length} chars (limit #{limit})" if length > limit
+        problems << "#{loc}/#{file} is empty" if length.zero?
+      end
+
+      Dir[File.join(root, loc, "changelogs", "*.txt")].each do |notes|
+        length = File.read(notes).strip.length
+        problems << "#{loc}/changelogs/#{File.basename(notes)} is #{length} chars (limit 500)" if length > 500
+      end
+    end
+
+    # Every locale should offer the same set of release notes, or some users see none.
+    note_sets = locales.to_h { |loc| [loc, Dir[File.join(root, loc, "changelogs", "*.txt")].map { |f| File.basename(f) }.sort] }
+    expected = note_sets.values.max_by(&:length) || []
+    note_sets.each do |loc, have|
+      (expected - have).each { |missing| problems << "#{loc}/changelogs/#{missing} is missing" }
+    end
+
+    if problems.any?
+      problems.each { |p| UI.error(p) }
+      UI.user_error!("#{problems.length} listing problem(s) — fix before uploading")
+    end
+
+    UI.success("#{locales.length} locales validated: #{locales.join(', ')}")
   end
 
   desc "Dry-run: validate localized store-listing metadata against Google Play (no changes committed)"
@@ -70,8 +111,27 @@ platform :android do
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_changelogs: true,
-      skip_upload_images: true,        # icon / feature graphic — none provided here
-      skip_upload_screenshots: false   # phone screenshots ARE uploaded
+      # Both are read from metadata/android/<locale>/images/. icon.png and
+      # featureGraphic.png upload when present; phone and tablet screenshot folders
+      # are picked up automatically by whichever of them exist.
+      skip_upload_images: false,
+      skip_upload_screenshots: false
+    )
+  end
+
+  desc "Upload only the 'What's new' release notes for a version (env: COORDI_VERSION_CODE)"
+  lane :upload_release_notes do
+    UI.user_error!("Set COORDI_VERSION_CODE to the versionCode whose notes you are updating") if ENV["COORDI_VERSION_CODE"].to_s.empty?
+
+    upload_to_play_store(
+      track: ENV["COORDI_TRACK"] || "internal",
+      version_code: ENV["COORDI_VERSION_CODE"].to_i,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: false
     )
   end
 
@@ -125,5 +185,82 @@ platform :android do
   lane :ship do
     build_aab
     release
+  end
+end
+
+# ---- iOS ----
+#
+# Mirrors the Android lanes so one repo ships both. Auth is an App Store Connect API key,
+# never an Apple-ID password:
+#   export ASC_KEY_ID="…" ASC_ISSUER_ID="…" ASC_KEY_PATH="$HOME/.secrets/AuthKey_XXXX.p8"
+#   export TEAM_ID="…"
+def coordi_signed_ipa
+  Dir[File.join(coordi_repo_root, "JustCompute/bin/Release/#{IOS_TFM}/**/*.ipa")]
+    .max_by { |f| File.mtime(f) }
+end
+
+def coordi_asc_api_key
+  %w[ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_PATH].each do |var|
+    UI.user_error!("Missing env #{var} — see docs/google-play-release.md for the equivalent Apple setup") if ENV[var].to_s.empty?
+  end
+  UI.user_error!("ASC_KEY_PATH points to a missing file: #{ENV['ASC_KEY_PATH']}") unless File.exist?(ENV["ASC_KEY_PATH"])
+
+  app_store_connect_api_key(
+    key_id: ENV["ASC_KEY_ID"],
+    issuer_id: ENV["ASC_ISSUER_ID"],
+    key_filepath: ENV["ASC_KEY_PATH"],
+    in_house: false
+  )
+end
+
+platform :ios do
+  desc "Validate the App Store Connect API key works"
+  lane :check_asc_key do
+    coordi_asc_api_key
+    UI.success("App Store Connect API key is valid.")
+  end
+
+  desc "Build a signed App Store IPA (requires TEAM_ID and a provisioning profile for the bundle id)"
+  lane :build_ipa do
+    UI.user_error!("Set TEAM_ID to your Apple Developer team id") if ENV["TEAM_ID"].to_s.empty?
+
+    sh("dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
+       "-f", IOS_TFM, "-c", "Release",
+       "-p:ArchiveOnBuild=true",
+       "-p:RuntimeIdentifier=ios-arm64",
+       "-p:CodesignProvision=#{ENV['IOS_PROVISIONING_PROFILE'] || 'Coordi App Store'}",
+       "-p:CodesignKey=#{ENV['IOS_SIGNING_IDENTITY'] || 'Apple Distribution'}")
+
+    ipa = coordi_signed_ipa
+    UI.user_error!("Publish finished but no .ipa was found under bin/Release/#{IOS_TFM}") if ipa.nil?
+    UI.success("Built IPA: #{ipa}")
+    ipa
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    api_key = coordi_asc_api_key
+    ipa = ENV["COORDI_IPA"].to_s.empty? ? (coordi_signed_ipa || build_ipa) : ENV["COORDI_IPA"]
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: ipa,
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Build and upload the binary for App Store review"
+  lane :release_appstore do
+    api_key = coordi_asc_api_key
+    ipa = ENV["COORDI_IPA"].to_s.empty? ? (coordi_signed_ipa || build_ipa) : ENV["COORDI_IPA"]
+
+    upload_to_app_store(
+      api_key: api_key,
+      ipa: ipa,
+      skip_screenshots: true,
+      skip_metadata: true,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: false
+    )
   end
 end

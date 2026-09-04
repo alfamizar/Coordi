@@ -1,32 +1,49 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using Compute.Astro;
 using Compute.Core.Domain.Entities.Models.Time;
 using Compute.Core.Utils;
 
 namespace Compute.Core.Domain.Entities.Models
 {
-    public partial class Location : ObservableObject
+    /// <summary>
+    /// A place the app can show data for.
+    ///
+    /// A plain object: it raises no change notifications, because the domain layer should not
+    /// have to know how a view redraws. The one screen that edits a location in place works on
+    /// an observable copy of its own (EditableLocation) and hands back a finished Location.
+    /// </summary>
+    public class Location
     {
         private string? _timeZoneId;
         private bool _timeZoneIdResolved;
+        private double _latitude;
+        private double _longitude;
 
         public int Id { get; set; }
 
-        [ObservableProperty]
-        private string name = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(TimeZoneOffset))]
-        [NotifyPropertyChangedFor(nameof(LatitudeDms))]
-        private double latitude = 0;
+        /// <summary>Moving the pin drops a zone that was resolved from the old coordinates.</summary>
+        public double Latitude
+        {
+            get => _latitude;
+            set
+            {
+                _latitude = value;
+                InvalidateResolvedTimeZone();
+            }
+        }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(TimeZoneOffset))]
-        [NotifyPropertyChangedFor(nameof(LongitudeDms))]
-        private double longitude = 0;
+        public double Longitude
+        {
+            get => _longitude;
+            set
+            {
+                _longitude = value;
+                InvalidateResolvedTimeZone();
+            }
+        }
 
-        [ObservableProperty]
-        private City city = new();
+        public City City { get; set; } = new();
 
         /// <summary>
         /// The placeholder the app falls back to before the user has chosen anywhere — so every
@@ -81,8 +98,6 @@ namespace Compute.Core.Domain.Entities.Models
             {
                 _timeZoneId = value;
                 _timeZoneIdResolved = !string.IsNullOrEmpty(value);
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(TimeZoneOffset));
             }
         }
 
@@ -138,17 +153,17 @@ namespace Compute.Core.Domain.Entities.Models
             },
         };
 
-        partial void OnLatitudeChanged(double value) => InvalidateResolvedTimeZone();
-
-        partial void OnLongitudeChanged(double value) => InvalidateResolvedTimeZone();
-
         /// <summary>
         /// Moving the pin invalidates a looked-up zone, but never an offset the user chose
         /// deliberately — that override is the whole point of the picker.
         /// </summary>
         private void InvalidateResolvedTimeZone()
         {
-            if (TimeZoneUtils.TryParseFixedOffset(_timeZoneId, out _)) return;
+            // Only a hand-picked offset survives the move. A bare "UTC" here is a lookup
+            // result — the answer for (0, 0), which is what a location reads as before its
+            // coordinates are filled in — and treating that as a pin left the place reporting
+            // UTC wherever it was subsequently put.
+            if (TimeZoneUtils.IsPinnedFixedOffset(_timeZoneId)) return;
 
             _timeZoneId = null;
             _timeZoneIdResolved = false;

@@ -1,0 +1,45 @@
+Coordi; astronomi, navigasyon ve fotoğrafçılık için çevrimdışı bir saha araç setidir: Güneş ve Ay efemerisi, bir yüzyıllık Güneş ve Ay tutulmaları, MGRS ve UTM koordinatları, jeodezik rota ölçümü, GPS hız göstergesi ve astrofotoğrafçılık için optik hesaplayıcı. Her şey cihazınızda hesaplanır — bağlantı yok, hesap yok, reklam yok.
+
+GÜNEŞ, AY VE EFEMERİS
+• Herhangi bir yer ve tarih için gün doğumu, gün batımı ve gün uzunluğu; şu anı canlı gösteren işaretçiyle etkileşimli Güneş yayı üzerinde.
+• Sivil, denizcilik ve astronomik alacakaranlık: ilk ışıktan son ışığa. Enleminizde hiç gerçekleşmeyen aşamalar listeye alınmaz.
+• Ay'ın evresi ve aydınlanması, Ay'ın doğuşu ve batışı, Ay'ın kilometre veya mil cinsinden uzaklığı.
+• Güneş'in ve Ay'ın burcu.
+• Zamanda yolculuk: herhangi bir tarihe gidin — bir hafta ileri ya da bir yüzyıl geri — her değer yeniden hesaplanır.
+• Kayıtlı konumlarınız için isteğe bağlı 7 günlük hava tahmini.
+
+BİR YÜZYILLIK TUTULMA
+• İçinde bulunduğumuz yüzyılın tüm Güneş ve Ay tutulmaları, 2000'den 2099'a.
+• Temas anları — başlangıç, en yüksek nokta ve bitiş — yerin kendi saat diliminde.
+• Görünürlük filtresi: yalnızca bulunduğunuz yerden görünen tutulmaları gösterin ya da hepsini.
+• Her tutulmanın büyüklüğü ve bulunduğunuz yerden gerçekten göreceğiniz tür — bu her zaman tutulmanın gezegen genelindeki türü değildir.
+
+MGRS, UTM VE JEODEZİ
+• Herhangi bir nokta MGRS'de — ızgara bölgesi, 100 km'lik çift harf, doğu ve kuzey değerleri — ve UTM'de.
+• Vincenty'nin ters formülüyle WGS-84 mesafeleri.
+• 42.900 dünya şehri arasında çevrimdışı arama.
+
+ROTA CETVELİ VE YAKIT MALİYETİ
+• Çok duraklı rotalar: birkaç işaret koyun ve yolculuğun tamamını ölçün.
+• Her etabın mesafesi ve başlangıç yönü, toplam mesafe, kuş uçuşu mesafe ve sapma oranı.
+• Yakıt hesaplayıcı: tüketiminize — l/100 km, km/l, MPG US veya MPG imperial — ve fiyatınıza göre hacim ve yolculuk maliyeti.
+
+GPS HIZ GÖSTERGESİ VE KİLOMETRE SAYACI
+• Anlık ve hesaplanmış hız: km/sa, mph veya m/s.
+• Rotanız boyunca kat edilen yol, başlangıçtan kuş uçuşu mesafe, rakım ve yükselti değişimi.
+• 24 saati geçince sıfırlanmak yerine saymayı sürdüren yolculuk kronometresi.
+• Ekran kapalıyken de kaydetmeye devam eder.
+
+OPTİK VE ASTROFOTOĞRAFÇILIK
+• Alan derinliği: hiperfokal uzaklık, yakın ve uzak sınırlar, öznenin önünde ve arkasında kalan pay.
+• Görüş alanı: yatay, dikey ve çapraz açılar ile özne uzaklığındaki gerçek kapsama.
+• Yıldız izleri: yıldızlar iz bırakmadan önceki en uzun pozlama — hem 500 kuralı hem NPF kuralı ile, fotoğraf makinenizin piksel aralığından.
+• Sensör hazır ayarları: tam kare, APS-C, Canon APS-C, Micro 4/3, 1 inç ve orta format; ayrıca bir makine gövdesi kitaplığı.
+
+DOĞRULUK İÇİN YAPILDI
+• Gerçek saat dilimleri: gösterilen her saat, baktığınız yerin yerel saatidir; yaz saati dahil.
+• Çevrimdışı çalışır — yalnızca isteğe bağlı hava tahmini bağlantı ister.
+• Reklam yok, takip yok, hesap yok.
+• Beş tema: Ocean ve Blossom açık, Midnight ve Ember koyu, System ise cihazınızı izler.
+• Kilometre, mil, deniz mili, metre veya fit; m/s, km/sa veya mph; 12 ya da 24 saat biçimi.
+• Birçok dilde kullanılabilir.

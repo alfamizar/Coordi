@@ -21,7 +21,7 @@
             StrokeThickness="0"
             Padding="16,12"
             Margin="0"
-            Background="{AppThemeBinding Light={StaticResource LightSurface}, Dark={StaticResource DarkSurface}}">
+            Background="{DynamicResource ThemeSurface}">
 
         <VerticalStackLayout>
             
@@ -48,9 +48,7 @@
                                                  Binding="{Binding IsSelected}"
                                                  Value="True">
                                         <Setter Property="TextColor"
-                                                Value="{AppThemeBinding
-                                            Light={StaticResource LightPrimaryVariant},
-                                            Dark={StaticResource DarkPrimary}}" />
+                                                Value="{DynamicResource ThemeAccentStrong}" />
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>

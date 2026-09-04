@@ -8,8 +8,8 @@ using Compute.Core.Domain.Entities.Models.Weather;
 using Compute.Core.Domain.Services;
 using Compute.Core.Domain.Services.Weather;
 using Compute.Core.Helpers;
-using Compute.Core.UI;
-using DotNext;
+using JustCompute.Shared.Abstractions.UI;
+using Compute.Core.Common.Results;
 using JustCompute.Features.InputLocation;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Shared.ViewModels;
@@ -19,21 +19,19 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Maui.ApplicationModel;
 using System.Collections.Specialized;
 using Location = Compute.Core.Domain.Entities.Models.Location;
+using JustCompute.Shared.Helpers;
 
 namespace JustCompute.Features.Locations
 {
     public partial class LocationsViewModel : BaseViewModel, IRecipient<LocationMessage>
     {
-        private const int ForecastDays = 7;
 
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
         private readonly IPermissionGateService _permissionGate;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
-        private readonly IWeatherService _weatherService;
+        private readonly LocationClock _clock;
 
-        private CancellationTokenSource? _timerCancellationTokenSource;
-        private CancellationTokenSource? _weatherCancellationTokenSource;
         private readonly SemaphoreSlim _initializationSemaphore = new(1, 1);
         private bool _permissionDialogOpen;
         private bool _isFetchingDeviceLocation;
@@ -69,8 +67,6 @@ namespace JustCompute.Features.Locations
         [ObservableProperty]
         private DateTime currentTime = DateTime.Now;
 
-        [ObservableProperty]
-        private WeatherForecast? weatherForecast;
 
         public LocationsViewModel(
             ViewModelServices services,
@@ -78,16 +74,14 @@ namespace JustCompute.Features.Locations
             IDevicePermissionsService<PermissionStatus> devicePermissionsService,
             IPermissionGateService permissionGate,
             IMessagingService messagerService,
-            IToastService toastService,
-            IWeatherService weatherService
-            )
+            IToastService toastService)
             : base(services)
         {
             _localizer = localizer;
+            _clock = new LocationClock(time => CurrentTime = time);
             _devicePermissionsService = devicePermissionsService;
             _permissionGate = permissionGate;
             _toastService = toastService;
-            _weatherService = weatherService;
 
             Locations.CollectionChanged += Locations_CollectionChanged;
             messagerService.Subscribe<IRecipient<LocationMessage>, LocationMessage>(this);
@@ -104,36 +98,8 @@ namespace JustCompute.Features.Locations
 
 
 
-        private void StartTimer(double offsetHours = 0)
-        {
-            StopTimer();
-
-            var cancellationTokenSource = new CancellationTokenSource();
-            _timerCancellationTokenSource = cancellationTokenSource;
-            Application.Current?.Dispatcher.StartTimer(TimeSpan.FromSeconds(1), () =>
-            {
-                if (cancellationTokenSource.IsCancellationRequested)
-                {
-                    return false;
-                }
-
-                CurrentTime = DateTime.UtcNow.AddHours(offsetHours);
-                return true;
-            });
-        }
-
-        private void StopTimer()
-        {
-            _timerCancellationTokenSource?.Cancel();
-            _timerCancellationTokenSource?.Dispose();
-            _timerCancellationTokenSource = null;
-        }
-
-        public void RestartTimer(double offsetHours = 0)
-        {
-            StopTimer();
-            StartTimer(offsetHours);
-        }
+        /// <summary>Restarts the ticking clock for the place currently on screen.</summary>
+        public void RestartTimer(double offsetHours = 0) => _clock.Start(offsetHours);
 
         private void Locations_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
@@ -176,9 +142,7 @@ namespace JustCompute.Features.Locations
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                var newLocations = savedLocations
-                    .Where(newLoc => !Locations.Any(existingLoc => AreSameLocation(existingLoc, newLoc)))
-                    .ToList();
+                var newLocations = LocationList.MissingFrom(savedLocations, Locations);
 
                 if (newLocations.Count > 0)
                     Locations.InsertRange(newLocations);
@@ -200,12 +164,14 @@ namespace JustCompute.Features.Locations
 
         private void MarkAsCurrentDeviceLocation(Location deviceLocation)
         {
-            var currentLocationSlot = Locations.FirstOrDefault(IsCurrentDeviceSlot);
+            var deviceSlot = Locations.FirstOrDefault(LocationIdentity.IsDeviceSlot);
 
-            if (currentLocationSlot is not null && !ReferenceEquals(currentLocationSlot, deviceLocation))
+            if (deviceSlot is not null && !ReferenceEquals(deviceSlot, deviceLocation))
             {
-                RefreshCoordinatesInPlace(currentLocationSlot, deviceLocation);
-                _gpsLocationService.DeviceLocation = currentLocationSlot;
+                // Move the fix onto the entry already in the list: the carousel is bound to that
+                // instance, so replacing it would lose the user's place in it.
+                LocationList.CopyPositionInto(deviceSlot, deviceLocation);
+                _gpsLocationService.DeviceLocation = deviceSlot;
                 return;
             }
 
@@ -213,57 +179,8 @@ namespace JustCompute.Features.Locations
             UpsertLocation(deviceLocation, insertAtStart: true);
         }
 
-        private static bool IsCurrentDeviceSlot(Location location) => location.IsCurrent && location.Id <= 0;
-
-        private static void RefreshCoordinatesInPlace(Location target, Location source)
-        {
-            target.Name = source.Name;
-            target.Latitude = source.Latitude;
-            target.Longitude = source.Longitude;
-            target.City = source.City;
-            target.IsCurrent = true;
-        }
-
-        private void UpsertLocation(Location location, bool insertAtStart = false)
-        {
-            var existingLocation = Locations.FirstOrDefault(existing => AreSameLocation(existing, location));
-            if (existingLocation is not null)
-            {
-                // Workaround: re-assigning the same instance raises a Replace event that snaps the
-                // CarouselView's CurrentItem back to index 0, discarding the user's selection.
-                if (ReferenceEquals(existingLocation, location)) return;
-
-                var index = Locations.IndexOf(existingLocation);
-                Locations[index] = location;
-                return;
-            }
-
-            if (insertAtStart)
-            {
-                Locations.Insert(0, location);
-            }
-            else
-            {
-                Locations.Add(location);
-            }
-        }
-
-        private static bool AreSameLocation(Location left, Location right)
-        {
-            if (left.Id > 0 && right.Id > 0)
-            {
-                return left.Id == right.Id;
-            }
-
-            if (left.IsCurrent && right.IsCurrent)
-            {
-                return true;
-            }
-
-            return Math.Abs(left.Latitude - right.Latitude) < 0.000001
-                && Math.Abs(left.Longitude - right.Longitude) < 0.000001
-                && string.Equals(left.Name, right.Name, StringComparison.Ordinal);
-        }
+        private void UpsertLocation(Location location, bool insertAtStart = false) =>
+            LocationList.Upsert(Locations, location, insertAtStart);
 
         protected async Task<bool> HandlePermissions()
         {
@@ -317,7 +234,7 @@ namespace JustCompute.Features.Locations
 
         public override Task OnPageDisappearingAsync()
         {
-            StopTimer();
+            _clock.Stop();
             return Task.CompletedTask;
         }
 
@@ -344,9 +261,7 @@ namespace JustCompute.Features.Locations
             if (location is null)
             {
                 Coordinate = null;
-                WeatherForecast = null;
-                StopTimer();
-                CancelWeatherLoad();
+                _clock.Stop();
                 return;
             }
 
@@ -359,43 +274,13 @@ namespace JustCompute.Features.Locations
                 offsetHours);
 
             RestartTimer(offsetHours);
-            _ = LoadWeatherForecastAsync(location.Latitude, location.Longitude);
-        }
-
-        private async Task LoadWeatherForecastAsync(double latitude, double longitude)
-        {
-            CancelWeatherLoad();
-            var cts = new CancellationTokenSource();
-            _weatherCancellationTokenSource = cts;
-
-            WeatherForecast = null;
-
-            try
-            {
-                var forecast = await _weatherService
-                    .GetDailyForecastAsync(latitude, longitude, ForecastDays, cts.Token)
-                    .ConfigureAwait(false);
-
-                if (cts.IsCancellationRequested) return;
-
-                await MainThread.InvokeOnMainThreadAsync(() => WeatherForecast = forecast);
-            }
-            catch (OperationCanceledException) { }
-        }
-
-        private void CancelWeatherLoad()
-        {
-            _weatherCancellationTokenSource?.Cancel();
-            _weatherCancellationTokenSource?.Dispose();
-            _weatherCancellationTokenSource = null;
         }
 
         [RelayCommand]
         private async Task GoToAddLocation()
         {
-            Dictionary<LocationInputContext, Location?> locationAndContext = [];
-            locationAndContext[LocationInputContext.Add] = null;
-            await _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
+            await _navigationService.NavigateToAsync<InputLocationViewModel>(
+                new LocationEditorArgs(LocationInputContext.Add, null));
         }
 
         [RelayCommand]
@@ -414,9 +299,8 @@ namespace JustCompute.Features.Locations
         {
             if (location is null || !location.IsSaved) return;
 
-            Dictionary<LocationInputContext, Location?> locationAndContext = [];
-            locationAndContext[LocationInputContext.Edit] = location;
-            await _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
+            await _navigationService.NavigateToAsync<InputLocationViewModel>(
+                new LocationEditorArgs(LocationInputContext.Edit, location));
         }
 
         [RelayCommand]
@@ -524,11 +408,6 @@ namespace JustCompute.Features.Locations
             }
         }
 
-        public override bool OnBackButtonPressed()
-        {
-            _navigationService.QuitApp();
-            return true;
-        }
 
         void IRecipient<LocationMessage>.Receive(LocationMessage message)
         {

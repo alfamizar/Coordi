@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Globalization;
+using JustCompute.Shared.Theming;
 using Compute.Core.Domain.Services;
 using JustCompute.Services;
 using Location = Compute.Core.Domain.Entities.Models.Location;
@@ -32,12 +34,21 @@ namespace JustCompute.Shared.Helpers
         public const string NameEnv = "COORDI_SCREENSHOT_NAME";
         public const string ThemeEnv = "COORDI_SCREENSHOT_THEME";
 
+        /// <summary>
+        /// Whether the eclipse screens show only what is observable from the seeded location.
+        /// A persisted preference, so without this a capture inherits whatever the last person
+        /// to touch the device left it on — and the store listing is not the place to find that
+        /// out.
+        /// </summary>
+        public const string OnlyVisibleEclipsesEnv = "COORDI_SCREENSHOT_ONLY_VISIBLE";
+
         // Populated by the Android MainActivity from intent extras.
         public static string? RouteFromPlatform;
         public static string? LatFromPlatform;
         public static string? LonFromPlatform;
         public static string? NameFromPlatform;
         public static string? ThemeFromPlatform;
+        public static string? OnlyVisibleEclipsesFromPlatform;
 
         private static string? Pick(string? platformValue, string envKey)
         {
@@ -57,12 +68,24 @@ namespace JustCompute.Shared.Helpers
             try
             {
                 ApplyTheme();
+                ApplyEclipseFilter();
                 SeedLocation();
                 Navigate();
             }
             catch
             {
                 // A screenshot aid must never crash startup.
+            }
+        }
+
+        private static void ApplyEclipseFilter()
+        {
+            string? value = Pick(OnlyVisibleEclipsesFromPlatform, OnlyVisibleEclipsesEnv);
+            if (value is null) return;
+
+            if (bool.TryParse(value, out bool onlyVisible))
+            {
+                Settings.ShowOnlyVisibleEclipses = onlyVisible;
             }
         }
 
@@ -74,11 +97,15 @@ namespace JustCompute.Shared.Helpers
                 return;
             }
 
-            AppTheme? mapped = theme.ToLowerInvariant() switch
+            // "light" and "dark" are kept as aliases for the default palette on each side, so
+            // existing capture scripts keep working now that themes have names.
+            AppThemeId? mapped = theme.ToLowerInvariant() switch
             {
-                "light" => AppTheme.Light,
-                "dark" => AppTheme.Dark,
-                "system" or "default" or "unspecified" => AppTheme.Unspecified,
+                "light" or "ocean" => AppThemeId.Ocean,
+                "blossom" or "pink" => AppThemeId.Blossom,
+                "dark" or "midnight" => AppThemeId.Midnight,
+                "ember" or "orange" => AppThemeId.Ember,
+                "system" or "default" or "unspecified" => AppThemeId.System,
                 _ => null,
             };
             if (mapped is null)
@@ -88,7 +115,7 @@ namespace JustCompute.Shared.Helpers
 
             // Drive the app's own theme exactly like the Settings toggle does:
             // persist the choice and re-run ThemeHandler (sets UserAppTheme + nav/status bars).
-            Settings.Theme = mapped.Value;
+            Settings.ThemeId = mapped.Value;
 
             ThemeHandler? handler = ServicesProvider.GetService<ThemeHandler>();
             if (handler is not null)
@@ -97,15 +124,30 @@ namespace JustCompute.Shared.Helpers
             }
             else if (Application.Current is not null)
             {
-                Application.Current.UserAppTheme = mapped.Value;
+                // No handler resolved (very early startup): at least land on the right side of
+                // light/dark, so the capture is not taken against the wrong background.
+                Application.Current.UserAppTheme =
+                    AppThemes.For(mapped.Value, Application.Current.RequestedTheme).IsDark
+                        ? AppTheme.Dark
+                        : AppTheme.Light;
             }
         }
+
+        private static bool TryParseCoordinate(string? value, out double result) =>
+            double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result);
 
         private static void SeedLocation()
         {
             string? latStr = Pick(LatFromPlatform, LatEnv);
             string? lonStr = Pick(LonFromPlatform, LonEnv);
-            if (!double.TryParse(latStr, out double lat) || !double.TryParse(lonStr, out double lon))
+
+            // Invariant, not the current culture. The coordinates arrive as "35.6762" from a
+            // shell script, but the harness runs under whichever locale is being captured: in
+            // German that period is a group separator, so TryParse *succeeds* and hands back
+            // 356762. Every comma-decimal locale was screenshotted at a nonsense location —
+            // wrong sun times, and a weather request the API rejects.
+            if (!TryParseCoordinate(latStr, out double lat) ||
+                !TryParseCoordinate(lonStr, out double lon))
             {
                 return;
             }

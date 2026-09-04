@@ -1,1 +1,1 @@
-Sonne, Mond & Koordinaten offline – mit Wetter, Diagrammen und Dark Mode.
+Offline-Astronomie: Sonne, Mond, Finsternisse, MGRS/UTM, GPS-Tempo, Optik.

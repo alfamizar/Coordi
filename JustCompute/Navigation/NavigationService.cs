@@ -1,4 +1,4 @@
-using Compute.Core.Navigation;
+using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Features.InputLocation;
 using JustCompute.Features.SearchByCity;
 

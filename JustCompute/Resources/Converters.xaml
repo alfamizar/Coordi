@@ -5,7 +5,6 @@
                     xmlns:distance="clr-namespace:JustCompute.Features.Distance"
                     xmlns:moonEclipses="clr-namespace:JustCompute.Features.MoonEclipses"
                     xmlns:sunEclipses="clr-namespace:JustCompute.Features.SunEclipses"
-                    xmlns:coordinatesConverter="clr-namespace:JustCompute.Features.CoordinatesConverter"
                     xmlns:weather="clr-namespace:JustCompute.Features.Weather"
                     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                     x:Class="JustCompute.Resources.Converters">
@@ -16,10 +15,13 @@
     <sunEclipses:SunEclipseTypeToNameConverter x:Key="SunEclipseTypeToNameConverter" />
     <moonEclipses:MoonEclipseTypeToNameConverter x:Key="MoonEclipseTypeToNameConverter" />
     <converters:IsDateTimeSetConverter x:Key="IsDateTimeSetConverter" />
+    <converters:CoordinateRangeValidatorToBoolConverter x:Key="CoordinateRangeValidatorToBoolConverter" />
     <converters:IsTimeSpanSetConverter x:Key="IsTimeSpanSetConverter" />
+    <converters:MagnitudeConverter x:Key="MagnitudeConverter" />
+    <converters:TwilightLabelToNameConverter x:Key="TwilightLabelToNameConverter" />
+    <converters:IsPositiveDoubleConverter x:Key="IsPositiveDoubleConverter" />
     <distance:KilometersToTargetDistanceTypeConverter x:Key="KilometersToTargetDistanceTypeConverter" />
     <converters:ZodiacSignEnumToLocalizedStringConverter x:Key="ZodiacSignEnumToLocalizedStringConverter" />
-    <coordinatesConverter:CoordinateRangeValidatorToBoolConverter x:Key="CoordinateRangeValidatorToBoolConverter" />
     <converters:RiseAndSetToDurationConverter x:Key="RiseAndSetToDurationConverter" />
     <converters:CoordinateToMoonPhaseConverter x:Key="CoordinateToMoonPhaseConverter" />
     <converters:TimeFormatConverter x:Key="TimeFormatConverter" />

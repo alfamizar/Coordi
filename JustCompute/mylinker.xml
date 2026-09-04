@@ -1,18 +1,12 @@
 <linker>
-	<!-- AutoMapper builds type maps via reflection. Without preserve, trimming strips the metadata
-	     it walks at runtime and Map() throws missing-member errors. -->
-	<assembly fullname="AutoMapper" preserve="all" />
-
-	<!-- Persistence layer is small but heavily reflection-driven:
-	     - sqlite-net-pcl reflects over [Table]/[PrimaryKey]-attributed entity classes
-	     - AutoMapperProfile references DTOs that nothing else touches statically
-	     - DI-resolved repositories live here
-	     Cheaper to preserve the whole assembly than to chase down every missed reference. -->
+	<!-- sqlite-net reflects over the [Table]/[PrimaryKey]-attributed row classes and the DTOs the
+	     queries project into, none of which are referenced by name anywhere the linker can see.
+	     The assembly is small, so preserving it wholesale is cheaper than chasing every one down. -->
 	<assembly fullname="JustCompute.Persistence" preserve="all" />
 
-	<!-- Compute.Core holds domain entities and time/timezone helpers reached by AutoMapper member
-	     expressions (TimeZoneOffset.GetUtcOffsets, City, Location, ...). Preserve wholesale;
-	     the assembly is small and trimming the wrong piece here breaks data load at runtime. -->
+	<!-- Domain entities are reached from XAML binding paths as well as from code. Compiled
+	     bindings cover most of them, but not every binding in the app is compiled, and trimming a
+	     property that only a binding string names fails silently at runtime rather than at build. -->
 	<assembly fullname="Compute.Core" preserve="all" />
 
 	<!-- Enum.ToString() / IFormattable paths need enum metadata that the linker would otherwise strip. -->

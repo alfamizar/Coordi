@@ -2,13 +2,16 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models.Speed;
 using Compute.Core.Domain.Services;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 using Compute.Core.Utils;
 using Compute.Core.Domain.Entities.Models;
-using DotNext;
+using Compute.Core.Common.Results;
+using Compute.Core.Domain.Errors;
 using JustCompute.Shared.ViewModels;
+using JustCompute.Shared.Helpers;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
+using System.Diagnostics;
 
 namespace JustCompute.Features.SpeedAndDistance
 {
@@ -20,6 +23,7 @@ namespace JustCompute.Features.SpeedAndDistance
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly DistanceCalculator _distanceCalculator;
+        private readonly DistanceFormatter _distanceFormatter;
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private Timer? _timer;
         private DateTime _lastUpdate = DateTime.MinValue;
@@ -30,6 +34,7 @@ namespace JustCompute.Features.SpeedAndDistance
         private SpeedType _speedType;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(TrackingActionLabel))]
         private bool _isRunning;
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FormattedSpeed))]
@@ -40,22 +45,67 @@ namespace JustCompute.Features.SpeedAndDistance
         [ObservableProperty]
         private double _direction = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedAccuracy))]
         private double _accuracy = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedVerticalAccuracy))]
         private double _verticalAccuracy = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedAltitude))]
         private double _altitude = -1;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedElevation))]
         private double _elevation = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedTravelledDistance))]
         private double travelledDistance = 0;
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FormattedDirectDistance))]
         private double directDistance = 0;
+        /// <summary>
+        /// How long the trip has been running.
+        ///
+        /// Measured from a monotonic clock rather than accumulated one tick at a time: counting
+        /// AddSeconds(1) per timer callback drifts whenever the system throttles the timer — a
+        /// backgrounded phone can miss many — so a long trip would read short by however much
+        /// the device decided to sleep.
+        /// </summary>
         [ObservableProperty]
-        private DateTime elapsedTime = DateTime.MinValue;
+        [NotifyPropertyChangedFor(nameof(FormattedElapsedTime))]
+        private TimeSpan elapsedTime = TimeSpan.Zero;
+
+        /// <summary>
+        /// hh:mm:ss, counting hours past 24 rather than wrapping. A DateTime formatted "HH:mm:ss"
+        /// silently restarted at zero on the second day of a trip, and TimeSpan's own "hh" does
+        /// the same because it is the hours *component* with the days held separately.
+        /// </summary>
+        public string FormattedElapsedTime =>
+            $"{(int)ElapsedTime.TotalHours:00}:{ElapsedTime.Minutes:00}:{ElapsedTime.Seconds:00}";
+
+        /// <summary>Where the running trip started, on the monotonic clock.</summary>
+        private long _tripStartedTicks;
+
+        /// <summary>
+        /// What the button next to it will do. Sat in the XAML as the literal words "Start" and
+        /// "Stop" — the most prominent control on the screen, in English, in an app that ships
+        /// sixteen other languages.
+        /// </summary>
+        public string TrackingActionLabel =>
+            _localizer.GetString(IsRunning ? "StopTrackingLabel" : "StartTrackingLabel");
 
         public string FormattedSpeed => FormatSpeed(Speed);
         public string FormattedCalculatedSpeed => FormatSpeed(CalculatedSpeed);
+
+        // Every distance on this screen used to be printed through a "{0} m" resource string, so a
+        // 42 km drive read "42000 m" and someone who had chosen miles was shown metres regardless.
+        // The trip totals take the chosen unit; the accuracies and heights stay short (see
+        // DistanceFormatter.FormatShort), because "0.01 km" of GPS accuracy helps nobody.
+        public string FormattedTravelledDistance => _distanceFormatter.Format(TravelledDistance);
+        public string FormattedDirectDistance => _distanceFormatter.Format(DirectDistance);
+        public string FormattedAccuracy => _distanceFormatter.FormatShort(Accuracy);
+        public string FormattedVerticalAccuracy => _distanceFormatter.FormatShort(VerticalAccuracy);
+        public string FormattedAltitude => _distanceFormatter.FormatShort(Altitude);
+        public string FormattedElevation => _distanceFormatter.FormatShort(Elevation);
 
         private string FormatSpeed(double metersPerSecond)
         {
@@ -71,12 +121,14 @@ namespace JustCompute.Features.SpeedAndDistance
         public SpeedAndDistanceViewModel(
             ViewModelServices services,
             IToastService toastService,
-            IStringLocalizer<AppStringsRes> localizer
+            IStringLocalizer<AppStringsRes> localizer,
+            DistanceFormatter distanceFormatter
             )
             : base(services)
         {
             _toastService = toastService;
             _localizer = localizer;
+            _distanceFormatter = distanceFormatter;
             _distanceCalculator = new();
             _speedType = global::JustCompute.Shared.Helpers.Settings.SpeedType;
         }
@@ -86,12 +138,16 @@ namespace JustCompute.Features.SpeedAndDistance
             _timer?.Dispose();
             _timer = null;
 
+            // Anchor to the monotonic clock; the tick only decides how often to re-read it.
+            _tripStartedTicks = Stopwatch.GetTimestamp();
+            TimeSpan alreadyElapsed = ElapsedTime;
+
             _timer = new Timer(
                 (_) =>
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        ElapsedTime = ElapsedTime.AddSeconds(1);
+                        ElapsedTime = alreadyElapsed + Stopwatch.GetElapsedTime(_tripStartedTicks);
                     });
                 },
                 null,
@@ -170,7 +226,7 @@ namespace JustCompute.Features.SpeedAndDistance
             Elevation = 0;
             TravelledDistance = 0;
             DirectDistance = 0;
-            ElapsedTime = DateTime.MinValue;
+            ElapsedTime = TimeSpan.Zero;
 
             _distanceCalculator.Reset();
         }
@@ -192,10 +248,9 @@ namespace JustCompute.Features.SpeedAndDistance
             var point = new GeoPoint(update.Latitude, update.Longitude);
             var fixTime = update.Timestamp.UtcDateTime;
 
-            if (_distanceCalculator.StartAltitude == -1)
-            {
-                _distanceCalculator.StartAltitude = update.Altitude ?? 0;
-            }
+            // Only once, and only from a fix that actually carried an altitude. Defaulting a
+            // missing one to 0 made every later reading an elevation measured from sea level.
+            _distanceCalculator.StartAltitude ??= update.Altitude;
 
             if (_distanceCalculator.LastPoint is { } previousPoint)
             {
@@ -211,7 +266,9 @@ namespace JustCompute.Features.SpeedAndDistance
 
             _distanceCalculator.AddFix(point, fixTime);
 
-            Elevation = Math.Round(_distanceCalculator.GetElevation(Altitude), 2);
+            // The fix's own altitude, not the rounded display value, and still nullable so a
+            // fix without one leaves the elevation alone instead of inventing a drop.
+            Elevation = Math.Round(_distanceCalculator.GetElevation(update.Altitude), 2);
             TravelledDistance = Math.Round(_distanceCalculator.GetCurvedDistance(TravelledDistance));
             DirectDistance = Math.Round(_distanceCalculator.GetDirectDistance());
             CalculatedSpeed = Math.Round(_distanceCalculator.GetSpeed(), 2);
@@ -253,6 +310,15 @@ namespace JustCompute.Features.SpeedAndDistance
             OnPropertyChanged(nameof(FormattedSpeed));
             OnPropertyChanged(nameof(FormattedCalculatedSpeed));
 
+            // The distance unit is read at format time rather than cached, so the formatted
+            // values only need telling that they are stale.
+            OnPropertyChanged(nameof(FormattedTravelledDistance));
+            OnPropertyChanged(nameof(FormattedDirectDistance));
+            OnPropertyChanged(nameof(FormattedAccuracy));
+            OnPropertyChanged(nameof(FormattedVerticalAccuracy));
+            OnPropertyChanged(nameof(FormattedAltitude));
+            OnPropertyChanged(nameof(FormattedElevation));
+
             if (IsRunning)
             {
                 DeviceDisplay.Current.KeepScreenOn = true;
@@ -274,7 +340,7 @@ namespace JustCompute.Features.SpeedAndDistance
             await StopListeningLocation();
         }
 
-        private async Task<Result<bool>> StartListeningLocation(bool backgroundCapable = false)
+        private async Task<Result<bool, FaultCode>> StartListeningLocation(bool backgroundCapable = false)
         {
             _gpsLocationService.DeviceLocationUpdated += OnDeviceLocationUpdated;
             _gpsLocationService.DeviceLocationListeningFailed += OnDeviceLocationListeningFailed;
@@ -289,7 +355,7 @@ namespace JustCompute.Features.SpeedAndDistance
             return result;
         }
 
-        private async Task<Result<bool>> StopListeningLocation()
+        private async Task<Result<bool, FaultCode>> StopListeningLocation()
         {
             _gpsLocationService.DeviceLocationUpdated -= OnDeviceLocationUpdated;
             _gpsLocationService.DeviceLocationListeningFailed -= OnDeviceLocationListeningFailed;

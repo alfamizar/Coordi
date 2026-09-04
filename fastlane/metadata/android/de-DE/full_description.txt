@@ -1,33 +1,45 @@
-Entdecke das Universum mit Coordi – deinem astronomischen Rechner für unterwegs!
+Coordi ist ein Offline-Werkzeugkasten für Astronomie, Navigation und Fotografie: Sonnen- und Mondephemeriden, ein Jahrhundert an Sonnen- und Mondfinsternissen, MGRS- und UTM-Koordinaten, geodätische Streckenmessung, ein GPS-Tachometer und ein Optikrechner für die Astrofotografie. Alles wird auf Ihrem Gerät berechnet — ohne Verbindung, ohne Konto, ohne Werbung.
 
-Coordi bringt präzise Astronomie auf dein Smartphone. Ob Sternegucker, Fotograf, Wanderer, Segler oder einfach neugierig auf den Himmel – Coordi berechnet Daten zu Sonne, Mond, Finsternissen und Koordinaten für jeden Ort und jedes Datum. Und jetzt zeigt es alles übersichtlich mit Diagrammen, einer 7-Tage-Wettervorhersage und wahlweise hellem oder dunklem Design.
+SONNE, MOND UND EPHEMERIDEN
+• Sonnenaufgang, Sonnenuntergang und Tageslänge für jeden Ort und jedes Datum, auf einem interaktiven Sonnenbogen mit Live-Markierung für den aktuellen Moment.
+• Bürgerliche, nautische und astronomische Dämmerung, vom ersten bis zum letzten Licht — Stufen, die es in Ihrer Breite nicht gibt, werden weggelassen.
+• Mondphase und Beleuchtung, Mondaufgang und Monduntergang sowie die Entfernung des Mondes in Kilometern oder Meilen.
+• Das Tierkreiszeichen von Sonne und Mond.
+• Zeitreise: Springen Sie zu einem beliebigen Datum, eine Woche voraus oder ein Jahrhundert zurück — alle Werte werden neu berechnet.
+• Optionale 7-Tage-Wettervorhersage für Ihre gespeicherten Orte.
 
-FUNKTIONEN
+EIN JAHRHUNDERT AN FINSTERNISSEN
+• Jede Sonnen- und Mondfinsternis des laufenden Jahrhunderts, von 2000 bis 2099.
+• Kontaktzeiten — erster Kontakt, Maximum, letzter Kontakt — in der Zeitzone des jeweiligen Ortes.
+• Sichtbarkeitsfilter: nur die von Ihrem Standort aus sichtbaren Finsternisse anzeigen oder alle.
+• Die Größe jeder Finsternis und die Art, die Sie von Ihrem Standort aus tatsächlich sehen — nicht immer die Art, die die Finsternis für die Erde insgesamt hat.
 
-* Sonne & Mond: genaue Auf- und Untergangszeiten, Tageslänge und ein interaktiver Sonnenbogen, der den Stand der Sonne im Tagesverlauf zeigt.
-* Mondphasen: die aktuelle Phase mit Beleuchtungsgrad und traditionellen Vollmond-Namen sowie eine übersichtliche Tag/Nacht-Zeitleiste.
-* Finsternisse: kommende Sonnen- und Mondfinsternisse mit Beginn, Höhepunkt und Ende.
-* Sternzeichen: das Tierkreiszeichen von Sonne und Mond für jedes Datum.
-* Tageslänge: die Dauer des Tageslichts für jeden Tag und Ort.
-* Wetter: eine optionale 7-Tage-Vorhersage für deine gespeicherten Orte.
-* Koordinaten-Umrechner: jeden Punkt in den Formaten UTM und MGRS anzeigen.
-* Lineal: die Entfernung zwischen zwei Punkten auf der Erde hochpräzise messen.
-* Nächste Stadt: die nächstgelegene Stadt zu beliebigen Koordinaten per Haversine-Formel finden.
-* Gespeicherte Orte: deine Lieblingsorte sichern und bequem durchblättern.
+MGRS, UTM UND GEODÄSIE
+• Jeder Punkt in MGRS — Gitterzone, 100-km-Digraph, Ostwert und Nordwert — und in UTM.
+• WGS-84-Entfernungen nach der inversen Formel von Vincenty.
+• Offline-Suche in 42.900 Städten weltweit.
 
-GANZ NACH DEINEM GESCHMACK
+STRECKENMESSER UND KRAFTSTOFFKOSTEN
+• Routen mit mehreren Stopps: mehrere Punkte setzen und die gesamte Strecke messen.
+• Entfernung und Anfangspeilung für jeden Abschnitt, Gesamtstrecke, Luftlinie und das Umwegverhältnis.
+• Kraftstoffrechner: Menge und Fahrtkosten aus Ihrem Verbrauch — l/100 km, km/l, MPG US oder MPG imperial — und Ihrem Preis.
 
-* Helles, dunkles und systemabhängiges Design.
-* Wähle deine Einheiten: Kilometer oder Meilen sowie m/s, km/h oder mph.
-* 12- oder 24-Stunden-Format.
-* In vielen Sprachen verfügbar.
+GPS-TACHOMETER UND KILOMETERZÄHLER
+• Aktuelle und berechnete Geschwindigkeit in km/h, mph oder m/s.
+• Zurückgelegte Wegstrecke, Luftlinie zum Start, Höhe und Höhenänderung.
+• Ein Fahrtzeitmesser, der über 24 Stunden hinaus weiterzählt, statt neu zu beginnen.
+• Zeichnet auch bei ausgeschaltetem Bildschirm weiter auf.
 
-WARUM COORDI?
+OPTIK UND ASTROFOTOGRAFIE
+• Schärfentiefe: hyperfokale Distanz, Nah- und Ferngrenze und wie viel davon vor und hinter dem Motiv liegt.
+• Bildwinkel: horizontal, vertikal und diagonal sowie die reale Abdeckung in Ihrer Motiventfernung.
+• Sternspuren: die längste Belichtung, bevor Sterne zu Strichen werden, nach der 500er-Regel und der NPF-Regel, aus dem Pixelabstand Ihrer Kamera.
+• Sensor-Voreinstellungen für Vollformat, APS-C, Canon APS-C, Micro 4/3, 1 Zoll und Mittelformat, dazu eine Bibliothek von Kameramodellen.
 
-* Funktioniert offline: jede astronomische Berechnung läuft auf deinem Gerät, ganz ohne Verbindung. Nur die optionale Wettervorhersage nutzt das Internet.
-* Klares, intuitives Design, das sich einfach bedienen lässt.
-* Genaue, zuverlässige Daten für alle deine Himmelsfragen.
-* Keine Werbung.
-* Ständig verbessert – dein Feedback prägt neue Funktionen.
-
-Entdecke die Wunder des Himmels, wo immer du bist. Lade Coordi noch heute herunter und mach den ersten Schritt zum Meister der Himmelsberechnungen!
+AUF GENAUIGKEIT GEBAUT
+• Echte Zeitzonen: jede Zeit ist die Ortszeit des betrachteten Ortes, Sommerzeit eingeschlossen.
+• Funktioniert offline — nur die optionale Wettervorhersage braucht eine Verbindung.
+• Keine Werbung, kein Tracking, kein Konto.
+• Fünf Themes: Ocean und Blossom sind hell, Midnight und Ember dunkel, System folgt Ihrem Gerät.
+• Kilometer, Meilen, Seemeilen, Meter oder Fuß; m/s, km/h oder mph; 12- oder 24-Stunden-Format.
+• In vielen Sprachen verfügbar.

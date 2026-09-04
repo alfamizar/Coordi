@@ -1,6 +1,6 @@
 using DeviceGeoLocation = Microsoft.Maui.Devices.Sensors.Location;
 using Location = Compute.Core.Domain.Entities.Models.Location;
-using DotNext;
+using Compute.Core.Common.Results;
 using Compute.Core.Domain.Errors;
 using Compute.Core.Domain.Services;
 using Compute.Core.Common.Exceptions.Location;
@@ -26,6 +26,7 @@ namespace JustCompute.Services.LocationService
         private Location? _selectedLocation;
         private Location? _placeholderLocation;
         private Task? _restoreTask;
+        private readonly Lock _restoreGate = new();
 
         /// <summary>
         /// Never null: until the user picks somewhere (or the device fix arrives) this returns a
@@ -68,7 +69,16 @@ namespace JustCompute.Services.LocationService
         /// await from anywhere, so every screen can gate its first read on it rather than relying
         /// on the user happening to open the Locations screen.
         /// </summary>
-        public Task RestorePersistedSelectedLocation() => _restoreTask ??= RestorePersistedSelectedLocationCore();
+        public Task RestorePersistedSelectedLocation()
+        {
+            // Locked, not just ??=: that reads and assigns in two steps, so two screens loading
+            // at once on a cold start could both find it null and both run the restore — two
+            // database reads, and two answers racing to become the selected location.
+            lock (_restoreGate)
+            {
+                return _restoreTask ??= RestorePersistedSelectedLocationCore();
+            }
+        }
 
         private async Task RestorePersistedSelectedLocationCore()
         {
@@ -186,6 +196,15 @@ namespace JustCompute.Services.LocationService
         {
             if (Interlocked.Increment(ref _listenerRefCount) > 1)
             {
+                // Already listening — but possibly not the way this caller needs. A trip that
+                // must keep recording with the screen off cannot be served by the foreground-only
+                // listener a screen started earlier, and silently returning success here left
+                // tracking that quietly stopped the moment the app was backgrounded.
+                if (backgroundCapable && !_backgroundCapable)
+                {
+                    return await UpgradeToBackgroundListening();
+                }
+
                 return true;
             }
 
@@ -198,6 +217,35 @@ namespace JustCompute.Services.LocationService
             {
                 Interlocked.Decrement(ref _listenerRefCount);
             }
+            return result;
+        }
+
+        /// <summary>
+        /// Swaps a running foreground-only listener for the background-capable platform service,
+        /// keeping the reference count intact — the screens already listening still are.
+        /// </summary>
+        private async Task<Result<bool, FaultCode>> UpgradeToBackgroundListening()
+        {
+            try
+            {
+                StopForegroundOnlyListening();
+            }
+            catch (Exception)
+            {
+                // Nothing useful to do: the platform listener is what matters, and it is next.
+            }
+
+            var result = await StartPlatformListening();
+            if (result.IsSuccessful)
+            {
+                _backgroundCapable = true;
+                return result;
+            }
+
+            // Put the foreground listener back so the callers already relying on updates keep
+            // getting them, rather than being left with nothing at all.
+            await StartForegroundOnlyListening();
+            Interlocked.Decrement(ref _listenerRefCount);
             return result;
         }
 
@@ -227,7 +275,7 @@ namespace JustCompute.Services.LocationService
             }
             catch (Exception)
             {
-                return new(FaultCode.CouldNotStopListeningDeciveGeoLocation);
+                return new(FaultCode.CouldNotStopListeningDeviceGeoLocation);
             }
         }
 
@@ -247,7 +295,7 @@ namespace JustCompute.Services.LocationService
             {
                 Geolocation.LocationChanged -= OnMauiLocationChanged;
                 Geolocation.ListeningFailed -= OnMauiListeningFailed;
-                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeciveGeoLocation);
+                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeviceGeoLocation);
             }
         }
 
@@ -258,14 +306,19 @@ namespace JustCompute.Services.LocationService
             Geolocation.StopListeningForeground();
         }
 
+        // Marshalled, like the background-capable path already is: MAUI raises these on a
+        // platform thread, and every subscriber writes straight into properties a screen is bound
+        // to. Off the UI thread those writes are dropped frames at best.
         private void OnMauiLocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            DeviceLocationUpdated?.Invoke(this, ToDomainUpdate(e.Location));
+            var update = ToDomainUpdate(e.Location);
+            MainThread.BeginInvokeOnMainThread(() => DeviceLocationUpdated?.Invoke(this, update));
         }
 
         private void OnMauiListeningFailed(object? sender, GeolocationListeningFailedEventArgs e)
         {
-            DeviceLocationListeningFailed?.Invoke(this, new DeviceLocationListeningFailure(e.Error.ToString()));
+            var failure = new DeviceLocationListeningFailure(e.Error.ToString());
+            MainThread.BeginInvokeOnMainThread(() => DeviceLocationListeningFailed?.Invoke(this, failure));
         }
 
         private partial Task<Result<bool, FaultCode>> StartPlatformListening();

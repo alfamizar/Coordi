@@ -1,4 +1,4 @@
-﻿using Compute.Core.UI;
+﻿using JustCompute.Shared.Abstractions.UI;
 
 namespace JustCompute.Platforms.iOS.UI
 {

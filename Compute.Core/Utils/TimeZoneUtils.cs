@@ -20,6 +20,19 @@ namespace Compute.Core.Utils
         /// lookup fails or the coordinates are out of range. Blocking — keep it off the UI thread
         /// on first use.
         /// </summary>
+        /// <summary>
+        /// Loads the zone dataset ahead of time, off whatever thread calls this.
+        ///
+        /// The lookup itself is trivial — measured at ~0.0006 ms — but the *first* one pays
+        /// ~23 ms to load GeoTimeZone's embedded data, and it lands wherever the first zone is
+        /// needed: usually a coordinate assignment on the UI thread, i.e. a visible hitch of
+        /// about one and a half frames on the first screen that shows a time. Doing it on a
+        /// background thread at startup moves that cost somewhere nobody is looking.
+        ///
+        /// Safe to call more than once; subsequent calls cost a lookup.
+        /// </summary>
+        public static void Prewarm() => GetTimeZoneId(51.5074, -0.1278);
+
         public static string GetTimeZoneId(double latitude, double longitude)
         {
             if (!AreValidCoordinates(latitude, longitude))
@@ -88,6 +101,22 @@ namespace Compute.Core.Utils
                 CultureInfo.InvariantCulture,
                 $"{FixedOffsetPrefix}{sign}{magnitude.Hours:00}:{magnitude.Minutes:00}");
         }
+
+        /// <summary>
+        /// True only for an id the offset picker produced, which is always signed
+        /// (<c>UTC+05:30</c>, <c>UTC+00:00</c>).
+        ///
+        /// Deliberately narrower than <see cref="TryParseFixedOffset"/>, which also accepts a
+        /// bare <c>UTC</c> so that id still yields a zero offset. Bare <c>UTC</c> is what a
+        /// coordinate lookup returns, not something anyone chose — telling the two apart is what
+        /// stops a place that once resolved to UTC from being frozen there forever.
+        /// </summary>
+        public static bool IsPinnedFixedOffset(string? timeZoneId) =>
+            !string.IsNullOrEmpty(timeZoneId)
+            && timeZoneId.Length > FixedOffsetPrefix.Length
+            && timeZoneId.StartsWith(FixedOffsetPrefix, StringComparison.Ordinal)
+            && timeZoneId[FixedOffsetPrefix.Length] is '+' or '-'
+            && TryParseFixedOffset(timeZoneId, out _);
 
         /// <summary>Reads back an id produced by <see cref="ToFixedOffsetId"/>.</summary>
         public static bool TryParseFixedOffset(string? timeZoneId, out TimeSpan offset)

@@ -50,6 +50,24 @@ namespace Compute.Astro
         double DayLengthMinutes);
 
     /// <summary>
+    /// The six twilight boundaries of one UTC calendar day, in minutes from 00:00 UTC and in the
+    /// order they occur.
+    ///
+    /// Any stage is null when the Sun does not reach that altitude on this day, which is a normal
+    /// answer rather than a failure: above roughly 48° of latitude there are summer weeks with no
+    /// astronomical twilight at all, and further north the nautical and even the civil stage go
+    /// the same way. That is what a white night is, and the caller is expected to show nothing
+    /// rather than invent a time.
+    /// </summary>
+    public readonly record struct TwilightTimes(
+        double? FirstLightUtcMinutes,
+        double? NauticalDawnUtcMinutes,
+        double? CivilDawnUtcMinutes,
+        double? CivilDuskUtcMinutes,
+        double? NauticalDuskUtcMinutes,
+        double? LastLightUtcMinutes);
+
+    /// <summary>
     /// Rise/set via the NOAA hour-angle method (derived from Meeus ch. 15 + ch. 25/28).
     /// Longitude is <b>positive east</b>.
     ///
@@ -98,6 +116,40 @@ namespace Compute.Astro
             var rise = transit - hMinutes;
             var set = transit + hMinutes;
             return new SunEvents(DayType.Normal, rise, set, transit, set - rise);
+        }
+
+        /// <summary>
+        /// All three twilight stages for one day, dawn and dusk, at the standard depressions of
+        /// 6°, 12° and 18° below the horizon.
+        ///
+        /// Each stage is solved independently, because they fail independently: on a June night in
+        /// northern Europe the Sun crosses −12° but never −18°, so nautical twilight has times and
+        /// astronomical twilight has none.
+        /// </summary>
+        public static TwilightTimes Twilight(
+            int year,
+            int month,
+            int day,
+            double latitudeDeg,
+            double longitudeEastDeg)
+        {
+            (double? Dawn, double? Dusk) At(double altitudeDeg)
+            {
+                var events = EventsAtAltitude(year, month, day, latitudeDeg, longitudeEastDeg, altitudeDeg);
+                return (events.SunriseUtcMinutes, events.SunsetUtcMinutes);
+            }
+
+            var (civilDawn, civilDusk) = At(SunAltitude.Civil);
+            var (nauticalDawn, nauticalDusk) = At(SunAltitude.Nautical);
+            var (astroDawn, astroDusk) = At(SunAltitude.Astronomical);
+
+            return new TwilightTimes(
+                FirstLightUtcMinutes: astroDawn,
+                NauticalDawnUtcMinutes: nauticalDawn,
+                CivilDawnUtcMinutes: civilDawn,
+                CivilDuskUtcMinutes: civilDusk,
+                NauticalDuskUtcMinutes: nauticalDusk,
+                LastLightUtcMinutes: astroDusk);
         }
     }
 }

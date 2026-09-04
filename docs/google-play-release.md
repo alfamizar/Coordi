@@ -75,6 +75,7 @@ export COORDI_KEY_PASS="…"
 ## 4. Build & publish
 
 ```bash
+fastlane android validate_metadata  # check listing text against Play's limits first
 fastlane android build_aab   # dotnet publish -> signed *-Signed.aab (passwords are not logged)
 fastlane android release     # upload to the 'internal' track as a draft
 fastlane android ship        # = build_aab + release
@@ -127,7 +128,38 @@ locale (copy the previous one and edit) before running `fastlane android ship`.
 > and the table in [store-assets-guide.md](store-assets-guide.md); keep them in sync with Google's
 > [supported-languages list](https://support.google.com/googleplay/android-developer/answer/9844778).
 
-## 7. Tip: set a UTF-8 locale
+## 7. Validate the listing before uploading
+
+Google Play rejects a whole upload for one over-long title, and the limits are per character,
+not per byte — easy to overshoot in German or Ukrainian. Check first:
+
+```sh
+fastlane android validate_metadata
+```
+
+It enforces Play's limits (title 30, short description 80, full description 4000, release notes
+500) across every locale, and fails if a locale is missing a file or a release-notes file the
+other locales have — the case where some users would see no "What's new" at all.
+
+## 8. iOS (App Store Connect)
+
+Auth is an App Store Connect API key, never an Apple-ID password:
+
+```sh
+export ASC_KEY_ID="…" ASC_ISSUER_ID="…" ASC_KEY_PATH="$HOME/.secrets/AuthKey_XXXX.p8"
+export TEAM_ID="…"
+
+fastlane ios check_asc_key      # → "App Store Connect API key is valid."
+fastlane ios build_ipa          # dotnet publish -f net10.0-ios -> signed .ipa
+fastlane ios beta               # build (if needed) + upload to TestFlight
+fastlane ios release_appstore   # build (if needed) + upload for review (does NOT submit)
+```
+
+Override the signing identity or profile with `IOS_SIGNING_IDENTITY` / `IOS_PROVISIONING_PROFILE`,
+or point at an existing build with `COORDI_IPA`. Neither iOS lane uploads listing text or
+screenshots — App Store metadata is managed separately from the Play listing.
+
+## 9. Tip: set a UTF-8 locale
 
 fastlane warns if your shell locale isn't UTF-8. Add to `~/.zshrc` to silence it:
 ```bash

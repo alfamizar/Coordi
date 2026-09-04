@@ -1,5 +1,5 @@
 ﻿using Compute.Core.Common.Device;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 

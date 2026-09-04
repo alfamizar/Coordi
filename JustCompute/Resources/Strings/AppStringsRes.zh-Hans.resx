@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCustomLocationLabel" xml:space="preserve">
+    <value>添加自定义地点</value>
+  </data>
+  <data name="AddLocationLabel" xml:space="preserve">
+    <value>添加地点</value>
+  </data>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>编辑地点</value>
+  </data>
+  <data name="AnnularEclipseLabel" xml:space="preserve">
+    <value>环食</value>
+  </data>
+  <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
+    <value>环食或全食开始时间：{0}</value>
+  </data>
+  <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
+    <value>环食或全食结束时间：{0}</value>
+  </data>
+  <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
+    <value>环食或全食持续时间：{0}</value>
+  </data>
+  <data name="AquariusLabel" xml:space="preserve">
+    <value>水瓶座</value>
+  </data>
+  <data name="AriesLabel" xml:space="preserve">
+    <value>白羊座</value>
+  </data>
+  <data name="AtTheseCoordinatesLabel" xml:space="preserve">
+    <value>在此坐标：</value>
+  </data>
+  <data name="BeaverMoonLabel" xml:space="preserve">
+    <value>海狸月</value>
+  </data>
+  <data name="BlueMoonLabel" xml:space="preserve">
+    <value>蓝月</value>
+  </data>
+  <data name="BuckMoonLabel" xml:space="preserve">
+    <value>雄鹿月</value>
+  </data>
+  <data name="CancerLabel" xml:space="preserve">
+    <value>巨蟹座</value>
+  </data>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>无法获取当前位置。请稍后重试、手动添加地点，或从数据库的地点列表中选择</value>
+  </data>
+  <data name="CannotGetLocationLabel" xml:space="preserve">
+    <value>无法获取任何位置</value>
+  </data>
+  <data name="CapricornLabel" xml:space="preserve">
+    <value>摩羯座</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>城市</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="ColdMoonLabel" xml:space="preserve">
+    <value>寒月</value>
+  </data>
+  <data name="ConvertersLabel" xml:space="preserve">
+    <value>转换器</value>
+  </data>
+  <data name="CoordinatesConverterLabel" xml:space="preserve">
+    <value>坐标转换器</value>
+  </data>
+  <data name="CornMoonLabel" xml:space="preserve">
+    <value>玉米月</value>
+  </data>
+  <data name="CountryLabel" xml:space="preserve">
+    <value>国家/地区</value>
+  </data>
+  <data name="DarkThemeLabel" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="LightThemeLabel" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="SystemThemeLabel" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>日期：{0:dd MMMM yyyy}</value>
+  </data>
+  <data name="DateWithTimeLabel" xml:space="preserve">
+    <value>日期：{0:dd MMMM yyyy hh:mm:ss}</value>
+  </data>
+  <data name="DayDurationLabel" xml:space="preserve">
+    <value>昼长：{0}</value>
+  </data>
+  <data name="DeleteLabel" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DigraphLabel" xml:space="preserve">
+    <value>双字母码（MGRS 100,000 米方格标识符）：{0}</value>
+  </data>
+  <data name="DistanceFormattedLabel" xml:space="preserve">
+    <value>距离：{0:0.##} {1}</value>
+  </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>速度与距离</value>
+  </data>
+  <data name="DistanceUnitLabel" xml:space="preserve">
+    <value>距离单位</value>
+  </data>
+  <data name="EclipsesLabel" xml:space="preserve">
+    <value>日月食</value>
+  </data>
+  <data name="FeetsAbbreviationLabel" xml:space="preserve">
+    <value>ft</value>
+  </data>
+  <data name="FeetsLabel" xml:space="preserve">
+    <value>英尺</value>
+  </data>
+  <data name="FirstQuarterLabel" xml:space="preserve">
+    <value>上弦月</value>
+  </data>
+  <data name="FullMoonLabel" xml:space="preserve">
+    <value>满月</value>
+  </data>
+  <data name="GeminiLabel" xml:space="preserve">
+    <value>双子座</value>
+  </data>
+  <data name="GoToSettings" xml:space="preserve">
+    <value>前往设置</value>
+  </data>
+  <data name="HuntersMoonLabel" xml:space="preserve">
+    <value>猎人月</value>
+  </data>
+  <data name="InverseFlatteningLabel" xml:space="preserve">
+    <value>扁率倒数：{0}</value>
+  </data>
+  <data name="KilometersAbbreviationLabel" xml:space="preserve">
+    <value>km</value>
+  </data>
+  <data name="KmLabel" xml:space="preserve">
+    <value>千米</value>
+  </data>
+  <data name="LastQuarterLabel" xml:space="preserve">
+    <value>下弦月</value>
+  </data>
+  <data name="LatitudeLabel" xml:space="preserve">
+    <value>纬度</value>
+  </data>
+  <data name="LatitudeStringFormatLabel" xml:space="preserve">
+    <value>纬度：{0:0.#####}</value>
+  </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>纬度：</value>
+  </data>
+  <data name="LeoLabel" xml:space="preserve">
+    <value>狮子座</value>
+  </data>
+  <data name="LibraLabel" xml:space="preserve">
+    <value>天秤座</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>经度：</value>
+  </data>
+  <data name="LocationLabel" xml:space="preserve">
+    <value>地点：</value>
+  </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>请输入唯一的地点名称</value>
+  </data>
+  <data name="LocationNameLabel" xml:space="preserve">
+    <value>地点名称</value>
+  </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>搜索不可用。点按重试。</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>未找到城市</value>
+  </data>
+  <data name="LocationPermissionDialogMessage" xml:space="preserve">
+    <value>允许访问位置后，应用可以显示你所在位置的数据。不允许也可以手动选择地点。</value>
+  </data>
+  <data name="LocationPermissionDialogTitle" xml:space="preserve">
+    <value>位置权限</value>
+  </data>
+  <data name="LocationsLabel" xml:space="preserve">
+    <value>地点</value>
+  </data>
+  <data name="LongitudeLabel" xml:space="preserve">
+    <value>经度</value>
+  </data>
+  <data name="LongitudeStringFormatLabel" xml:space="preserve">
+    <value>经度：{0:0.#####}</value>
+  </data>
+  <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
+    <value>食甚时间：{0}</value>
+  </data>
+  <data name="MetersAbbreviationLabel" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="MetersLabel" xml:space="preserve">
+    <value>米</value>
+  </data>
+  <data name="MGRSEastingLabel" xml:space="preserve">
+    <value>MGRS 东距：{0}</value>
+  </data>
+  <data name="MGRSLabel" xml:space="preserve">
+    <value>MGRS</value>
+  </data>
+  <data name="MGRSLatZoneLabel" xml:space="preserve">
+    <value>MGRS 纬度带网格区划：{0}</value>
+  </data>
+  <data name="MGRSLonZoneLabel" xml:space="preserve">
+    <value>MGRS 经度带网格区划：{0}</value>
+  </data>
+  <data name="MGRSNorthingLabel" xml:space="preserve">
+    <value>MGRS 北距：{0}</value>
+  </data>
+  <data name="MGRSTypeLabel" xml:space="preserve">
+    <value>MGRS 类型：{0}</value>
+  </data>
+  <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
+    <value>食甚时间：{0}</value>
+  </data>
+  <data name="MilesAbbreviationLabel" xml:space="preserve">
+    <value>mi</value>
+  </data>
+  <data name="MilesLabel" xml:space="preserve">
+    <value>英里</value>
+  </data>
+  <data name="MoonEclipsesLabel" xml:space="preserve">
+    <value>月食</value>
+  </data>
+  <data name="MoonInZodiacSignLabel" xml:space="preserve">
+    <value>月亮星座：{0}</value>
+  </data>
+  <data name="MoonLabel" xml:space="preserve">
+    <value>月亮</value>
+  </data>
+  <data name="MoonNameLabel" xml:space="preserve">
+    <value>满月名称：</value>
+  </data>
+  <data name="MoonPhaseLabel" xml:space="preserve">
+    <value>月相：</value>
+  </data>
+  <data name="MoonRiseDurationLabel" xml:space="preserve">
+    <value>月亮在地平线上的时长：{0}</value>
+  </data>
+  <data name="MoonRiseLabel" xml:space="preserve">
+    <value>月出：{0}</value>
+  </data>
+  <data name="MoonSetLabel" xml:space="preserve">
+    <value>月落：{0}</value>
+  </data>
+  <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
+    <value>nmi</value>
+  </data>
+  <data name="NauticalMilesLabel" xml:space="preserve">
+    <value>海里</value>
+  </data>
+  <data name="NewMoonLabel" xml:space="preserve">
+    <value>新月</value>
+  </data>
+  <data name="NoSavedLocationsLabel" xml:space="preserve">
+    <value>你还没有保存任何地点。请手动添加地点，或在搜索页面从数据库的地点列表中选择</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="PartialEclipseLabel" xml:space="preserve">
+    <value>偏食</value>
+  </data>
+  <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>偏食开始时间：{0}</value>
+  </data>
+  <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>偏食结束时间：{0}</value>
+  </data>
+  <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>偏食开始时间：{0}</value>
+  </data>
+  <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
+    <value>偏食结束时间：{0}</value>
+  </data>
+  <data name="PenumbralEclipseLabel" xml:space="preserve">
+    <value>半影食</value>
+  </data>
+  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>半影食开始时间：{0}</value>
+  </data>
+  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>半影食结束时间：{0}</value>
+  </data>
+  <data name="PermissionRequiredDialogMessage" xml:space="preserve">
+    <value>允许访问位置后，应用可以显示你所在位置的数据。不允许也可以手动选择地点。</value>
+  </data>
+  <data name="PermissionRequiredDialogTitle" xml:space="preserve">
+    <value>需要权限</value>
+  </data>
+  <data name="PinkMoonLabel" xml:space="preserve">
+    <value>粉红月</value>
+  </data>
+  <data name="PiscesLabel" xml:space="preserve">
+    <value>双鱼座</value>
+  </data>
+  <data name="PlusAddLocationLabel" xml:space="preserve">
+    <value>+ 添加地点</value>
+  </data>
+  <data name="PopulationFormattedLabel" xml:space="preserve">
+    <value>人口：{0:N0}</value>
+  </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>人口</value>
+  </data>
+  <data name="SagittariusLabel" xml:space="preserve">
+    <value>射手座</value>
+  </data>
+  <data name="SavedLocationsLabel" xml:space="preserve">
+    <value>已保存的地点：</value>
+  </data>
+  <data name="SaveLocationButtonText" xml:space="preserve">
+    <value>保存地点</value>
+  </data>
+  <data name="ScorpioLabel" xml:space="preserve">
+    <value>天蝎座</value>
+  </data>
+  <data name="SearchCityLabel" xml:space="preserve">
+    <value>搜索城市</value>
+  </data>
+  <data name="SearchPlaceholderLabel" xml:space="preserve">
+    <value>搜索…</value>
+  </data>
+  <data name="SetsAndRisesLabel" xml:space="preserve">
+    <value>升起与落下</value>
+  </data>
+  <data name="SettingsLabel" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SnowMoonLabel" xml:space="preserve">
+    <value>雪月</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>排序方式</value>
+  </data>
+  <data name="StrawberryMoonLabel" xml:space="preserve">
+    <value>草莓月</value>
+  </data>
+  <data name="SturgeonMoonLabel" xml:space="preserve">
+    <value>鲟鱼月</value>
+  </data>
+  <data name="SunAndMoonLabel" xml:space="preserve">
+    <value>太阳与月亮</value>
+  </data>
+  <data name="SunEclipsesLabel" xml:space="preserve">
+    <value>日食</value>
+  </data>
+  <data name="SunEclispseTypeLabel" xml:space="preserve">
+    <value>类型：{0}</value>
+  </data>
+  <data name="SunLabel" xml:space="preserve">
+    <value>太阳</value>
+  </data>
+  <data name="SunRiseLabel" xml:space="preserve">
+    <value>日出：{0}</value>
+  </data>
+  <data name="SunSetLabel" xml:space="preserve">
+    <value>日落：{0}</value>
+  </data>
+  <data name="TaurusLabel" xml:space="preserve">
+    <value>金牛座</value>
+  </data>
+  <data name="TimeLabel" xml:space="preserve">
+    <value>时间：{0}</value>
+  </data>
+  <data name="TimeTravelLabel" xml:space="preserve">
+    <value>时间旅行</value>
+  </data>
+  <data name="TotalEclipseLabel" xml:space="preserve">
+    <value>全食</value>
+  </data>
+  <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>全食开始时间：{0}</value>
+  </data>
+  <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>全食结束时间：{0}</value>
+  </data>
+  <data name="TwoValuesSeparatedByComa" xml:space="preserve">
+    <value>{}{0}, {1}</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>类型：{0}</value>
+  </data>
+  <data name="UnknownLocationLabel" xml:space="preserve">
+    <value>未知地点</value>
+  </data>
+  <data name="Use24HourTimeFormatLabel" xml:space="preserve">
+    <value>使用 24 小时制</value>
+  </data>
+  <data name="UTCTimeOffsetLabel" xml:space="preserve">
+    <value>UTC 时差</value>
+  </data>
+  <data name="UTMEastingLabel" xml:space="preserve">
+    <value>UTM 东距：{0}</value>
+  </data>
+  <data name="UTMLabel" xml:space="preserve">
+    <value>UTM</value>
+  </data>
+  <data name="UTMLatZoneLabel" xml:space="preserve">
+    <value>UTM 纬度带网格区划：{0}</value>
+  </data>
+  <data name="UTMLonZoneLabel" xml:space="preserve">
+    <value>UTM 经度带网格区划：{0}</value>
+  </data>
+  <data name="UTMNorthingLabel" xml:space="preserve">
+    <value>UTM 北距：{0}</value>
+  </data>
+  <data name="UTMTypeLabel" xml:space="preserve">
+    <value>UTM 类型：{0}</value>
+  </data>
+  <data name="VirgoLabel" xml:space="preserve">
+    <value>处女座</value>
+  </data>
+  <data name="WaningCrescentLabel" xml:space="preserve">
+    <value>残月</value>
+  </data>
+  <data name="WaningGibbousLabel" xml:space="preserve">
+    <value>亏凸月</value>
+  </data>
+  <data name="WeatherLabel" xml:space="preserve">
+    <value>天气</value>
+  </data>
+  <data name="WaxingCrescentLabel" xml:space="preserve">
+    <value>娥眉月</value>
+  </data>
+  <data name="WaxingGibbousLabel" xml:space="preserve">
+    <value>盈凸月</value>
+  </data>
+  <data name="WolfMoonLabel" xml:space="preserve">
+    <value>狼月</value>
+  </data>
+  <data name="WormMoonLabel" xml:space="preserve">
+    <value>虫月</value>
+  </data>
+  <data name="ZodiacSignLabel" xml:space="preserve">
+    <value>星座：{0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>点 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>点 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>无法删除当前地点！</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>无法开始监听位置</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>同名地点已存在</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>精度</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>直线距离</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>海拔</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} 度</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} m/s</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>标尺</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>已行距离</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>垂直精度</value>
+  </data>
+  <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
+    <value>位置监听失败</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>无法停止监听位置</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>计算速度</value>
+  </data>
+  <data name="SpeedUnitLabel" xml:space="preserve">
+    <value>速度单位</value>
+  </data>
+  <data name="MetersPerSecondLabel" xml:space="preserve">
+    <value>m/s</value>
+  </data>
+  <data name="KilometersPerHourLabel" xml:space="preserve">
+    <value>km/h</value>
+  </data>
+  <data name="MilesPerHourLabel" xml:space="preserve">
+    <value>mph</value>
+  </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>后台位置</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>为了在 Coordi 最小化或屏幕关闭时继续记录行程的速度、距离和海拔，应用需要在后台收集你的位置。记录期间会显示常驻通知，结束行程后立即停止。你的位置仅保留在本设备上，绝不会与任何人共享。</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>仅显示此地可见的食</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>应用当前以 {0} 作为占位地点。请设置你的位置，使日出、日落、月相和日月食与你所在地相符。</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>设置你的位置</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>天气不可用。点按重试。</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>当前地点</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>使用我的位置</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>时区</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>此地不可见</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>光学</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>镜头与传感器</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>相机</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>焦距（mm）</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>光圈（f 值）</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>被摄体距离（m）</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>图像宽度（px）</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>赤纬（°）</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>保存为默认值</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>景深</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>超焦距</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>近界</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>远界</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>合计</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>被摄体前方</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>被摄体后方</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>视野</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>水平</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>垂直</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>对角</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>星空曝光</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>500 法则</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>NPF 法则</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>像素间距</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>星点开始拖尾前的最长曝光时间。NPF 是考虑传感器的更严格法则；赤纬 0° 为最不利情况。</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>输入焦距、光圈和被摄体距离，即可查看景深与视野。</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>必须为正数。</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>请输入整数像素值。</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>赤纬必须介于 −90 与 90 之间。</value>
+  </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>海洋蓝</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>花漾粉</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>午夜黑</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>余烬橙</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>路线</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>至少添加两个点才能测量路线。</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>清除</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>总计</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>绕行比</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>燃油</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>油耗</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>单位价格</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>所需燃油</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>费用</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>输入油耗即可估算这条路线的燃油。</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>单位</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>升/100 公里</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>公里/升</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>mpg（美制）</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>mpg（英制）</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>升</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>加仑</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>此期间从这里看不到任何日月食。</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>食分：{0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>本影食分：{0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>半影食分：{0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>曙暮光</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>天文晨光始</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>航海晨光始</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>民用晨光始</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>民用昏影终</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>航海昏影终</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>天文昏影终</value>
+  </data>
+</root>

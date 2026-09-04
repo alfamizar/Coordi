@@ -14,8 +14,8 @@
     <ApplicationId>com.cutecompute.coordi</ApplicationId>
     <ApplicationIdGuid>b09e0a6c-4e76-48d3-8aa1-0d34c37b1c47</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
-    <ApplicationVersion>2</ApplicationVersion>
+    <ApplicationDisplayVersion>1.1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>3</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <ValidateXcodeVersion>false</ValidateXcodeVersion>
@@ -58,14 +58,21 @@
   </PropertyGroup>
   
   <!-- Android Release — known-good optimization set.
-       EnableLLVM intentionally OFF: with our dependencies (notably AutoMapper + sqlite-net
-       reflection-heavy paths), the LLVM optimizer pass mis-compiles something on the
-       data-load path and the app aborts shortly after launch. Mono's default AOT alone
-       still gives most of the startup-time and steady-state wins; LLVM was diminishing
-       returns we couldn't ship. Revisit only if a specific perf measurement justifies it.
+
+       EnableLLVM stays OFF, and it is not AutoMapper's fault. AutoMapper was removed in favour
+       of hand-written mappers (JustCompute.Persistence.Mapping) partly to try this, and a
+       Release AOT+LLVM build still aborts within seconds of launch:
+
+         Assertion at aot-runtime.c:5341, condition `plt_entry' not met
+         Fatal signal 6 (SIGABRT) in tid ... (.NET Timer)
+
+       That is the AOT runtime failing to resolve a PLT entry in LLVM-compiled code — a
+       toolchain problem, not a reflection one. Mono's own AOT alone still gives most of the
+       startup and steady-state win. Re-test on a runtime upgrade, not before.
+
        AndroidStripILAfterAOT is safe to enable because mylinker.xml pins preserve="all"
-       on app assemblies (Compute.Core, JustCompute.Persistence, AutoMapper), so only
-       BCL/MAUI IL bodies get stripped — those assemblies don't need IL at runtime. -->
+       on the app assemblies (Compute.Core, JustCompute.Persistence), so only BCL/MAUI IL
+       bodies get stripped — those assemblies don't need IL at runtime. -->
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net10.0-android36.0'">
     <RunAOTCompilation>true</RunAOTCompilation>
     <EnableLLVM>false</EnableLLVM>
@@ -73,11 +80,29 @@
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
     <AndroidLinkTool>r8</AndroidLinkTool>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- The globe is drawn to fill Android's adaptive safe zone: 66dp of the 108dp layer, which
+         every launcher mask is guaranteed to show. iOS has no mask and no parallax, so the same
+         artwork there is just a smaller icon inside a wide navy border - it gets scaled back up
+         to the size the icon was designed at. -->
+    <AppIconForegroundScale>1.0</AppIconForegroundScale>
+    <AppIconForegroundScale Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">1.28</AppIconForegroundScale>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\appicon.png" />
+    <!-- Two adaptive layers, not one image used as both. A single file is copied into the
+         background layer as well, and the launcher slides that layer against the foreground
+         under parallax, so the globe ghosts behind itself. The background is now flat. -->
+    <MauiIcon Include="Resources\AppIcon\appicon.png"
+              ForegroundFile="Resources\AppIcon\appiconfg.png"
+              ForegroundScale="$(AppIconForegroundScale)"
+              Color="#050E38" />
     <!-- Splash Screen -->
-    <MauiSplashScreen Include="Resources\Splash\splash.png" Color="#1f1f1f" BaseSize="128,128" />
+    <!-- Same mark and same navy as the app icon: launch, icon and first screen now read as
+         one thing. The old splash was unrelated artwork on #1f1f1f grey, which matched
+         neither the icon nor any theme in the app. -->
+    <MauiSplashScreen Include="Resources\Splash\splash.png" Color="#050E38" BaseSize="128,128" />
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
     <!-- Custom Fonts -->
@@ -145,12 +170,15 @@
     <EmbeddedResource Include="Database\geo_world.db" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.90" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="15.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.100" />
+    <!-- The MVVM toolkit belongs here, where the view models are. It used to arrive
+         transitively through Compute.Core, which made the domain library carry a presentation
+         dependency for the app's benefit. -->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
     <PackageReference Include="Polly" Version="8.7.0" />
   </ItemGroup>
   <ItemGroup>
@@ -222,12 +250,6 @@
     <Compile Update="Platforms\iOS\UI\Environment.cs">
       <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
     </Compile>
-    <Compile Update="Platforms\iOS\UI\Handlers\CustomSwitchHandler.cs">
-      <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
-    </Compile>
-    <Compile Update="Features\CoordinatesConverter\CoordinatesConverterPage.xaml.cs">
-      <DependentUpon>CoordinatesConverterPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Features\MoonEclipses\MoonEclipsesPage.xaml.cs">
       <DependentUpon>MoonEclipsesPage.xaml</DependentUpon>
     </Compile>
@@ -236,9 +258,6 @@
     </Compile>
     <Compile Update="Features\SunEclipses\SunEclipsesPage.xaml.cs">
       <DependentUpon>SunEclipsesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Features\Moon\MoonPage.xaml.cs">
-      <DependentUpon>MoonPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Features\InputLocation\InputLocationPage.xaml.cs">
       <DependentUpon>InputLocationPage.xaml</DependentUpon>
@@ -249,14 +268,8 @@
     <Compile Update="Features\Distance\DistancePage.xaml.cs">
       <DependentUpon>DistancePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Features\SpeedAndDistance\SpeedAndDistancelPage.xaml.cs">
-      <DependentUpon>SpeedAndDistancelPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Features\TimeTravel\TimeTravelPage.xaml.cs">
-      <DependentUpon>TimeTravelPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Features\Sun\SunPage.xaml.cs">
-      <DependentUpon>SunPage.xaml</DependentUpon>
+    <Compile Update="Features\SpeedAndDistance\SpeedAndDistancePage.xaml.cs">
+      <DependentUpon>SpeedAndDistancePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Shared\Popups\SortOptionsPopup.xaml.cs">
       <DependentUpon>SortOptionsPopup.xaml</DependentUpon>
@@ -283,9 +296,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <MauiXaml Update="Features\CoordinatesConverter\CoordinatesConverterPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Shared\Popups\NoOutsideTapDismissPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -301,9 +311,6 @@
     <MauiXaml Update="Features\SunEclipses\SunEclipsesPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Features\Moon\MoonPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Features\InputLocation\InputLocationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -313,13 +320,7 @@
     <MauiXaml Update="Features\Distance\DistancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Features\SpeedAndDistance\SpeedAndDistancelPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Features\TimeTravel\TimeTravelPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
-    <MauiXaml Update="Features\Sun\SunPage.xaml">
+    <MauiXaml Update="Features\SpeedAndDistance\SpeedAndDistancePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Shared\Popups\SortOptionsPopup.xaml">

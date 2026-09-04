@@ -1,6 +1,6 @@
 using Compute.Core.Domain.Services;
-using Compute.Core.Navigation;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.Navigation;
+using JustCompute.Shared.Abstractions.UI;
 
 namespace JustCompute.Shared.ViewModels;
 

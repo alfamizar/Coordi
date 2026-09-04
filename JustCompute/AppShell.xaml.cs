@@ -20,16 +20,18 @@ public partial class AppShell : Shell
         SetStatusBarTheme();
     }
 
-    private static void SetStatusBarTheme()
+    internal static void SetStatusBarTheme()
     {
         var resources = Application.Current?.Resources;
         if (resources == null) return;
 
-        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
-
-        var color = isDark
-            ? (Color)resources["DarkStatusBarColor"]
-            : (Color)resources["LightStatusBarColor"];
+        // The active palette's chrome colour, not the device's light/dark setting: the app
+        // offers more themes than the platform knows about, and the bar has to match the one
+        // that is actually on screen.
+        if (resources.TryGetValue("ThemeHeaderBackground", out var header) is false || header is not Color color)
+        {
+            return;
+        }
 
 #if ANDROID
         // StatusBar styling APIs require Android 23+; on older Android there is no equivalent API.

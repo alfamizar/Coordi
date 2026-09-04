@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace Compute.Core.Common.Sort
+﻿namespace Compute.Core.Common.Sort
 {
     public record Sorting(SortCriterion Criterion, string DisplayName, SortDirection Direction = SortDirection.Ascending)
     {

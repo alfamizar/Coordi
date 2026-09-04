@@ -1,0 +1,5 @@
+Novo ecrã Hoje: nascer, pôr do sol, duração do dia e arco solar em direto para qualquer data, com fase da Lua e previsão opcional a 7 dias.
+Nova calculadora ótica: profundidade de campo, campo de visão e exposição máxima sem rasto de estrelas (regras 500 e NPF).
+Os eclipses usam o fuso do local; o filtro de visibilidade está lá.
+Fusos com fronteiras reais e hora de verão.
+Edite e remova locais na lista.

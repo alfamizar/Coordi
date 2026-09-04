@@ -44,7 +44,7 @@
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasFocalLengthError}"
                            FontSize="Small"
-                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+                           TextColor="{DynamicResource ThemeError}" />
 
                     <Label Text="{localization:Localize OpticsApertureLabel}" />
                     <Entry Text="{Binding Aperture, Mode=TwoWay}"
@@ -52,7 +52,7 @@
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasApertureError}"
                            FontSize="Small"
-                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+                           TextColor="{DynamicResource ThemeError}" />
 
                     <Label Text="{localization:Localize OpticsSubjectDistanceLabel}" />
                     <Entry Text="{Binding SubjectDistanceMeters, Mode=TwoWay}"
@@ -60,7 +60,7 @@
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasSubjectDistanceError}"
                            FontSize="Small"
-                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+                           TextColor="{DynamicResource ThemeError}" />
 
                     <Picker ItemsSource="{Binding Formats}"
                             ItemDisplayBinding="{Binding Label}"
@@ -74,7 +74,7 @@
                     <Label Text="{localization:Localize OpticsErrImageWidthLabel}"
                            IsVisible="{Binding HasImageWidthError}"
                            FontSize="Small"
-                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+                           TextColor="{DynamicResource ThemeError}" />
 
                     <Label Text="{localization:Localize OpticsDeclinationLabel}" />
                     <Entry Text="{Binding DeclinationDeg, Mode=TwoWay}"
@@ -82,7 +82,7 @@
                     <Label Text="{localization:Localize OpticsErrDeclinationLabel}"
                            IsVisible="{Binding HasDeclinationError}"
                            FontSize="Small"
-                           TextColor="{AppThemeBinding Light={StaticResource LightError}, Dark={StaticResource DarkError}}" />
+                           TextColor="{DynamicResource ThemeError}" />
 
                     <!-- Last, under everything it would keep. Off by default: a calculator that
                          silently remembers is one that quietly hands you someone else's answer. -->

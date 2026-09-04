@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Validate the Google Play service-account key is present and authorized
 
+### android validate_metadata
+
+```sh
+[bundle exec] fastlane android validate_metadata
+```
+
+Check every locale's listing text against Google Play's limits before uploading
+
 ### android upload_listing_dry_run
 
 ```sh
@@ -47,6 +55,14 @@ Upload localized store-listing text (title / short & full description) to Google
 
 Upload localized listing text AND phone screenshots (metadata/.../images/phoneScreenshots) to Google Play
 
+### android upload_release_notes
+
+```sh
+[bundle exec] fastlane android upload_release_notes
+```
+
+Upload only the 'What's new' release notes for a version (env: COORDI_VERSION_CODE)
+
 ### android build_aab
 
 ```sh
@@ -70,6 +86,43 @@ Upload a signed AAB to a Play track (env: COORDI_AAB?, COORDI_TRACK=internal, CO
 ```
 
 Build the signed AAB and upload it (build_aab + release)
+
+----
+
+
+## iOS
+
+### ios check_asc_key
+
+```sh
+[bundle exec] fastlane ios check_asc_key
+```
+
+Validate the App Store Connect API key works
+
+### ios build_ipa
+
+```sh
+[bundle exec] fastlane ios build_ipa
+```
+
+Build a signed App Store IPA (requires TEAM_ID and a provisioning profile for the bundle id)
+
+### ios beta
+
+```sh
+[bundle exec] fastlane ios beta
+```
+
+Build and upload to TestFlight
+
+### ios release_appstore
+
+```sh
+[bundle exec] fastlane ios release_appstore
+```
+
+Build and upload the binary for App Store review
 
 ----
 

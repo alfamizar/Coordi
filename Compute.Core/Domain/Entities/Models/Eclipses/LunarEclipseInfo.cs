@@ -10,7 +10,7 @@ namespace Compute.Core.Domain.Entities.Models.Eclipses
     /// (0001-01-01) rather than null, which is what the <c>IsDateTimeSetConverter</c>
     /// visibility bindings test for.
     /// </summary>
-    public class LunarEclipseInfo
+    public class LunarEclipseInfo : IEclipseInfo
     {
         /// <summary>Date of the eclipse.</summary>
         public DateTime Date { get; init; }

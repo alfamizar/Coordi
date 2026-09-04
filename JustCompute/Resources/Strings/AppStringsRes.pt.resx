@@ -762,4 +762,112 @@
   <data name="OpticsErrDeclinationLabel" xml:space="preserve">
     <value>A declinação tem de estar entre −90 e 90.</value>
   </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Azul oceano</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Rosa flor</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Meia-noite</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Laranja brasa</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Rota</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Adicione pelo menos dois pontos para medir uma rota.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Anular</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Limpar</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Desvio</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Combustível</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Consumo</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Preço por unidade</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Combustível necessário</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Custo</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Introduza o consumo para estimar o combustível desta rota.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Unidades</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>L/100 km</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>km/L</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>mpg (EUA)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>mpg (RU)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>gal</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>Não há eclipses visíveis daqui neste período.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Magnitude: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Magnitude umbral: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Magnitude penumbral: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Parar</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Crepúsculo</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>Primeira luz</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Alvorada náutica</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Alvorada civil</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Crepúsculo civil</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Crepúsculo náutico</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Última luz</value>
+  </data>
 </root>

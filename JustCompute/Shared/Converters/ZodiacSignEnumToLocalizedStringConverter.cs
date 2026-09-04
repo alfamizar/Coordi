@@ -13,8 +13,14 @@ namespace JustCompute.Shared.Converters
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            AstroZodiacSign? zodiacSign = (AstroZodiacSign?)value;
-            return $"{BaseCelestialBodyCycle.ZodiacSigns.ElementAt((int?)value - 1 ?? 0)} {GetLocalizedStringFromSignEnum(zodiacSign)}";
+            if (value is not AstroZodiacSign zodiacSign || zodiacSign == AstroZodiacSign.None)
+            {
+                // Nothing to show beats a glyph for a sign we do not have. The old arithmetic
+                // read ElementAt(-1) for None and threw, and for null silently showed Aries.
+                return string.Empty;
+            }
+
+            return $"{BaseCelestialBodyCycle.GlyphFor(zodiacSign)} {GetLocalizedStringFromSignEnum(zodiacSign)}";
         }
 
         private static string? GetLocalizedStringFromSignEnum(object? sign)

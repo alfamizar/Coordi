@@ -1,6 +1,6 @@
 using Android.Content;
 using Compute.Core.Domain.Errors;
-using DotNext;
+using Compute.Core.Common.Results;
 using JustCompute.Platforms.Android.Services;
 using AndroidApp = Android.App.Application;
 using AndroidLocation = Android.Locations.Location;
@@ -54,7 +54,7 @@ namespace JustCompute.Services.LocationService
             {
                 System.Diagnostics.Debug.WriteLine($"[GPSLocationService.Android] StartPlatformListening failed: {ex}");
                 UnsubscribeFromService();
-                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeciveGeoLocation);
+                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeviceGeoLocation);
             }
         }
 

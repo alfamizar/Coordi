@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using Compute.Core.Navigation;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.Navigation;
+using JustCompute.Shared.Abstractions.UI;
 using Compute.Core.Domain.Services;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
@@ -31,8 +31,17 @@ namespace JustCompute.Shared.ViewModels
             _navigationService = services.NavigationService;
         }
 
+        /// <summary>
+        /// How many loads are in flight. Stepping the date fires a fresh load without waiting
+        /// for the previous one, so several overlap; the spinner belongs to all of them, and
+        /// only the last to finish may put it away.
+        /// </summary>
+        private int _loadsInFlight;
+
         protected virtual async Task LoadItems()
         {
+            _hasLoadedOnce = true;
+            Interlocked.Increment(ref _loadsInFlight);
             await MainThread.InvokeOnMainThreadAsync(() => IsBusy = true);
 
             // Every exit resets it, including the ones nobody plans for. Without this a throw
@@ -67,7 +76,13 @@ namespace JustCompute.Shared.ViewModels
             }
             finally
             {
-                await MainThread.InvokeOnMainThreadAsync(() => IsBusy = false);
+                // Not unconditionally: whoever finishes first would otherwise clear the spinner
+                // while slower loads are still running, leaving the screen looking settled over
+                // data that is still arriving.
+                if (Interlocked.Decrement(ref _loadsInFlight) == 0)
+                {
+                    await MainThread.InvokeOnMainThreadAsync(() => IsBusy = false);
+                }
             }
         }
 
@@ -82,7 +97,25 @@ namespace JustCompute.Shared.ViewModels
 
         protected virtual void ClearData() { }
 
-        public virtual Task OnPageAppearingAsync() => Task.CompletedTask;
+        /// <summary>
+        /// Loads the screen's data the first time it is shown.
+        ///
+        /// Loading is otherwise driven only by <see cref="OnNavigatedToAsync"/>, and Shell raises
+        /// no navigation event for the item that is already current — so the landing screen,
+        /// reached by starting the app rather than by navigating, never loaded at all. It showed
+        /// its chrome over no data until the user went somewhere else and came back.
+        ///
+        /// Guarded so a normal navigation, which raises both events, still loads exactly once.
+        /// </summary>
+        public virtual Task OnPageAppearingAsync()
+        {
+            if (this is not ICompute || _hasLoadedOnce)
+            {
+                return Task.CompletedTask;
+            }
+
+            return LoadItems();
+        }
 
         public virtual Task OnPageDisappearingAsync() => Task.CompletedTask;
 
@@ -100,6 +133,9 @@ namespace JustCompute.Shared.ViewModels
         {
             return this is ICompute ? LoadItems() : Task.CompletedTask;
         }
+
+        /// <summary>Set by the first completed load, so appearing does not re-fetch every time.</summary>
+        private bool _hasLoadedOnce;
 
         public virtual void OnAppWindowCreated() { }
         public virtual void OnAppWindowActivated() { }

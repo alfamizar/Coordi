@@ -235,20 +235,24 @@ namespace JustCompute.Shared.Controls
             private static Palette ResolvePalette()
             {
                 var app = Application.Current;
-                var isDark = app?.RequestedTheme == AppTheme.Dark;
-                var prefix = isDark ? "Dark" : "Light";
+                // The chart takes its colours from the active theme's semantic slots, not from
+                // the device's light/dark setting, so it follows the chosen palette like the rest
+                // of the UI. UserAppTheme is set from that palette, so it still says which side
+                // we are on.
+                var isDark = (app?.UserAppTheme ?? AppTheme.Unspecified) == AppTheme.Dark
+                             || (app?.UserAppTheme == AppTheme.Unspecified && app?.RequestedTheme == AppTheme.Dark);
 
                 Color Resource(string key, string fallback) =>
                     app?.Resources.TryGetValue(key, out var v) == true && v is Color c
                         ? c
                         : Color.FromArgb(fallback);
 
-                var background = Resource($"{prefix}Background", isDark ? "#180161" : "#FFFFFF");
-                var surface = Resource($"{prefix}Surface", isDark ? "#4F1787" : "#CDF5FD");
-                var primary = Resource($"{prefix}Primary", isDark ? "#EB3678" : "#00A9FF");
-                var secondary = Resource($"{prefix}Secondary", isDark ? "#FB773C" : "#89CFF3");
-                var outline = Resource($"{prefix}Outline", isDark ? "#6B27A8" : "#89CFF3");
-                var onSurface = Resource($"{prefix}OnSurface", isDark ? "#FFFFFF" : "#212121");
+                var background = Resource("ThemeBackground", isDark ? "#121316" : "#FFFFFF");
+                var surface = Resource("ThemeSurface", isDark ? "#1C1C1E" : "#CDF5FD");
+                var primary = Resource("ThemePrimary", isDark ? "#FF9500" : "#00A9FF");
+                var secondary = Resource("ThemeSecondary", isDark ? "#2C2C2E" : "#89CFF3");
+                var outline = Resource("ThemeOutline", isDark ? "#2C2C2E" : "#89CFF3");
+                var onSurface = Resource("ThemeOnSurface", isDark ? "#FFFFFF" : "#212121");
 
                 if (isDark)
                 {
@@ -256,7 +260,10 @@ namespace JustCompute.Shared.Controls
                         BgTop: surface,
                         BgBottom: background,
                         Horizon: outline.WithAlpha(0.7f),
-                        Curve: secondary,
+                        // The primary, as on the light side. This used to be the secondary, which
+                        // worked only while every dark palette happened to have a bright one; a
+                        // theme whose secondary is a muted surface drew the sun's arc in grey.
+                        Curve: primary,
                         Sun: Color.FromArgb("#FFC844"));
                 }
 

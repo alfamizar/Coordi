@@ -1,6 +1,5 @@
 ﻿using Android.Graphics;
 using Android.Widget;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using AColor = Android.Graphics.Color;
@@ -32,7 +31,7 @@ public partial class SearchBarExHandler : SearchBarHandler
         {
             var searchView = customHandler.PlatformView;
             var searchEditText = searchView.FindViewById(Resource.Id.search_src_text) as EditText;
-            searchEditText?.SetBackgroundColor(Colors.LightGray.ToAndroid());
+            searchEditText?.SetBackgroundColor(Colors.LightGray.ToPlatform());
         }
     }
 

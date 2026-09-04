@@ -45,7 +45,7 @@ namespace Compute.Core.Domain.Entities.Models.Moon
             set
             {
                 _moonInZodiacSign = value;
-                MoonInZodiacSignUnicodeIcon = ZodiacSigns.ElementAt((int)value - 1);
+                MoonInZodiacSignUnicodeIcon = GlyphFor(value);
             }
         }
     }

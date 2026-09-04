@@ -762,4 +762,112 @@
   <data name="OpticsErrDeclinationLabel" xml:space="preserve">
     <value>Склонение должно быть от −90 до 90.</value>
   </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Океанский синий</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Цветочный розовый</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Полночь</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Оранжевые угли</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Маршрут</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Добавьте не менее двух точек, чтобы измерить маршрут.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Очистить</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Всего</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Крюк</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Топливо</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Расход</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Цена за единицу</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Нужно топлива</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Стоимость</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Укажите расход, чтобы оценить топливо на этом маршруте.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Единицы</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>л/100 км</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>км/л</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>миль/гал (США)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>миль/гал (Великобритания)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>л</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>гал</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>В этот период отсюда не видно ни одного затмения.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Фаза: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Теневая фаза: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Полутеневая фаза: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Сумерки</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>Первый свет</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Навигационный рассвет</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Гражданский рассвет</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Гражданские сумерки</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Навигационные сумерки</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Последний свет</value>
+  </data>
 </root>

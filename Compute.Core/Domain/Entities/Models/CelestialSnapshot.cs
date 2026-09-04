@@ -32,6 +32,12 @@ namespace Compute.Core.Domain.Entities.Models
         /// <summary>Sunset in local time; null when the Sun does not set.</summary>
         public DateTime? SunSet { get; init; }
 
+        /// <summary>
+        /// The twilight boundaries of this day in local time, in the order they occur — first
+        /// light through last light. Only the stages that actually happen are present.
+        /// </summary>
+        public IReadOnlyList<TwilightStage> TwilightStages { get; init; } = [];
+
         /// <summary>Moonrise in local time; null when it does not occur that day.</summary>
         public DateTime? MoonRise { get; init; }
 
@@ -69,6 +75,7 @@ namespace Compute.Core.Domain.Entities.Models
             var offsetMinutes = (int)Math.Round(offsetHours * 60.0);
 
             var sun = SunRiseSet.Events(day.Year, day.Month, day.Day, latitude, longitude);
+            var twilight = SunRiseSet.Twilight(day.Year, day.Month, day.Day, latitude, longitude);
             var moonEvents = MoonRiseSet.Events(day.Year, day.Month, day.Day, latitude, longitude, offsetMinutes);
 
             // Evaluate the Moon's own quantities at local noon, the middle of the day being shown.
@@ -83,6 +90,7 @@ namespace Compute.Core.Domain.Entities.Models
                 OffsetHours = offsetHours,
                 SunRise = CelestialTimeUtils.ToLocalTime(day, sun.SunriseUtcMinutes, offsetHours),
                 SunSet = CelestialTimeUtils.ToLocalTime(day, sun.SunsetUtcMinutes, offsetHours),
+                TwilightStages = BuildTwilightStages(day, twilight, offsetHours),
                 MoonRise = CelestialTimeUtils.ToLocalTime(day, moonEvents.MoonriseUtcMinutes, offsetHours),
                 MoonSet = CelestialTimeUtils.ToLocalTime(day, moonEvents.MoonsetUtcMinutes, offsetHours),
                 MoonDistanceKm = moonPosition.DistanceKm,
@@ -93,6 +101,33 @@ namespace Compute.Core.Domain.Entities.Models
                 Utm = TryUtm(latitude, longitude),
                 Mgrs = TryMgrs(latitude, longitude),
             };
+        }
+
+        /// <summary>
+        /// The stages that occur, in chronological order. The three dawn stages run darkest to
+        /// lightest and the three dusk stages the other way, which is the order a person watching
+        /// the sky sees them in.
+        /// </summary>
+        private static IReadOnlyList<TwilightStage> BuildTwilightStages(
+            DateTime day, TwilightTimes twilight, double offsetHours)
+        {
+            (TwilightLabel Label, double? Minutes)[] ordered =
+            [
+                (TwilightLabel.FirstLight, twilight.FirstLightUtcMinutes),
+                (TwilightLabel.NauticalDawn, twilight.NauticalDawnUtcMinutes),
+                (TwilightLabel.CivilDawn, twilight.CivilDawnUtcMinutes),
+                (TwilightLabel.CivilDusk, twilight.CivilDuskUtcMinutes),
+                (TwilightLabel.NauticalDusk, twilight.NauticalDuskUtcMinutes),
+                (TwilightLabel.LastLight, twilight.LastLightUtcMinutes),
+            ];
+
+            return
+            [
+                .. ordered
+                    .Select(stage => (stage.Label, Time: CelestialTimeUtils.ToLocalTime(day, stage.Minutes, offsetHours)))
+                    .Where(stage => stage.Time is not null)
+                    .Select(stage => new TwilightStage(stage.Label, stage.Time!.Value))
+            ];
         }
 
         private static UtmInfo? TryUtm(double latitude, double longitude)

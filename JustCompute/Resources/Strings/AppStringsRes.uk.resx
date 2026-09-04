@@ -762,4 +762,112 @@
   <data name="OpticsErrDeclinationLabel" xml:space="preserve">
     <value>Схилення має бути від −90 до 90.</value>
   </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Океанський синій</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Квітковий рожевий</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Північ</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Помаранчевий жар</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Маршрут</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Додайте щонайменше дві точки, щоб виміряти маршрут.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Очистити</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Разом</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Гак</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Пальне</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Ціна за одиницю</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Потрібно пального</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Вартість</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Вкажіть витрату, щоб оцінити пальне на цьому маршруті.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Одиниці</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>л/100 км</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>км/л</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>миль/гал (США)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>миль/гал (Велика Британія)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>л</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>гал</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>У цей період звідси не видно жодного затемнення.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Фаза: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Тіньова фаза: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Півтіньова фаза: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Сутінки</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>Перше світло</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Навігаційний світанок</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Громадянський світанок</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Громадянські сутінки</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Навігаційні сутінки</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Останнє світло</value>
+  </data>
 </root>

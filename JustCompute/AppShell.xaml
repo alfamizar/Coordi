@@ -7,7 +7,6 @@
        xmlns:moonEclipses="clr-namespace:JustCompute.Features.MoonEclipses"
        xmlns:distance="clr-namespace:JustCompute.Features.Distance"
        xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
-       xmlns:coordinatesConverter="clr-namespace:JustCompute.Features.CoordinatesConverter"
        xmlns:optics="clr-namespace:JustCompute.Features.Optics"
        xmlns:settings="clr-namespace:JustCompute.Features.Settings"
        xmlns:locations="clr-namespace:JustCompute.Features.Locations"
@@ -20,7 +19,7 @@
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
             <Grid Padding="16,20"
-                  BackgroundColor="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkSurface}}">
+                  BackgroundColor="{DynamicResource ThemeHeaderBackground}">
                 <VerticalStackLayout Spacing="2"
                                      VerticalOptions="Center">
                     <Label Text="{x:Static localization:AppMetadata.Name}"
@@ -91,7 +90,7 @@
 
         <ShellContent Title="{localization:Localize SpeedAndDistanceLabel}"
                       Route="speedAndDistance"
-                      ContentTemplate="{DataTemplate speedAndDistance:SpeedAndDistancelPage}" />
+                      ContentTemplate="{DataTemplate speedAndDistance:SpeedAndDistancePage}" />
 
     </FlyoutItem>
 
@@ -106,15 +105,6 @@
 
     </FlyoutItem>
 
-    <FlyoutItem IsVisible="False"
-                FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize ConvertersLabel}"
-                FlyoutIcon="{AppThemeBinding Light=convert_icon_light.png, Dark=convert_icon_light.png}">
-
-        <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
-                      ContentTemplate="{DataTemplate coordinatesConverter:CoordinatesConverterPage}" />
-
-    </FlyoutItem>
     
     <FlyoutItem IsVisible="True"
                 FlyoutDisplayOptions="AsSingleItem"

@@ -1,1 +1,1 @@
-Sol, Luna y coordenadas sin conexión: con clima, gráficos y tema oscuro.
+Astronomía sin conexión: Sol, Luna, eclipses, MGRS/UTM, velocidad GPS y óptica.

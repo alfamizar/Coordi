@@ -8,6 +8,7 @@
              xmlns:ViewModels="clr-namespace:JustCompute.Features.Today"
              xmlns:weatherUi="clr-namespace:JustCompute.Features.Weather"
              xmlns:converters="clr-namespace:JustCompute.Shared.Converters"
+             xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
              x:DataType="ViewModels:TodayViewModel"
              Title="{Binding LocationName}">
 
@@ -134,7 +135,7 @@
                                         Stroke="Transparent"
                                         StrokeShape="RoundRectangle 10"
                                         IsVisible="{Binding WeatherForecast, Converter={StaticResource IsNotNullConverter}}"
-                                        Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}">
+                                        Background="{DynamicResource ThemeSecondary}">
                                     <Grid ColumnDefinitions="*,1,*,1,*,1,*,1,*,1,*,1,*"
                                           ColumnSpacing="0">
 
@@ -218,6 +219,36 @@
                                 <Label Text="{Binding Snapshot.SunRise, StringFormat={localization:Localize SunRiseLabel},Converter={StaticResource TimeFormatConverter}}" />
 
                                 <Label Text="{Binding Snapshot.SunSet, StringFormat={localization:Localize SunSetLabel},Converter={StaticResource TimeFormatConverter}}" />
+
+                                <!-- Twilight, in the order it happens: first light up to sunrise,
+                                     then sunset down to last light. The list carries only the
+                                     stages that occur, so a northern summer night — where the Sun
+                                     never reaches -18°, or even -12° — simply shows fewer rows,
+                                     and under the midnight sun the whole section disappears. -->
+                                <BoxView Style="{StaticResource DividerStyle}"
+                                         IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
+
+                                <Label Text="{localization:Localize TwilightSectionLabel}"
+                                       FontAttributes="Bold"
+                                       IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
+
+                                <VerticalStackLayout Spacing="4"
+                                                     BindableLayout.ItemsSource="{Binding Snapshot.TwilightStages}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:TwilightStage">
+                                            <Grid ColumnDefinitions="*,Auto"
+                                                  ColumnSpacing="8">
+                                                <Label Grid.Column="0"
+                                                       Text="{Binding Label, Converter={StaticResource TwilightLabelToNameConverter}}" />
+                                                <Label Grid.Column="1"
+                                                       Text="{Binding Time, Converter={StaticResource TimeFormatConverter}}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+
+                                <BoxView Style="{StaticResource DividerStyle}"
+                                         IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
 
                                 <Label Text="{Binding Snapshot.ZodiacSign,
                                        Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},

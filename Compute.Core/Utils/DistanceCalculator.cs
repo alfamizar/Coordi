@@ -4,18 +4,21 @@ namespace Compute.Core.Utils
 {
     public class DistanceCalculator
     {
-        private double _startAltitude = -1;
         private GeoPoint? _startingPoint;
         private GeoPoint? _previousPoint;
         private GeoPoint? _lastPoint;
         private DateTime? _previousTimestamp;
         private DateTime? _lastTimestamp;
 
-        public double StartAltitude
-        {
-            get => _startAltitude;
-            set => _startAltitude = value;
-        }
+        /// <summary>
+        /// Altitude at the first fix of the run, or null before one has been recorded.
+        ///
+        /// Null rather than a sentinel: -1 used to mean "unset", which quietly zeroed the
+        /// elevation for anyone starting a metre below sea level — the Dead Sea shore, Death
+        /// Valley, the Caspian depression and much of the Netherlands are all legitimately
+        /// negative.
+        /// </summary>
+        public double? StartAltitude { get; set; }
 
         public GeoPoint? StartingPoint => _startingPoint;
 
@@ -46,7 +49,7 @@ namespace Compute.Core.Utils
         /// <summary>Clears every accumulated fix so a new run starts from nothing.</summary>
         public void Reset()
         {
-            _startAltitude = -1;
+            StartAltitude = null;
             _startingPoint = null;
             _previousPoint = null;
             _lastPoint = null;
@@ -54,14 +57,15 @@ namespace Compute.Core.Utils
             _lastTimestamp = null;
         }
 
-        public double GetElevation(double currentAltitude)
+        /// <summary>Height gained since the run began; zero until both altitudes are known.</summary>
+        public double GetElevation(double? currentAltitude)
         {
-            if (_startAltitude == -1 || currentAltitude == -1)
+            if (StartAltitude is not { } start || currentAltitude is not { } current)
             {
                 return 0;
             }
 
-            return currentAltitude - _startAltitude;
+            return current - start;
         }
 
         public double GetCurvedDistance(double currentCurvedDistance)

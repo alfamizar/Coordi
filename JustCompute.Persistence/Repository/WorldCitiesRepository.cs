@@ -1,4 +1,6 @@
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Repository;
+using JustCompute.Persistence.Mapping;
 using Compute.Core.Utils;
 using JustCompute.Persistence.Repository.Constants;
 using JustCompute.Persistence.Repository.Models;
@@ -6,21 +8,28 @@ using SQLite;
 
 namespace JustCompute.Persistence.Repository
 {
-    public class WorldCitiesRepository : IWorldCitiesRepository<WorldCityTable>
+    public class WorldCitiesRepository : IWorldCitiesRepository
     {
         private readonly SQLiteAsyncConnection _database;
 
         public WorldCitiesRepository(AppDatabaseConnection connection)
         {
-            _database = connection.Database;
+            _database = connection.Catalogue;
         }
 
-        public async Task<WorldCityTable> GetTheNearestCityAsync(double currentLat, double currentLng)
+        public async Task<City> GetNearestCityAsync(double latitude, double longitude)
         {
-            return await GetTheNearestCityByQueryAsync(currentLat, currentLng).ConfigureAwait(false);
+            WorldCityTable row = await NearestRowAsync(latitude, longitude).ConfigureAwait(false);
+            return row.ToCity();
         }
 
-        public async Task<WorldCityTable> GetTheNearestCityByQueryAsync(double currentLat, double currentLng)
+        public async Task<List<Location>> SearchAsync(string term, int limit)
+        {
+            IEnumerable<WorldCityTable> rows = await FilterByCityAsync(term, limit).ConfigureAwait(false);
+            return rows.ToDomainLocations();
+        }
+
+        private async Task<WorldCityTable> NearestRowAsync(double currentLat, double currentLng)
         {
             if (double.IsNaN(currentLat) || double.IsNaN(currentLng))
             {
@@ -45,16 +54,7 @@ namespace JustCompute.Persistence.Repository
                 .FirstOrDefault() ?? new WorldCityTable();
         }
 
-        public Task<List<WorldCityTable>> GetItemsAsync() => _database.Table<WorldCityTable>().ToListAsync();
-
-        public Task<List<WorldCityTable>> GetCitiesInCountryAsync(string name)
-        {
-            return _database.QueryAsync<WorldCityTable>(
-                @"SELECT * FROM worldcities WHERE Country = ? ORDER BY CityAscii ASC",
-                name);
-        }
-
-        public async Task<IEnumerable<WorldCityTable>> FilterByCity(string name, int limit)
+        private async Task<IEnumerable<WorldCityTable>> FilterByCityAsync(string name, int limit)
         {
             var searchPattern = $"%{name}%";
 

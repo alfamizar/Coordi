@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
 using CommunityToolkit.Maui;
 using JustCompute.DependencyInjectionExtensions;
-using JustCompute.Features.CoordinatesConverter;
 using JustCompute.Features.Distance;
 using JustCompute.Features.InputLocation;
 using JustCompute.Features.Locations;
@@ -26,8 +25,6 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .ConfigureAutoMapper()
-            .AddCoordinatesConverterFeature()
             .AddDistanceFeature()
             .AddInputLocationFeature()
             .AddLocationsFeature()

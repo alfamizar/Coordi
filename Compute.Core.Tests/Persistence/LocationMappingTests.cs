@@ -1,24 +1,19 @@
-using AutoMapper;
 using Compute.Core.Domain.Entities.Models;
-using JustCompute.Persistence.AutoMapper;
+using JustCompute.Persistence.Mapping;
 using JustCompute.Persistence.Repository.Models;
 using JustCompute.Persistence.Repository.Models.DTOs;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Compute.Core.Tests.Persistence
 {
     /// <summary>
     /// The location and city tables have independent autoincrement sequences, so a location's id
-    /// says nothing about which city row belongs to it. AutoMapper's name convention will happily
-    /// map <c>Location.Id</c> onto <c>CityTable.Id</c>, which is right only by coincidence and
-    /// silently corrupts the foreign key the moment the two sequences drift apart.
+    /// says nothing about which city row belongs to it. Mapping one onto the other is right only
+    /// by coincidence, and silently corrupts the foreign key the moment the sequences drift
+    /// apart — which is exactly what a convention-based mapper did here before these conversions
+    /// were written out by hand.
     /// </summary>
     public class LocationMappingTests
     {
-        private static IMapper CreateMapper() =>
-            new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>(), NullLoggerFactory.Instance)
-                .CreateMapper();
-
         private static Location LocationWithDistinctIds() => new()
         {
             Id = 7,
@@ -32,7 +27,7 @@ namespace Compute.Core.Tests.Persistence
         [Fact]
         public void LocationToCityTable_UsesTheCityRowId_NotTheLocationId()
         {
-            var cityTable = CreateMapper().Map<CityTable>(LocationWithDistinctIds());
+            var cityTable = LocationWithDistinctIds().ToCityTable();
 
             Assert.Equal(3, cityTable.Id);
             Assert.Equal("Tokyo", cityTable.CityName);
@@ -42,7 +37,7 @@ namespace Compute.Core.Tests.Persistence
         [Fact]
         public void LocationToLocationTable_PointsTheForeignKeyAtTheCityRow()
         {
-            var locationTable = CreateMapper().Map<LocationTable>(LocationWithDistinctIds());
+            var locationTable = LocationWithDistinctIds().ToLocationTable();
 
             Assert.Equal(3, locationTable.CityId);
             Assert.Equal("Asia/Tokyo", locationTable.TimeZoneId);
@@ -64,7 +59,7 @@ namespace Compute.Core.Tests.Persistence
                 TimeZoneId = "Asia/Tokyo",
             };
 
-            var location = CreateMapper().Map<Location>(dto);
+            var location = dto.ToDomain();
 
             Assert.Equal(7, location.Id);
             Assert.Equal(3, location.City.Id);
@@ -75,13 +70,12 @@ namespace Compute.Core.Tests.Persistence
         [Fact]
         public void RoundTrip_KeepsLocationAndCityIdsDistinct()
         {
-            var mapper = CreateMapper();
             var original = LocationWithDistinctIds();
 
-            var locationTable = mapper.Map<LocationTable>(original);
-            var cityTable = mapper.Map<CityTable>(original);
+            var locationTable = original.ToLocationTable();
+            var cityTable = original.ToCityTable();
 
-            var reloaded = mapper.Map<Location>(new LocationWithCityDTO
+            var reloaded = new LocationWithCityDTO
             {
                 Id = locationTable.Id == 0 ? original.Id : locationTable.Id,
                 Name = locationTable.Name,
@@ -92,7 +86,7 @@ namespace Compute.Core.Tests.Persistence
                 CountryName = cityTable.CountryName!,
                 Population = cityTable.Population,
                 TimeZoneId = locationTable.TimeZoneId,
-            });
+            }.ToDomain();
 
             Assert.Equal(original.Id, reloaded.Id);
             Assert.Equal(original.City.Id, reloaded.City.Id);

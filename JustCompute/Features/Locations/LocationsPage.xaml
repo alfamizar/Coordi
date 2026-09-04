@@ -139,9 +139,9 @@
                                                     <VisualState x:Name="Selected">
                                                         <VisualState.Setters>
                                                             <Setter Property="BackgroundColor"
-                                                                    Value="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource Gray600}}" />
+                                                                    Value="{DynamicResource ThemeMutedSurface}" />
                                                             <Setter Property="Stroke"
-                                                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                                                                    Value="{DynamicResource ThemePrimary}" />
                                                         </VisualState.Setters>
                                                     </VisualState>
                                                 </VisualStateGroup>
@@ -149,7 +149,7 @@
                                         </VisualStateManager.VisualStateGroups>
 
                                         <Grid ColumnDefinitions="*,Auto,Auto"
-                                              ColumnSpacing="4">
+                                              ColumnSpacing="0">
 
                                             <VerticalStackLayout Grid.Column="0"
                                                                  Spacing="2"
@@ -165,31 +165,61 @@
                                             <!-- Only a place the user saved can be edited or removed:
                                                  the device's own position and the placeholder are not
                                                  rows in the database. -->
-                                            <ImageButton Grid.Column="1"
-                                                         IsVisible="{Binding IsSaved}"
-                                                         Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}"
-                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=EditLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
-                                                         CommandParameter="{Binding .}"
-                                                         VerticalOptions="Center"
-                                                         WidthRequest="32"
-                                                         HeightRequest="32"
-                                                         MinimumWidthRequest="32"
-                                                         MinimumHeightRequest="32"
-                                                         Padding="6"
-                                                         CornerRadius="8" />
+                                            <!-- 32dp of ink inside a 48dp target: the icon reads
+                                                 small, but the tap area still meets the platform
+                                                 minimum. The button itself is inert; the
+                                                 surrounding cell takes the tap. -->
+                                            <Grid Grid.Column="1"
+                                                  IsVisible="{Binding IsSaved}"
+                                                  WidthRequest="48"
+                                                  HeightRequest="48"
+                                                  VerticalOptions="Center">
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=EditLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
+                                                                          CommandParameter="{Binding .}" />
+                                                </Grid.GestureRecognizers>
+                                                <!-- Still an ImageButton: it is what draws these
+                                                     glyphs correctly on their filled ground. Inert
+                                                     here — the 48dp cell around it takes the tap. -->
+                                                <ImageButton InputTransparent="True"
+                                                             Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}"
+                                                             WidthRequest="32"
+                                                             HeightRequest="32"
+                                                             MinimumWidthRequest="32"
+                                                             MinimumHeightRequest="32"
+                                                             Padding="6"
+                                                             CornerRadius="8"
+                                                             HorizontalOptions="Center"
+                                                             VerticalOptions="Center" />
+                                            </Grid>
 
-                                            <ImageButton Grid.Column="2"
-                                                         IsVisible="{Binding IsSaved}"
-                                                         Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
-                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=DeleteLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
-                                                         CommandParameter="{Binding .}"
-                                                         VerticalOptions="Center"
-                                                         WidthRequest="32"
-                                                         HeightRequest="32"
-                                                         MinimumWidthRequest="32"
-                                                         MinimumHeightRequest="32"
-                                                         Padding="6"
-                                                         CornerRadius="8" />
+                                            <!-- 32dp of ink inside a 48dp target: the icon reads
+                                                 small, but the tap area still meets the platform
+                                                 minimum. The button itself is inert; the
+                                                 surrounding cell takes the tap. -->
+                                            <Grid Grid.Column="2"
+                                                  IsVisible="{Binding IsSaved}"
+                                                  WidthRequest="48"
+                                                  HeightRequest="48"
+                                                  VerticalOptions="Center">
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=DeleteLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
+                                                                          CommandParameter="{Binding .}" />
+                                                </Grid.GestureRecognizers>
+                                                <!-- Still an ImageButton: it is what draws these
+                                                     glyphs correctly on their filled ground. Inert
+                                                     here — the 48dp cell around it takes the tap. -->
+                                                <ImageButton InputTransparent="True"
+                                                             Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
+                                                             WidthRequest="32"
+                                                             HeightRequest="32"
+                                                             MinimumWidthRequest="32"
+                                                             MinimumHeightRequest="32"
+                                                             Padding="6"
+                                                             CornerRadius="8"
+                                                             HorizontalOptions="Center"
+                                                             VerticalOptions="Center" />
+                                            </Grid>
 
                                         </Grid>
 

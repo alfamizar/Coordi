@@ -22,32 +22,27 @@ namespace JustCompute.Features.SunEclipses
                     return _localizer.GetString("NotVisibleFromHereLabel");
                 }
 
-                value = info.Type;
+                // LocalType, not Type. Type is the geocentric classification — what the eclipse is
+                // for the planet, decided by the darkest shadow that touches anyone. A reader in
+                // Berlin looking at an eclipse whose umbra crosses Spain is owed "Partial", which
+                // is what they will see; labelling that row "Total" promises them a totality that
+                // happens two thousand kilometres away.
+                value = info.LocalType;
             }
 
-            if (value is SolarEclipseType solarEclipseType)
+            if (value is SolarEclipseLocalType localType)
             {
-                switch (solarEclipseType)
+                return localType switch
                 {
-                    case SolarEclipseType.Total:
-                        {
-                            return _localizer.GetString("TotalEclipseLabel");
-                        }
-                    case SolarEclipseType.Annular:
-                        {
-                            return _localizer.GetString("AnnularEclipseLabel");
-                        }
-                    case SolarEclipseType.Partial:
-                        {
-                            return _localizer.GetString("PartialEclipseLabel");
-                        }
-                }
-                return null;
+                    SolarEclipseLocalType.Total => _localizer.GetString("TotalEclipseLabel"),
+                    SolarEclipseLocalType.Annular => _localizer.GetString("AnnularEclipseLabel"),
+                    SolarEclipseLocalType.Partial => _localizer.GetString("PartialEclipseLabel"),
+                    // Visible but classified as nothing is a contradiction; say the honest half.
+                    _ => _localizer.GetString("NotVisibleFromHereLabel"),
+                };
             }
-            else
-            {
-                return $"Expected SolarEclipseTypeEnum type for {value?.ToString()}";
-            }
+
+            return $"Expected SolarEclipseLocalType for {value?.ToString()}";
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

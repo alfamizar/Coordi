@@ -270,6 +270,15 @@ namespace JustCompute.Features.Optics
                 && picked.Format == SelectedFormat
                 && picked.ImageWidthPixels == width.Value;
 
+            if (!stillAgrees && picked is not null)
+            {
+                // Editing the pixel field by hand leaves the picker naming a body that is no
+                // longer described by the numbers. Clearing it drops the picker back to its
+                // placeholder, which is honest; the line underneath still names the body when
+                // the numbers can only be one.
+                SelectedBody = null;
+            }
+
             BodyName = stillAgrees
                 ? picked!.Label
                 : CameraBodies.UniqueMatch(SelectedFormat, width.Value)?.Label ?? string.Empty;

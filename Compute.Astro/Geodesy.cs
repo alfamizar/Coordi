@@ -35,7 +35,21 @@ namespace Compute.Astro
             double lat1Deg,
             double lon1Deg,
             double lat2Deg,
-            double lon2Deg)
+            double lon2Deg) =>
+            Inverse(lat1Deg, lon1Deg, lat2Deg, lon2Deg, allowAntipodalFallback: true);
+
+        /// <summary>
+        /// Vincenty's inverse. <paramref name="allowAntipodalFallback"/> is false when this is
+        /// solving one leg of <see cref="AntipodalInverse"/>. Those legs span roughly a quarter of
+        /// the globe and so are never themselves antipodal, and refusing the fallback there makes
+        /// the absence of recursion structural rather than an assumption about the inputs.
+        /// </summary>
+        private static GeodesicResult Inverse(
+            double lat1Deg,
+            double lon1Deg,
+            double lat2Deg,
+            double lon2Deg,
+            bool allowAntipodalFallback)
         {
             var l = ToRadians(lon2Deg - lon1Deg);
             var u1 = Math.Atan((1.0 - F) * Math.Tan(ToRadians(lat1Deg)));
@@ -52,6 +66,7 @@ namespace Compute.Astro
             var cosSqAlpha = 0.0;
             var cos2SigmaM = 0.0;
 
+            var converged = false;
             var iterations = 0;
             while (iterations < MaxIter)
             {
@@ -75,7 +90,20 @@ namespace Compute.Astro
                 var lambdaPrev = lambda;
                 lambda = l + (1.0 - c) * F * sinAlpha *
                     (sigma + c * sinSigma * (cos2SigmaM + c * cosSigma * (-1.0 + 2.0 * cos2SigmaM * cos2SigmaM)));
-                if (Math.Abs(lambda - lambdaPrev) < Eps) break;
+                if (Math.Abs(lambda - lambdaPrev) < Eps)
+                {
+                    converged = true;
+                    break;
+                }
+            }
+
+            // Vincenty's inverse does not converge for nearly antipodal points: the iteration
+            // oscillates and the loop leaves on its cap holding a poor lambda. The distance that
+            // falls out of it is not merely imprecise — for equatorial antipodes it came out
+            // ~100 km SHORTER than the shortest path that exists on this planet.
+            if (!converged && allowAntipodalFallback)
+            {
+                return AntipodalInverse(lat1Deg, lon1Deg, lat2Deg, lon2Deg);
             }
 
             var uSq = cosSqAlpha * (A * A - B * B) / (B * B);
@@ -106,6 +134,107 @@ namespace Compute.Astro
                 InitialBearingDeg: NormalizeDegrees(ToDegrees(initial)),
                 FinalBearingDeg: NormalizeDegrees(ToDegrees(final)));
         }
+
+        /// <summary>
+        /// The geodesic between nearly antipodal points, found by splitting it in two.
+        ///
+        /// Every geodesic from P1 to its (near) antipode passes through a point roughly a quarter
+        /// of the way around the globe from P1, and which one it passes through is exactly what
+        /// Vincenty cannot decide here. So this asks the question the other way round: sweep that
+        /// waypoint around the circle of candidates, measure P1→M and M→P2 — each an ordinary
+        /// ~10,000 km line the formula solves without complaint — and keep the shortest total.
+        ///
+        /// The minimum over that sweep is the geodesic, because a shortest path's own midpoint
+        /// lies on the locus being swept. A coarse pass finds the basin; golden-section narrows
+        /// it. Both legs are converged solutions, so the sum carries their accuracy.
+        /// </summary>
+        private static GeodesicResult AntipodalInverse(
+            double lat1Deg, double lon1Deg, double lat2Deg, double lon2Deg)
+        {
+            // Total length of the two legs through the waypoint at azimuth t from P1.
+            double Through(double azimuthDeg)
+            {
+                var (mLat, mLon) = QuarterWayPoint(lat1Deg, lon1Deg, azimuthDeg);
+                return LegMeters(lat1Deg, lon1Deg, mLat, mLon)
+                     + LegMeters(mLat, mLon, lat2Deg, lon2Deg);
+            }
+
+            // Coarse sweep: 5° steps around the full circle of candidate waypoints.
+            var bestAzimuth = 0.0;
+            var best = double.MaxValue;
+            for (var azimuth = 0.0; azimuth < 360.0; azimuth += 5.0)
+            {
+                var total = Through(azimuth);
+                if (total < best)
+                {
+                    best = total;
+                    bestAzimuth = azimuth;
+                }
+            }
+
+            // Golden-section refinement within the bracketing 10° window.
+            var low = bestAzimuth - 5.0;
+            var high = bestAzimuth + 5.0;
+            const double Phi = 0.618033988749895;
+            var c = high - Phi * (high - low);
+            var d = low + Phi * (high - low);
+            var fc = Through(c);
+            var fd = Through(d);
+
+            for (var i = 0; i < 60 && high - low > 1e-9; i++)
+            {
+                if (fc < fd)
+                {
+                    high = d; d = c; fd = fc;
+                    c = high - Phi * (high - low);
+                    fc = Through(c);
+                }
+                else
+                {
+                    low = c; c = d; fc = fd;
+                    d = low + Phi * (high - low);
+                    fd = Through(d);
+                }
+            }
+
+            var azimuthOfGeodesic = (low + high) / 2.0;
+            var (waypointLat, waypointLon) = QuarterWayPoint(lat1Deg, lon1Deg, azimuthOfGeodesic);
+
+            var first = Inverse(lat1Deg, lon1Deg, waypointLat, waypointLon, allowAntipodalFallback: false);
+            var second = Inverse(waypointLat, waypointLon, lat2Deg, lon2Deg, allowAntipodalFallback: false);
+
+            // Bearings are those of the legs: leaving P1 on the first, arriving at P2 on the last.
+            return new GeodesicResult(
+                DistanceMeters: first.DistanceMeters + second.DistanceMeters,
+                InitialBearingDeg: first.InitialBearingDeg,
+                FinalBearingDeg: second.FinalBearingDeg);
+        }
+
+        /// <summary>
+        /// A point a quarter of the way around a sphere from the given one, on the given azimuth.
+        /// Spherical is enough: it only has to place the waypoint in the right neighbourhood, and
+        /// the two ellipsoidal legs measured through it carry the accuracy.
+        /// </summary>
+        private static (double Lat, double Lon) QuarterWayPoint(double latDeg, double lonDeg, double azimuthDeg)
+        {
+            var lat = ToRadians(latDeg);
+            var azimuth = ToRadians(azimuthDeg);
+            const double QuarterCircle = Math.PI / 2.0;
+
+            var destLat = Math.Asin(
+                Math.Sin(lat) * Math.Cos(QuarterCircle) +
+                Math.Cos(lat) * Math.Sin(QuarterCircle) * Math.Cos(azimuth));
+
+            var destLon = ToRadians(lonDeg) + Math.Atan2(
+                Math.Sin(azimuth) * Math.Sin(QuarterCircle) * Math.Cos(lat),
+                Math.Cos(QuarterCircle) - Math.Sin(lat) * Math.Sin(destLat));
+
+            return (ToDegrees(destLat), NormalizeDegrees(ToDegrees(destLon) + 180.0) - 180.0);
+        }
+
+        /// <summary>One leg of the split, in metres.</summary>
+        private static double LegMeters(double lat1, double lon1, double lat2, double lon2) =>
+            Inverse(lat1, lon1, lat2, lon2, allowAntipodalFallback: false).DistanceMeters;
 
         /// <summary>Distance only, in metres.</summary>
         public static double DistanceMeters(double lat1, double lon1, double lat2, double lon2) =>

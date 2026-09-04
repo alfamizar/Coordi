@@ -1,0 +1,5 @@
+Yeni Bugün ekranı: gün doğumu, batımı, gün uzunluğu ve herhangi bir tarih için canlı Güneş yayı; ay evresi ve isteğe bağlı 7 günlük tahmin.
+Yeni optik hesaplayıcı: alan derinliği, görüş açısı ve yıldızlar iz bırakmadan önceki en uzun pozlama (500 ve NPF kuralları).
+Tutulmalar artık yerin saat diliminde; görünürlük filtresi o ekranda.
+Saat dilimleri gerçek sınırlara ve yaz saatine uyuyor.
+Kayıtlı yerler listeden düzenlenip silinebiliyor.

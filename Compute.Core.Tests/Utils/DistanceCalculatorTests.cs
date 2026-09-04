@@ -112,8 +112,32 @@ namespace Compute.Core.Tests.Utils
             Assert.Null(calculator.PreviousPoint);
             Assert.Null(calculator.LastPoint);
             Assert.Null(calculator.LastFixTimestampUtc);
-            Assert.Equal(-1, calculator.StartAltitude);
+            Assert.Null(calculator.StartAltitude);
             Assert.Equal(0, calculator.GetSpeed());
         }
+
+        [Fact]
+        public void Elevation_IsMeasuredFromBelowSeaLevelStarts()
+        {
+            // The Dead Sea shore. -1 used to mean "no altitude recorded", so a run starting
+            // exactly a metre below sea level reported no climb at all.
+            var calculator = new DistanceCalculator { StartAltitude = -1 };
+
+            Assert.Equal(431, calculator.GetElevation(430));
+            Assert.Equal(-9, calculator.GetElevation(-10));
+        }
+
+        [Fact]
+        public void Elevation_IsZeroUntilBothAltitudesAreKnown()
+        {
+            var calculator = new DistanceCalculator();
+
+            Assert.Equal(0, calculator.GetElevation(430));
+
+            calculator.StartAltitude = 100;
+            Assert.Equal(0, calculator.GetElevation(null));
+            Assert.Equal(330, calculator.GetElevation(430));
+        }
+
     }
 }

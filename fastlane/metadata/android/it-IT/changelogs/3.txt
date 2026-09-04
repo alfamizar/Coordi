@@ -1,0 +1,5 @@
+Nuova schermata Oggi: alba, tramonto, durata del giorno e arco solare dal vivo per qualsiasi data, con fase lunare e meteo opzionale a 7 giorni.
+Nuovo calcolatore ottico: profondità di campo, campo visivo e posa massima senza scie stellari (regole 500 e NPF).
+Le eclissi usano il fuso del luogo; il filtro di visibilità è lì.
+Fusi con confini reali e ora legale.
+Modifica ed elimina i luoghi dall'elenco.

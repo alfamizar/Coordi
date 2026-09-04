@@ -4,17 +4,20 @@ using SQLite;
 namespace JustCompute.Persistence.Repository
 {
     /// <summary>
-    /// The single connection to the one database file the app owns.
+    /// The app's two databases, kept apart on purpose.
     ///
-    /// Both repositories read <c>geo_world.db</c> — saved locations and the world-city catalogue
-    /// live side by side in it. Opening a connection each meant two of them over the same file
-    /// with <see cref="SQLiteOpenFlags.SharedCache"/>, where SQLite takes table-level locks: a
-    /// city search running while the Locations screen queried its own tables could fail with
-    /// SQLITE_LOCKED. Sharing one connection removes the contention entirely.
+    /// <see cref="Catalogue"/> is the shipped world-city list: read-only, and replaceable wholesale
+    /// on any release. <see cref="UserData"/> holds the places the user saved. They used to share
+    /// one file, which meant the catalogue could never be refreshed without destroying the user's
+    /// locations along with it. Separate files also mean the two connections no longer contend for
+    /// the same shared-cache locks.
     /// </summary>
     public sealed class AppDatabaseConnection
     {
-        public SQLiteAsyncConnection Database { get; } =
-            new(RepositoryConstants.DatabasePath, RepositoryConstants.Flags);
+        public SQLiteAsyncConnection UserData { get; } =
+            new(RepositoryConstants.UserDatabasePath, RepositoryConstants.Flags);
+
+        public SQLiteAsyncConnection Catalogue { get; } =
+            new(RepositoryConstants.CataloguePath, RepositoryConstants.Flags);
     }
 }

@@ -1,18 +1,43 @@
 using Compute.Core.Domain.Entities.Models.Distance;
+using JustCompute.Shared.Theming;
 using Compute.Core.Domain.Entities.Models.Speed;
 
 namespace JustCompute.Shared.Helpers;
 
 public static class Settings
 {
-    public static AppTheme Theme
+    /// <summary>
+    /// The chosen theme. Stored by name so the enum may be reordered freely.
+    ///
+    /// Falls back to whatever the old <c>Theme</c> preference held, so an install that predates
+    /// named themes keeps the side it was on: Light becomes Ocean, Dark becomes Midnight.
+    /// </summary>
+    public static AppThemeId ThemeId
     {
         get
         {
-            Enum.TryParse<AppTheme>(Preferences.Get(nameof(Theme), Enum.GetName(AppTheme.Unspecified)), true, out var appTheme);
-            return appTheme;
+            string? stored = Preferences.Get(nameof(ThemeId), null);
+            if (stored is not null && Enum.TryParse<AppThemeId>(stored, true, out var themeId))
+            {
+                return themeId;
+            }
+
+            return MigrateFromLegacyTheme();
         }
-        set => Preferences.Set(nameof(Theme), value.ToString());
+        set => Preferences.Set(nameof(ThemeId), value.ToString());
+    }
+
+    private static AppThemeId MigrateFromLegacyTheme()
+    {
+        Enum.TryParse<AppTheme>(
+            Preferences.Get("Theme", Enum.GetName(AppTheme.Unspecified)), true, out var legacy);
+
+        return legacy switch
+        {
+            AppTheme.Light => AppThemeId.Ocean,
+            AppTheme.Dark => AppThemeId.Midnight,
+            _ => AppThemeId.System,
+        };
     }
 
     public static DistanceType DistanceType
@@ -134,6 +159,33 @@ public static class Settings
     {
         get => Preferences.Get(nameof(HasAcceptedBackgroundLocationDisclosure), false);
         set => Preferences.Set(nameof(HasAcceptedBackgroundLocationDisclosure), value);
+    }
+
+    /// <summary>
+    /// The Ruler's fuel figures, kept as the text the user typed rather than parsed numbers — a
+    /// field mid-edit is not always a valid number, and round-tripping through a double would
+    /// rewrite what they were in the middle of typing. Same reasoning as the Optics inputs.
+    /// </summary>
+    public static string FuelConsumption
+    {
+        get => Preferences.Get(nameof(FuelConsumption), string.Empty);
+        set => Preferences.Set(nameof(FuelConsumption), value);
+    }
+
+    /// <summary>
+    /// How the reader quotes fuel consumption. Empty until they choose, so the first visit can
+    /// guess from their region rather than assuming everyone counts litres per 100 km.
+    /// </summary>
+    public static string FuelConsumptionMode
+    {
+        get => Preferences.Get(nameof(FuelConsumptionMode), string.Empty);
+        set => Preferences.Set(nameof(FuelConsumptionMode), value);
+    }
+
+    public static string FuelPrice
+    {
+        get => Preferences.Get(nameof(FuelPrice), string.Empty);
+        set => Preferences.Set(nameof(FuelPrice), value);
     }
 
     public static DateTime Birthday

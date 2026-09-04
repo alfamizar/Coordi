@@ -10,7 +10,7 @@ using JustCompute.Shared.Popups;
 using System.ComponentModel;
 using Microsoft.Extensions.Localization;
 using JustCompute.Resources.Strings;
-using Compute.Core.Navigation;
+using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Features.InputLocation;
 
 namespace JustCompute.Features.SearchByCity
@@ -233,9 +233,8 @@ namespace JustCompute.Features.SearchByCity
             }
             else
             {
-                Dictionary<LocationInputContext, Location> locationAndContext = [];
-                locationAndContext[LocationInputContext.Add] = selectedLocation;
-                _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
+                _navigationService.NavigateToAsync<InputLocationViewModel>(
+                    new LocationEditorArgs(LocationInputContext.Add, selectedLocation));
             }
         }
 

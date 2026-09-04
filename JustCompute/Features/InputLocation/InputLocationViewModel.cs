@@ -2,8 +2,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Common.Messaging;
 using Compute.Core.Domain.Entities.Models.Time;
-using Compute.Core.Navigation;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.Navigation;
+using JustCompute.Shared.Abstractions.UI;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.ViewModels.Messages;
 using JustCompute.Resources.Strings;
@@ -29,7 +29,7 @@ namespace JustCompute.Features.InputLocation
         private ObservableCollection<TimeZoneOffset> timeZoneOffsets;
 
         [ObservableProperty]
-        private Location location = new();
+        private EditableLocation location = new();
 
         /// <summary>
         /// The same page serves both contexts, so the title has to say which one it is —
@@ -101,13 +101,13 @@ namespace JustCompute.Features.InputLocation
                 case LocationInputContext.Add:
                     {
                         if (Location != null)
-                            await SaveLocationIfNotExists(Location);
+                            await SaveLocationIfNotExists(Location.ToLocation());
                         break;
                     }
                 case LocationInputContext.Edit:
                     {
                         if (Location != null)
-                            await UpdateLocation(Location);
+                            await UpdateLocation(Location.ToLocation());
                         break;
                     }
             }
@@ -164,24 +164,20 @@ namespace JustCompute.Features.InputLocation
 
         public void ApplyQueryParameter(object? parameter)
         {
-            if (parameter is Dictionary<LocationInputContext, Location> locationAndContext)
+            if (parameter is LocationEditorArgs args)
             {
                 if (Location != null)
                 {
                     Location.PropertyChanged -= OnPropertyChanged;
                 }
 
-                var kvp = locationAndContext.FirstOrDefault();
-                _locationInputContext = kvp.Key;
+                _locationInputContext = args.Context;
 
-                if (kvp.Value != null)
+                if (args.Location is not null)
                 {
-                    // Edit works on a copy: the screen binds directly to this object, so editing
-                    // the caller's instance would push every keystroke into the lists that hold
-                    // it and leave the changes there even when the user backs out without saving.
-                    Location = _locationInputContext == LocationInputContext.Edit
-                        ? kvp.Value.Clone()
-                        : kvp.Value;
+                    // EditableLocation already takes a detached copy, so editing never reaches
+                    // the caller's instance and a cancelled edit leaves the lists untouched.
+                    Location = new EditableLocation(args.Location);
                 }
 
                 if (Location != null)
@@ -196,10 +192,10 @@ namespace JustCompute.Features.InputLocation
                 ? _localizer.GetString("EditLocationLabel")
                 : _localizer.GetString("AddLocationLabel");
 
-            if (_locationInputContext.Value == LocationInputContext.Add && Location != null)
-            {
-                Location.Name = string.Empty;
-            }
+            // Nothing is blanked here. Adding *from a search* arrives with the city already
+            // chosen, and clearing its name left the user retyping the place they had just
+            // picked — with Save disabled until they did. Adding from scratch arrives with no
+            // location at all, so the field is empty anyway.
         }
 
         public override bool OnBackButtonPressed()
