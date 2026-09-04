@@ -12,7 +12,7 @@
             StrokeShape="RoundRectangle 10"
             MinimumWidthRequest="140"
             MinimumHeightRequest="140"
-            Padding="12"
+            Padding="8"
             BindingContext="{x:Reference this}"
             x:DataType="controls:DynamicInfoItem">
 

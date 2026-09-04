@@ -9,17 +9,19 @@
              xmlns:views="clr-namespace:JustCompute.Shared.Controls"
              x:DataType="ViewModels:SpeedAndDistanceViewModel">
 
-    <Grid RowDefinitions="*, Auto"
-          Padding="8">
+    <!-- Margin 4 is the content inset Today, Optics and the Ruler all use on their
+         scrolling container; with the implicit Border margin of 8 it puts every card and
+         tile at the same 12 from the screen edge as the rest of the app. -->
+    <Grid RowDefinitions="*, Auto, Auto"
+          Margin="4">
 
         <ScrollView Grid.Row="0"
                     VerticalScrollBarVisibility="Never">
 
             <Grid ColumnDefinitions="*,*"
-                  RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                  RowDefinitions="Auto,Auto,Auto,Auto"
                   ColumnSpacing="12"
-                  RowSpacing="12"
-                  Padding="2">
+                  RowSpacing="12">
 
                 <views:DynamicInfoItem
                     Grid.Row="0" Grid.Column="0"
@@ -52,27 +54,50 @@
                     ItemValue="{Binding FormattedAltitude}" />
 
                 <views:DynamicInfoItem
-                    Grid.Row="3" Grid.Column="0"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                     ItemTitle="{localization:Localize ElevationLabel}"
                     ItemValue="{Binding FormattedElevation}" />
-
-                <views:DynamicInfoItem
-                    Grid.Row="3" Grid.Column="1"
-                    ItemTitle="{localization:Localize TravelledDistanceLabel}"
-                    ItemValue="{Binding FormattedTravelledDistance}" />
-
-                <views:DynamicInfoItem
-                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                    ItemTitle="{localization:Localize DirectDistanceLabel}"
-                    ItemValue="{Binding FormattedDirectDistance}" />
 
             </Grid>
 
         </ScrollView>
 
+        <!-- Padding 8 and the inherited 8,4 margin, which is what every other card in the app
+             uses; the page adds no padding of its own, so this lines up both with the tiles
+             above it and with the cards on Today, Optics and the Ruler. -->
+        <Border Grid.Row="1"
+                Padding="8"
+                IsVisible="{Binding HasTrip}">
+
+            <StackLayout Spacing="8">
+
+                <Label Text="{localization:Localize DistanceLabel}"
+                       Style="{StaticResource TitleLabel}" />
+                <BoxView Style="{StaticResource DividerStyle}" />
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="{localization:Localize TravelledDistanceLabel}" />
+                    <Label Grid.Column="1" Text="{Binding FormattedTravelledDistance}" FontAttributes="Bold" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0" Text="{localization:Localize DirectDistanceLabel}" />
+                    <Label Grid.Column="1" Text="{Binding DirectSummary}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto"
+                      IsVisible="{Binding HasDetour}">
+                    <Label Grid.Column="0" Text="{localization:Localize DetourRatioLabel}" />
+                    <Label Grid.Column="1" Text="{Binding DetourRatio}" />
+                </Grid>
+
+            </StackLayout>
+
+        </Border>
+
         <Grid ColumnDefinitions="Auto,Auto,*"
               ColumnSpacing="8"
-              Grid.Row="1">
+              Grid.Row="2">
 
             <ImageButton Grid.Column="0"
                          Command="{Binding ToggleLocationTrackingCommand}"

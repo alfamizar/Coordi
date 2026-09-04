@@ -12,6 +12,8 @@ using JustCompute.Shared.Helpers;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 using System.Diagnostics;
+using System.Globalization;
+using Compute.Astro;
 
 namespace JustCompute.Features.SpeedAndDistance
 {
@@ -58,6 +60,7 @@ namespace JustCompute.Features.SpeedAndDistance
         private double _elevation = 0;
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FormattedTravelledDistance))]
+        [NotifyPropertyChangedFor(nameof(HasTrip))]
         private double travelledDistance = 0;
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(FormattedDirectDistance))]
@@ -101,6 +104,25 @@ namespace JustCompute.Features.SpeedAndDistance
         // The trip totals take the chosen unit; the accuracies and heights stay short (see
         // DistanceFormatter.FormatShort), because "0.01 km" of GPS accuracy helps nobody.
         public string FormattedTravelledDistance => _distanceFormatter.Format(TravelledDistance);
+
+        /// <summary>
+        /// The trip summary, in the shape the Ruler uses for a route: what you covered, the
+        /// straight line between the ends, and how much further the first is than the second.
+        /// The readouts above it are instantaneous; this is the trip as a whole, which is the
+        /// thing a person actually wants when they stop.
+        /// </summary>
+        public bool HasTrip => TravelledDistance > 0;
+
+        /// <summary>Direct distance carrying the bearing, because the straight line back to the
+        /// start is the one you would point at.</summary>
+        [ObservableProperty]
+        private string directSummary = string.Empty;
+
+        [ObservableProperty]
+        private string detourRatio = string.Empty;
+
+        [ObservableProperty]
+        private bool hasDetour;
         public string FormattedDirectDistance => _distanceFormatter.Format(DirectDistance);
         public string FormattedAccuracy => _distanceFormatter.FormatShort(Accuracy);
         public string FormattedVerticalAccuracy => _distanceFormatter.FormatShort(VerticalAccuracy);
@@ -226,6 +248,9 @@ namespace JustCompute.Features.SpeedAndDistance
             Elevation = 0;
             TravelledDistance = 0;
             DirectDistance = 0;
+            DirectSummary = string.Empty;
+            DetourRatio = string.Empty;
+            HasDetour = false;
             ElapsedTime = TimeSpan.Zero;
 
             _distanceCalculator.Reset();
@@ -271,8 +296,34 @@ namespace JustCompute.Features.SpeedAndDistance
             Elevation = Math.Round(_distanceCalculator.GetElevation(update.Altitude), 2);
             TravelledDistance = Math.Round(_distanceCalculator.GetCurvedDistance(TravelledDistance));
             DirectDistance = Math.Round(_distanceCalculator.GetDirectDistance());
+            UpdateTripSummary();
             CalculatedSpeed = Math.Round(_distanceCalculator.GetSpeed(), 2);
         }
+
+        /// <summary>
+        /// Recomputed from the path so far rather than accumulated, so it stays correct after
+        /// fixes are discarded for poor accuracy or as implausible jumps.
+        /// </summary>
+        private void UpdateTripSummary()
+        {
+            DirectSummary = _distanceCalculator.StartingPoint is { } start
+                            && _distanceCalculator.LastPoint is { } last
+                            && DirectDistance > 0
+                ? $"{_distanceFormatter.Format(DirectDistance)}   ·   {Bearing(start, last)}°"
+                : _distanceFormatter.Format(DirectDistance);
+
+            // A ratio of 1x says nothing - it only means the path was straight. Show it once the
+            // route has actually wandered, so the row appears when it has something to report.
+            HasDetour = DirectDistance > 0 && TravelledDistance > DirectDistance * 1.01;
+            DetourRatio = HasDetour
+                ? (TravelledDistance / DirectDistance).ToString("0.##", CultureInfo.CurrentCulture) + "\u00D7"
+                : string.Empty;
+        }
+
+        /// <summary>Initial bearing of the straight line from the start to where you are now.</summary>
+        private static int Bearing(GeoPoint from, GeoPoint to) =>
+            (int)Math.Round(Geodesy.Inverse(from.Latitude, from.Longitude, to.Latitude, to.Longitude)
+                .InitialBearingDeg) % 360;
 
         private void UpdateLiveReadouts(DeviceLocationUpdate update)
         {
