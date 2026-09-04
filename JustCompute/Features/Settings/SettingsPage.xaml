@@ -30,7 +30,7 @@
     <!-- 12 is where every other screen's content edge falls (a 4 content inset plus the
          implicit Border margin of 8). This page has no cards to inherit that, so it states
          the same inset directly and lines up with the rest of the app. -->
-    <VerticalStackLayout Padding="12" HorizontalOptions="FillAndExpand" Spacing="4">
+    <VerticalStackLayout Padding="{StaticResource PageEdgeInset}" HorizontalOptions="FillAndExpand" Spacing="4">
 
         <Label Text="{localization:Localize ThemeLabel}" />
         <Picker x:Name="ThemePicker"

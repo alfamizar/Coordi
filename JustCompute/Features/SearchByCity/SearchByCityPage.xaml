@@ -19,11 +19,12 @@
 
     <Grid>
         <Grid RowDefinitions="Auto, *"
-              RowSpacing="8"
-              Padding="12,8">
+              RowSpacing="4"
+              Padding="{StaticResource PageEdgeInset}">
             <Grid ColumnDefinitions="*,Auto"
                   Grid.Row="0"
-                  ColumnSpacing="12">
+                  ColumnSpacing="{StaticResource CardGap}"
+                  Padding="0,4">
                 <SearchBar x:Name="searchBar"
                            Grid.Column="0"
                            Text="{Binding SearchTerm}"
@@ -62,7 +63,7 @@
                             IsVisible="{Binding LocationsSearchResult, Converter={StaticResource IsListNotNullOrEmptyConverter}}">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
-                                     VerticalItemSpacing="4"/>
+                                     VerticalItemSpacing="{StaticResource CardGap}"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
 

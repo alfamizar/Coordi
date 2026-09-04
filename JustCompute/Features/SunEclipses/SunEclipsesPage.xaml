@@ -19,8 +19,8 @@
 
                 <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                       ColumnDefinitions="*,*"
-                      ColumnSpacing="8"
-                      RowSpacing="8">
+                      ColumnSpacing="{StaticResource CardGap}"
+                      RowSpacing="{StaticResource CardGap}">
 
                     <Label x:Name="Date"
                            Grid.Column="0"
@@ -172,7 +172,7 @@
                     Stroke="{DynamicResource ThemeOutline}">
 
                 <Grid ColumnDefinitions="*, *"
-                      ColumnSpacing="8"
+                      ColumnSpacing="{StaticResource CardGap}"
                       Padding="0, 4"
                       VerticalOptions="Center">
 
@@ -199,15 +199,15 @@
 
     </ContentPage.Resources>
 
-    <Grid Padding="4,0"
+    <Grid Padding="{StaticResource PageEdgeInset}"
           RowDefinitions="Auto,*">
 
         <!-- The filter belongs with the list it filters, not in Settings: it is a property of
              what you are looking at, and the count says how much it is hiding. -->
         <Grid Grid.Row="0"
               ColumnDefinitions="Auto,*,Auto"
-              ColumnSpacing="8"
-              Padding="8,4">
+              ColumnSpacing="{StaticResource CardGap}"
+              Padding="0,4">
 
             <CheckBox Grid.Column="0"
                       IsChecked="{Binding ShowOnlyVisible}"
@@ -219,8 +219,7 @@
 
             <Label Grid.Column="2"
                    Text="{Binding FilterSummary}"
-                   FontSize="Small"
-                   Opacity="0.7"
+                   Style="{StaticResource CaptionLabel}"
                    VerticalOptions="Center" />
 
         </Grid>
@@ -264,10 +263,9 @@
                         IsGrouped="True">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="helpers:IGroupHeader">
-                    <StackLayout Padding="8,0">
+                    <StackLayout Padding="0,4">
                         <Label Text="{Binding Key}"
-                               FontAttributes="Bold"
-                               FontSize="18" />
+                               Style="{StaticResource SectionHeaderLabel}" />
                         <BoxView Style="{StaticResource DividerStyle}" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:SunEclipsesViewModel}}, Path=ToggleGroupCommand, x:DataType=ViewModels:SunEclipsesViewModel}"
@@ -278,7 +276,7 @@
             </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical"
-                                   ItemSpacing="4" />
+                                   ItemSpacing="{StaticResource CardGap}" />
             </CollectionView.ItemsLayout>
 
         </CollectionView>

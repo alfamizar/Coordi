@@ -9,14 +9,12 @@
              x:Name="this">
 
     <Border BindingContext="{x:Reference this}"
-            x:DataType="controls:LocationItem"
-            Stroke="Transparent"
-            StrokeShape="RoundRectangle 10">
+            x:DataType="controls:LocationItem">
 
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
               ColumnDefinitions="*,*,Auto"
-              ColumnSpacing="8"
-              RowSpacing="8">
+              ColumnSpacing="{StaticResource CardGap}"
+              RowSpacing="{StaticResource CardGap}">
 
             <Label Grid.Column="0"
                    Grid.Row="0"
@@ -70,9 +68,9 @@
                              HorizontalOptions="Center"
                              Command="{Binding EditButtonClickedCommand}"
                              CommandParameter="{Binding Location}"
-                             WidthRequest="32"
-                             HeightRequest="32"
-                             Padding="4"
+                             WidthRequest="{StaticResource MinTouchTarget}"
+                             HeightRequest="{StaticResource MinTouchTarget}"
+                             Padding="12"
                              CornerRadius="8"/>
                 <ImageButton Grid.Row="1"
                              Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
@@ -80,9 +78,9 @@
                              HorizontalOptions="Center"
                              Command="{Binding DeleteButtonClickedCommand}"
                              CommandParameter="{Binding Location}"
-                             WidthRequest="32"
-                             HeightRequest="32"
-                             Padding="4"
+                             WidthRequest="{StaticResource MinTouchTarget}"
+                             HeightRequest="{StaticResource MinTouchTarget}"
+                             Padding="12"
                              CornerRadius="8" />
 
             </Grid>

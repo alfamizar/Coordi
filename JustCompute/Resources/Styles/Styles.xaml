@@ -3,6 +3,39 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- Design System: Spacing & Dimension Scale -->
+    <x:Double x:Key="SpacingMicro">4</x:Double>
+    <x:Double x:Key="SpacingSmall">8</x:Double>
+    <x:Double x:Key="SpacingMedium">12</x:Double>
+    <x:Double x:Key="SpacingLarge">16</x:Double>
+    <x:Double x:Key="SpacingXLarge">24</x:Double>
+
+    <!-- Semantic Layout Dimensions.
+
+         Values follow Material Design 3 for a compact window, which Apple's HIG agrees with on
+         a phone: a 16 body margin, 16 of padding inside a card, 8 between cards, and a 12 corner
+         on a medium surface. All sit on the 4 grid both systems are built from.
+
+         Insets are padding only. A card carries no margin of its own: the container states the
+         edge inset once, and the gap between cards is the container's Spacing. When both were in
+         play the gap was 8 of Spacing plus 4 of margin at each end - 16 in total, a number written
+         nowhere - and removing a card's margin silently changed the screen edge as well, because
+         one property was doing two unrelated jobs. -->
+    <Thickness x:Key="PageEdgeInset">16</Thickness>
+    <Thickness x:Key="CardPadding">16</Thickness>
+    <x:Double x:Key="CardGap">8</x:Double>
+    <x:Double x:Key="CardCornerRadius">12</x:Double>
+
+    <!-- Material 3 puts the minimum touch target at 48; the HIG says 44. Use the larger. -->
+    <x:Double x:Key="MinTouchTarget">48</x:Double>
+
+    <!-- Design System: Typography Scale -->
+    <x:Double x:Key="FontSizeDisplay">22</x:Double>
+    <x:Double x:Key="FontSizeHeader">18</x:Double>
+    <x:Double x:Key="FontSizeTitle">16</x:Double>
+    <x:Double x:Key="FontSizeBody">14</x:Double>
+    <x:Double x:Key="FontSizeCaption">12</x:Double>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color"
                 Value="{DynamicResource ThemePrimary}" />
@@ -17,17 +50,15 @@
 
     <Style TargetType="Border">
         <Setter Property="Stroke"
-                Value="{DynamicResource ThemeOutline}" />
+                Value="Transparent" />
         <Setter Property="StrokeShape"
-                Value="RoundRectangle 10" />
+                Value="RoundRectangle 12" />
         <Setter Property="StrokeThickness"
                 Value="0" />
         <Setter Property="Background"
                 Value="{DynamicResource ThemeSurface}" />
         <Setter Property="Padding"
-                Value="16, 8" />
-        <Setter Property="Margin"
-                Value="8, 4" />
+                Value="{StaticResource CardPadding}" />
     </Style>
 
     <Style TargetType="BoxView">
@@ -38,7 +69,7 @@
     <Style TargetType="BoxView"
            x:Key="DividerStyle">
         <Setter Property="HeightRequest"
-                Value="2" />
+                Value="1" />
         <Setter Property="Color"
                 Value="{DynamicResource ThemeOutline}" />
     </Style>
@@ -108,7 +139,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="CornerRadius"
                 Value="8" />
         <Setter Property="Padding"
@@ -224,7 +255,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="PlaceholderColor"
                 Value="{StaticResource Gray500}" />
         <Setter Property="MinimumHeightRequest"
@@ -311,7 +342,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -344,7 +375,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
                 Value="44" />
         <Setter Property="MinimumWidthRequest"
@@ -429,7 +460,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
                 Value="44" />
         <Setter Property="MinimumWidthRequest"
@@ -646,7 +677,23 @@
         <Setter Property="VerticalTextAlignment"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Medium" />
+                Value="{StaticResource FontSizeTitle}" />
+        <Setter Property="FontAttributes"
+                Value="Bold" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeOnBackground}" />
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="SectionHeaderLabel">
+        <Setter Property="VerticalOptions"
+                Value="Center" />
+        <Setter Property="FontSize"
+                Value="{StaticResource FontSizeHeader}" />
+        <Setter Property="FontAttributes"
+                Value="Bold" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeOnBackground}" />
     </Style>
 
     <Style TargetType="Label"
@@ -656,7 +703,27 @@
         <Setter Property="VerticalTextAlignment"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Small" />
+                Value="{StaticResource FontSizeBody}" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeOnBackground}" />
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="CaptionLabel">
+        <Setter Property="FontSize"
+                Value="{StaticResource FontSizeCaption}" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeOnBackground}" />
+        <Setter Property="Opacity"
+                Value="0.8" />
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="ErrorLabel">
+        <Setter Property="FontSize"
+                Value="{StaticResource FontSizeCaption}" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeError}" />
     </Style>
 
     <Style TargetType="Label"
@@ -666,7 +733,9 @@
         <Setter Property="HorizontalOptions"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Small" />
+                Value="{StaticResource FontSizeCaption}" />
+        <Setter Property="FontAttributes"
+                Value="Bold" />
         <Setter Property="TextTransform"
                 Value="Uppercase" />
     </Style>
@@ -678,7 +747,7 @@
         <Setter Property="HorizontalOptions"
                 Value="Center" />
         <Setter Property="FontSize"
-                Value="Header" />
+                Value="{StaticResource FontSizeHeader}" />
         <Setter Property="LineBreakMode"
                 Value="WordWrap" />
     </Style>
@@ -723,7 +792,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="HeightRequest"
                 Value="44" />
     </Style>

@@ -29,7 +29,7 @@
         <StackLayout  Grid.Row="2"
                       Orientation="Horizontal"
                       HorizontalOptions="Fill"
-                      Spacing="8">
+                      Spacing="{StaticResource CardGap}">
 
             <Button Style="{StaticResource DialogButton}"
                     Clicked="NegativeButtonClicked"

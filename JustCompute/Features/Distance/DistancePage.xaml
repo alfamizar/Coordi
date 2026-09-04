@@ -13,28 +13,27 @@
 
     <!-- The summary is pinned: it is the answer, and scrolling a long route away from it left
          the reader hunting for the number they came for. The pins and the inputs scroll under it. -->
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto"
+          RowSpacing="{StaticResource CardGap}"
+          Padding="{StaticResource PageEdgeInset}">
 
     <ScrollView Grid.Row="0"
                 VerticalScrollBarVisibility="Never">
 
-        <VerticalStackLayout Margin="4"
-                             Spacing="8">
+        <VerticalStackLayout Spacing="{StaticResource CardGap}">
 
             <!-- Ways to add a pin. Paired two to a row so the four read as one set of choices
                  rather than a column of unrelated buttons. -->
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10">
+            <Border>
 
-                <StackLayout Spacing="8">
+                <StackLayout Spacing="{StaticResource CardGap}">
 
                     <Label Text="{localization:Localize RouteLabel}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
                     <Grid ColumnDefinitions="*,*"
-                          ColumnSpacing="8">
+                          ColumnSpacing="{StaticResource CardGap}">
                         <Button Grid.Column="0"
                                 Text="{localization:Localize SearchCityLabel}"
                                 Command="{Binding AddFromSearchCommand}" />
@@ -44,7 +43,7 @@
                     </Grid>
 
                     <Grid ColumnDefinitions="*,*"
-                          ColumnSpacing="8">
+                          ColumnSpacing="{StaticResource CardGap}">
                         <Button Grid.Column="0"
                                 Text="{localization:Localize UndoLabel}"
                                 Command="{Binding UndoCommand}"
@@ -60,10 +59,7 @@
 
             <!-- The pins, each carrying the leg that leaves it. Tap a row to correct its
                  coordinates by hand; the last pin has no leg, which is why HasLeg gates it. -->
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasStops}">
+            <Border IsVisible="{Binding HasStops}">
 
                 <StackLayout Spacing="4"
                              BindableLayout.ItemsSource="{Binding Stops}">
@@ -94,9 +90,9 @@
                                                FontAttributes="Bold"
                                                IsVisible="{Binding Name, Converter={StaticResource IsStringNotNullOrEmptyConverter}}" />
                                         <Label Text="{Binding Coordinates}"
-                                               FontSize="13" />
+                                               Style="{StaticResource CaptionLabel}" />
                                         <Label Text="{Binding Leg}"
-                                               FontSize="13"
+                                               Style="{StaticResource CaptionLabel}"
                                                TextColor="{DynamicResource ThemePrimary}"
                                                IsVisible="{Binding HasLeg}" />
                                     </StackLayout>
@@ -136,12 +132,9 @@
             <!-- What the route costs to drive. Volume and money are left unitless on purpose:
                  the app does not know whether the reader thinks in litres or gallons, euros or
                  forints, and a wrong currency symbol is worse than none. -->
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasRoute}">
+            <Border IsVisible="{Binding HasRoute}">
 
-                <StackLayout Spacing="8">
+                <StackLayout Spacing="{StaticResource CardGap}">
 
                     <Label Text="{localization:Localize FuelLabel}"
                            Style="{StaticResource TitleLabel}" />
@@ -163,7 +156,7 @@
                            Keyboard="Numeric" />
 
                     <Label Text="{localization:Localize FuelHintLabel}"
-                           FontSize="13"
+                           Style="{StaticResource CaptionLabel}"
                            IsVisible="{Binding HasFuelEstimate, Converter={StaticResource InvertedBoolConverter}}" />
 
                 </StackLayout>
@@ -176,12 +169,9 @@
             <!-- What the route adds up to. Direct carries its bearing, because the straight line
                  is the one you would actually point at. -->
         <Border Grid.Row="1"
-                Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasRoute}">
+                IsVisible="{Binding HasRoute}">
 
-                <StackLayout Spacing="8">
+                <StackLayout Spacing="{StaticResource CardGap}">
 
                     <Label Text="{localization:Localize DistanceLabel}"
                            Style="{StaticResource TitleLabel}" />

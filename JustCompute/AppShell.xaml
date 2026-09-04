@@ -23,11 +23,11 @@
                 <VerticalStackLayout Spacing="2"
                                      VerticalOptions="Center">
                     <Label Text="{x:Static localization:AppMetadata.Name}"
-                           FontSize="22"
+                           FontSize="{StaticResource FontSizeDisplay}"
                            FontAttributes="Bold"
                            TextColor="{StaticResource White}" />
                     <Label Text="{x:Static localization:AppMetadata.Version}"
-                           FontSize="12"
+                           FontSize="{StaticResource FontSizeCaption}"
                            Opacity="0.8"
                            TextColor="{StaticResource White}" />
                 </VerticalStackLayout>

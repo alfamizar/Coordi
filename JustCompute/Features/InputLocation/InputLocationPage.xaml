@@ -22,12 +22,12 @@
     <ContentPage.Content>
 
         <Grid RowDefinitions="*, 64"
-              Padding="4,0"
+              Padding="{StaticResource PageEdgeInset}"
               IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
 
             <ScrollView Grid.Row="0">
 
-                <StackLayout Padding="8"
+                <StackLayout Padding="0,8"
                              Spacing="16">
 
                     <Label Text="{localization:Localize LocationNameLabel}" />
@@ -65,7 +65,7 @@
                     Grid.Row="1"
                     Text="{localization:Localize SaveLocationButtonText}"
                     Command="{Binding SaveLocationCommand}"
-                    Margin="8" />
+                    Margin="0,8" />
 
             <ActivityIndicator HeightRequest="50"
                                WidthRequest="50"

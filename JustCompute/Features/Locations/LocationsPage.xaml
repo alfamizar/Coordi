@@ -16,18 +16,15 @@
 
         <ScrollView VerticalScrollBarVisibility="Never">
 
-            <VerticalStackLayout Margin="4"
-                                 Spacing="8">
+            <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                                 Spacing="{StaticResource CardGap}">
 
                 <!-- Onboarding, shown until the user picks somewhere themselves. Today explains
                      the placeholder; this is the screen where it gets acted on. -->
-                <Border Padding="8"
-                        Stroke="Transparent"
-                        StrokeShape="RoundRectangle 10"
-                        IsVisible="{Binding IsPlaceholderLocation}">
+                <Border IsVisible="{Binding IsPlaceholderLocation}">
 
                     <StackLayout Padding="0"
-                                 Spacing="8">
+                                 Spacing="{StaticResource CardGap}">
 
                         <Label Text="{localization:Localize SetYourLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -46,13 +43,10 @@
                 </Border>
 
                 <!-- Current location -->
-                <Border Padding="8"
-                        Stroke="Transparent"
-                        StrokeShape="RoundRectangle 10"
-                        IsVisible="{Binding SelectedLocation, Converter={StaticResource IsNotNullConverter}}">
+                <Border IsVisible="{Binding SelectedLocation, Converter={StaticResource IsNotNullConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="8">
+                                 Spacing="{StaticResource CardGap}">
 
                         <Label Text="{localization:Localize CurrentLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -95,13 +89,10 @@
                 </Border>
 
                 <!-- Tap a row to make it current; saved rows carry their own edit and delete actions. -->
-                <Border Padding="8"
-                        Stroke="Transparent"
-                        StrokeShape="RoundRectangle 10"
-                        IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}">
+                <Border IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="8">
+                                 Spacing="{StaticResource CardGap}">
 
                         <Label Text="{localization:Localize LocationsLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -157,9 +148,9 @@
                                                 <Label Text="{Binding Name}"
                                                        FontAttributes="Bold" />
                                                 <Label Text="{Binding LatitudeDms}"
-                                                       FontSize="Small" />
+                                                       Style="{StaticResource CaptionLabel}" />
                                                 <Label Text="{Binding LongitudeDms}"
-                                                       FontSize="Small" />
+                                                       Style="{StaticResource CaptionLabel}" />
                                             </VerticalStackLayout>
 
                                             <!-- Only a place the user saved can be edited or removed:
@@ -233,13 +224,10 @@
                 </Border>
 
                 <!-- Add a location -->
-                <Border Padding="8"
-                        Stroke="Transparent"
-                        StrokeShape="RoundRectangle 10"
-                        IsVisible="{Binding IsPlaceholderLocation, Converter={StaticResource InvertedBoolConverter}}">
+                <Border IsVisible="{Binding IsPlaceholderLocation, Converter={StaticResource InvertedBoolConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="8">
+                                 Spacing="{StaticResource CardGap}">
 
                         <Label Text="{localization:Localize AddLocationLabel}"
                                Style="{StaticResource TitleLabel}" />

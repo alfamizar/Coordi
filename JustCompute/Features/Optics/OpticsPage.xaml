@@ -11,18 +11,16 @@
 
     <ScrollView VerticalScrollBarVisibility="Never">
 
-        <VerticalStackLayout Margin="4"
-                             Spacing="8">
+        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                             Spacing="{StaticResource CardGap}">
 
             <!-- Inputs. The camera picker comes first because choosing a body writes two of the
                  fields below it, and the pixel pitch is the input nobody knows off the top of
                  their head. Everything stays editable underneath — it is a shortcut, not a mode. -->
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10">
+            <Border>
 
                 <StackLayout Padding="0"
-                             Spacing="8">
+                             Spacing="{StaticResource CardGap}">
 
                     <Label Text="{localization:Localize OpticsLensSensorLabel}"
                            Style="{StaticResource TitleLabel}" />
@@ -43,24 +41,21 @@
                            Keyboard="Numeric" />
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasFocalLengthError}"
-                           FontSize="Small"
-                           TextColor="{DynamicResource ThemeError}" />
+                           Style="{StaticResource ErrorLabel}" />
 
                     <Label Text="{localization:Localize OpticsApertureLabel}" />
                     <Entry Text="{Binding Aperture, Mode=TwoWay}"
                            Keyboard="Numeric" />
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasApertureError}"
-                           FontSize="Small"
-                           TextColor="{DynamicResource ThemeError}" />
+                           Style="{StaticResource ErrorLabel}" />
 
                     <Label Text="{localization:Localize OpticsSubjectDistanceLabel}" />
                     <Entry Text="{Binding SubjectDistanceMeters, Mode=TwoWay}"
                            Keyboard="Numeric" />
                     <Label Text="{localization:Localize OpticsErrPositiveLabel}"
                            IsVisible="{Binding HasSubjectDistanceError}"
-                           FontSize="Small"
-                           TextColor="{DynamicResource ThemeError}" />
+                           Style="{StaticResource ErrorLabel}" />
 
                     <Picker ItemsSource="{Binding Formats}"
                             ItemDisplayBinding="{Binding Label}"
@@ -73,21 +68,19 @@
                            Keyboard="Numeric" />
                     <Label Text="{localization:Localize OpticsErrImageWidthLabel}"
                            IsVisible="{Binding HasImageWidthError}"
-                           FontSize="Small"
-                           TextColor="{DynamicResource ThemeError}" />
+                           Style="{StaticResource ErrorLabel}" />
 
                     <Label Text="{localization:Localize OpticsDeclinationLabel}" />
                     <Entry Text="{Binding DeclinationDeg, Mode=TwoWay}"
                            Keyboard="Numeric" />
                     <Label Text="{localization:Localize OpticsErrDeclinationLabel}"
                            IsVisible="{Binding HasDeclinationError}"
-                           FontSize="Small"
-                           TextColor="{DynamicResource ThemeError}" />
+                           Style="{StaticResource ErrorLabel}" />
 
                     <!-- Last, under everything it would keep. Off by default: a calculator that
                          silently remembers is one that quietly hands you someone else's answer. -->
                     <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="8"
+                          ColumnSpacing="{StaticResource CardGap}"
                           Margin="0,4,0,0">
                         <CheckBox Grid.Column="0"
                                   IsChecked="{Binding RememberInputs, Mode=TwoWay}"
@@ -106,11 +99,8 @@
                    HorizontalTextAlignment="Center"
                    Padding="16" />
 
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="8">
+            <Border IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
                     <Label Text="{localization:Localize OpticsDofTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
@@ -132,11 +122,8 @@
                 </StackLayout>
             </Border>
 
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="8">
+            <Border IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
                     <Label Text="{localization:Localize OpticsStarsTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
@@ -151,16 +138,12 @@
                     </Grid>
 
                     <Label Text="{localization:Localize OpticsStarsHintLabel}"
-                           FontSize="Small"
-                           Opacity="0.7" />
+                           Style="{StaticResource CaptionLabel}" />
                 </StackLayout>
             </Border>
 
-            <Border Padding="8"
-                    Stroke="Transparent"
-                    StrokeShape="RoundRectangle 10"
-                    IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="8">
+            <Border IsVisible="{Binding HasResults}">
+                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
                     <Label Text="{localization:Localize OpticsFovTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />

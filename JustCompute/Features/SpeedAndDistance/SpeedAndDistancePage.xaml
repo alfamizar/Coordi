@@ -9,19 +9,18 @@
              xmlns:views="clr-namespace:JustCompute.Shared.Controls"
              x:DataType="ViewModels:SpeedAndDistanceViewModel">
 
-    <!-- Margin 4 is the content inset Today, Optics and the Ruler all use on their
-         scrolling container; with the implicit Border margin of 8 it puts every card and
-         tile at the same 12 from the screen edge as the rest of the app. -->
     <Grid RowDefinitions="*, Auto, Auto"
-          Margin="4">
+          RowSpacing="{StaticResource CardGap}"
+          Padding="{StaticResource PageEdgeInset}">
 
         <ScrollView Grid.Row="0"
                     VerticalScrollBarVisibility="Never">
 
             <Grid ColumnDefinitions="*,*"
                   RowDefinitions="Auto,Auto,Auto,Auto"
-                  ColumnSpacing="12"
-                  RowSpacing="12">
+                  ColumnSpacing="{StaticResource CardGap}"
+                  RowSpacing="{StaticResource CardGap}"
+                  Padding="0">
 
                 <views:DynamicInfoItem
                     Grid.Row="0" Grid.Column="0"
@@ -62,14 +61,10 @@
 
         </ScrollView>
 
-        <!-- Padding 8 and the inherited 8,4 margin, which is what every other card in the app
-             uses; the page adds no padding of its own, so this lines up both with the tiles
-             above it and with the cards on Today, Optics and the Ruler. -->
         <Border Grid.Row="1"
-                Padding="8"
                 IsVisible="{Binding HasTrip}">
 
-            <StackLayout Spacing="8">
+            <StackLayout Spacing="{StaticResource CardGap}">
 
                 <Label Text="{localization:Localize DistanceLabel}"
                        Style="{StaticResource TitleLabel}" />
@@ -96,7 +91,7 @@
         </Border>
 
         <Grid ColumnDefinitions="Auto,Auto,*"
-              ColumnSpacing="8"
+              ColumnSpacing="{StaticResource CardGap}"
               Grid.Row="2">
 
             <ImageButton Grid.Column="0"

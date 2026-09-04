@@ -21,16 +21,14 @@
 
             <ScrollView VerticalScrollBarVisibility="Never">
 
-                <VerticalStackLayout Margin="4"
-                                     Spacing="8">
+                <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                                     Spacing="{StaticResource CardGap}">
 
                     <!-- Date control: this is the time-travel surface. Every card below reacts to it. -->
-                    <Border Padding="8"
-                            Stroke="Transparent"
-                            StrokeShape="RoundRectangle 10">
+                    <Border>
 
                         <StackLayout Padding="0"
-                                     Spacing="8">
+                                     Spacing="{StaticResource CardGap}">
 
                             <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto"
                                   ColumnSpacing="4"
@@ -82,13 +80,10 @@
 
                     <!-- Onboarding: the app is showing a placeholder, and says so plainly rather
                          than greeting a first-time user with an error. -->
-                    <Border Padding="8"
-                            Stroke="Transparent"
-                            StrokeShape="RoundRectangle 10"
-                            IsVisible="{Binding IsPlaceholderLocation}">
+                    <Border IsVisible="{Binding IsPlaceholderLocation}">
 
                         <StackLayout Padding="0"
-                                     Spacing="8">
+                                     Spacing="{StaticResource CardGap}">
 
                             <Label Text="{localization:Localize SetYourLocationLabel}"
                                    Style="{StaticResource TitleLabel}" />
@@ -103,17 +98,14 @@
 
                     </Border>
 
-                    <VerticalStackLayout Spacing="8"
+                    <VerticalStackLayout Spacing="{StaticResource CardGap}"
                                          IsVisible="{Binding Snapshot, Converter={StaticResource IsNotNullConverter}}">
 
                         <!-- Weather only exists for the current date; hidden when time-travelling. -->
-                        <Border Padding="8"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10"
-                                IsVisible="{Binding IsDateWithinForecast}">
+                        <Border IsVisible="{Binding IsDateWithinForecast}">
 
                             <StackLayout Padding="0"
-                                         Spacing="8">
+                                         Spacing="{StaticResource CardGap}">
 
                                 <Label Text="{localization:Localize WeatherLabel}"
                                        Style="{StaticResource TitleLabel}" />
@@ -132,8 +124,6 @@
                                 </Label>
 
                                 <Border Padding="0"
-                                        Stroke="Transparent"
-                                        StrokeShape="RoundRectangle 10"
                                         IsVisible="{Binding WeatherForecast, Converter={StaticResource IsNotNullConverter}}"
                                         Background="{DynamicResource ThemeSecondary}">
                                     <Grid ColumnDefinitions="*,1,*,1,*,1,*,1,*,1,*,1,*"
@@ -185,19 +175,16 @@
 
                         </Border>
 
-                        <Border Padding="8"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10">
+                        <Border>
 
                             <StackLayout Padding="0"
-                                         Spacing="8">
+                                         Spacing="{StaticResource CardGap}">
 
                                 <Label Text="{localization:Localize SunLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
                                 <Border Padding="0"
-                                        Stroke="Transparent"
                                         StrokeShape="RoundRectangle 12">
                                     <extendedcontrols:SunPathView RiseTime="{Binding Snapshot.SunRise}"
                                                                   SetTime="{Binding Snapshot.SunSet}"
@@ -229,7 +216,7 @@
                                          IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
 
                                 <Label Text="{localization:Localize TwilightSectionLabel}"
-                                       FontAttributes="Bold"
+                                       Style="{StaticResource SectionHeaderLabel}"
                                        IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
 
                                 <VerticalStackLayout Spacing="4"
@@ -237,7 +224,7 @@
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="models:TwilightStage">
                                             <Grid ColumnDefinitions="*,Auto"
-                                                  ColumnSpacing="8">
+                                                  ColumnSpacing="{StaticResource CardGap}">
                                                 <Label Grid.Column="0"
                                                        Text="{Binding Label, Converter={StaticResource TwilightLabelToNameConverter}}" />
                                                 <Label Grid.Column="1"
@@ -257,12 +244,10 @@
 
                         </Border>
 
-                        <Border Padding="8"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10">
+                        <Border>
 
                             <StackLayout Padding="0"
-                                         Spacing="8">
+                                         Spacing="{StaticResource CardGap}">
 
                                 <Label Text="{localization:Localize MoonLabel}"
                                        Style="{StaticResource TitleLabel}" />
@@ -302,13 +287,10 @@
 
                         </Border>
 
-                        <Border Padding="8"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10"
-                                IsVisible="{Binding Snapshot.Mgrs, Converter={StaticResource IsNotNullConverter}}">
+                        <Border IsVisible="{Binding Snapshot.Mgrs, Converter={StaticResource IsNotNullConverter}}">
 
                             <StackLayout Padding="0"
-                                         Spacing="8">
+                                         Spacing="{StaticResource CardGap}">
 
                                 <Label Text="{localization:Localize MGRSLabel}"
                                        Style="{StaticResource TitleLabel}" />
@@ -324,13 +306,10 @@
                             </StackLayout>
                         </Border>
 
-                        <Border Padding="8"
-                                Stroke="Transparent"
-                                StrokeShape="RoundRectangle 10"
-                                IsVisible="{Binding Snapshot.Utm, Converter={StaticResource IsNotNullConverter}}">
+                        <Border IsVisible="{Binding Snapshot.Utm, Converter={StaticResource IsNotNullConverter}}">
 
                             <StackLayout Padding="0"
-                                         Spacing="8">
+                                         Spacing="{StaticResource CardGap}">
 
                                 <Label Text="{localization:Localize UTMLabel}"
                                        Style="{StaticResource TitleLabel}" />
