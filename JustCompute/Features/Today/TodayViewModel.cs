@@ -6,6 +6,9 @@ using Compute.Core.Domain.Services.Weather;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
+using System.Globalization;
+using Microsoft.Extensions.Localization;
+using JustCompute.Resources.Strings;
 
 namespace JustCompute.Features.Today
 {
@@ -19,6 +22,7 @@ namespace JustCompute.Features.Today
         private const int ForecastDays = 7;
 
         private readonly IWeatherService _weatherService;
+        private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly SupersedingTask _weather = new();
 
         // Set once the user moves off "now" — after that the date is theirs and a location change
@@ -54,13 +58,78 @@ namespace JustCompute.Features.Today
         private bool isRefreshing;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Verdict))]
+        [NotifyPropertyChangedFor(nameof(DarkWindow))]
+        [NotifyPropertyChangedFor(nameof(HasDarkWindow))]
         private CelestialSnapshot? snapshot;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Verdict))]
+        [NotifyPropertyChangedFor(nameof(CloudSummary))]
+        [NotifyPropertyChangedFor(nameof(HasCloudSummary))]
         private WeatherForecast? weatherForecast;
+
+        /// <summary>
+        /// The night at a glance, above everything else on the page: is it worth going out, how
+        /// much cloud, and when it is actually dark. Borrowed from Penombre's Tonight banner —
+        /// the reader's first question is a verdict, not a table.
+        ///
+        /// While the forecast is in flight the verdict stays Unknown rather than guessing at
+        /// Clear and correcting itself a moment later.
+        /// </summary>
+        public SkyVerdict Verdict =>
+            IsWeatherLoading || TodaysWeather is null
+                ? SkyVerdict.Unknown
+                : SkySummary.VerdictFor(TodaysWeather.Condition);
+
+        /// <summary>The forecast row for the date being shown, if it is inside the forecast.</summary>
+        private DailyForecast? TodaysWeather
+        {
+            get
+            {
+                if (WeatherForecast?.Days is not { } days) return null;
+                var date = DateOnly.FromDateTime(SelectedDate.Date);
+                foreach (var day in days)
+                {
+                    if (day.Date == date) return day;
+                }
+                return null;
+            }
+        }
+
+        public bool HasCloudSummary => TodaysWeather?.CloudCoverPercent is not null && !IsWeatherLoading;
+
+        public string CloudSummary =>
+            TodaysWeather?.CloudCoverPercent is { } pct
+                ? string.Format(_localizer.GetString("AverageCloudLabel"), pct)
+                : string.Empty;
+
+        /// <summary>
+        /// Last light to first light, in the reader's own time format. Empty when the Sun never
+        /// reaches -18 degrees, which the card reports as a sentence rather than a blank row.
+        /// </summary>
+        public bool HasDarkWindow =>
+            Snapshot is { } snap && SkySummary.DarkWindow(snap.TwilightStages) is not null;
+
+        public string DarkWindow
+        {
+            get
+            {
+                if (Snapshot is not { } snap) return string.Empty;
+                if (SkySummary.DarkWindow(snap.TwilightStages) is not { } window) return string.Empty;
+
+                // Minutes only: the dark window is a plan for the evening, not a contact time.
+                var format = global::JustCompute.Shared.Helpers.Settings.Is24HourTimeFormat ? "H:mm" : "h:mm tt";
+                return string.Format(
+                    _localizer.GetString("DarkSkyWindowLabel"),
+                    $"{window.From.ToString(format, CultureInfo.CurrentCulture)} \u2013 {window.To.ToString(format, CultureInfo.CurrentCulture)}");
+            }
+        }
 
         /// <summary>Skeleton is up while the forecast is in flight.</summary>
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(Verdict))]
+        [NotifyPropertyChangedFor(nameof(HasCloudSummary))]
         private bool isWeatherLoading;
 
         /// <summary>
@@ -103,10 +172,14 @@ namespace JustCompute.Features.Today
         /// </summary>
         public DateTime? CurrentTime => IsShowingToday ? LocationNow : null;
 
-        public TodayViewModel(ViewModelServices services, IWeatherService weatherService)
+        public TodayViewModel(
+            ViewModelServices services,
+            IWeatherService weatherService,
+            IStringLocalizer<AppStringsRes> localizer)
             : base(services)
         {
             _weatherService = weatherService;
+            _localizer = localizer;
         }
 
         [RelayCommand]
@@ -155,6 +228,11 @@ namespace JustCompute.Features.Today
 
         partial void OnSelectedDateChanged(DateTime value)
         {
+            // The summary reads the forecast row for the day on screen, so it moves with the date.
+            OnPropertyChanged(nameof(Verdict));
+            OnPropertyChanged(nameof(CloudSummary));
+            OnPropertyChanged(nameof(HasCloudSummary));
+
             if (!_syncingDateToLocation)
             {
                 _hasUserChosenDate = true;

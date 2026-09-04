@@ -57,7 +57,7 @@ public sealed class WeatherService(HttpClient httpClient) : IWeatherService
 
         return $"{BaseUrl}?latitude={lat}&longitude={lon}"
              + "&current=temperature_2m,weather_code"
-             + "&daily=weather_code,temperature_2m_max,temperature_2m_min"
+             + "&daily=weather_code,temperature_2m_max,temperature_2m_min,cloud_cover_mean"
              + $"&forecast_days={days}"
              + "&timezone=auto";
     }
@@ -105,7 +105,12 @@ public sealed class WeatherService(HttpClient httpClient) : IWeatherService
                 WmoWeatherCodeMapper.Map(daily.WeatherCode[i]),
                 daily.MinTemperature[i],
                 daily.MaxTemperature[i],
-                currentTemp));
+                currentTemp,
+                // Absent rather than zero when the source omits it: a missing reading and a
+                // cloudless sky are not the same claim.
+                daily.CloudCover is { } cloud && i < cloud.Count && cloud[i] is { } pct
+                    ? (int)Math.Round(pct)
+                    : null));
         }
 
         // All of the requested days, or none of them.
@@ -136,6 +141,7 @@ public sealed class WeatherService(HttpClient httpClient) : IWeatherService
         [JsonPropertyName("weather_code")] public IReadOnlyList<int>? WeatherCode { get; init; }
         [JsonPropertyName("temperature_2m_max")] public IReadOnlyList<double>? MaxTemperature { get; init; }
         [JsonPropertyName("temperature_2m_min")] public IReadOnlyList<double>? MinTemperature { get; init; }
+        [JsonPropertyName("cloud_cover_mean")] public IReadOnlyList<double?>? CloudCover { get; init; }
     }
 
     private sealed class DailyUnitsBlock

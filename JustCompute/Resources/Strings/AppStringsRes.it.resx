@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Ultima luce</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Cielo sereno stanotte</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Parzialmente nuvoloso stanotte</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Nuvoloso stanotte</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Il cielo stanotte</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Nuvolosità media: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Buio astronomico: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Stanotte non c'è buio astronomico</value>
+  </data>
 </root>

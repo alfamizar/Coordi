@@ -24,6 +24,51 @@
                 <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
                                      Spacing="{StaticResource CardGap}">
 
+                    <!-- The night at a glance, before any table: a verdict, how much cloud, and
+                         when it is actually dark. Copied in concept from Penombre's Tonight
+                         banner. It carries its own colour rather than the theme's, so "clear"
+                         reads the same whichever palette is on.
+
+                         While the forecast is in flight the verdict stays Unknown and wears the
+                         neutral colour, rather than guessing at Clear and correcting itself. -->
+                    <Border Background="{Binding Verdict, Converter={StaticResource SkyVerdictToColorConverter}}"
+                            IsVisible="{Binding Snapshot, Converter={StaticResource IsNotNullConverter}}">
+
+                        <StackLayout Padding="0"
+                                     Spacing="4">
+
+                            <Label Text="{Binding SelectedDate, Converter={StaticResource DateOnlyToShortDateConverter}}"
+                                   Style="{StaticResource CaptionLabel}"
+                                   TextColor="White"
+                                   Opacity="0.8" />
+
+                            <Label Text="{Binding Verdict, Converter={StaticResource SkyVerdictToTextConverter}}"
+                                   FontSize="{StaticResource FontSizeHeader}"
+                                   FontAttributes="Bold"
+                                   TextColor="White" />
+
+                            <Label Text="{Binding CloudSummary}"
+                                   IsVisible="{Binding HasCloudSummary}"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   TextColor="White"
+                                   Opacity="0.9" />
+
+                            <Label Text="{Binding DarkWindow}"
+                                   IsVisible="{Binding HasDarkWindow}"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   TextColor="White"
+                                   Opacity="0.9" />
+
+                            <Label Text="{localization:Localize NoAstronomicalDarkLabel}"
+                                   IsVisible="{Binding HasDarkWindow, Converter={StaticResource InvertedBoolConverter}}"
+                                   Style="{StaticResource CollectionViewLabel}"
+                                   TextColor="White"
+                                   Opacity="0.9" />
+
+                        </StackLayout>
+
+                    </Border>
+
                     <!-- Date control: this is the time-travel surface. Every card below reacts to it. -->
                     <Border>
 

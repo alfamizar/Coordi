@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>천문박명 끝</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>오늘 밤 맑음</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>오늘 밤 부분적으로 흐림</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>오늘 밤 흐림</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>오늘 밤 하늘</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>평균 운량: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>천문 암흑: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>오늘 밤에는 천문 암흑이 없습니다</value>
+  </data>
 </root>

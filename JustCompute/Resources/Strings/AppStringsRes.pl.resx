@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Ostatnie światło</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Dziś w nocy bezchmurnie</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Dziś w nocy częściowe zachmurzenie</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Dziś w nocy pochmurno</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Niebo dziś w nocy</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Średnie zachmurzenie: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Ciemność astronomiczna: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Dziś w nocy nie ma ciemności astronomicznej</value>
+  </data>
 </root>

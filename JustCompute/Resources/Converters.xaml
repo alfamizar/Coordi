@@ -19,6 +19,8 @@
     <converters:IsTimeSpanSetConverter x:Key="IsTimeSpanSetConverter" />
     <converters:MagnitudeConverter x:Key="MagnitudeConverter" />
     <converters:TwilightLabelToNameConverter x:Key="TwilightLabelToNameConverter" />
+    <converters:SkyVerdictToColorConverter x:Key="SkyVerdictToColorConverter" />
+    <converters:SkyVerdictToTextConverter x:Key="SkyVerdictToTextConverter" />
     <converters:IsPositiveDoubleConverter x:Key="IsPositiveDoubleConverter" />
     <distance:KilometersToTargetDistanceTypeConverter x:Key="KilometersToTargetDistanceTypeConverter" />
     <converters:ZodiacSignEnumToLocalizedStringConverter x:Key="ZodiacSignEnumToLocalizedStringConverter" />

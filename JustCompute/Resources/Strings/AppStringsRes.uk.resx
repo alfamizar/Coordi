@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Останнє світло</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Уночі ясно</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Уночі мінлива хмарність</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Уночі похмуро</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Небо цієї ночі</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Середня хмарність: {0} %</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Астрономічна ніч: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Цієї ночі астрономічної ночі не буде</value>
+  </data>
 </root>

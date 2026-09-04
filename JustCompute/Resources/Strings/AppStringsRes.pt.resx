@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Última luz</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Céu limpo esta noite</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Parcialmente nublado esta noite</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Nublado esta noite</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>O céu esta noite</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Nebulosidade média: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Escuridão astronómica: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Esta noite não há escuridão astronómica</value>
+  </data>
 </root>

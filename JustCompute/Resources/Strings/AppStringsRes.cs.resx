@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Poslední světlo</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Dnes v noci jasno</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Dnes v noci polojasno</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Dnes v noci zataženo</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Dnešní obloha</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Průměrná oblačnost: {0} %</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Astronomická tma: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Dnes v noci nenastane astronomická tma</value>
+  </data>
 </root>

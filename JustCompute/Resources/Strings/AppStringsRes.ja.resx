@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>天文薄明の終わり</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>今夜は晴れ</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>今夜は晴れ時々くもり</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>今夜はくもり</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>今夜の空</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>平均雲量: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>天文薄明終了から: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>今夜は天文薄明が終わりません</value>
+  </data>
 </root>

@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>天文昏影終</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>今夜晴朗</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>今夜局部多雲</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>今夜多雲</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>今夜的天空</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>平均雲量：{0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>天文暗夜：{0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>今夜沒有天文暗夜</value>
+  </data>
 </root>

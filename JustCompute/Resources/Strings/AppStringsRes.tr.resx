@@ -870,4 +870,25 @@
   <data name="LastLightLabel" xml:space="preserve">
     <value>Son ışık</value>
   </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Bu gece açık</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Bu gece parçalı bulutlu</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Bu gece bulutlu</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Bu gecenin gökyüzü</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Ortalama bulutluluk: %{0}</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Astronomik karanlık: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Bu gece astronomik karanlık yok</value>
+  </data>
 </root>
