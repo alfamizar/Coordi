@@ -55,6 +55,14 @@ Upload localized store-listing text (title / short & full description) to Google
 
 Upload localized listing text AND phone screenshots (metadata/.../images/phoneScreenshots) to Google Play
 
+### android upload_listing_batch
+
+```sh
+[bundle exec] fastlane android upload_listing_batch
+```
+
+Upload listing text + screenshots for one slice of locales, e.g. batch:1 of:4
+
 ### android upload_release_notes
 
 ```sh
@@ -62,6 +70,14 @@ Upload localized listing text AND phone screenshots (metadata/.../images/phoneSc
 ```
 
 Upload only the 'What's new' release notes for a version (env: COORDI_VERSION_CODE)
+
+### android track_status
+
+```sh
+[bundle exec] fastlane android track_status
+```
+
+Read-only: which version codes are live on each track
 
 ### android build_aab
 
@@ -78,6 +94,14 @@ Build a signed release AAB (env: COORDI_KEYSTORE, COORDI_KEYSTORE_PASS, COORDI_K
 ```
 
 Upload a signed AAB to a Play track (env: COORDI_AAB?, COORDI_TRACK=internal, COORDI_RELEASE_STATUS=draft)
+
+### android release_binary
+
+```sh
+[bundle exec] fastlane android release_binary
+```
+
+Upload ONLY the signed AAB - no listing text, images or release notes
 
 ### android ship
 

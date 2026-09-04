@@ -1,3 +1,7 @@
+require 'tmpdir'
+require 'fileutils'
+require 'open3'
+
 default_platform(:android)
 
 # Coordi — Google Play automation.
@@ -119,6 +123,44 @@ platform :android do
     )
   end
 
+  desc "Upload listing text + screenshots for one slice of locales, e.g. batch:1 of:4"
+  lane :upload_listing_batch do |options|
+    total = (options[:of] || ENV["COORDI_BATCHES"] || 4).to_i
+    batch = (options[:batch] || ENV["COORDI_BATCH"]).to_i
+    UI.user_error!("Pass batch:N of:M — got batch:#{batch} of:#{total}") unless total > 0 && batch.between?(1, total)
+
+    root = File.join(coordi_repo_root, "fastlane/metadata/android")
+    locales = Dir.children(root).select { |d| File.directory?(File.join(root, d)) }.sort
+    per = (locales.length / total.to_f).ceil
+    slice = locales.each_slice(per).to_a[batch - 1] || []
+    UI.user_error!("Batch #{batch} of #{total} is empty (#{locales.length} locales)") if slice.empty?
+
+    UI.message("Batch #{batch}/#{total}: #{slice.join(', ')}")
+
+    # supply uploads every locale it finds under metadata_path, so the slice is expressed by
+    # handing it a directory that contains only those locales.
+    staging = File.join(Dir.tmpdir, "coordi-listing-batch-#{batch}-of-#{total}")
+    FileUtils.rm_rf(staging)
+    FileUtils.mkdir_p(staging)
+    slice.each { |loc| FileUtils.cp_r(File.join(root, loc), File.join(staging, loc)) }
+
+    begin
+      upload_to_play_store(
+        metadata_path: staging,
+        track: ENV["COORDI_TRACK"] || "production",
+        version_code: ENV["COORDI_VERSION_CODE"]&.to_i,
+        skip_upload_apk: true,
+        skip_upload_aab: true,
+        skip_upload_changelogs: true,
+        skip_upload_images: false,
+        skip_upload_screenshots: false
+      )
+      UI.success("Batch #{batch}/#{total} uploaded: #{slice.join(', ')}")
+    ensure
+      FileUtils.rm_rf(staging)
+    end
+  end
+
   desc "Upload only the 'What's new' release notes for a version (env: COORDI_VERSION_CODE)"
   lane :upload_release_notes do
     UI.user_error!("Set COORDI_VERSION_CODE to the versionCode whose notes you are updating") if ENV["COORDI_VERSION_CODE"].to_s.empty?
@@ -135,6 +177,19 @@ platform :android do
     )
   end
 
+  desc "Read-only: which version codes are live on each track"
+  lane :track_status do
+    pkg = ENV["COORDI_PACKAGE_NAME"] || "com.cutecompute.coordi"
+    %w[production beta alpha internal].each do |t|
+      begin
+        codes = google_play_track_version_codes(track: t, package_name: pkg, json_key: ENV["SUPPLY_JSON_KEY"])
+        UI.message("#{t.ljust(11)} #{codes.to_a.empty? ? '(nothing)' : codes.to_a.join(', ')}")
+      rescue => e
+        UI.error("#{t.ljust(11)} could not be read: #{e.message}")
+      end
+    end
+  end
+
   # ---- App release (signed AAB) ----
 
   desc "Build a signed release AAB (env: COORDI_KEYSTORE, COORDI_KEYSTORE_PASS, COORDI_KEY_ALIAS, COORDI_KEY_PASS)"
@@ -144,16 +199,30 @@ platform :android do
     end
     UI.user_error!("Keystore not found: #{ENV['COORDI_KEYSTORE']}") unless File.exist?(ENV["COORDI_KEYSTORE"])
 
-    # log: false keeps the keystore passwords out of the fastlane output/logs.
-    sh("dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
-       "-f", ANDROID_TFM, "-c", "Release",
-       "-p:AndroidPackageFormat=aab",
-       "-p:AndroidKeyStore=true",
-       "-p:AndroidSigningKeyStore=#{ENV['COORDI_KEYSTORE']}",
-       "-p:AndroidSigningStorePass=#{ENV['COORDI_KEYSTORE_PASS']}",
-       "-p:AndroidSigningKeyAlias=#{ENV['COORDI_KEY_ALIAS']}",
-       "-p:AndroidSigningKeyPass=#{ENV['COORDI_KEY_PASS']}",
-       log: false)
+    # The passwords are arguments, so the command line must never be echoed. But suppressing
+    # the output entirely (the old `log: false`) also swallowed the reason for a failure, and
+    # "Shell command exited with exit status 1" says nothing at all. Capture it instead, and on
+    # failure print it with the secrets masked.
+    cmd = ["dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
+           "-f", ANDROID_TFM, "-c", "Release",
+           "-p:AndroidPackageFormat=aab",
+           "-p:AndroidKeyStore=true",
+           "-p:AndroidSigningKeyStore=#{ENV['COORDI_KEYSTORE']}",
+           "-p:AndroidSigningStorePass=#{ENV['COORDI_KEYSTORE_PASS']}",
+           "-p:AndroidSigningKeyAlias=#{ENV['COORDI_KEY_ALIAS']}",
+           "-p:AndroidSigningKeyPass=#{ENV['COORDI_KEY_PASS']}"]
+
+    UI.message("Publishing signed AAB (output shown only if it fails)...")
+    output, status = Open3.capture2e(*cmd)
+
+    unless status.success?
+      masked = output.dup
+      [ENV["COORDI_KEYSTORE_PASS"], ENV["COORDI_KEY_PASS"]].compact.reject(&:empty?).uniq.each do |secret|
+        masked.gsub!(secret, "********")
+      end
+      UI.error(masked)
+      UI.user_error!("dotnet publish failed while building the signed AAB — see the output above")
+    end
 
     aab = coordi_signed_aab
     UI.user_error!("Publish finished but no *-Signed.aab was found under publish/") if aab.nil?
@@ -178,6 +247,23 @@ platform :android do
       # attached to this release automatically — no more pasting them into the Play Console.
       # Add a <newVersionCode>.txt per locale for each release (current: changelogs/2.txt).
       skip_upload_changelogs: false
+    )
+  end
+
+  desc "Upload ONLY the signed AAB - no listing text, images or release notes"
+  lane :release_binary do
+    aab = ENV["COORDI_AAB"].to_s.empty? ? coordi_signed_aab : ENV["COORDI_AAB"]
+    UI.user_error!("No AAB found - run `fastlane android build_aab` first.") if aab.nil? || !File.exist?(aab)
+
+    upload_to_play_store(
+      aab: aab,
+      track: ENV["COORDI_TRACK"] || "production",
+      release_status: ENV["COORDI_RELEASE_STATUS"] || "completed",
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
     )
   end
 
