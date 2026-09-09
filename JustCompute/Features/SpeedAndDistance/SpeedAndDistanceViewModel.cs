@@ -376,6 +376,36 @@ namespace JustCompute.Features.SpeedAndDistance
                 return;
             }
 
+#if DEBUG
+            // A finished trip for the store screenshots. The summary only exists while tracking,
+            // which a deep link cannot produce, and an empty screen shows none of what the card
+            // is for. Debug-only, and it never runs unless the harness was given a trip.
+            if (global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededTrip is { } demo)
+            {
+                TravelledDistance = demo.Travelled;
+                DirectDistance = demo.Direct;
+                ElapsedTime = TimeSpan.FromMinutes(37);
+
+                // A trip in progress, with readouts a real fix would carry. All zeros and the
+                // -1 altitude placeholder are what an untouched screen shows, and they make the
+                // screen look broken rather than idle.
+                IsRunning = true;
+                Speed = 4.1;
+                CalculatedSpeed = demo.Travelled / (37 * 60);
+                Direction = demo.Bearing;
+                Accuracy = 4;
+                VerticalAccuracy = 3;
+                Altitude = 78;
+                Elevation = 24;
+                DirectSummary = $"{_distanceFormatter.Format(demo.Direct)}   \u00B7   {demo.Bearing}\u00B0";
+                HasDetour = demo.Travelled > demo.Direct * 1.01;
+                DetourRatio = HasDetour
+                    ? (demo.Travelled / demo.Direct).ToString("0.##", CultureInfo.CurrentCulture) + "\u00D7"
+                    : string.Empty;
+                return;
+            }
+#endif
+
             var startedListeningLocationResult = await StartListeningLocation();
             if (startedListeningLocationResult.IsSuccessful)
             {

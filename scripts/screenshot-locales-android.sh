@@ -48,6 +48,14 @@ SEED_NAME="${COORDI_SEED_NAME:-Paris}"
 # so a capture never inherits whatever the device was last left on.
 ONLY_VISIBLE="${COORDI_ONLY_VISIBLE:-}"
 
+# Content the screens cannot show on a fresh install. Saved places persist, but the Ruler's
+# pins and a trip live only in memory and this script stops the app between every screen, so
+# both have to be handed over on the intent or the shots show an empty route and a zeroed trip.
+# Semicolons are quoted for the device shell, which would otherwise read them as separators.
+SEED_SAVED="${COORDI_SEED_SAVED:-Warsaw,52.2297,21.0122;Berlin,52.5200,13.4050;Madrid,40.4168,-3.7038;Tokyo,35.6762,139.6503}"
+SEED_STOPS="${COORDI_SEED_STOPS:-Warsaw,52.2297,21.0122;Berlin,52.5200,13.4050;Madrid,40.4168,-3.7038}"
+SEED_TRIP="${COORDI_SEED_TRIP:-5120,4180,42}"
+
 # culture (our resx) | BCP-47 tag for set-app-locales
 LOCALES=(
   "en|en-US" "ru-RU|ru-RU" "uk|uk-UA" "pl|pl-PL" "fr|fr-FR" "it|it-IT"
@@ -104,6 +112,9 @@ for loc in "${LOCALES[@]}"; do
       adbx shell am start -n "$COMP" \
         --es coordi_route "$route" --es coordi_theme "$theme" \
         ${ONLY_VISIBLE:+--es coordi_only_visible "$ONLY_VISIBLE"} \
+        ${SEED_SAVED:+--es coordi_saved "'$SEED_SAVED'"} \
+        ${SEED_STOPS:+--es coordi_stops "'$SEED_STOPS'"} \
+        ${SEED_TRIP:+--es coordi_trip "$SEED_TRIP"} \
         --es coordi_lat "$SEED_LAT" --es coordi_lon "$SEED_LON" --es coordi_name "$SEED_NAME" >/dev/null
       for i in $(seq 1 30); do
         foc="$(adbx shell dumpsys window 2>/dev/null | grep -m1 mCurrentFocus || true)"

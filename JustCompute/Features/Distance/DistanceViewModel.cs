@@ -178,6 +178,19 @@ namespace JustCompute.Features.Distance
 
                 if (Stops.Count == 0)
                 {
+#if DEBUG
+                    // A screenshot run can hand the Ruler a real route. The pins live in memory,
+                    // so unlike a saved place this cannot be arranged before the app starts.
+                    if (global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededRouteStops.Count > 1)
+                    {
+                        foreach (var stop in global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededRouteStops)
+                        {
+                            Add(stop);
+                        }
+                        Renumber();
+                        return Task.CompletedTask;
+                    }
+#endif
                     Add(location.Clone());
                     return Task.CompletedTask;
                 }
