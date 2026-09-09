@@ -8,7 +8,8 @@ public sealed class ViewModelServices(
     IDialogService dialogService,
     IGPSLocationService gpsLocationService,
     ILocationService locationService,
-    INavigationService navigationService)
+    INavigationService navigationService,
+    IPermissionGateService permissionGate)
 {
     public IDialogService DialogService { get; } = dialogService;
 
@@ -17,4 +18,6 @@ public sealed class ViewModelServices(
     public ILocationService LocationService { get; } = locationService;
 
     public INavigationService NavigationService { get; } = navigationService;
+
+    public IPermissionGateService PermissionGate { get; } = permissionGate;
 }

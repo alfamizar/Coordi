@@ -27,7 +27,6 @@ namespace JustCompute.Features.Locations
     {
 
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
-        private readonly IPermissionGateService _permissionGate;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly LocationClock _clock;
@@ -46,11 +45,13 @@ namespace JustCompute.Features.Locations
         private int locationsCount;
 
         /// <summary>
-        /// True while the app is still on the placeholder location, i.e. the user has not chosen
-        /// anywhere yet. Drives the onboarding card at the top of the screen.
+        /// True while the app has nowhere real to compute from — no chosen place and no device
+        /// fix. Drives the onboarding card at the top of the screen, and its absence reveals the
+        /// "Add a location" card at the bottom, which offers the same two buttons as a suggestion
+        /// rather than as something standing between the user and the app.
         /// </summary>
         [ObservableProperty]
-        private bool isPlaceholderLocation = !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation;
+        private bool isPlaceholderLocation;
 
         [ObservableProperty]
         private bool isRefreshing;
@@ -72,7 +73,6 @@ namespace JustCompute.Features.Locations
             ViewModelServices services,
             IStringLocalizer<AppStringsRes> localizer,
             IDevicePermissionsService<PermissionStatus> devicePermissionsService,
-            IPermissionGateService permissionGate,
             IMessagingService messagerService,
             IToastService toastService)
             : base(services)
@@ -80,8 +80,9 @@ namespace JustCompute.Features.Locations
             _localizer = localizer;
             _clock = new LocationClock(time => CurrentTime = time);
             _devicePermissionsService = devicePermissionsService;
-            _permissionGate = permissionGate;
             _toastService = toastService;
+
+            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
 
             Locations.CollectionChanged += Locations_CollectionChanged;
             messagerService.Subscribe<IRecipient<LocationMessage>, LocationMessage>(this);
@@ -156,9 +157,39 @@ namespace JustCompute.Features.Locations
                 MarkAsCurrentDeviceLocation(_gpsLocationService.DeviceLocation);
             }
 
-            if (_gpsLocationService.SelectedLocation is not null)
+            if (_gpsLocationService.SelectedLocation is { } selected)
             {
-                UpsertLocation(_gpsLocationService.SelectedLocation, insertAtStart: Locations.Count == 0);
+                // The placeholder is a fallback so the other screens have data before anywhere is
+                // picked - not a place the user chose - so it earns a row only while there is
+                // nothing else to show. Listing it unconditionally left an undeletable London
+                // sitting beside the real entries: with no persisted id it draws no edit or delete
+                // affordance, and DeleteLocation refuses unsaved rows outright, so tapping it did
+                // nothing at all. Determining the device position did not help either, because the
+                // fix is added as its own row and SelectedLocation stays on the placeholder until
+                // something is chosen.
+                bool isPlaceholder = LocationIdentity.IsPlaceholder(selected);
+
+                if (!isPlaceholder || Locations.Count == 0)
+                {
+                    UpsertLocation(selected, insertAtStart: Locations.Count == 0);
+                }
+            }
+
+            DropPlaceholderOnceSomethingRealExists();
+        }
+
+        /// <summary>
+        /// Removes a placeholder left over from an earlier pass. It can be added before the device
+        /// fix or the saved rows arrive, and without this it would simply stay.
+        /// </summary>
+        private void DropPlaceholderOnceSomethingRealExists()
+        {
+            if (Locations.Count < 2) return;
+
+            var placeholder = Locations.FirstOrDefault(LocationIdentity.IsPlaceholder);
+            if (placeholder is not null)
+            {
+                Locations.Remove(placeholder);
             }
         }
 
@@ -256,7 +287,7 @@ namespace JustCompute.Features.Locations
 
         private void UpdateAtThisLocationInfo(Location? location)
         {
-            IsPlaceholderLocation = !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation;
+            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
 
             if (location is null)
             {

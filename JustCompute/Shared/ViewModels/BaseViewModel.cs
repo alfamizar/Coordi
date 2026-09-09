@@ -14,6 +14,7 @@ namespace JustCompute.Shared.ViewModels
         protected readonly IGPSLocationService _gpsLocationService;
         protected readonly ILocationService _locationService;
         protected readonly INavigationService _navigationService;
+        protected readonly IPermissionGateService _permissionGate;
 
         public static readonly int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(DateTime.UtcNow.Year) ? 366 : 365;
 
@@ -29,6 +30,65 @@ namespace JustCompute.Shared.ViewModels
             _gpsLocationService = services.GpsLocationService;
             _locationService = services.LocationService;
             _navigationService = services.NavigationService;
+            _permissionGate = services.PermissionGate;
+
+            _gpsLocationService.DeviceLocationChanged += OnDeviceLocationChanged;
+        }
+
+        /// <summary>
+        /// The place the data on screen was computed for. Kept so a selection that changes
+        /// underneath a loaded screen can be noticed.
+        /// </summary>
+        private Location? _loadedFor;
+
+        /// <summary>
+        /// One device-location request between all the screens: they share a service, and several
+        /// first loads landing together would otherwise each start their own.
+        /// </summary>
+        private static int _adoptionInFlight;
+
+        private void OnDeviceLocationChanged(object? sender, EventArgs e)
+        {
+            // A fix becomes the place the app computes from all by itself when the user has not
+            // chosen one. Screens read that once per load, so without this they would go on
+            // showing the placeholder's answers for a location the app has already left behind.
+            if (!_hasLoadedOnce) return;
+            if (ReferenceEquals(_loadedFor, _gpsLocationService.SelectedLocation)) return;
+
+            _ = LoadItems();
+        }
+
+        /// <summary>
+        /// Asks the device where it is when the app has nowhere real to compute from, so a first
+        /// run works out of the box instead of quietly reporting the placeholder's city.
+        /// </summary>
+        private async Task AdoptDeviceLocationIfNothingChosen()
+        {
+            if (!_gpsLocationService.ShouldPromptForLocation) return;
+
+            if (Interlocked.Exchange(ref _adoptionInFlight, 1) == 1) return;
+
+            try
+            {
+                // Checked, never requested: being asked for location by a screen the user opened
+                // to read a moon phase is the wrong moment to ask. The Locations screen is where
+                // that request belongs, and it still makes it. Left denied, nothing changes and
+                // the onboarding card goes on asking for a place instead.
+                if (!await _permissionGate.RefreshLocationPermissionState()) return;
+                if (_gpsLocationService.IsGettingDeviceLocation) return;
+
+                await _gpsLocationService.GetDeviceGeoLocation();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Adopting the device location failed: {ex}");
+            }
+            finally
+            {
+                // Reset so a later load can try again: permission may be granted by then, or the
+                // platform may have a fix it did not have a moment ago.
+                _adoptionInFlight = 0;
+            }
         }
 
         /// <summary>
@@ -54,6 +114,11 @@ namespace JustCompute.Shared.ViewModels
                 // own choice has been read back from storage. Restoring runs once per launch.
                 await _gpsLocationService.RestorePersistedSelectedLocation();
 
+                // Fire and forget: the platform can sit on this for up to 30 seconds, and there
+                // is a placeholder to draw in the meantime. When the fix lands it becomes the
+                // selection and DeviceLocationChanged brings this screen back to reload.
+                _ = AdoptDeviceLocationIfNothingChosen();
+
                 if (_gpsLocationService.IsGettingDeviceLocation && _gpsLocationService.GettingDeviceLocationFinished is not null)
                 {
                     await _gpsLocationService.GettingDeviceLocationFinished.Task;
@@ -66,6 +131,8 @@ namespace JustCompute.Shared.ViewModels
                     await MainThread.InvokeOnMainThreadAsync(ClearData);
                     return;
                 }
+
+                _loadedFor = location;
 
                 // Started on the UI thread on purpose. Everything above can hand back on a
                 // background thread — a database read, or the device-fix task completing on the

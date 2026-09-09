@@ -10,6 +10,14 @@ namespace Compute.Core.Domain.Services
 
         Location? SelectedLocation { get; set; }
 
+        /// <summary>
+        /// True while the app has nowhere real to compute from: the user has not chosen a place
+        /// and the device's own fix has not arrived either, so every screen is running on the
+        /// invented fallback. Drives the onboarding cards, which have nothing to ask for once a
+        /// fix has been adopted.
+        /// </summary>
+        bool ShouldPromptForLocation { get; }
+
         bool IsGettingDeviceLocation { get; }
 
         TaskCompletionSource<bool>? GettingDeviceLocationFinished { get; }

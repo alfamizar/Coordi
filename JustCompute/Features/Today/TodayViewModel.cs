@@ -264,7 +264,7 @@ namespace JustCompute.Features.Today
             var offsetHours = location.GetUtcOffsetHours(DateTime.SpecifyKind(date, DateTimeKind.Utc));
 
             LocationName = location.Name;
-            IsPlaceholderLocation = !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation;
+            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
 
             // The snapshot is pure computation, so keep it off the UI thread — a year of
             // timezone lookups plus the lunar series is not free.

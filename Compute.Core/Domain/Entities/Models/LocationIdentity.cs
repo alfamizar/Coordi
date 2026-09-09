@@ -37,5 +37,12 @@ namespace Compute.Core.Domain.Entities.Models
         /// having no persisted id, which is also what makes it neither editable nor deletable.
         /// </summary>
         public static bool IsDeviceSlot(Location location) => location.IsCurrent && location.Id <= 0;
+
+        /// <summary>
+        /// The fallback the location service invents so screens have something to compute from
+        /// before anywhere has been chosen. Neither saved nor the device's own fix, which is what
+        /// separates it from the two rows that legitimately have no id.
+        /// </summary>
+        public static bool IsPlaceholder(Location location) => !location.IsCurrent && location.Id <= 0;
     }
 }

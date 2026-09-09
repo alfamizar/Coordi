@@ -2,6 +2,7 @@ using DeviceGeoLocation = Microsoft.Maui.Devices.Sensors.Location;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using Compute.Core.Common.Results;
 using Compute.Core.Domain.Errors;
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Services;
 using Compute.Core.Common.Exceptions.Location;
 using Polly.Retry;
@@ -25,13 +26,14 @@ namespace JustCompute.Services.LocationService
 
         private Location? _selectedLocation;
         private Location? _placeholderLocation;
+        private Location? _adoptedDeviceLocation;
         private Task? _restoreTask;
         private readonly Lock _restoreGate = new();
 
         /// <summary>
         /// Never null: until the user picks somewhere (or the device fix arrives) this returns a
         /// placeholder, so screens show real data instead of an error. Pair with
-        /// <c>Settings.HasUserSetLocation</c> to tell the two apart.
+        /// <see cref="ShouldPromptForLocation"/> to tell the two apart.
         /// </summary>
         public Location? SelectedLocation
         {
@@ -47,9 +49,52 @@ namespace JustCompute.Services.LocationService
                 // London sitting in the list as though it were a place they had picked.
                 if (value != null && !ReferenceEquals(value, _placeholderLocation))
                 {
+                    // Assigning is a choice even when it lands on the device's own row, so the
+                    // adoption below is no longer standing in for one.
+                    _adoptedDeviceLocation = null;
                     global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// Whether the selection is somewhere the user actually picked, rather than one of the two
+        /// stand-ins the app fills in for them: the invented placeholder, and the device's own fix
+        /// adopted by <see cref="AdoptDeviceLocation"/>. Both must give way to a persisted choice
+        /// when one is restored, and neither may block that restore.
+        /// </summary>
+        private bool IsUserChoice =>
+            LocationSelection.IsUserChoice(_selectedLocation, _placeholderLocation, _adoptedDeviceLocation);
+
+        public bool ShouldPromptForLocation =>
+            !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation
+            && (_selectedLocation is null || ReferenceEquals(_selectedLocation, _placeholderLocation));
+
+        /// <summary>
+        /// Makes the device's own fix the place the app computes from, for as long as the user has
+        /// not chosen one. Without this the app knew where it was, listed it, and still reported
+        /// the placeholder's London to every screen.
+        /// </summary>
+        /// <param name="previous">
+        /// The fix being replaced. The Locations screen moves a fresh fix onto the row already in
+        /// the list and hands that row back here, so a selection pointing at the old instance has
+        /// to follow it across or it silently goes stale.
+        /// </param>
+        private void AdoptDeviceLocation(Location? previous)
+        {
+            if (_deviceLocation is null) return;
+
+            if (!LocationSelection.ShouldAdoptDeviceFix(
+                    _selectedLocation, _placeholderLocation, _adoptedDeviceLocation, previous))
+            {
+                return;
+            }
+
+            // Deliberately not through the setter: the app is filling in a blank, not recording a
+            // decision. Persisting an id or setting HasUserSetLocation would dismiss the prompt to
+            // save a place and make the next launch treat a passing fix as a settled choice.
+            _selectedLocation = _deviceLocation;
+            _adoptedDeviceLocation = _deviceLocation;
         }
 
         private static void PersistSelectedLocationId(int? id)
@@ -84,8 +129,9 @@ namespace JustCompute.Services.LocationService
         {
             // Reading the property hands back a placeholder and caches it, so "already set" is not
             // the same as "chosen by the user" — any screen that asked first would otherwise block
-            // the restore and the app would forget the user's location on every cold start.
-            if (_selectedLocation != null && !ReferenceEquals(_selectedLocation, _placeholderLocation))
+            // the restore and the app would forget the user's location on every cold start. An
+            // adopted device fix is a stand-in for the same reason and must not block it either.
+            if (IsUserChoice)
             {
                 return;
             }
@@ -109,7 +155,10 @@ namespace JustCompute.Services.LocationService
             {
                 if (_deviceLocation != value)
                 {
+                    var previous = _deviceLocation;
                     _deviceLocation = value;
+                    AdoptDeviceLocation(previous);
+
                     if (_deviceLocation != null)
                     {
                         OnDeviceLocationChanged();
@@ -155,8 +204,9 @@ namespace JustCompute.Services.LocationService
                 DeviceLocation = await _locationService.GetLocationFromCoordinates(deviceLocation.Latitude, deviceLocation.Longitude);
                 DeviceLocation.IsCurrent = true;
 
-                SelectedLocation ??= DeviceLocation;
-
+                // No selection to make here: the property above never returns null, so the ??=
+                // that used to sit on this line could not fire. The DeviceLocation setter adopts
+                // the fix instead, which also covers the fixes that arrive from elsewhere.
                 return DeviceLocation;
             }
             catch (FeatureNotSupportedException)
