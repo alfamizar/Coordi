@@ -30,6 +30,11 @@
                                Style="{StaticResource TitleLabel}" />
                         <BoxView Style="{StaticResource DividerStyle}" />
 
+                        <Button Text="{localization:Localize UseMyLocationLabel}"
+                                Command="{Binding UseMyLocationCommand}"
+                                IsVisible="{Binding CanRequestDeviceLocation}"
+                                HorizontalOptions="Fill" />
+
                         <Button Text="{localization:Localize SearchCityLabel}"
                                 Command="{Binding GoToSearchByCityCommand}"
                                 HorizontalOptions="Fill" />
@@ -232,6 +237,11 @@
                         <Label Text="{localization:Localize AddLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
                         <BoxView Style="{StaticResource DividerStyle}" />
+
+                        <Button Text="{localization:Localize UseMyLocationLabel}"
+                                Command="{Binding UseMyLocationCommand}"
+                                IsVisible="{Binding CanRequestDeviceLocation}"
+                                HorizontalOptions="Fill" />
 
                         <Button Text="{localization:Localize SearchCityLabel}"
                                 Command="{Binding GoToSearchByCityCommand}"

@@ -35,6 +35,7 @@ namespace JustCompute.Features.Locations
         private bool _permissionDialogOpen;
         private bool _isFetchingDeviceLocation;
         private bool _initializationPending;
+        private bool _pendingUserInitiated;
 
         // Suppresses the SelectedLocation write-back while we restore the selection ourselves.
         // Mutating Locations makes the CarouselView snap CurrentItem to index 0, which would
@@ -52,6 +53,14 @@ namespace JustCompute.Features.Locations
         /// </summary>
         [ObservableProperty]
         private bool isPlaceholderLocation;
+
+        /// <summary>
+        /// Whether to offer the button that asks for the device's position. Only while the
+        /// permission is missing: once it is granted the fix arrives on its own, and a button
+        /// asking for what the app already has would be noise.
+        /// </summary>
+        [ObservableProperty]
+        private bool canRequestDeviceLocation;
 
         [ObservableProperty]
         private bool isRefreshing;
@@ -83,6 +92,7 @@ namespace JustCompute.Features.Locations
             _toastService = toastService;
 
             IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
+            CanRequestDeviceLocation = _permissionGate.LastKnownLocationPermissionGranted != true;
 
             Locations.CollectionChanged += Locations_CollectionChanged;
             messagerService.Subscribe<IRecipient<LocationMessage>, LocationMessage>(this);
@@ -91,6 +101,8 @@ namespace JustCompute.Features.Locations
 
         private void OnLocationPermissionStateChanged(object? sender, bool isGranted)
         {
+            CanRequestDeviceLocation = !isGranted;
+
             if (isGranted)
             {
                 _ = InitViewModelAsync(forceRefreshDeviceLocation: true);
@@ -107,13 +119,15 @@ namespace JustCompute.Features.Locations
             LocationsCount = Locations.Count;
         }
 
-        private async Task<bool> InitDeviceLocation(bool forceRefresh = false)
+        private async Task<bool> InitDeviceLocation(bool forceRefresh, bool userInitiated)
         {
             if (_isFetchingDeviceLocation) return false;
 
-            if (!await HandlePermissions()) return false;
-
+            // Before the permission check, not after: with a fix already in hand and no refresh
+            // asked for there is nothing here to need permission for.
             if (!forceRefresh && _gpsLocationService.DeviceLocation != null) return true;
+
+            if (!await HandlePermissions(userInitiated)) return false;
 
             // Deliberately not IsBusy: the list is already on screen by now and the fix takes up
             // to 30s (forever, on an emulator with no provider). A blocking spinner over usable
@@ -213,13 +227,42 @@ namespace JustCompute.Features.Locations
         private void UpsertLocation(Location location, bool insertAtStart = false) =>
             LocationList.Upsert(Locations, location, insertAtStart);
 
-        protected async Task<bool> HandlePermissions()
+        /// <summary>
+        /// Gets the location permission, if the moment is right to ask for it.
+        /// </summary>
+        /// <param name="userInitiated">
+        /// True when the user asked for their position outright. Opening this screen is not such
+        /// a request: the app works without the permission — search for a city, or type
+        /// coordinates — and it used to raise a modal on every single visit for someone who had
+        /// declined, on a screen whose own dialog told them the permission was optional.
+        /// </param>
+        protected async Task<bool> HandlePermissions(bool userInitiated)
         {
+            if (!userInitiated)
+            {
+                // One automatic request, ever, so someone who would have granted it is not left
+                // hunting for the button. From then on the offer lives on the button alone.
+                if (global::JustCompute.Shared.Helpers.Settings.HasAskedForLocationPermission)
+                {
+                    bool granted = await _permissionGate.RefreshLocationPermissionState();
+                    CanRequestDeviceLocation = !granted;
+                    return granted;
+                }
+
+                global::JustCompute.Shared.Helpers.Settings.HasAskedForLocationPermission = true;
+            }
+
             PermissionStatus permissionStatus = await _devicePermissionsService
                 .CheckPermissionAndRequestIfNeeded(Permission.DeviceLocation);
+
+            CanRequestDeviceLocation = !await _permissionGate.RefreshLocationPermissionState();
+
             if (permissionStatus == PermissionStatus.Denied)
             {
-                if (_permissionDialogOpen)
+                // Declining the request the app made of its own accord is an answer, not a
+                // problem to be solved with a second dialog. Only somebody who came looking for
+                // their location is owed an explanation of why they did not get it.
+                if (!userInitiated || _permissionDialogOpen)
                 {
                     return false;
                 }
@@ -307,6 +350,14 @@ namespace JustCompute.Features.Locations
             RestartTimer(offsetHours);
         }
 
+        /// <summary>
+        /// The one place the app asks for the location permission on purpose. Everything else
+        /// makes do with whatever has already been granted.
+        /// </summary>
+        [RelayCommand]
+        private Task UseMyLocation() =>
+            InitViewModelAsync(forceRefreshDeviceLocation: true, userInitiated: true);
+
         [RelayCommand]
         private async Task GoToAddLocation()
         {
@@ -389,14 +440,16 @@ namespace JustCompute.Features.Locations
                 UpdateAtThisLocationInfo(selected);
             });
 
-        private async Task InitViewModelAsync(bool forceRefreshDeviceLocation = false)
+        private async Task InitViewModelAsync(bool forceRefreshDeviceLocation = false, bool userInitiated = false)
         {
             if (!await _initializationSemaphore.WaitAsync(0))
             {
                 // An init can sit on a device fix for up to 30s. Dropping the request outright
                 // meant anything that happened meanwhile — a location added, edited, deleted —
-                // stayed invisible until the next navigation. Queue one re-run instead.
+                // stayed invisible until the next navigation. Queue one re-run instead, keeping
+                // the intent: a tap on "Use my location" must still ask when its turn comes.
                 _initializationPending = true;
+                _pendingUserInitiated |= userInitiated;
                 return;
             }
 
@@ -423,7 +476,7 @@ namespace JustCompute.Features.Locations
 
                 // A denied or unavailable device fix is not fatal — the app falls back to a
                 // placeholder — so it runs last and only adds to what is already on screen.
-                await InitDeviceLocation(forceRefreshDeviceLocation);
+                await InitDeviceLocation(forceRefreshDeviceLocation, userInitiated);
 
                 await ApplySelection(_gpsLocationService.SelectedLocation);
             }
@@ -434,7 +487,9 @@ namespace JustCompute.Features.Locations
                 if (_initializationPending)
                 {
                     _initializationPending = false;
-                    _ = InitViewModelAsync();
+                    bool wasUserInitiated = _pendingUserInitiated;
+                    _pendingUserInitiated = false;
+                    _ = InitViewModelAsync(wasUserInitiated, wasUserInitiated);
                 }
             }
         }

@@ -146,6 +146,18 @@ public static class Settings
         set => Preferences.Set(nameof(HasUserSetLocation), value);
     }
 
+    /// <summary>
+    /// Whether the app has ever raised the location permission request by itself. It gets one
+    /// chance, on the first visit to the Locations screen, so someone who would have granted it
+    /// is not left hunting for a button. After that only an explicit "Use my location" asks —
+    /// the app works without the permission, and a dialog on every visit made that a lie.
+    /// </summary>
+    public static bool HasAskedForLocationPermission
+    {
+        get => Preferences.Get(nameof(HasAskedForLocationPermission), false);
+        set => Preferences.Set(nameof(HasAskedForLocationPermission), value);
+    }
+
     public static bool IsWifiOnlyEnabled
     {
         get => Preferences.Get(nameof(IsWifiOnlyEnabled), false);
