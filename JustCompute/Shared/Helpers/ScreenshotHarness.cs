@@ -63,6 +63,14 @@ namespace JustCompute.Shared.Helpers
         /// </summary>
         public const string TripEnv = "COORDI_SCREENSHOT_TRIP";
 
+        /// <summary>
+        /// The local hour (0-23) the sky chart should open on, rather than the hour the capture
+        /// happens to run at. A chart of a daylit sky is a correct answer and a useless picture:
+        /// the stars are there, faded to nothing, and the one screen whose whole subject is the
+        /// starfield shows an empty blue disc.
+        /// </summary>
+        public const string SkyHourEnv = "COORDI_SCREENSHOT_SKY_HOUR";
+
         // Populated by the Android MainActivity from intent extras.
         public static string? RouteFromPlatform;
         public static string? LatFromPlatform;
@@ -73,6 +81,7 @@ namespace JustCompute.Shared.Helpers
         public static string? SavedLocationsFromPlatform;
         public static string? RouteStopsFromPlatform;
         public static string? TripFromPlatform;
+        public static string? SkyHourFromPlatform;
 
         /// <summary>
         /// Pins the Ruler should open with, or empty. Read by the view model when it seeds, so
@@ -82,6 +91,15 @@ namespace JustCompute.Shared.Helpers
 
         /// <summary>Travelled metres, straight-line metres and bearing, or null for no demo trip.</summary>
         public static (double Travelled, double Direct, int Bearing)? SeededTrip { get; private set; }
+
+        /// <summary>
+        /// The local hour the sky chart should open on, or null to open on now. Read by the chart
+        /// when it loads, which then scrubs itself to the next occurrence of that hour.
+        /// </summary>
+        public static int? SeededSkyHour =>
+            int.TryParse(Pick(SkyHourFromPlatform, SkyHourEnv), out var hour) && hour is >= 0 and <= 23
+                ? hour
+                : null;
 
         private static string? Pick(string? platformValue, string envKey)
         {

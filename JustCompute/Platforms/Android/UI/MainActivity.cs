@@ -33,6 +33,7 @@ public class MainActivity : MauiAppCompatActivity
         ScreenshotHarness.SavedLocationsFromPlatform = Intent?.GetStringExtra("coordi_saved");
         ScreenshotHarness.RouteStopsFromPlatform = Intent?.GetStringExtra("coordi_stops");
         ScreenshotHarness.TripFromPlatform = Intent?.GetStringExtra("coordi_trip");
+        ScreenshotHarness.SkyHourFromPlatform = Intent?.GetStringExtra("coordi_sky_hour");
 #endif
 
         base.OnCreate(savedInstanceState);

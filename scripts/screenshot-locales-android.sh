@@ -56,6 +56,11 @@ SEED_SAVED="${COORDI_SEED_SAVED:-Warsaw,52.2297,21.0122;Berlin,52.5200,13.4050;M
 SEED_STOPS="${COORDI_SEED_STOPS:-Warsaw,52.2297,21.0122;Berlin,52.5200,13.4050;Madrid,40.4168,-3.7038}"
 SEED_TRIP="${COORDI_SEED_TRIP:-5120,4180,42}"
 
+# The hour the sky chart should open on. Left to "now", a capture run in the afternoon gives a
+# daylit disc with the stars faded out of it — a true picture of a screen whose whole subject is
+# invisible at that hour.
+SEED_SKY_HOUR="${COORDI_SEED_SKY_HOUR:-23}"
+
 # culture (our resx) | BCP-47 tag for set-app-locales
 LOCALES=(
   "en|en-US" "ru-RU|ru-RU" "uk|uk-UA" "pl|pl-PL" "fr|fr-FR" "it|it-IT"
@@ -69,6 +74,7 @@ LOCALES=(
 SCREENS=(
   "//today|today" "//locations|locations"
   "//sunEclipses|sun-eclipses" "//moonEclipses|moon-eclipses"
+  "//skyChart|sky-chart" "//planets|planets" "//converter|converter"
   "//optics|optics" "//ruler|ruler"
   "//speedAndDistance|speed-distance" "//settings|settings"
 )
@@ -115,6 +121,7 @@ for loc in "${LOCALES[@]}"; do
         ${SEED_SAVED:+--es coordi_saved "'$SEED_SAVED'"} \
         ${SEED_STOPS:+--es coordi_stops "'$SEED_STOPS'"} \
         ${SEED_TRIP:+--es coordi_trip "$SEED_TRIP"} \
+        ${SEED_SKY_HOUR:+--es coordi_sky_hour "$SEED_SKY_HOUR"} \
         --es coordi_lat "$SEED_LAT" --es coordi_lon "$SEED_LON" --es coordi_name "$SEED_NAME" >/dev/null
       for i in $(seq 1 30); do
         foc="$(adbx shell dumpsys window 2>/dev/null | grep -m1 mCurrentFocus || true)"
