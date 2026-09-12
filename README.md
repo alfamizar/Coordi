@@ -60,6 +60,11 @@ listings), with five themes.
 - **📷 Optics** — depth of field (hyperfocal, near/far limits, front/behind split), field of
   view (horizontal, vertical, diagonal and real coverage), and the longest exposure before
   stars trail by both the 500 rule and the NPF rule, from your camera's own pixel pitch.
+- **✨ Sky chart** — the whole sky over your location on a disc, zenith at the centre and
+  east on the left the way a planisphere is read: the Yale bright stars to magnitude 4.5 tinted
+  by colour index, the traditional stick figures, the IAU constellation boundaries precessed out
+  of B1875, and the Sun, Moon and planets labelled. Scrubbable a day either way, and the disc
+  lightens through twilight into daylight so it says whether any of it could be seen.
 - **🪐 Planets** — the seven other planets from where you are: altitude and azimuth now,
   rise, highest point and set in the location's own clock, and distance from Earth. Every planet
   is listed in order out from the Sun whether or not it is up, and the outer ones that cross

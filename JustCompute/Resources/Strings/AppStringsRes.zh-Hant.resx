@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} 天文單位</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>星空圖</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>星座連線</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>邊界</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>北</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>東</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>南</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>西</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>現在</value>
+  </data>
 </root>

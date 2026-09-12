@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} а. о.</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Карта неба</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Лінії сузір’їв</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Межі</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>Пн</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>Сх</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>Пд</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>Зх</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Зараз</value>
+  </data>
 </root>

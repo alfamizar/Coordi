@@ -8,6 +8,7 @@
        xmlns:distance="clr-namespace:JustCompute.Features.Distance"
        xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
        xmlns:optics="clr-namespace:JustCompute.Features.Optics"
+       xmlns:skyChart="clr-namespace:JustCompute.Features.SkyChart"
        xmlns:planets="clr-namespace:JustCompute.Features.Planets"
        xmlns:converter="clr-namespace:JustCompute.Features.Converter"
        xmlns:settings="clr-namespace:JustCompute.Features.Settings"
@@ -108,8 +109,19 @@
     </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize PlanetsLabel}"
+                Title="{localization:Localize SkyChartLabel}"
                 FlyoutIcon="{AppThemeBinding Light=stars_icon_light.png, Dark=stars_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize SkyChartLabel}"
+                      Route="skyChart"
+                      ContentTemplate="{DataTemplate skyChart:SkyChartPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize PlanetsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=orbit_icon_light.png, Dark=orbit_icon_light.png}"
                 Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize PlanetsLabel}"

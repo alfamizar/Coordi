@@ -132,6 +132,7 @@
     <None Remove="Resources\Images\clock_icon.svg" />
     <None Remove="Resources\Images\Dark\speed_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\stars_icon_dark.svg" />
+    <None Remove="Resources\Images\Dark\orbit_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\stop_circle_light_dark.svg" />
     <None Remove="Resources\Images\Dark\stop_icon_dark.svg" />
     <None Remove="Resources\Images\Dark\timer_icon_dark.svg" />
@@ -212,6 +213,7 @@
     <MauiImage Include="Resources\Images\Dark\sort_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\speed_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\stars_icon_dark.svg" />
+    <MauiImage Include="Resources\Images\Dark\orbit_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\stop_circle_light_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\stop_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Dark\timer_icon_dark.svg" />
@@ -236,6 +238,7 @@
     <MauiImage Include="Resources\Images\Light\sort_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\speed_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\stars_icon_light.svg" />
+    <MauiImage Include="Resources\Images\Light\orbit_icon_light.svg" />
     <MauiImage Include="Resources\Images\Light\my_location_icon_light.svg" />
     <MauiImage Include="Resources\Images\Dark\my_location_icon_dark.svg" />
     <MauiImage Include="Resources\Images\Light\stop_circle_icon_light.svg" />

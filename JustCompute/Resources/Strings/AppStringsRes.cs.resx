@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} AU</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Mapa oblohy</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Spojnice souhvězdí</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Hranice</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>V</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>J</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Nyní</value>
+  </data>
 </root>

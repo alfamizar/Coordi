@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.SkyChart.SkyChartPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:controls="clr-namespace:JustCompute.Shared.Controls"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.SkyChart"
+             x:DataType="ViewModels:SkyChartViewModel">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                             Spacing="{StaticResource CardGap}">
+
+            <!-- The chart carries its own sky colour, so it sits on the page without a card
+                 behind it: a border around a picture of the sky only fences it in. Its height is
+                 set in code, from the page rather than from its own width — bound square it
+                 overflowed a landscape tablet, clipping the horizon ring and pushing the time
+                 and the toggles below the fold. -->
+            <controls:SkyChartView x:Name="Chart"
+                                   Latitude="{Binding Latitude}"
+                                   Longitude="{Binding Longitude}"
+                                   JdUtc="{Binding JdUtc}"
+                                   ShowStickFigures="{Binding ShowStickFigures}"
+                                   ShowBorders="{Binding ShowBorders}"
+                                   Cardinals="{Binding Cardinals}"
+                                   PlanetNames="{Binding PlanetNames}"
+                                   HorizontalOptions="Fill" />
+
+            <Border>
+
+                <StackLayout Padding="0"
+                             Spacing="{StaticResource CardGap}">
+
+                    <!-- The instant on the chart, in the place's own clock, above the control
+                         that changes it. -->
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="{StaticResource CardGap}">
+                        <Label Grid.Column="0"
+                               Text="{Binding TimeLabel}"
+                               Style="{StaticResource TitleLabel}"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="1"
+                                Text="{localization:Localize NowLabel}"
+                                Command="{Binding NowCommand}" />
+                    </Grid>
+
+                    <Slider Minimum="{Binding MinimumHours}"
+                            Maximum="{Binding MaximumHours}"
+                            Value="{Binding HoursFromNow, Mode=TwoWay}" />
+
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="{StaticResource CardGap}">
+                        <CheckBox Grid.Column="0"
+                                  IsChecked="{Binding ShowStickFigures, Mode=TwoWay}"
+                                  VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="{localization:Localize SkyChartLinesLabel}"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                    <!-- Off by default: eighty-nine polygons over nine hundred stars reads as a
+                         mesh on a phone, and the first thing anyone should see is the sky. -->
+                    <Grid ColumnDefinitions="Auto,*"
+                          ColumnSpacing="{StaticResource CardGap}">
+                        <CheckBox Grid.Column="0"
+                                  IsChecked="{Binding ShowBorders, Mode=TwoWay}"
+                                  VerticalOptions="Center" />
+                        <Label Grid.Column="1"
+                               Text="{localization:Localize SkyChartBordersLabel}"
+                               VerticalOptions="Center" />
+                    </Grid>
+
+                </StackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</v1:BasePage>

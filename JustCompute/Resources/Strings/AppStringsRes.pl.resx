@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} au</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Mapa nieba</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Linie gwiazdozbiorów</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Granice</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>Pn</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>Wsch</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>Pd</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>Zach</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Teraz</value>
+  </data>
 </root>

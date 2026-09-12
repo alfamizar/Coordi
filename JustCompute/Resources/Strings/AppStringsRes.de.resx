@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} AE</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Himmelskarte</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Sternbildlinien</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Grenzen</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>O</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>W</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Jetzt</value>
+  </data>
 </root>

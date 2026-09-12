@@ -966,4 +966,28 @@
   <data name="SkyDistanceAuLabel" xml:space="preserve">
     <value>{0} AU</value>
   </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>하늘 지도</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>별자리선</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>경계선</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>북</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>동</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>남</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>서</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>지금</value>
+  </data>
 </root>

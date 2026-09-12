@@ -8,6 +8,7 @@ using JustCompute.Features.MoonEclipses;
 using JustCompute.Features.Converter;
 using JustCompute.Features.Optics;
 using JustCompute.Features.Planets;
+using JustCompute.Features.SkyChart;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Features.Settings;
 using JustCompute.Features.SpeedAndDistance;
@@ -35,6 +36,7 @@ public static class MauiProgram
             .AddSettingsFeature()
             .AddSpeedAndDistanceFeature()
             .AddOpticsFeature()
+            .AddSkyChartFeature()
             .AddPlanetsFeature()
             .AddConverterFeature()
             .AddSunEclipsesFeature()
