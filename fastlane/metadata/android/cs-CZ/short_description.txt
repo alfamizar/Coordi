@@ -1,1 +1,1 @@
-Astronomie offline: Slunce, Měsíc, zatmění, MGRS/UTM, rychlost GPS, optika.
+Offline mapa nebe, efemeridy Slunce a Měsíce, zatmění, MGRS/UTM, GPS, optika.

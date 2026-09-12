@@ -1,0 +1,5 @@
+New Sky Chart: the whole sky on a disc — stars, constellation figures, IAU boundaries, and the Sun, Moon and planets labelled, scrubbable a day either way.
+New Planets screen: altitude and azimuth now, rise, highest point, set, and distance from Earth.
+New coordinate converter: decimal, DMS, DDM, UTM and MGRS.
+The app now computes for where your device says it is, until you choose somewhere else.
+Location permission is asked once instead of on every visit.

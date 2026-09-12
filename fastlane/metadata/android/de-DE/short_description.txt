@@ -1,1 +1,1 @@
-Offline-Astronomie: Sonne, Mond, Finsternisse, MGRS/UTM, GPS-Tempo, Optik.
+Offline-Sternkarte, Sonnen- und Mondephemeriden, Finsternisse, MGRS/UTM, Optik.

@@ -1,0 +1,5 @@
+Nová mapa nebe: celá obloha na kotouči — hvězdy, obrazce souhvězdí, hranice IAU a popsané Slunce, Měsíc i planety; posouvání o den do obou stran.
+Nová obrazovka Planety: výška a azimut nyní, východ, kulminace, západ a vzdálenost od Země.
+Nový převodník souřadnic: desetinné stupně, DMS, DDM, UTM a MGRS.
+Aplikace počítá pro polohu zjištěnou zařízením, dokud nevyberete jinou.
+Na oprávnění k poloze se ptáme jednou, ne při každé návštěvě.

@@ -1,0 +1,5 @@
+Nowa Mapa nieba: całe niebo na dysku — gwiazdy, figury gwiazdozbiorów, granice IAU oraz podpisane Słońce, Księżyc i planety; przesuwanie o dobę w obie strony.
+Nowy ekran Planety: wysokość i azymut teraz, wschód, górowanie, zachód i odległość od Ziemi.
+Nowy konwerter współrzędnych: stopnie dziesiętne, DMS, DDM, UTM i MGRS.
+Aplikacja liczy dla miejsca ustalonego przez telefon, dopóki nie wybierzesz innego.
+O uprawnienie do lokalizacji pytamy raz, nie przy każdej wizycie.

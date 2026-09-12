@@ -15,10 +15,16 @@ BİR YÜZYILLIK TUTULMA
 • Görünürlük filtresi: yalnızca bulunduğunuz yerden görünen tutulmaları gösterin ya da hepsini.
 • Her tutulmanın büyüklüğü ve bulunduğunuz yerden gerçekten göreceğiniz tür — bu her zaman tutulmanın gezegen genelindeki türü değildir.
 
+GÖK HARİTASI VE GEZEGENLER
+• Tüm gökyüzü bir disk üzerinde: 4,5 kadire kadar yıldızlar, takımyıldız figürleri, IAU sınırları, adlarıyla Güneş, Ay ve gezegenler.
+• Bir gün ileri geri kaydırın; disk alacakaranlıktan gündüze doğru açılır.
+• Her gezegen: şimdiki yükseklik ve azimut, doğuş, en yüksek nokta, batış ve Dünya'ya uzaklık.
+
 MGRS, UTM VE JEODEZİ
 • Herhangi bir nokta MGRS'de — ızgara bölgesi, 100 km'lik çift harf, doğu ve kuzey değerleri — ve UTM'de.
 • Vincenty'nin ters formülüyle WGS-84 mesafeleri.
 • 42.900 dünya şehri arasında çevrimdışı arama.
+• Koordinat dönüştürücü: ondalık derece, DMS, DDM, UTM ve MGRS.
 
 ROTA CETVELİ VE YAKIT MALİYETİ
 • Çok duraklı rotalar: birkaç işaret koyun ve yolculuğun tamamını ölçün.

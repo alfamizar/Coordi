@@ -1,1 +1,1 @@
-Astronomia offline: Sole, Luna, eclissi, MGRS/UTM, velocità GPS e ottica.
+Carta del cielo offline, effemeridi, eclissi, MGRS/UTM, velocità GPS, ottica.

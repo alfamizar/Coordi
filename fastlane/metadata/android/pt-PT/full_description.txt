@@ -15,10 +15,16 @@ UM SÉCULO DE ECLIPSES
 • Filtro de visibilidade: mostrar apenas os eclipses visíveis de onde está, ou todos.
 • A magnitude de cada eclipse e o tipo que verá realmente da sua posição, que nem sempre é o tipo do eclipse para o planeta inteiro.
 
+CARTA DO CÉU E PLANETAS
+• Todo o céu num disco: estrelas até 4,5 mag, figuras das constelações, limites da UAI, e o Sol, a Lua e os planetas identificados.
+• Percorra um dia para cada lado; o disco clareia do crepúsculo até ao dia.
+• Cada planeta: altura e azimute agora, nascer, culminação, pôr e distância à Terra.
+
 MGRS, UTM E GEODESIA
 • Qualquer ponto em MGRS — zona da grelha, dígrafo de 100 km, este e norte — e em UTM.
 • Distâncias WGS-84 pela fórmula inversa de Vincenty.
 • Pesquisa offline em 42 900 cidades do mundo.
+• Conversor de coordenadas: graus decimais, DMS, DDM, UTM e MGRS.
 
 RÉGUA DE PERCURSOS E CUSTO DE COMBUSTÍVEL
 • Percursos com várias paragens: coloque vários pontos e meça a viagem inteira.

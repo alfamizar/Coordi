@@ -15,10 +15,16 @@ EIN JAHRHUNDERT AN FINSTERNISSEN
 • Sichtbarkeitsfilter: nur die von Ihrem Standort aus sichtbaren Finsternisse anzeigen oder alle.
 • Die Größe jeder Finsternis und die Art, die Sie von Ihrem Standort aus tatsächlich sehen — nicht immer die Art, die die Finsternis für die Erde insgesamt hat.
 
+STERNKARTE UND PLANETEN
+• Der ganze Himmel auf einer Scheibe: Sterne bis 4,5 mag, Sternbildfiguren, IAU-Grenzen sowie Sonne, Mond und Planeten mit Namen.
+• Einen Tag in beide Richtungen scrubben; die Scheibe hellt über die Dämmerung zum Tag auf.
+• Jeder Planet: Höhe und Azimut jetzt, Aufgang, Höchststand, Untergang und Entfernung zur Erde.
+
 MGRS, UTM UND GEODÄSIE
 • Jeder Punkt in MGRS — Gitterzone, 100-km-Digraph, Ostwert und Nordwert — und in UTM.
 • WGS-84-Entfernungen nach der inversen Formel von Vincenty.
 • Offline-Suche in 42.900 Städten weltweit.
+• Koordinatenumrechner: Dezimalgrad, DMS, DDM, UTM und MGRS.
 
 STRECKENMESSER UND KRAFTSTOFFKOSTEN
 • Routen mit mehreren Stopps: mehrere Punkte setzen und die gesamte Strecke messen.

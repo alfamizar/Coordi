@@ -1,0 +1,5 @@
+Nouvelle carte du ciel : tout le ciel sur un disque — étoiles, figures des constellations, limites UAI, Soleil, Lune et planètes nommés, un jour dans les deux sens.
+Nouvel écran Planètes : hauteur et azimut, lever, culmination, coucher et distance à la Terre.
+Nouveau convertisseur : décimal, DMS, DDM, UTM et MGRS.
+L'application calcule pour la position de l'appareil, jusqu'à ce que vous en choisissiez une autre.
+L'autorisation de localisation est demandée une fois, non à chaque visite.

@@ -1,1 +1,1 @@
-Astronomia offline: Słońce, Księżyc, zaćmienia, MGRS/UTM, prędkość GPS, optyka.
+Mapa nieba offline, efemerydy Słońca i Księżyca, zaćmienia, MGRS/UTM, optyka.

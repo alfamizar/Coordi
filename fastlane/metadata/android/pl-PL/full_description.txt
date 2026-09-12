@@ -15,10 +15,16 @@ STULECIE ZAĆMIEŃ
 • Filtr widoczności: pokaż tylko zaćmienia widoczne z Twojego miejsca albo wszystkie.
 • Wielkość każdego zaćmienia i ten rodzaj, który naprawdę zobaczysz ze swojego miejsca — nie zawsze jest to rodzaj zaćmienia dla całej planety.
 
+MAPA NIEBA I PLANETY
+• Całe niebo na dysku: gwiazdy do 4,5 mag, figury gwiazdozbiorów, granice IAU, Słońce, Księżyc i planety z podpisami.
+• Przesuwaj o dobę w obie strony; dysk jaśnieje przez zmierzch aż do dnia.
+• Każda planeta: wysokość i azymut teraz, wschód, górowanie, zachód i odległość od Ziemi.
+
 MGRS, UTM I GEODEZJA
 • Dowolny punkt w MGRS — strefa siatki, dwuznak 100 km, współrzędna wschodnia i północna — oraz w UTM.
 • Odległości WGS-84 według odwrotnego wzoru Vincentego.
 • Wyszukiwanie offline wśród 42 900 miast świata.
+• Konwerter współrzędnych: stopnie dziesiętne, DMS, DDM, UTM i MGRS.
 
 LINIJKA TRASY I KOSZT PALIWA
 • Trasy z wieloma przystankami: postaw kilka punktów i zmierz całą podróż.

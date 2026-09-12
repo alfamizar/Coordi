@@ -1,1 +1,1 @@
-Offline astronomy, Sun & Moon ephemeris, eclipses, MGRS/UTM, GPS speed & optics.
+Offline sky chart, Sun & Moon ephemeris, eclipses, MGRS/UTM, GPS speed & optics.

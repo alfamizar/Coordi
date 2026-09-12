@@ -1,1 +1,1 @@
-Astronomie hors ligne : Soleil, Lune, éclipses, MGRS/UTM, vitesse GPS, optique.
+Carte du ciel hors ligne, éphémérides, éclipses, MGRS/UTM, vitesse GPS, optique.

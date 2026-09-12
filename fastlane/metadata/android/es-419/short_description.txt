@@ -1,1 +1,1 @@
-Astronomía sin conexión: Sol, Luna, eclipses, MGRS/UTM, velocidad GPS y óptica.
+Carta del cielo sin conexión, efemérides, eclipses, MGRS/UTM, GPS y óptica.

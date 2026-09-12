@@ -1,1 +1,1 @@
-Çevrimdışı astronomi: Güneş, Ay, tutulmalar, MGRS/UTM, GPS hızı ve optik.
+Çevrimdışı gök haritası, Güneş-Ay efemerisi, tutulmalar, MGRS/UTM, GPS, optik.

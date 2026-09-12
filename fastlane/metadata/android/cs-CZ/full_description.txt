@@ -15,10 +15,16 @@ STOLETÍ ZATMĚNÍ
 • Filtr viditelnosti: zobrazit jen zatmění viditelná odtud, kde jste, nebo všechna.
 • Velikost každého zatmění a ten druh, který ze svého místa skutečně uvidíte — není to vždy druh zatmění pro celou planetu.
 
+MAPA NEBE A PLANETY
+• Celá obloha na kotouči: hvězdy do 4,5 mag, obrazce souhvězdí, hranice IAU a popsané Slunce, Měsíc i planety.
+• Posouvejte o den do obou stran; kotouč se přes soumrak prosvětluje do dne.
+• Každá planeta: výška a azimut nyní, východ, kulminace, západ a vzdálenost od Země.
+
 MGRS, UTM A GEODÉZIE
 • Libovolný bod v MGRS — zóna sítě, stokilometrový digraf, východní a severní souřadnice — a v UTM.
 • Vzdálenosti WGS-84 podle inverzního Vincentyho vzorce.
 • Offline vyhledávání mezi 42 900 městy světa.
+• Převodník souřadnic: desetinné stupně, DMS, DDM, UTM a MGRS.
 
 PRAVÍTKO TRASY A NÁKLADY NA PALIVO
 • Trasy s více zastávkami: rozmístěte několik bodů a změřte celou cestu.

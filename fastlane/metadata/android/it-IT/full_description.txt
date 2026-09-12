@@ -15,10 +15,16 @@ UN SECOLO DI ECLISSI
 • Filtro di visibilità: mostra solo le eclissi visibili da dove ti trovi, oppure tutte.
 • La magnitudine di ogni eclissi e il tipo che vedrai davvero dalla tua posizione, che non è sempre il tipo dell'eclissi per l'intero pianeta.
 
+CARTA DEL CIELO E PIANETI
+• Tutto il cielo su un disco: stelle fino a 4,5 mag, figure delle costellazioni, confini IAU, Sole, Luna e pianeti con i nomi.
+• Scorri un giorno in entrambi i versi; il disco si schiarisce dal crepuscolo al giorno.
+• Ogni pianeta: altezza e azimut ora, alba, culminazione, tramonto e distanza dalla Terra.
+
 MGRS, UTM E GEODESIA
 • Qualsiasi punto in MGRS — zona di griglia, digramma da 100 km, est e nord — e in UTM.
 • Distanze WGS-84 con la formula inversa di Vincenty.
 • Ricerca offline tra 42.900 città del mondo.
+• Convertitore di coordinate: gradi decimali, DMS, DDM, UTM e MGRS.
 
 RIGHELLO PER PERCORSI E COSTO DEL CARBURANTE
 • Percorsi con più tappe: posiziona più punti e misura l'intero viaggio.

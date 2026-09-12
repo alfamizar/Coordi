@@ -15,10 +15,16 @@ A CENTURY OF ECLIPSES
 • Local visibility filter: show only the eclipses visible from where you are, or show them all.
 • Eclipse magnitude for each event, and the type you will actually see from your location, which is not always the type the eclipse is for the planet.
 
+SKY CHART AND PLANETS
+• The whole sky on a disc: stars to magnitude 4.5, constellation figures, IAU boundaries, and the Sun, Moon and planets labelled.
+• Scrub a day either way; the disc lightens through twilight into daylight.
+• Every planet: altitude and azimuth now, rise, highest point, set, and distance from Earth.
+
 MGRS, UTM AND GEODESY
 • Any point in MGRS — grid zone, 100 km digraph, easting and northing — and in UTM.
 • WGS-84 distances from Vincenty's inverse formula.
 • Offline search across 42,900 world cities.
+• Coordinate converter: decimal, DMS, DDM, UTM and MGRS, from any angular form.
 
 ROUTE RULER AND FUEL COST
 • Multi-stop routes: drop several pins and measure the whole journey.
