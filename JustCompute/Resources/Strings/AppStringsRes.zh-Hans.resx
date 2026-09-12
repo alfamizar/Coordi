@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>今夜没有天文暗夜</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>输入有效坐标以查看所有格式。</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>格式</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>十进制</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DMS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDM</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>纬度必须是 -90 到 90 之间的有效十进制或 DMS 值。</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>经度必须是 -180 到 180 之间的有效十进制或 DMS 值。</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>超出 UTM/MGRS 网格范围（南纬80°至北纬84°）</value>
+  </data>
 </root>

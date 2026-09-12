@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>Esta noite não há escuridão astronômica</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Digite uma coordenada válida para ver todos os formatos.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Formatos</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Decimal</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>GMS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>GDM</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>A latitude deve ser um valor decimal ou DMS válido entre -90 e 90.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>A longitude deve ser um valor decimal ou DMS válido entre -180 e 180.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>Fora da grade UTM/MGRS (80° S a 84° N)</value>
+  </data>
 </root>

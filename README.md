@@ -60,6 +60,10 @@ listings), with five themes.
 - **📷 Optics** — depth of field (hyperfocal, near/far limits, front/behind split), field of
   view (horizontal, vertical, diagonal and real coverage), and the longest exposure before
   stars trail by both the 500 rule and the NPF rule, from your camera's own pixel pitch.
+- **🔁 Coordinates converter** — one coordinate written five ways: decimal, DMS, DDM, UTM and
+  MGRS. Reads any of the three angular forms, with a hemisphere letter or a sign, so a figure
+  copied off a map or out of a message goes in as it stands, and says so plainly outside the
+  UTM band rather than inventing a square.
 - **🌤️ Weather** — [Open-Meteo](https://open-meteo.com/) (no key required), with retries.
 - **🌐 Localized** — English, Czech, German, Spanish (ES + Latin America), French, Italian,
   Japanese, Korean, Polish, Portuguese (PT + BR), Russian, Turkish, Ukrainian and Chinese

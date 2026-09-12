@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.Converter.ConverterPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.Converter"
+             x:DataType="ViewModels:ConverterViewModel">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                             Spacing="{StaticResource CardGap}">
+
+            <!-- The two fields take any of the angular forms, so a coordinate read off a map or
+                 pasted out of a message goes in as it stands. Seeded with the place the app is
+                 computing from, which is the coordinate most often wanted and the shortest way
+                 to show what the fields accept. -->
+            <Border>
+
+                <StackLayout Padding="0"
+                             Spacing="{StaticResource CardGap}">
+
+                    <Label Text="{localization:Localize AtTheseCoordinatesLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <Label Text="{localization:Localize LatitudeLabel}" />
+                    <Entry Text="{Binding LatitudeText, Mode=TwoWay}" />
+                    <Label Text="{localization:Localize ConverterLatitudeErrorLabel}"
+                           IsVisible="{Binding HasLatitudeError}"
+                           Style="{StaticResource ErrorLabel}" />
+
+                    <Label Text="{localization:Localize LongitudeLabel}" />
+                    <Entry Text="{Binding LongitudeText, Mode=TwoWay}" />
+                    <Label Text="{localization:Localize ConverterLongitudeErrorLabel}"
+                           IsVisible="{Binding HasLongitudeError}"
+                           Style="{StaticResource ErrorLabel}" />
+
+                    <Button Text="{localization:Localize UseMyLocationLabel}"
+                            Command="{Binding UseMyLocationCommand}"
+                            HorizontalOptions="Fill" />
+
+                </StackLayout>
+
+            </Border>
+
+            <Label Text="{localization:Localize ConverterHintLabel}"
+                   IsVisible="{Binding HasResults, Converter={StaticResource InvertedBoolConverter}}"
+                   HorizontalTextAlignment="Center"
+                   Padding="16" />
+
+            <!-- Stacked rather than in a value column: MGRS and UTM are long enough to wrap on a
+                 phone, and a label beside them leaves too little room to read either. -->
+            <Border IsVisible="{Binding HasResults}">
+
+                <StackLayout Padding="0"
+                             Spacing="{StaticResource CardGap}">
+
+                    <Label Text="{localization:Localize ConverterFormatsLabel}"
+                           Style="{StaticResource TitleLabel}" />
+                    <BoxView Style="{StaticResource DividerStyle}" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{localization:Localize ConverterDecimalLabel}" />
+                        <Label Text="{Binding DecimalText}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{localization:Localize ConverterDmsLabel}" />
+                        <Label Text="{Binding DmsText}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{localization:Localize ConverterDdmLabel}" />
+                        <Label Text="{Binding DdmText}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{localization:Localize UTMLabel}" />
+                        <Label Text="{Binding UtmText}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{localization:Localize MGRSLabel}" />
+                        <Label Text="{Binding MgrsText}"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+
+                </StackLayout>
+
+            </Border>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</v1:BasePage>

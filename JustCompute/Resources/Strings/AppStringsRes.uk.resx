@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>Цієї ночі астрономічної ночі не буде</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Уведіть коректну координату, щоб побачити всі формати.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Формати</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Десятковий</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>Г°Х′С″</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>Г°Х.х′</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Широта має бути коректним числом або DMS у діапазоні від -90 до 90.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Довгота має бути коректним числом або DMS у діапазоні від -180 до 180.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>Поза сіткою UTM/MGRS (від 80° пд. ш. до 84° пн. ш.)</value>
+  </data>
 </root>

@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>Dnes v noci nenastane astronomická tma</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Zadejte platnou souřadnici pro zobrazení všech formátů.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Formáty</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Desetinný</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DMS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDM</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Zeměpisná šířka musí být platná desítková nebo DMS hodnota mezi -90 a 90.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Zeměpisná délka musí být platná desítková nebo DMS hodnota mezi -180 a 180.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>Mimo síť UTM/MGRS (80° j. š. až 84° s. š.)</value>
+  </data>
 </root>

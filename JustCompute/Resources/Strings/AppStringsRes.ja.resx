@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>今夜は天文薄明が終わりません</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>有効な座標を入力して、すべての形式を表示します。</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>形式</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>十進法</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DMS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDM</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>緯度は-90から90の間の有効な十進数またはDMS値である必要があります。</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>経度は-180から180の間の有効な十進数またはDMS値である必要があります。</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>UTM/MGRS グリッドの範囲外（南緯80度〜北緯84度）</value>
+  </data>
 </root>

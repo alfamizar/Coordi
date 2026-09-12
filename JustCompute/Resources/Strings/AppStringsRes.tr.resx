@@ -891,4 +891,28 @@
   <data name="NoAstronomicalDarkLabel" xml:space="preserve">
     <value>Bu gece astronomik karanlık yok</value>
   </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Tüm biçimleri görmek için geçerli bir koordinat girin.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Biçimler</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Ondalık</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DDS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDD</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Enlem, -90 ile 90 arasında geçerli bir ondalık sayı veya DMS değeri olmalıdır.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Boylam, -180 ile 180 arasında geçerli bir ondalık sayı veya DMS değeri olmalıdır.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>UTM/MGRS ızgarasının dışında (80° G – 84° K)</value>
+  </data>
 </root>

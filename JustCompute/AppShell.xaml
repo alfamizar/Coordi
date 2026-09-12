@@ -8,6 +8,7 @@
        xmlns:distance="clr-namespace:JustCompute.Features.Distance"
        xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
        xmlns:optics="clr-namespace:JustCompute.Features.Optics"
+       xmlns:converter="clr-namespace:JustCompute.Features.Converter"
        xmlns:settings="clr-namespace:JustCompute.Features.Settings"
        xmlns:locations="clr-namespace:JustCompute.Features.Locations"
        xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
@@ -105,7 +106,17 @@
 
     </FlyoutItem>
 
-    
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize CoordinatesConverterLabel}"
+                FlyoutIcon="{AppThemeBinding Light=convert_icon_light.png, Dark=convert_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
+                      Route="converter"
+                      ContentTemplate="{DataTemplate converter:ConverterPage}" />
+
+    </FlyoutItem>
+
     <FlyoutItem IsVisible="True"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SettingsLabel}"

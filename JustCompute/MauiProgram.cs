@@ -5,6 +5,7 @@ using JustCompute.Features.Distance;
 using JustCompute.Features.InputLocation;
 using JustCompute.Features.Locations;
 using JustCompute.Features.MoonEclipses;
+using JustCompute.Features.Converter;
 using JustCompute.Features.Optics;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Features.Settings;
@@ -33,6 +34,7 @@ public static class MauiProgram
             .AddSettingsFeature()
             .AddSpeedAndDistanceFeature()
             .AddOpticsFeature()
+            .AddConverterFeature()
             .AddSunEclipsesFeature()
             .AddTodayFeature()
             .ConfigureServices()
