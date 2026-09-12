@@ -167,4 +167,46 @@ public class PlanetsValidationTests
         Assert.Equal(69911.0, Planet.Jupiter.MeanRadiusKm());
         Assert.Equal(268.057, Planet.Jupiter.PoleRaDeg());
     }
+
+    /// <summary>
+    /// Distance from Earth, against two close approaches whose figures were published at the
+    /// time: Mars on 2020-10-06 at 0.41492 AU (62.07 million km, its closest until 2035) and
+    /// Jupiter's 2022-09-26 opposition at 3.9527 AU, the nearest in 59 years. Both are dated
+    /// events, not quantities derived from this model.
+    /// </summary>
+    [Theory]
+    [InlineData(2020, 10, 6, 14, Planet.Mars, 0.41492)]
+    [InlineData(2022, 9, 26, 19, Planet.Jupiter, 3.95270)]
+    public void GeocentricDistanceMatchesAPublishedApproach(
+        int year, int month, int day, int hour, Planet planet, double expectedAu)
+    {
+        var d = Planets.GeocentricDistanceAu(planet, AstroTime.JulianDay(year, month, day, hour));
+
+        Assert.InRange(d, expectedAu - 0.005, expectedAu + 0.005);
+    }
+
+    /// <summary>
+    /// A triangle closes: however the two planets are arranged, the distance between them is at
+    /// least the difference of their heliocentric radii and at most the sum. Cheap to state and
+    /// it would catch a sign or a frame error anywhere in the difference vector.
+    /// </summary>
+    [Fact]
+    public void GeocentricDistanceStaysWithinTheTriangle()
+    {
+        Planet[] planets = [Planet.Mercury, Planet.Venus, Planet.Mars, Planet.Jupiter, Planet.Saturn, Planet.Uranus, Planet.Neptune];
+
+        for (int step = 0; step < 60; step++)
+        {
+            var jd = AstroTime.JulianDay(2000, 1, 1) + step * 300.0;
+            var earth = Planets.PositionAt(Planet.Earth, jd).RadiusAu;
+
+            foreach (var planet in planets)
+            {
+                var r = Planets.PositionAt(planet, jd).RadiusAu;
+                var d = Planets.GeocentricDistanceAu(planet, jd);
+
+                Assert.InRange(d, Math.Abs(r - earth) - 1e-9, r + earth + 1e-9);
+            }
+        }
+    }
 }

@@ -149,6 +149,24 @@ namespace Compute.Astro
         }
 
         /// <summary>
+        /// How far the planet is from Earth (AU) on day <paramref name="jd"/> — the length of the
+        /// same difference vector <see cref="GeocentricEquatorial"/> takes the direction of.
+        ///
+        /// Worth having beside the direction because it is what makes the difference between the
+        /// two: Mars is the same colour at 0.4 AU and at 2.6 AU, and only one of those is worth
+        /// pointing a telescope at.
+        /// </summary>
+        public static double GeocentricDistanceAu(Planet planet, double jd)
+        {
+            var e = PositionAt(Planet.Earth, jd);
+            var p = PositionAt(planet, jd);
+            var x = p.X - e.X;
+            var y = p.Y - e.Y;
+            var z = p.Z - e.Z;
+            return Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        /// <summary>
         /// The planet's meridian angle W (degrees) at <paramref name="jd"/>: the accumulated spin about
         /// its own axis. The zero point is arbitrary for visualization (a surface marker's phase can't be
         /// checked by eye), but the <i>rate</i> is the true IAU sidereal rotation rate, so relative spin
