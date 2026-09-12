@@ -8,8 +8,12 @@ public partial class SkyChartPage : BasePage
     /// How much of the page's height the disc may take. The rest has to hold the instant being
     /// shown and the controls that change it, and a chart with its scrubber off-screen is a
     /// picture rather than an instrument.
+    ///
+    /// Six tenths left the second toggle clipped on a 7-inch tablet in landscape, which is the
+    /// shortest viewport the app is built for: 600 points of height against roughly 190 the card
+    /// needs. Phones are unaffected — there the disc is bound by width long before this.
     /// </summary>
-    private const double HeightShare = 0.62;
+    private const double HeightShare = 0.55;
 
     public SkyChartPage(SkyChartViewModel viewModel)
     {
