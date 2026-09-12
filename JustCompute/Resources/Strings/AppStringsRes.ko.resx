@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>UTM/MGRS 격자 범위 밖 (남위 80°~북위 84°)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>행성</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>수성</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>금성</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>화성</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>목성</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>토성</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>천왕성</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>해왕성</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>고도</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>방위각</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>거리</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>가장 높을 때</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>출</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>몰</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>하루 종일 지평선 위</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>오늘은 떠오르지 않음</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} AU</value>
+  </data>
 </root>

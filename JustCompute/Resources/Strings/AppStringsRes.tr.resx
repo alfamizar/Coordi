@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>UTM/MGRS ızgarasının dışında (80° G – 84° K)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Gezegenler</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Merkür</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Venüs</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jüpiter</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Satürn</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uranüs</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptün</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Uzaklık</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>En yüksek</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Doğuş</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Batış</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Gün boyu ufkun üzerinde</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Bugün doğmuyor</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} AB</value>
+  </data>
 </root>

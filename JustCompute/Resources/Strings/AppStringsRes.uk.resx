@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>Поза сіткою UTM/MGRS (від 80° пд. ш. до 84° пн. ш.)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Планети</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Меркурій</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Венера</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Марс</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Юпітер</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Сатурн</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Уран</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Нептун</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Висота</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Азимут</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Відстань</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Найвище</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Схід</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Захід</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Цілий день над горизонтом</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Сьогодні не сходить</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} а. о.</value>
+  </data>
 </root>

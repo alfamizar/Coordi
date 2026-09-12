@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>Fuori dalla griglia UTM/MGRS (da 80° S a 84° N)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Pianeti</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Mercurio</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Venere</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Marte</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Giove</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Saturno</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Urano</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Nettuno</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Altezza</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Distanza</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Più alto</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Sorge</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Tramonta</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Sopra l'orizzonte tutto il giorno</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Oggi non sorge</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} UA</value>
+  </data>
 </root>

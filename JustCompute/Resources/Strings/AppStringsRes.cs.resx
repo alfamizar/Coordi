@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>Mimo síť UTM/MGRS (80° j. š. až 84° s. š.)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Planety</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Merkur</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Venuše</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jupiter</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Saturn</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uran</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptun</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Výška</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Vzdálenost</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Nejvýše</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Vychází</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Zapadá</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Celý den nad horizontem</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Dnes nevychází</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} AU</value>
+  </data>
 </root>

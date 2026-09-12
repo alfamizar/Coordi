@@ -8,6 +8,7 @@
        xmlns:distance="clr-namespace:JustCompute.Features.Distance"
        xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
        xmlns:optics="clr-namespace:JustCompute.Features.Optics"
+       xmlns:planets="clr-namespace:JustCompute.Features.Planets"
        xmlns:converter="clr-namespace:JustCompute.Features.Converter"
        xmlns:settings="clr-namespace:JustCompute.Features.Settings"
        xmlns:locations="clr-namespace:JustCompute.Features.Locations"
@@ -103,6 +104,17 @@
         <ShellContent Title="{localization:Localize OpticsLabel}"
                       Route="optics"
                       ContentTemplate="{DataTemplate optics:OpticsPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize PlanetsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=stars_icon_light.png, Dark=stars_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize PlanetsLabel}"
+                      Route="planets"
+                      ContentTemplate="{DataTemplate planets:PlanetsPage}" />
 
     </FlyoutItem>
 

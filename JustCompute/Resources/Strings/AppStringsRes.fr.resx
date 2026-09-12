@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>Hors de la grille UTM/MGRS (80° S à 84° N)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Planètes</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Mercure</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Vénus</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jupiter</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Saturne</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uranus</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptune</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Au plus haut</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Lever</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Coucher</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Au-dessus de l'horizon toute la journée</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Ne se lève pas aujourd'hui</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} ua</value>
+  </data>
 </root>

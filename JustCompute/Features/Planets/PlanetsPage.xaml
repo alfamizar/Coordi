@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JustCompute.Features.Planets.PlanetsPage"
+             xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
+             xmlns:ViewModels="clr-namespace:JustCompute.Features.Planets"
+             x:DataType="ViewModels:PlanetsViewModel">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+
+        <!-- One card per planet, in order out from the Sun. Deliberately not sorted by how high
+             each stands: the order would then change between one evening and the next, and a
+             reader looking for Saturn would have to search for it. -->
+        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                             Spacing="{StaticResource CardGap}"
+                             BindableLayout.ItemsSource="{Binding Planets}">
+
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="ViewModels:PlanetRow">
+
+                    <Border>
+
+                        <StackLayout Padding="0"
+                                     Spacing="{StaticResource CardGap}">
+
+                            <!-- The dot marks the ones that are up: the first thing anyone wants
+                                 off this screen is which of them they could go and look at. -->
+                            <Grid ColumnDefinitions="*,Auto"
+                                  ColumnSpacing="{StaticResource CardGap}">
+                                <Label Grid.Column="0"
+                                       Text="{Binding Name}"
+                                       Style="{StaticResource TitleLabel}" />
+                                <Ellipse Grid.Column="1"
+                                         WidthRequest="10"
+                                         HeightRequest="10"
+                                         VerticalOptions="Center"
+                                         Fill="{DynamicResource ThemeAccentStrong}"
+                                         IsVisible="{Binding IsUp}" />
+                            </Grid>
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <Grid ColumnDefinitions="*,Auto"
+                                  RowDefinitions="Auto,Auto"
+                                  ColumnSpacing="12"
+                                  RowSpacing="6">
+
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{localization:Localize SkyAltitudeLabel}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Altitude}"
+                                       FontAttributes="Bold"
+                                       HorizontalTextAlignment="End" />
+
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{localization:Localize SkyAzimuthLabel}" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding Azimuth}"
+                                       HorizontalTextAlignment="End" />
+
+                            </Grid>
+
+                            <BoxView Style="{StaticResource DividerStyle}" />
+
+                            <!-- Replaces the rise and set rows when there are none. -->
+                            <Label Text="{Binding AllDayNote}"
+                                   FontAttributes="Italic"
+                                   IsVisible="{Binding HasRiseAndSet, Converter={StaticResource InvertedBoolConverter}}" />
+
+                            <!-- Rise, highest, set: the order they happen in, so the card reads as
+                                 the planet's day rather than as three unrelated times. The two
+                                 outer rows collapse on a planet that neither rises nor sets. -->
+                            <Grid ColumnDefinitions="*,Auto"
+                                  RowDefinitions="Auto,Auto,Auto,Auto"
+                                  ColumnSpacing="12"
+                                  RowSpacing="6">
+
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{localization:Localize SkyRisesLabel}"
+                                       IsVisible="{Binding HasRiseAndSet}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Rise}"
+                                       IsVisible="{Binding HasRiseAndSet}"
+                                       HorizontalTextAlignment="End" />
+
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{localization:Localize SkyHighestLabel}" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding Highest}"
+                                       HorizontalTextAlignment="End" />
+
+                                <Label Grid.Row="2" Grid.Column="0"
+                                       Text="{localization:Localize SkySetsLabel}"
+                                       IsVisible="{Binding HasRiseAndSet}" />
+                                <Label Grid.Row="2" Grid.Column="1"
+                                       Text="{Binding Set}"
+                                       IsVisible="{Binding HasRiseAndSet}"
+                                       HorizontalTextAlignment="End" />
+
+                                <Label Grid.Row="3" Grid.Column="0"
+                                       Text="{localization:Localize SkyDistanceLabel}" />
+                                <Label Grid.Row="3" Grid.Column="1"
+                                       Text="{Binding Distance}"
+                                       HorizontalTextAlignment="End" />
+
+                            </Grid>
+
+                        </StackLayout>
+
+                    </Border>
+
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</v1:BasePage>

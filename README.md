@@ -60,6 +60,10 @@ listings), with five themes.
 - **📷 Optics** — depth of field (hyperfocal, near/far limits, front/behind split), field of
   view (horizontal, vertical, diagonal and real coverage), and the longest exposure before
   stars trail by both the 500 rule and the NPF rule, from your camera's own pixel pitch.
+- **🪐 Planets** — the seven other planets from where you are: altitude and azimuth now,
+  rise, highest point and set in the location's own clock, and distance from Earth. Every planet
+  is listed in order out from the Sun whether or not it is up, and the outer ones that cross
+  midnight carry the date so there is nothing to work out.
 - **🔁 Coordinates converter** — one coordinate written five ways: decimal, DMS, DDM, UTM and
   MGRS. Reads any of the three angular forms, with a hemisphere letter or a sign, so a figure
   copied off a map or out of a message goes in as it stands, and says so plainly outside the

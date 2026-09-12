@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>Poza siatką UTM/MGRS (od 80°S do 84°N)</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Planety</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Merkury</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Wenus</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jowisz</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Saturn</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uran</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptun</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Wysokość</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azymut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Odległość</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Najwyżej</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Wschód</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Zachód</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Cały dzień nad horyzontem</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Dziś nie wschodzi</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} au</value>
+  </data>
 </root>

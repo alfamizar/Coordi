@@ -915,4 +915,55 @@
   <data name="ConverterOutsideGridLabel" xml:space="preserve">
     <value>超出 UTM/MGRS 网格范围（南纬80°至北纬84°）</value>
   </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>行星</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>水星</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>金星</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>火星</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>木星</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>土星</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>天王星</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>海王星</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>方位角</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>最高点</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>出</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>落</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>全天位于地平线以上</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>今天不会升起</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} 天文单位</value>
+  </data>
 </root>
