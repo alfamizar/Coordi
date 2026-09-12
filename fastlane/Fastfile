@@ -53,15 +53,20 @@ platform :android do
         path = File.join(root, loc, file)
         next problems << "#{loc}/#{file} is missing" unless File.exist?(path)
 
-        # Play counts characters, not bytes, and trailing newlines do not count.
+        # Play counts characters, not bytes. Trailing newlines do not count for these three.
         length = File.read(path).strip.length
         problems << "#{loc}/#{file} is #{length} chars (limit #{limit})" if length > limit
         problems << "#{loc}/#{file} is empty" if length.zero?
       end
 
+      # Release notes are measured as sent, trailing newline and all. A German note that this
+      # lane called exactly 500 was rejected by Play as 501 — the newline the strip above
+      # removes is one Google counts, and the upload fails for every locale at once because a
+      # single over-long note aborts the whole edit.
       Dir[File.join(root, loc, "changelogs", "*.txt")].each do |notes|
-        length = File.read(notes).strip.length
-        problems << "#{loc}/changelogs/#{File.basename(notes)} is #{length} chars (limit 500)" if length > 500
+        length = File.read(notes).length
+        problems << "#{loc}/changelogs/#{File.basename(notes)} is #{length} chars as sent (limit 500)" if length > 500
+        problems << "#{loc}/changelogs/#{File.basename(notes)} is empty" if File.read(notes).strip.empty?
       end
     end
 

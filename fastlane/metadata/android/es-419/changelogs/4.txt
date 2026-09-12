@@ -1,5 +1,5 @@
-Nueva carta del cielo: todo el cielo en un disco — estrellas, figuras de las constelaciones, límites de la UAI, y el Sol, la Luna y los planetas con sus nombres, con un día a cada lado.
+Nueva carta del cielo: todo el cielo en un disco — estrellas, figuras de constelaciones, límites de la UAI, y el Sol, la Luna y los planetas con sus nombres, con un día a cada lado.
 Nueva pantalla Planetas: altura y azimut ahora, salida, culminación, puesta y distancia a la Tierra.
 Nuevo conversor de coordenadas: grados decimales, DMS, DDM, UTM y MGRS.
 La app calcula para la posición que indica el dispositivo hasta que elijas otra.
-El permiso de ubicación se pide una vez, no cada visita.
+El permiso de ubicación se pide una vez, no siempre.
