@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,8 +123,8 @@
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Add Location</value>
   </data>
-  <data name="LocationActionLabel" xml:space="preserve">
-    <value>Actions</value>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Edit Location</value>
   </data>
   <data name="AnnularEclipseLabel" xml:space="preserve">
     <value>Annular</value>
@@ -288,8 +288,14 @@
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Location Name</value>
   </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Search unavailable. Tap to try again.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>No cities found</value>
+  </data>
   <data name="LocationPermissionDialogMessage" xml:space="preserve">
-    <value>App needs access device location to operate</value>
+    <value>Location access lets the app show data for where you are. Without it you can still pick a place manually.</value>
   </data>
   <data name="LocationPermissionDialogTitle" xml:space="preserve">
     <value>Location Permission</value>
@@ -302,9 +308,6 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Longitude: {0:0.#####}</value>
-  </data>
-  <data name="ManageSavedLocationsLabel" xml:space="preserve">
-    <value>Manage saved locations</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Maximum eclipse time: {0}</value>
@@ -406,7 +409,7 @@
     <value>Penumbral eclipse end time: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
-    <value>App needs location permission to operate. Go to app settings and grant permission or close the app</value>
+    <value>Location access lets the app show data for where you are. Without it you can still pick a place manually.</value>
   </data>
   <data name="PermissionRequiredDialogTitle" xml:space="preserve">
     <value>Permission required</value>
@@ -644,5 +647,347 @@
   </data>
   <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Only eclipses visible from here</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>The app is showing {0} as a placeholder. Set your location so sunrise, sunset, moon phases and eclipses are accurate for where you are.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Set your location</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Weather unavailable. Tap to try again.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Current location</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Use my location</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Time zone</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Not visible from here</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Optics</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Lens &amp; sensor</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Focal length (mm)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Aperture (f-number)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Subject distance (m)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Image width (px)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Declination (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Save as default</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Depth of field</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Hyperfocal distance</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Near limit</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Far limit</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>In front of subject</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>Behind subject</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Field of view</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>Diagonal</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Star exposure</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>500 rule</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>NPF rule</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Pixel pitch</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Longest exposure before stars trail. NPF is the stricter, sensor-aware rule; declination 0° is the worst case.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Enter focal length, aperture and subject distance to see depth of field and field of view.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Must be a positive number.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Enter a whole number of pixels.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Declination must be between −90 and 90.</value>
+  </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Ocean blue</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Blossom pink</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Midnight</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Ember orange</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Route</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Add at least two points to measure a route.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Detour</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Fuel</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Consumption</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Price per unit</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Fuel needed</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Enter consumption to estimate fuel for this route.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>L/100 km</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>km/L</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>mpg (US)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>mpg (UK)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>gal</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>No eclipses are visible from here in this period.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Magnitude: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Umbral magnitude: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Penumbral magnitude: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Twilight</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>First light</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Nautical dawn</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Civil dawn</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Civil dusk</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Nautical dusk</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Last light</value>
+  </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Clear skies tonight</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Partly cloudy tonight</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Cloudy tonight</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Tonight's sky</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Average cloud: {0}%</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Astronomical dark: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>No astronomical darkness tonight</value>
+  </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Enter a valid coordinate to see all formats.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Formats</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Decimal</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DMS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDM</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Latitude must be a valid decimal or DMS value between -90 and 90.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Longitude must be a valid decimal or DMS value between -180 and 180.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>Outside the UTM/MGRS grid (80°S to 84°N)</value>
+  </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Planets</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Mercury</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Venus</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jupiter</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Saturn</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uranus</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptune</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimuth</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Highest</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Rises</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Sets</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Above the horizon all day</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Does not rise today</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} AU</value>
+  </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Sky Chart</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Constellation lines</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Borders</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>W</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Now</value>
   </data>
 </root>

@@ -1,28 +1,53 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <Shell x:Class="JustCompute.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:sun="clr-namespace:JustCompute.Features.Sun"
-       xmlns:moon="clr-namespace:JustCompute.Features.Moon"
+       xmlns:today="clr-namespace:JustCompute.Features.Today"
        xmlns:sunEclipses="clr-namespace:JustCompute.Features.SunEclipses"
        xmlns:moonEclipses="clr-namespace:JustCompute.Features.MoonEclipses"
        xmlns:distance="clr-namespace:JustCompute.Features.Distance"
        xmlns:speedAndDistance="clr-namespace:JustCompute.Features.SpeedAndDistance"
-       xmlns:coordinatesConverter="clr-namespace:JustCompute.Features.CoordinatesConverter"
-       xmlns:timeTravel="clr-namespace:JustCompute.Features.TimeTravel"
+       xmlns:optics="clr-namespace:JustCompute.Features.Optics"
+       xmlns:skyChart="clr-namespace:JustCompute.Features.SkyChart"
+       xmlns:planets="clr-namespace:JustCompute.Features.Planets"
+       xmlns:converter="clr-namespace:JustCompute.Features.Converter"
        xmlns:settings="clr-namespace:JustCompute.Features.Settings"
        xmlns:locations="clr-namespace:JustCompute.Features.Locations"
        xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
        Shell.TabBarIsVisible="True"
        FlyoutWidth="230">
 
+    <!-- Name and build, in place of the old artwork: the version is the one thing a user needs
+         to be able to read off the screen when reporting a problem. -->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Image Source="appdrawer_header.png"
-                   WidthRequest="230"
-                   HeightRequest="230"/>
+            <Grid Padding="16,20"
+                  BackgroundColor="{DynamicResource ThemeHeaderBackground}">
+                <VerticalStackLayout Spacing="2"
+                                     VerticalOptions="Center">
+                    <Label Text="{x:Static localization:AppMetadata.Name}"
+                           FontSize="{StaticResource FontSizeDisplay}"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource White}" />
+                    <Label Text="{x:Static localization:AppMetadata.Version}"
+                           FontSize="{StaticResource FontSizeCaption}"
+                           Opacity="0.8"
+                           TextColor="{StaticResource White}" />
+                </VerticalStackLayout>
+            </Grid>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize TodayLabel}"
+                FlyoutIcon="{AppThemeBinding Light=twilight_icon_light.png, Dark=twilight_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize TodayLabel}"
+                      Route="today"
+                      ContentTemplate="{DataTemplate today:TodayPage}" />
+
+    </FlyoutItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize LocationsLabel}"
@@ -32,21 +57,6 @@
         <ShellContent Title="{localization:Localize LocationsLabel}"
                       Route="locations"
                       ContentTemplate="{DataTemplate locations:LocationsPage}" />
-
-    </FlyoutItem>
-
-    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize SetsAndRisesLabel}"
-                FlyoutIcon="{AppThemeBinding Light=twilight_icon_light.png, Dark=twilight_icon_light.png}">
-
-        <ShellContent Title="{localization:Localize SunLabel}"
-                      Icon="sun_icon.png"
-                      Route="sun"
-                      ContentTemplate="{DataTemplate sun:SunPage}" />
-        <ShellContent Title="{localization:Localize MoonLabel}"
-                      Icon="moon_icon.png"
-                      Route="moon"
-                      ContentTemplate="{DataTemplate moon:MoonPage}" />
 
     </FlyoutItem>
 
@@ -83,30 +93,54 @@
 
         <ShellContent Title="{localization:Localize SpeedAndDistanceLabel}"
                       Route="speedAndDistance"
-                      ContentTemplate="{DataTemplate speedAndDistance:SpeedAndDistancelPage}" />
+                      ContentTemplate="{DataTemplate speedAndDistance:SpeedAndDistancePage}" />
 
     </FlyoutItem>
 
-    <FlyoutItem IsVisible="False"
-                FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize ConvertersLabel}"
-                FlyoutIcon="{AppThemeBinding Light=convert_icon_light.png, Dark=convert_icon_light.png}">
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize OpticsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=photo_camera_icon_light.png, Dark=photo_camera_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize OpticsLabel}"
+                      Route="optics"
+                      ContentTemplate="{DataTemplate optics:OpticsPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize SkyChartLabel}"
+                FlyoutIcon="{AppThemeBinding Light=stars_icon_light.png, Dark=stars_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize SkyChartLabel}"
+                      Route="skyChart"
+                      ContentTemplate="{DataTemplate skyChart:SkyChartPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize PlanetsLabel}"
+                FlyoutIcon="{AppThemeBinding Light=orbit_icon_light.png, Dark=orbit_icon_light.png}"
+                Shell.TabBarIsVisible="False">
+
+        <ShellContent Title="{localization:Localize PlanetsLabel}"
+                      Route="planets"
+                      ContentTemplate="{DataTemplate planets:PlanetsPage}" />
+
+    </FlyoutItem>
+
+    <FlyoutItem FlyoutDisplayOptions="AsSingleItem"
+                Title="{localization:Localize CoordinatesConverterLabel}"
+                FlyoutIcon="{AppThemeBinding Light=convert_icon_light.png, Dark=convert_icon_light.png}"
+                Shell.TabBarIsVisible="False">
 
         <ShellContent Title="{localization:Localize CoordinatesConverterLabel}"
-                      ContentTemplate="{DataTemplate coordinatesConverter:CoordinatesConverterPage}" />
+                      Route="converter"
+                      ContentTemplate="{DataTemplate converter:ConverterPage}" />
 
     </FlyoutItem>
-    
-    <FlyoutItem IsVisible="False"
-                FlyoutDisplayOptions="AsSingleItem"
-                Title="{localization:Localize TimeTravelLabel}"
-                FlyoutIcon="{AppThemeBinding Light=clock_icon_light.png, Dark=clock_icon_light.png}">
 
-        <ShellContent Title="{localization:Localize TimeTravelLabel}"
-                      ContentTemplate="{DataTemplate timeTravel:TimeTravelPage}" />
-
-    </FlyoutItem>
-    
     <FlyoutItem IsVisible="True"
                 FlyoutDisplayOptions="AsSingleItem"
                 Title="{localization:Localize SettingsLabel}"

@@ -1,0 +1,5 @@
+Nowy ekran Dziś: wschód, zachód, długość dnia i łuk Słońca na żywo dla dowolnej daty, z fazą Księżyca i opcjonalną prognozą na 7 dni.
+Nowy kalkulator optyczny: głębia ostrości, pole widzenia i najdłuższa ekspozycja bez smug gwiazd (reguły 500 i NPF).
+Zaćmienia w strefie czasowej miejsca; filtr widoczności jest na tym ekranie.
+Strefy czasowe z prawdziwymi granicami i czasem letnim.
+Edytuj i usuwaj miejsca z listy.

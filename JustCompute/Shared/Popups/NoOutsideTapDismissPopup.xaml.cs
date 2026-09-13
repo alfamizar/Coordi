@@ -1,5 +1,5 @@
 using CommunityToolkit.Maui.Views;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 
 namespace JustCompute.Shared.Popups;
 

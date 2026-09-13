@@ -1,7 +1,8 @@
-﻿using Compute.Core.Domain.Services;
+using Compute.Core.Domain.Services;
 using JustCompute.Persistence.Repository.Constants;
 using JustCompute.Shared.Helpers;
 using System.Reflection;
+using Compute.Core.Utils;
 
 namespace JustCompute;
 
@@ -17,10 +18,20 @@ public partial class App : Application
         _themeHandler = themeHandler;
         _permissionGate = permissionGate;
 
-        if (VersionTracking.Default.IsFirstLaunchEver || !File.Exists(RepositoryConstants.DatabasePath))
+        // Reinstalled on every new version, not just the first launch ever. That is only safe
+        // now the user's saved places live in their own file: this overwrites the shipped city
+        // catalogue wholesale, which used to mean overwriting their locations along with it.
+        if (VersionTracking.Default.IsFirstLaunchForCurrentVersion
+            || !File.Exists(RepositoryConstants.CataloguePath))
         {
             InstallDatabase();
         }
+
+        // Off the UI thread on purpose: the first zone lookup pays a one-off ~23 ms to load
+        // GeoTimeZone's dataset, and left to itself it lands on whichever screen first asks a
+        // location for its time. Fire and forget — nothing waits on it, and any failure just
+        // means the first real lookup pays the cost as it did before.
+        _ = Task.Run(TimeZoneUtils.Prewarm);
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
@@ -117,9 +128,9 @@ public partial class App : Application
             return;
         }
 
-        Directory.CreateDirectory(Path.GetDirectoryName(RepositoryConstants.DatabasePath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(RepositoryConstants.CataloguePath)!);
 
-        using FileStream fileStream = File.Create(RepositoryConstants.DatabasePath);
+        using FileStream fileStream = File.Create(RepositoryConstants.CataloguePath);
         stream.CopyTo(fileStream);
     }
 }

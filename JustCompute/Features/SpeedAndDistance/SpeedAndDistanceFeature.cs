@@ -4,7 +4,7 @@ public static class SpeedAndDistanceFeature
 {
     public static MauiAppBuilder AddSpeedAndDistanceFeature(this MauiAppBuilder builder)
     {
-        builder.Services.AddSingleton<SpeedAndDistancelPage>();
+        builder.Services.AddSingleton<SpeedAndDistancePage>();
         builder.Services.AddSingleton<SpeedAndDistanceViewModel>();
         return builder;
     }

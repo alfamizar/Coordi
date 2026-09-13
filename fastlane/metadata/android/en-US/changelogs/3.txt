@@ -1,0 +1,5 @@
+New Today screen: sunrise, sunset, day length and a live Sun-path arc for any date, with moon phase and an optional 7-day forecast.
+New Optics calculator: depth of field, field of view, and the longest exposure before stars trail (500 and NPF rules).
+Eclipse times now use each location's own time zone, and the "visible from here" filter sits on the eclipse screen.
+Time zones follow real borders and daylight saving.
+Saved places can be edited or removed from the list.

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -13,7 +13,7 @@
              x:DataType="ViewModels:InputLocationViewModel"
              Shell.PresentationMode="Animated"
              Shell.TabBarIsVisible="False"
-             Title="{localization:Localize AddLocationLabel}">
+             Title="{Binding PageTitle}">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding GoBackCommand}" />
@@ -22,12 +22,12 @@
     <ContentPage.Content>
 
         <Grid RowDefinitions="*, 64"
-              Padding="4,0"
+              Padding="{StaticResource PageEdgeInset}"
               IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
 
             <ScrollView Grid.Row="0">
 
-                <StackLayout Padding="8"
+                <StackLayout Padding="0,8"
                              Spacing="16">
 
                     <Label Text="{localization:Localize LocationNameLabel}" />
@@ -39,12 +39,12 @@
                     <Label Text="{localization:Localize CountryLabel}" />
                     <Entry x:Name="CountryEntry"
                            Placeholder="{localization:Localize CountryLabel}"
-                           Text="{Binding Location.City.CountryName, Mode=TwoWay}" />
+                           Text="{Binding Location.CountryName, Mode=TwoWay}" />
 
                     <Label Text="{localization:Localize CityLabel}" />
                     <Entry x:Name="CityEntry"
                            Placeholder="{localization:Localize CityLabel}"
-                           Text="{Binding Location.City.CityName, Mode=TwoWay}" />
+                           Text="{Binding Location.CityName, Mode=TwoWay}" />
 
                     <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
                     <Picker Title="{Binding Location.TimeZoneOffset}"
@@ -55,7 +55,7 @@
                                       IsPointLabelVisible="False"
                                       IsPointCityCountryLabelVisible="False"
                                       ImageButtonIconSource="{AppThemeBinding Light=my_location_icon_dark.png, Dark=my_location_icon_light.png}"
-                                      ImageButtonClickedCommand="{Binding Commands[PrefillCoordinatesCommand]}" />
+                                      ImageButtonClickedCommand="{Binding PrefillCoordinatesCommand}" />
 
                 </StackLayout>
 
@@ -64,8 +64,8 @@
             <Button x:Name="SaveLocationButton"
                     Grid.Row="1"
                     Text="{localization:Localize SaveLocationButtonText}"
-                    Command="{Binding Commands[SaveLocationCommand]}"
-                    Margin="8" />
+                    Command="{Binding SaveLocationCommand}"
+                    Margin="0,8" />
 
             <ActivityIndicator HeightRequest="50"
                                WidthRequest="50"

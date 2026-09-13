@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.Helpers;
 using Microsoft.Extensions.Localization;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using Compute.Core.Domain.Entities.Models.Distance;
 using Compute.Core.Domain.Entities.Models.Speed;
 using System.Windows.Input;
+using JustCompute.Shared.Theming;
 
 namespace JustCompute.Features.Settings
 {
@@ -19,14 +21,7 @@ namespace JustCompute.Features.Settings
         private ObservableCollection<ThemeOption> themeOptions = [];
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsSystemThemeSelected))]
-        [NotifyPropertyChangedFor(nameof(IsLightThemeSelected))]
-        [NotifyPropertyChangedFor(nameof(IsDarkThemeSelected))]
         private ThemeOption selectedThemeOption = null!;
-
-        public bool IsSystemThemeSelected => SelectedThemeOption?.Theme == AppTheme.Unspecified;
-        public bool IsLightThemeSelected => SelectedThemeOption?.Theme == AppTheme.Light;
-        public bool IsDarkThemeSelected => SelectedThemeOption?.Theme == AppTheme.Dark;
 
         [ObservableProperty]
         private ObservableCollection<SpeedOption> speedOptions = [];
@@ -44,22 +39,36 @@ namespace JustCompute.Features.Settings
         [ObservableProperty]
         private bool is24HourTimeFormat;
 
+
         [ObservableProperty]
         private ObservableCollection<DistanceUnitOfMeasure> distanceUnitOfMeasures = [];
 
         [ObservableProperty]
         private DistanceUnitOfMeasure selectedDistanceUnitOfMeasure = null!;
 
-        public ICommand SaveSelectedDistanceTypeToSettingsCommand => Commands[nameof(SaveSelectedDistanceTypeToSettingsCommand)];
-        public ICommand SelectThemeCommand => Commands[nameof(SelectThemeCommand)];
-        public ICommand SelectSpeedUnitCommand => Commands[nameof(SelectSpeedUnitCommand)];
 
         partial void OnIs24HourTimeFormatChanged(bool value) => global::JustCompute.Shared.Helpers.Settings.Is24HourTimeFormat = value;
+
+        /// <summary>
+        /// Saves the chosen distance unit.
+        ///
+        /// This used to hang off an EventToCommandBehavior on the picker's SelectedIndexChanged,
+        /// which was not firing — the picker showed the new unit, nothing was written, and every
+        /// screen that reads the setting carried on in the old one. The theme and the clock
+        /// format persist from their property hooks; this now does too.
+        /// </summary>
+        partial void OnSelectedDistanceUnitOfMeasureChanged(DistanceUnitOfMeasure value)
+        {
+            if (value is null) return;
+
+            global::JustCompute.Shared.Helpers.Settings.DistanceType = value.DistanceType;
+        }
+
 
         partial void OnSelectedThemeOptionChanged(ThemeOption value)
         {
             if (value is null) return;
-            global::JustCompute.Shared.Helpers.Settings.Theme = value.Theme;
+            global::JustCompute.Shared.Helpers.Settings.ThemeId = value.Theme;
             ApplyTheme();
         }
 
@@ -90,17 +99,16 @@ namespace JustCompute.Features.Settings
             _themeHandler = themeHandler;
             _localizer = localizer;
 
-            Commands[nameof(SaveSelectedDistanceTypeToSettingsCommand)] = new Command(OnSaveSelectedDistanceTypeToSettings);
-            Commands[nameof(SelectThemeCommand)] = new Command<string>(OnSelectTheme);
-            Commands[nameof(SelectSpeedUnitCommand)] = new Command<string>(OnSelectSpeedUnit);
 
             ThemeOptions =
             [
-                new ThemeOption(AppTheme.Unspecified, _localizer.GetString("SystemThemeLabel")),
-                new ThemeOption(AppTheme.Light, _localizer.GetString("LightThemeLabel")),
-                new ThemeOption(AppTheme.Dark, _localizer.GetString("DarkThemeLabel"))
+                new ThemeOption(AppThemeId.System, _localizer.GetString("SystemThemeLabel")),
+                new ThemeOption(AppThemeId.Ocean, _localizer.GetString("ThemeOceanLabel")),
+                new ThemeOption(AppThemeId.Blossom, _localizer.GetString("ThemeBlossomLabel")),
+                new ThemeOption(AppThemeId.Midnight, _localizer.GetString("ThemeMidnightLabel")),
+                new ThemeOption(AppThemeId.Ember, _localizer.GetString("ThemeEmberLabel")),
             ];
-            SelectedThemeOption = ThemeOptions.FirstOrDefault(o => o.Theme == global::JustCompute.Shared.Helpers.Settings.Theme)
+            SelectedThemeOption = ThemeOptions.FirstOrDefault(o => o.Theme == global::JustCompute.Shared.Helpers.Settings.ThemeId)
                                   ?? ThemeOptions[0];
 
             SpeedOptions =
@@ -121,33 +129,15 @@ namespace JustCompute.Features.Settings
                 new DistanceUnitOfMeasure(DistanceType.NauticalMiles, _localizer.GetString("NauticalMilesLabel"))
             ];
             DistanceType distanceType = global::JustCompute.Shared.Helpers.Settings.DistanceType;
-            SelectedDistanceUnitOfMeasure = distanceType switch
-            {
-                DistanceType.Meters => new DistanceUnitOfMeasure(DistanceType.Meters, _localizer.GetString("MetersLabel")),
-                DistanceType.Kilometers => new DistanceUnitOfMeasure(DistanceType.Kilometers, _localizer.GetString("KmLabel")),
-                DistanceType.Miles => new DistanceUnitOfMeasure(DistanceType.Miles, _localizer.GetString("MilesLabel")),
-                DistanceType.Feets => new DistanceUnitOfMeasure(DistanceType.Feets, _localizer.GetString("FeetsLabel")),
-                DistanceType.NauticalMiles => new DistanceUnitOfMeasure(DistanceType.NauticalMiles, _localizer.GetString("NauticalMilesLabel")),
-                _ => SelectedDistanceUnitOfMeasure
-            };
+            SelectedDistanceUnitOfMeasure =
+                DistanceUnitOfMeasures.FirstOrDefault(o => o.DistanceType == distanceType)
+                ?? DistanceUnitOfMeasures[0];
 
             Is24HourTimeFormat = global::JustCompute.Shared.Helpers.Settings.Is24HourTimeFormat;
         }
 
-        private void OnSaveSelectedDistanceTypeToSettings()
-        {
-            global::JustCompute.Shared.Helpers.Settings.DistanceType = SelectedDistanceUnitOfMeasure.DistanceType;
-        }
-
-        private void OnSelectTheme(string? themeName)
-        {
-            if (string.IsNullOrEmpty(themeName)) return;
-            if (!Enum.TryParse<AppTheme>(themeName, true, out var theme)) return;
-            var option = ThemeOptions.FirstOrDefault(o => o.Theme == theme);
-            if (option != null) SelectedThemeOption = option;
-        }
-
-        private void OnSelectSpeedUnit(string? speedTypeName)
+        [RelayCommand]
+        private void SelectSpeedUnit(string? speedTypeName)
         {
             if (string.IsNullOrEmpty(speedTypeName)) return;
             if (!Enum.TryParse<SpeedType>(speedTypeName, true, out var speedType)) return;

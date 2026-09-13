@@ -1,9 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Common.Messaging;
 using Compute.Core.Domain.Entities.Models.Time;
-using Compute.Core.Navigation;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.Navigation;
+using JustCompute.Shared.Abstractions.UI;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.ViewModels.Messages;
 using JustCompute.Resources.Strings;
@@ -29,11 +29,15 @@ namespace JustCompute.Features.InputLocation
         private ObservableCollection<TimeZoneOffset> timeZoneOffsets;
 
         [ObservableProperty]
-        private Location location = new();
+        private EditableLocation location = new();
 
-        public ICommand SaveLocationCommand => Commands[nameof(SaveLocationCommand)];
-        public ICommand PrefillCoordinatesCommand => Commands[nameof(PrefillCoordinatesCommand)];
-        public ICommand GoBackCommand => Commands[nameof(GoBackCommand)];
+        /// <summary>
+        /// The same page serves both contexts, so the title has to say which one it is —
+        /// it read "Add Location" even when editing an existing place.
+        /// </summary>
+        [ObservableProperty]
+        private string pageTitle = string.Empty;
+
 
         public InputLocationViewModel(
             ViewModelServices services,
@@ -47,10 +51,8 @@ namespace JustCompute.Features.InputLocation
             _messagingService = messagingService;
             _localizer = localizer;
 
-            Commands[nameof(SaveLocationCommand)] = new AsyncRelayCommand(OnSaveLocation, CanSaveLocation);
-            Commands[nameof(PrefillCoordinatesCommand)] = new AsyncRelayCommand(OnPrefillCoordinates);
-            Commands[nameof(GoBackCommand)] = new Command(() => OnBackButtonPressed());
 
+            pageTitle = localizer.GetString("AddLocationLabel");
             timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
             selectedTimeZoneOffset = TimeZoneOffset.DefaultTimeZoneOffset;
 
@@ -65,15 +67,15 @@ namespace JustCompute.Features.InputLocation
                 e.PropertyName == nameof(Location.Latitude) ||
                 e.PropertyName == nameof(Location.Longitude))
             {
-                (Commands[nameof(SaveLocationCommand)] as IRelayCommand)?.NotifyCanExecuteChanged();
+                SaveLocationCommand.NotifyCanExecuteChanged();
             }
         }
 
         private bool CanSaveLocation()
         {
             return !string.IsNullOrWhiteSpace(Location?.Name)
-                   && IsValidLatitude(Location.LatitudeDouble)
-                   && IsValidLongitude(Location.LongitudeDouble);
+                   && IsValidLatitude(Location.Latitude)
+                   && IsValidLongitude(Location.Longitude);
         }
 
         private static bool IsValidLatitude(double latitude)
@@ -86,7 +88,11 @@ namespace JustCompute.Features.InputLocation
             return longitude >= -180 && longitude <= 180;
         }
 
-        private async Task OnSaveLocation()
+        [RelayCommand]
+        private void GoBack() => OnBackButtonPressed();
+
+        [RelayCommand(CanExecute = nameof(CanSaveLocation))]
+        private async Task SaveLocation()
         {
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
 
@@ -95,13 +101,13 @@ namespace JustCompute.Features.InputLocation
                 case LocationInputContext.Add:
                     {
                         if (Location != null)
-                            await SaveLocationIfNotExists(Location);
+                            await SaveLocationIfNotExists(Location.ToLocation());
                         break;
                     }
                 case LocationInputContext.Edit:
                     {
                         if (Location != null)
-                            await UpdateLocation(Location);
+                            await UpdateLocation(Location.ToLocation());
                         break;
                     }
             }
@@ -113,7 +119,17 @@ namespace JustCompute.Features.InputLocation
             if (!savedLocations.Any(x => x.Name == location.Name))
             {
                 await _locationService.SaveLocation(location);
-                OnBackButtonPressed();
+
+                // Announce it like Edit and Delete already do. Without this the new place only
+                // surfaces on the next full re-init of the Locations screen, which is exactly the
+                // sort of thing that gets skipped while a device fix is still in flight.
+                _messagingService.Send(new LocationMessage(location, LocationInputContext.Add));
+
+                // The place is saved and now current, so going back one step to the city search
+                // the user has finished with is the wrong destination — return to Locations,
+                // where the result of what they just did is actually visible.
+                _locationInputContext = null;
+                await _navigationService.NavigateToShellRouteAsync("locations");
             }
             else
             {
@@ -130,7 +146,8 @@ namespace JustCompute.Features.InputLocation
             OnBackButtonPressed();
         }
 
-        public async Task OnPrefillCoordinates()
+        [RelayCommand]
+        private async Task PrefillCoordinates()
         {
             if (Location == null || IsBusy) return;
 
@@ -141,25 +158,26 @@ namespace JustCompute.Features.InputLocation
                 IsBusy = false;
             }
 
-            Location.Latitude = _gpsLocationService.DeviceLocation?.LatitudeDouble.ToString() ?? Location.Latitude;
-            Location.Longitude = _gpsLocationService.DeviceLocation?.LongitudeDouble.ToString() ?? Location.Latitude;
+            Location.Latitude = _gpsLocationService.DeviceLocation?.Latitude ?? Location.Latitude;
+            Location.Longitude = _gpsLocationService.DeviceLocation?.Longitude ?? Location.Longitude;
         }
 
         public void ApplyQueryParameter(object? parameter)
         {
-            if (parameter is Dictionary<LocationInputContext, Location> locationAndContext)
+            if (parameter is LocationEditorArgs args)
             {
                 if (Location != null)
                 {
                     Location.PropertyChanged -= OnPropertyChanged;
                 }
 
-                var kvp = locationAndContext.FirstOrDefault();
-                _locationInputContext = kvp.Key;
+                _locationInputContext = args.Context;
 
-                if (kvp.Value != null)
+                if (args.Location is not null)
                 {
-                    Location = kvp.Value;
+                    // EditableLocation already takes a detached copy, so editing never reaches
+                    // the caller's instance and a cancelled edit leaves the lists untouched.
+                    Location = new EditableLocation(args.Location);
                 }
 
                 if (Location != null)
@@ -170,10 +188,14 @@ namespace JustCompute.Features.InputLocation
 
             if (!_locationInputContext.HasValue) throw new Exception("VM context parameter must be specified");
 
-            if (_locationInputContext.Value == LocationInputContext.Add && Location != null)
-            {
-                Location.Name = string.Empty;
-            }
+            PageTitle = _locationInputContext.Value == LocationInputContext.Edit
+                ? _localizer.GetString("EditLocationLabel")
+                : _localizer.GetString("AddLocationLabel");
+
+            // Nothing is blanked here. Adding *from a search* arrives with the city already
+            // chosen, and clearing its name left the user retyping the place they had just
+            // picked — with Save disabled until they did. Adding from scratch arrives with no
+            // location at all, so the field is empty anyway.
         }
 
         public override bool OnBackButtonPressed()

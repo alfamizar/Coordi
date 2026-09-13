@@ -1,0 +1,5 @@
+Nuova carta del cielo: tutto il cielo su un disco — stelle, figure delle costellazioni, confini IAU, Sole, Luna e pianeti con i nomi, un giorno in entrambi i versi.
+Nuova schermata Pianeti: altezza e azimut ora, alba, culminazione, tramonto e distanza dalla Terra.
+Nuovo convertitore di coordinate: gradi decimali, DMS, DDM, UTM e MGRS.
+L'app calcola per la posizione rilevata dal dispositivo, finché non ne scegli un'altra.
+Il permesso di posizione viene chiesto una volta, non a ogni visita.

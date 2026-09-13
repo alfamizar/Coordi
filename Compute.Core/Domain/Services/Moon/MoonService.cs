@@ -1,63 +1,55 @@
-﻿using Compute.Core.Domain.Entities.Models;
+using Compute.Astro;
+using Compute.Core.Domain.Entities.Models;
+using Compute.Core.Domain.Entities.Models.Eclipses;
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Extensions;
-using CoordinateSharp;
-using NodaTime;
+using Compute.Core.Utils;
 using Distance = Compute.Core.Domain.Entities.Models.Distance.Distance;
+using MoonPhase = Compute.Core.Domain.Entities.Models.Moon.MoonPhase;
 
 namespace Compute.Core.Domain.Services.Moon
 {
     public class MoonService : IMoonService
     {
-        public async Task<List<MoonCycle>> GetMoonCyclesAsync(double lat, double lng, DateTime date)
+        public async Task<List<LunarEclipseInfo>> GetMoonEclipsesAsync(Location location, DateTime date)
         {
+            var lat = location.Latitude;
+            var lng = location.Longitude;
+
             return await Task.Run(() =>
             {
-                var el = new EagerLoad(EagerLoadType.Celestial)
-                {
-                    Extensions = new EagerLoad_Extensions(EagerLoad_ExtensionsType.Lunar_Cycle | EagerLoad_ExtensionsType.Zodiac)
-                };
+                var (startJd, endJd) = EclipseTableRange.ForCenturyOf(date);
 
-                var moonCycles = new List<MoonCycle>();
-
-                var startDate = date.Date;
-                var endDate = startDate.AddYears(1);
-                var coordinate = new Coordinate(lat, lng, startDate, el);
-
-                for (var day = startDate; day < endDate; day = day.AddDays(1))
-                {
-                    coordinate.GeoDate = day;
-                    var zonedDateTime = coordinate.GetZonedDateTime();
-                    coordinate.Offset = zonedDateTime?.Offset.ToTimeSpan().TotalHours ?? 0;
-
-                    var celestialInfo = new MoonCycle
+                return Eclipse.LunarEclipseCircumstancesBetween(startJd, endJd)
+                    .Select(e =>
                     {
-                        GeoDate = coordinate.GeoDate,
-                        EarthHemisphere = lat > 0 ? BaseCelestialBodyCycle.Hemisphere.Northern : BaseCelestialBodyCycle.Hemisphere.Southern,
-                        RiseTime = coordinate.CelestialInfo.MoonRise,
-                        SetTime = coordinate.CelestialInfo.MoonSet,
-                        Distance = new Distance(coordinate.CelestialInfo.MoonDistance.Kilometers),
-                        PhaseName = (MoonPhase)coordinate.CelestialInfo.MoonIllum.PhaseNameEnum,
-                        ZodiacSign = AstroExtensions.CalculateZodiacSign(coordinate.GeoDate),
-                        // CoordinateSharp has deprecated its astrological-sign API and offers no
-                        // equivalent moon-sign replacement, so keep using it to preserve this feature.
-#pragma warning disable CS0618
-                        MoonInZodiacSign = (AstrologicalSignType)coordinate.CelestialInfo.AstrologicalSigns.EMoonSign,
-#pragma warning restore CS0618
-                        MoonName = (Entities.Models.Moon.MoonName)coordinate.CelestialInfo.AlmanacMoonName.EName,
-                        IsDaylightSavingTime = zonedDateTime?.IsDaylightSavingTime() ?? false,
-                    };
-                    moonCycles.Add(celestialInfo);
-                }
-                return moonCycles;
-            });
-        }
+                        // One offset per eclipse, taken at greatest eclipse. Resolving each contact
+                        // separately could straddle a daylight-saving change and print an event
+                        // whose contacts run backwards.
+                        var offsetHours = location.GetUtcOffsetHours(
+                            AstroTime.DateTimeFromJulianDay(e.MaximumJdUtc));
 
-        public async Task<List<LunarEclipseDetails>> GetMoonEclipsesAsync(double lat, double lng, DateTime date)
-        {
-            return await Task.Run(() =>
-            {
-                return Celestial.Get_Lunar_Eclipse_Table(lat, lng, date);
+                        return new LunarEclipseInfo
+                        {
+                            Date = AstroTime.DateTimeFromJulianDay(e.MaximumJdUtc).AddHours(offsetHours).Date,
+                            Type = e.Type,
+                            // A lunar eclipse looks the same everywhere on the night side, so
+                            // "visible from here" reduces to the Moon being above the horizon.
+                            IsVisible = HorizontalCoordinates
+                                .OfMoon(e.MaximumJdUtc, lat, lng, applyRefraction: true)
+                                .AltitudeDeg > 0.0,
+                            PenumbralEclipseBegin = CelestialTimeUtils.ToLocalTimeOrDefault(e.PenumbralBeginJdUtc, offsetHours),
+                            PenumbralEclipseEnd = CelestialTimeUtils.ToLocalTimeOrDefault(e.PenumbralEndJdUtc, offsetHours),
+                            PartialEclipseBegin = CelestialTimeUtils.ToLocalTimeOrDefault(e.PartialBeginJdUtc, offsetHours),
+                            PartialEclipseEnd = CelestialTimeUtils.ToLocalTimeOrDefault(e.PartialEndJdUtc, offsetHours),
+                            TotalEclipseBegin = CelestialTimeUtils.ToLocalTimeOrDefault(e.TotalBeginJdUtc, offsetHours),
+                            TotalEclipseEnd = CelestialTimeUtils.ToLocalTimeOrDefault(e.TotalEndJdUtc, offsetHours),
+                            MidEclipse = CelestialTimeUtils.ToLocalTimeOrDefault(e.MaximumJdUtc, offsetHours),
+                            UmbralMagnitude = e.UmbralMagnitude,
+                            PenumbralMagnitude = e.PenumbralMagnitude,
+                        };
+                    })
+                    .ToList();
             });
         }
     }

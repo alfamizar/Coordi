@@ -1,0 +1,5 @@
+Yeni Gök Haritası: tüm gökyüzü bir disk üzerinde — yıldızlar, takımyıldız figürleri, IAU sınırları, adlarıyla Güneş, Ay ve gezegenler; bir gün ileri geri kaydırılabilir.
+Yeni Gezegenler ekranı: şimdiki yükseklik ve azimut, doğuş, en yüksek nokta, batış ve Dünya'ya uzaklık.
+Yeni koordinat dönüştürücü: ondalık derece, DMS, DDM, UTM ve MGRS.
+Uygulama, siz başka bir yer seçene kadar cihazın bildirdiği konum için hesaplar.
+Konum izni her girişte değil, bir kez isteniyor.

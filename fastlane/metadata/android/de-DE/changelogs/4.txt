@@ -1,0 +1,5 @@
+Neue Sternkarte: der ganze Himmel auf einer Scheibe — Sterne, Sternbildfiguren, IAU-Grenzen sowie Sonne, Mond und Planeten mit Namen, einen Tag in beide Richtungen.
+Neuer Planeten-Bildschirm: Höhe und Azimut jetzt, Aufgang, Höchststand, Untergang und Entfernung zur Erde.
+Neuer Koordinatenumrechner: Dezimalgrad, DMS, DDM, UTM und MGRS.
+Die App rechnet für den Standort, den das Gerät meldet, bis Sie einen anderen wählen.
+Standortfreigabe wird einmal erfragt, nicht bei jedem Aufruf.

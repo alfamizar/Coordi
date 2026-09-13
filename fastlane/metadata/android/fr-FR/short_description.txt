@@ -1,1 +1,1 @@
-Soleil, Lune et coordonnées hors ligne, avec météo, graphiques et thème sombre.
+Carte du ciel hors ligne, éphémérides, éclipses, MGRS/UTM, vitesse GPS, optique.

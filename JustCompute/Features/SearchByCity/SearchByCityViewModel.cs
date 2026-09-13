@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +10,7 @@ using JustCompute.Shared.Popups;
 using System.ComponentModel;
 using Microsoft.Extensions.Localization;
 using JustCompute.Resources.Strings;
-using Compute.Core.Navigation;
+using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Features.InputLocation;
 
 namespace JustCompute.Features.SearchByCity
@@ -36,6 +36,13 @@ namespace JustCompute.Features.SearchByCity
         [ObservableProperty]
         private Sorting _selectedSortCriterion = null!;
 
+        /// <summary>
+        /// The last search could not be run. Without this a failure was indistinguishable from
+        /// "no matches" and from "still loading" — all three drew an empty page.
+        /// </summary>
+        [ObservableProperty]
+        private bool _hasSearchFailed;
+
         public SearchByCityViewModel(
             ViewModelServices services,
             IStringLocalizer<AppStringsRes> localizer)
@@ -51,10 +58,6 @@ namespace JustCompute.Features.SearchByCity
 
         private void InitializeCommands()
         {
-            Commands.Add("PerformSearchLocationCommand", new AsyncRelayCommand<string>(OnPerformSearchLocation));
-            Commands.Add("LocationSelectedCommand", new Command<Location>(OnLocationSelected));
-            Commands.Add("ShowSortingPopupCommand", new AsyncRelayCommand<View>(OnShowSortingPopup));
-            Commands.Add("GoBackCommand", new Command(() => OnBackButtonPressed()));
         }
 
         private void InitializeSortingCriteria()
@@ -71,9 +74,17 @@ namespace JustCompute.Features.SearchByCity
         {
             if (e.PropertyName == nameof(SelectedSortCriterion))
             {
-                IsBusy = true;
-                LocationsSearchResult = await SortLocationsInBackground(LocationsSearchResult);
-                IsBusy = false;
+                // async void: anything escaping here takes the process down, and a throw part-way
+                // would strand the busy indicator on screen.
+                try
+                {
+                    IsBusy = true;
+                    LocationsSearchResult = await SortLocationsInBackground(LocationsSearchResult);
+                }
+                finally
+                {
+                    IsBusy = false;
+                }
             }
         }
 
@@ -99,11 +110,12 @@ namespace JustCompute.Features.SearchByCity
             return [.. sortedLocations
                 .ThenBy(location => location.City.CityName)
                 .ThenBy(location => location.City.CountryName)
-                .ThenBy(location => location.LatitudeDouble)
-                .ThenBy(location => location.LongitudeDouble)];
+                .ThenBy(location => location.Latitude)
+                .ThenBy(location => location.Longitude)];
         }
 
-        private async Task OnShowSortingPopup(View? view)
+        [RelayCommand]
+        private async Task ShowSortingPopup(View? view)
         {
             var popupViewModel = new SortOptionsPopupViewModel(_services);
             popupViewModel.ApplyParameters(_sortingCriteria, SelectedSortCriterion, view);
@@ -157,30 +169,49 @@ namespace JustCompute.Features.SearchByCity
         {
             await base.OnNavigatedToAsync();
             if (_isShowingPopup) return;
-            await OnPerformSearchLocation(string.Empty);
+
+            // Leaving the screen no longer throws the results away, so coming back is instant and
+            // a refresh that fails can never blank a list the user was already reading. Only seed
+            // when there is genuinely nothing to show.
+            if (LocationsSearchResult.Count > 0) return;
+
+            await PerformSearchLocation(SearchTerm ?? string.Empty);
         }
 
-        public override void OnNavigatedFrom()
-        {
-            base.OnNavigatedFrom();
-            if (_isShowingPopup) return;
-            SearchTerm = string.Empty;
-            LocationsSearchResult = [];
-        }
+        [RelayCommand]
+        private void GoBack() => OnBackButtonPressed();
 
-        private async Task OnPerformSearchLocation(string? searchTerm)
+        [RelayCommand]
+        private Task RetrySearch() => PerformSearchLocation(SearchTerm ?? string.Empty);
+
+        [RelayCommand]
+        private async Task PerformSearchLocation(string? searchTerm)
         {
             var searchVersion = Interlocked.Increment(ref _searchVersion);
 
             try
             {
                 IsBusy = true;
+                if (searchVersion == _searchVersion)
+                {
+                    HasSearchFailed = false;
+                }
+
                 var searchQuery = searchTerm?.Trim().RemoveAccents() ?? string.Empty;
                 var unsortedLocations = await _locationService.SearchLocations(searchQuery);
                 var sortedLocations = await SortLocationsInBackground(unsortedLocations ?? []);
                 if (searchVersion == _searchVersion)
                 {
                     LocationsSearchResult = sortedLocations;
+                }
+            }
+            catch (Exception)
+            {
+                // The database can refuse a read while another screen is using it. Say so and
+                // offer a retry rather than leaving an empty page and a swallowed log line.
+                if (searchVersion == _searchVersion)
+                {
+                    HasSearchFailed = true;
                 }
             }
             finally
@@ -192,7 +223,8 @@ namespace JustCompute.Features.SearchByCity
             }
         }
 
-        private void OnLocationSelected(Location selectedLocation)
+        [RelayCommand]
+        private void LocationSelected(Location selectedLocation)
         {
             if (_searchLocationContext == SearchLocationContext.ReturnResult)
             {
@@ -201,9 +233,8 @@ namespace JustCompute.Features.SearchByCity
             }
             else
             {
-                Dictionary<LocationInputContext, Location> locationAndContext = [];
-                locationAndContext[LocationInputContext.Add] = selectedLocation;
-                _navigationService.NavigateToAsync<InputLocationViewModel>(locationAndContext);
+                _navigationService.NavigateToAsync<InputLocationViewModel>(
+                    new LocationEditorArgs(LocationInputContext.Add, selectedLocation));
             }
         }
 

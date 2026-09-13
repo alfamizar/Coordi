@@ -35,16 +35,24 @@
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
 
-    <Color x:Key="LightPrimary">#00A9FF</Color>
+    <!--
+        Light theme: rose pink chrome over mint-green surfaces.
+
+        The primary is deliberately deeper than it looks like it needs to be. Buttons and the
+        app bar put white text on it at 14pt, so it has to clear 4.5:1 to be readable — the
+        previous #00A9FF managed only 2.59:1 and failed even the large-text threshold. #DB2777
+        gives 4.60:1 while still reading as pink rather than maroon.
+    -->
+    <Color x:Key="LightPrimary">#DB2777</Color>
     <Color x:Key="LightOnPrimary">#FFFFFF</Color>
-    <Color x:Key="LightPrimaryVariant">#0086CC</Color>
-    <Color x:Key="LightSecondary">#89CFF3</Color>
-    <Color x:Key="LightOnSecondary">#000000</Color>
-    <Color x:Key="LightBackground">#FFFFFF</Color>
+    <Color x:Key="LightPrimaryVariant">#A81B5C</Color>
+    <Color x:Key="LightSecondary">#A5D6A7</Color>
+    <Color x:Key="LightOnSecondary">#14321A</Color>
+    <Color x:Key="LightBackground">#FFF7FB</Color>
     <Color x:Key="LightOnBackground">#212121</Color>
-    <Color x:Key="LightSurface">#CDF5FD</Color>
+    <Color x:Key="LightSurface">#E4F7E2</Color>
     <Color x:Key="LightOnSurface">#212121</Color>
-    <Color x:Key="LightOutline">#89CFF3</Color>
+    <Color x:Key="LightOutline">#8FCB92</Color>
     <Color x:Key="LightError">#B00020</Color>
     <Color x:Key="LightOnError">#FFFFFF</Color>
 
@@ -61,9 +69,34 @@
     <Color x:Key="DarkError">#CF6679</Color>
     <Color x:Key="DarkOnError">#000000</Color>
 
-    <Color x:Key="LightStatusBarColor">#00A9FF</Color>
+    <!--
+        Semantic theme slots. These are what the XAML actually binds to, through DynamicResource,
+        and ThemeHandler rewrites them whenever the chosen theme changes — which is what lets the
+        theme switch take effect without rebuilding the pages.
+
+        The values here are only the parse-time defaults (the Ocean palette); the real ones are
+        applied at startup. The Light*/Dark* entries above remain as the palettes' source of
+        record and for anything still keyed to the device's own light/dark setting.
+    -->
+    <Color x:Key="ThemePrimary">#00A9FF</Color>
+    <Color x:Key="ThemeOnPrimary">#FFFFFF</Color>
+    <Color x:Key="ThemePrimaryVariant">#0086CC</Color>
+    <Color x:Key="ThemeSecondary">#89CFF3</Color>
+    <Color x:Key="ThemeOnSecondary">#000000</Color>
+    <Color x:Key="ThemeBackground">#FFFFFF</Color>
+    <Color x:Key="ThemeOnBackground">#212121</Color>
+    <Color x:Key="ThemeSurface">#CDF5FD</Color>
+    <Color x:Key="ThemeOnSurface">#212121</Color>
+    <Color x:Key="ThemeOutline">#89CFF3</Color>
+    <Color x:Key="ThemeError">#B00020</Color>
+    <Color x:Key="ThemeOnError">#FFFFFF</Color>
+    <Color x:Key="ThemeHeaderBackground">#00A9FF</Color>
+    <Color x:Key="ThemeMutedSurface">#89CFF3</Color>
+    <Color x:Key="ThemeAccentStrong">#0086CC</Color>
+
+    <Color x:Key="LightStatusBarColor">#DB2777</Color>
     <Color x:Key="DarkStatusBarColor">#323232</Color>
-    <Color x:Key="LightNavigationBarColor">#00A9FF</Color>
+    <Color x:Key="LightNavigationBarColor">#DB2777</Color>
     <Color x:Key="DarkNavigationBarColor">#323232</Color>
 
 </ResourceDictionary>

@@ -1,6 +1,6 @@
 using Compute.Core.Domain.Errors;
 using CoreLocation;
-using DotNext;
+using Compute.Core.Common.Results;
 using Foundation;
 using DeviceGeoLocation = Microsoft.Maui.Devices.Sensors.Location;
 
@@ -64,7 +64,7 @@ namespace JustCompute.Services.LocationService
             {
                 System.Diagnostics.Debug.WriteLine($"[GPSLocationService.iOS] StartPlatformListening failed: {ex}");
                 DisposeLocationManager();
-                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeciveGeoLocation);
+                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeviceGeoLocation);
             }
         }
 

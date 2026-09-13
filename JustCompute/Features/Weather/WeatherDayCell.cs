@@ -1,4 +1,5 @@
 using System.Globalization;
+using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Entities.Models.Weather;
 
 namespace JustCompute.Features.Weather;
@@ -78,7 +79,7 @@ public sealed class WeatherDayCell : ContentView
         var culture = CultureInfo.CurrentCulture;
 
         _dayOfWeek.Text = culture.DateTimeFormat.GetAbbreviatedDayName(day.Date.DayOfWeek);
-        _date.Text = day.Date.ToString("d MMM", culture);
+        _date.Text = ShortDateFormat.DayAndMonth(day.Date, culture);
         _icon.Text = WeatherConditionToIconConverter.IconFor(day.Condition);
         _currentTemp.Text = day.CurrentTemperature is { } t
             ? $"{Math.Round(t):0}°"

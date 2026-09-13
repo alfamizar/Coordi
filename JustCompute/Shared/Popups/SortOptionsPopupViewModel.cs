@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Common.Sort;
 using JustCompute.Shared.Models;
 using JustCompute.Shared.ViewModels;
@@ -23,7 +24,6 @@ namespace JustCompute.Shared.Popups
             : base(services)
         {
             sortingCriteria = [];
-            Commands.Add("SelectSortCriterionCommand", new Command<SelectableSortingCriterion>(OnSelectSortCriterion));
         }
 
         partial void OnAnchorChanged(View? value)
@@ -49,7 +49,8 @@ namespace JustCompute.Shared.Popups
             Anchor = anchor;
         }
 
-        private void OnSelectSortCriterion(SelectableSortingCriterion selected)
+        [RelayCommand]
+        private void SelectSortCriterion(SelectableSortingCriterion selected)
         {
             if (SelectedSortCriterion == selected)
             {

@@ -29,6 +29,11 @@ public class MainActivity : MauiAppCompatActivity
         ScreenshotHarness.LonFromPlatform = Intent?.GetStringExtra("coordi_lon");
         ScreenshotHarness.NameFromPlatform = Intent?.GetStringExtra("coordi_name");
         ScreenshotHarness.ThemeFromPlatform = Intent?.GetStringExtra("coordi_theme");
+        ScreenshotHarness.OnlyVisibleEclipsesFromPlatform = Intent?.GetStringExtra("coordi_only_visible");
+        ScreenshotHarness.SavedLocationsFromPlatform = Intent?.GetStringExtra("coordi_saved");
+        ScreenshotHarness.RouteStopsFromPlatform = Intent?.GetStringExtra("coordi_stops");
+        ScreenshotHarness.TripFromPlatform = Intent?.GetStringExtra("coordi_trip");
+        ScreenshotHarness.SkyHourFromPlatform = Intent?.GetStringExtra("coordi_sky_hour");
 #endif
 
         base.OnCreate(savedInstanceState);

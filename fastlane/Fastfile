@@ -1,3 +1,7 @@
+require 'tmpdir'
+require 'fileutils'
+require 'open3'
+
 default_platform(:android)
 
 # Coordi — Google Play automation.
@@ -18,6 +22,7 @@ def coordi_repo_root
 end
 
 ANDROID_TFM = "net10.0-android36.0"
+IOS_TFM = "net10.0-ios"
 
 # Newest signed AAB produced by `dotnet publish` (nil if none built yet).
 def coordi_signed_aab
@@ -33,6 +38,51 @@ platform :android do
     UI.user_error!("SUPPLY_JSON_KEY points to a missing file: #{key}") unless File.exist?(key)
     validate_play_store_json_key(json_key: key)
     UI.success("Service-account key is valid.")
+  end
+
+  desc "Check every locale's listing text against Google Play's limits before uploading"
+  lane :validate_metadata do
+    limits = { "title.txt" => 30, "short_description.txt" => 80, "full_description.txt" => 4000 }
+    root = File.join(coordi_repo_root, "fastlane/metadata/android")
+    locales = Dir.children(root).select { |d| File.directory?(File.join(root, d)) }.sort
+    UI.user_error!("No locales found under #{root}") if locales.empty?
+
+    problems = []
+    locales.each do |loc|
+      limits.each do |file, limit|
+        path = File.join(root, loc, file)
+        next problems << "#{loc}/#{file} is missing" unless File.exist?(path)
+
+        # Play counts characters, not bytes. Trailing newlines do not count for these three.
+        length = File.read(path).strip.length
+        problems << "#{loc}/#{file} is #{length} chars (limit #{limit})" if length > limit
+        problems << "#{loc}/#{file} is empty" if length.zero?
+      end
+
+      # Release notes are measured as sent, trailing newline and all. A German note that this
+      # lane called exactly 500 was rejected by Play as 501 — the newline the strip above
+      # removes is one Google counts, and the upload fails for every locale at once because a
+      # single over-long note aborts the whole edit.
+      Dir[File.join(root, loc, "changelogs", "*.txt")].each do |notes|
+        length = File.read(notes).length
+        problems << "#{loc}/changelogs/#{File.basename(notes)} is #{length} chars as sent (limit 500)" if length > 500
+        problems << "#{loc}/changelogs/#{File.basename(notes)} is empty" if File.read(notes).strip.empty?
+      end
+    end
+
+    # Every locale should offer the same set of release notes, or some users see none.
+    note_sets = locales.to_h { |loc| [loc, Dir[File.join(root, loc, "changelogs", "*.txt")].map { |f| File.basename(f) }.sort] }
+    expected = note_sets.values.max_by(&:length) || []
+    note_sets.each do |loc, have|
+      (expected - have).each { |missing| problems << "#{loc}/changelogs/#{missing} is missing" }
+    end
+
+    if problems.any?
+      problems.each { |p| UI.error(p) }
+      UI.user_error!("#{problems.length} listing problem(s) — fix before uploading")
+    end
+
+    UI.success("#{locales.length} locales validated: #{locales.join(', ')}")
   end
 
   desc "Dry-run: validate localized store-listing metadata against Google Play (no changes committed)"
@@ -70,9 +120,79 @@ platform :android do
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_changelogs: true,
-      skip_upload_images: true,        # icon / feature graphic — none provided here
-      skip_upload_screenshots: false   # phone screenshots ARE uploaded
+      # Both are read from metadata/android/<locale>/images/. icon.png and
+      # featureGraphic.png upload when present; phone and tablet screenshot folders
+      # are picked up automatically by whichever of them exist.
+      skip_upload_images: false,
+      skip_upload_screenshots: false
     )
+  end
+
+  desc "Upload listing text + screenshots for one slice of locales, e.g. batch:1 of:4"
+  lane :upload_listing_batch do |options|
+    total = (options[:of] || ENV["COORDI_BATCHES"] || 4).to_i
+    batch = (options[:batch] || ENV["COORDI_BATCH"]).to_i
+    UI.user_error!("Pass batch:N of:M — got batch:#{batch} of:#{total}") unless total > 0 && batch.between?(1, total)
+
+    root = File.join(coordi_repo_root, "fastlane/metadata/android")
+    locales = Dir.children(root).select { |d| File.directory?(File.join(root, d)) }.sort
+    per = (locales.length / total.to_f).ceil
+    slice = locales.each_slice(per).to_a[batch - 1] || []
+    UI.user_error!("Batch #{batch} of #{total} is empty (#{locales.length} locales)") if slice.empty?
+
+    UI.message("Batch #{batch}/#{total}: #{slice.join(', ')}")
+
+    # supply uploads every locale it finds under metadata_path, so the slice is expressed by
+    # handing it a directory that contains only those locales.
+    staging = File.join(Dir.tmpdir, "coordi-listing-batch-#{batch}-of-#{total}")
+    FileUtils.rm_rf(staging)
+    FileUtils.mkdir_p(staging)
+    slice.each { |loc| FileUtils.cp_r(File.join(root, loc), File.join(staging, loc)) }
+
+    begin
+      upload_to_play_store(
+        metadata_path: staging,
+        track: ENV["COORDI_TRACK"] || "production",
+        version_code: ENV["COORDI_VERSION_CODE"]&.to_i,
+        skip_upload_apk: true,
+        skip_upload_aab: true,
+        skip_upload_changelogs: true,
+        skip_upload_images: false,
+        skip_upload_screenshots: false
+      )
+      UI.success("Batch #{batch}/#{total} uploaded: #{slice.join(', ')}")
+    ensure
+      FileUtils.rm_rf(staging)
+    end
+  end
+
+  desc "Upload only the 'What's new' release notes for a version (env: COORDI_VERSION_CODE)"
+  lane :upload_release_notes do
+    UI.user_error!("Set COORDI_VERSION_CODE to the versionCode whose notes you are updating") if ENV["COORDI_VERSION_CODE"].to_s.empty?
+
+    upload_to_play_store(
+      track: ENV["COORDI_TRACK"] || "internal",
+      version_code: ENV["COORDI_VERSION_CODE"].to_i,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: false
+    )
+  end
+
+  desc "Read-only: which version codes are live on each track"
+  lane :track_status do
+    pkg = ENV["COORDI_PACKAGE_NAME"] || "com.cutecompute.coordi"
+    %w[production beta alpha internal].each do |t|
+      begin
+        codes = google_play_track_version_codes(track: t, package_name: pkg, json_key: ENV["SUPPLY_JSON_KEY"])
+        UI.message("#{t.ljust(11)} #{codes.to_a.empty? ? '(nothing)' : codes.to_a.join(', ')}")
+      rescue => e
+        UI.error("#{t.ljust(11)} could not be read: #{e.message}")
+      end
+    end
   end
 
   # ---- App release (signed AAB) ----
@@ -84,16 +204,30 @@ platform :android do
     end
     UI.user_error!("Keystore not found: #{ENV['COORDI_KEYSTORE']}") unless File.exist?(ENV["COORDI_KEYSTORE"])
 
-    # log: false keeps the keystore passwords out of the fastlane output/logs.
-    sh("dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
-       "-f", ANDROID_TFM, "-c", "Release",
-       "-p:AndroidPackageFormat=aab",
-       "-p:AndroidKeyStore=true",
-       "-p:AndroidSigningKeyStore=#{ENV['COORDI_KEYSTORE']}",
-       "-p:AndroidSigningStorePass=#{ENV['COORDI_KEYSTORE_PASS']}",
-       "-p:AndroidSigningKeyAlias=#{ENV['COORDI_KEY_ALIAS']}",
-       "-p:AndroidSigningKeyPass=#{ENV['COORDI_KEY_PASS']}",
-       log: false)
+    # The passwords are arguments, so the command line must never be echoed. But suppressing
+    # the output entirely (the old `log: false`) also swallowed the reason for a failure, and
+    # "Shell command exited with exit status 1" says nothing at all. Capture it instead, and on
+    # failure print it with the secrets masked.
+    cmd = ["dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
+           "-f", ANDROID_TFM, "-c", "Release",
+           "-p:AndroidPackageFormat=aab",
+           "-p:AndroidKeyStore=true",
+           "-p:AndroidSigningKeyStore=#{ENV['COORDI_KEYSTORE']}",
+           "-p:AndroidSigningStorePass=#{ENV['COORDI_KEYSTORE_PASS']}",
+           "-p:AndroidSigningKeyAlias=#{ENV['COORDI_KEY_ALIAS']}",
+           "-p:AndroidSigningKeyPass=#{ENV['COORDI_KEY_PASS']}"]
+
+    UI.message("Publishing signed AAB (output shown only if it fails)...")
+    output, status = Open3.capture2e(*cmd)
+
+    unless status.success?
+      masked = output.dup
+      [ENV["COORDI_KEYSTORE_PASS"], ENV["COORDI_KEY_PASS"]].compact.reject(&:empty?).uniq.each do |secret|
+        masked.gsub!(secret, "********")
+      end
+      UI.error(masked)
+      UI.user_error!("dotnet publish failed while building the signed AAB — see the output above")
+    end
 
     aab = coordi_signed_aab
     UI.user_error!("Publish finished but no *-Signed.aab was found under publish/") if aab.nil?
@@ -121,9 +255,103 @@ platform :android do
     )
   end
 
+  desc "Upload ONLY the signed AAB - no listing text, images or release notes"
+  lane :release_binary do
+    aab = ENV["COORDI_AAB"].to_s.empty? ? coordi_signed_aab : ENV["COORDI_AAB"]
+    UI.user_error!("No AAB found - run `fastlane android build_aab` first.") if aab.nil? || !File.exist?(aab)
+
+    upload_to_play_store(
+      aab: aab,
+      track: ENV["COORDI_TRACK"] || "production",
+      release_status: ENV["COORDI_RELEASE_STATUS"] || "completed",
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true
+    )
+  end
+
   desc "Build the signed AAB and upload it (build_aab + release)"
   lane :ship do
     build_aab
     release
+  end
+end
+
+# ---- iOS ----
+#
+# Mirrors the Android lanes so one repo ships both. Auth is an App Store Connect API key,
+# never an Apple-ID password:
+#   export ASC_KEY_ID="…" ASC_ISSUER_ID="…" ASC_KEY_PATH="$HOME/.secrets/AuthKey_XXXX.p8"
+#   export TEAM_ID="…"
+def coordi_signed_ipa
+  Dir[File.join(coordi_repo_root, "JustCompute/bin/Release/#{IOS_TFM}/**/*.ipa")]
+    .max_by { |f| File.mtime(f) }
+end
+
+def coordi_asc_api_key
+  %w[ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_PATH].each do |var|
+    UI.user_error!("Missing env #{var} — see docs/google-play-release.md for the equivalent Apple setup") if ENV[var].to_s.empty?
+  end
+  UI.user_error!("ASC_KEY_PATH points to a missing file: #{ENV['ASC_KEY_PATH']}") unless File.exist?(ENV["ASC_KEY_PATH"])
+
+  app_store_connect_api_key(
+    key_id: ENV["ASC_KEY_ID"],
+    issuer_id: ENV["ASC_ISSUER_ID"],
+    key_filepath: ENV["ASC_KEY_PATH"],
+    in_house: false
+  )
+end
+
+platform :ios do
+  desc "Validate the App Store Connect API key works"
+  lane :check_asc_key do
+    coordi_asc_api_key
+    UI.success("App Store Connect API key is valid.")
+  end
+
+  desc "Build a signed App Store IPA (requires TEAM_ID and a provisioning profile for the bundle id)"
+  lane :build_ipa do
+    UI.user_error!("Set TEAM_ID to your Apple Developer team id") if ENV["TEAM_ID"].to_s.empty?
+
+    sh("dotnet", "publish", File.join(coordi_repo_root, "JustCompute/JustCompute.csproj"),
+       "-f", IOS_TFM, "-c", "Release",
+       "-p:ArchiveOnBuild=true",
+       "-p:RuntimeIdentifier=ios-arm64",
+       "-p:CodesignProvision=#{ENV['IOS_PROVISIONING_PROFILE'] || 'Coordi App Store'}",
+       "-p:CodesignKey=#{ENV['IOS_SIGNING_IDENTITY'] || 'Apple Distribution'}")
+
+    ipa = coordi_signed_ipa
+    UI.user_error!("Publish finished but no .ipa was found under bin/Release/#{IOS_TFM}") if ipa.nil?
+    UI.success("Built IPA: #{ipa}")
+    ipa
+  end
+
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    api_key = coordi_asc_api_key
+    ipa = ENV["COORDI_IPA"].to_s.empty? ? (coordi_signed_ipa || build_ipa) : ENV["COORDI_IPA"]
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: ipa,
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Build and upload the binary for App Store review"
+  lane :release_appstore do
+    api_key = coordi_asc_api_key
+    ipa = ENV["COORDI_IPA"].to_s.empty? ? (coordi_signed_ipa || build_ipa) : ENV["COORDI_IPA"]
+
+    upload_to_app_store(
+      api_key: api_key,
+      ipa: ipa,
+      skip_screenshots: true,
+      skip_metadata: true,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: false
+    )
   end
 end

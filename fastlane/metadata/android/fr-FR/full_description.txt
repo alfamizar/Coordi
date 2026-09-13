@@ -1,33 +1,51 @@
-Découvrez l'Univers avec Coordi — votre calculateur céleste hors ligne !
+Coordi est une boîte à outils hors ligne pour l'astronomie, la navigation et la photographie : éphémérides du Soleil et de la Lune, un siècle d'éclipses solaires et lunaires, coordonnées MGRS et UTM, mesure géodésique d'itinéraires, compteur de vitesse GPS et calculateur optique. Tout est calculé sur votre appareil — sans connexion, sans compte, sans publicité.
 
-Coordi met l'astronomie de précision au bout de vos doigts. Que vous soyez passionné d'étoiles, photographe, randonneur, navigateur ou simplement curieux du ciel, Coordi calcule les données du Soleil, de la Lune, des éclipses et des coordonnées pour tout lieu et toute date. Et désormais, tout s'affiche avec clarté grâce aux graphiques, à des prévisions météo sur 7 jours et au thème clair ou sombre de votre choix.
+SOLEIL, LUNE ET ÉPHÉMÉRIDES
+• La nuit en un coup d'œil : ciel dégagé, partiellement nuageux ou couvert, la nébulosité moyenne et les heures de vraie nuit astronomique.
+• Lever, coucher et durée du jour pour n'importe quel lieu et n'importe quelle date, sur un arc solaire interactif avec un repère en direct pour l'instant présent.
+• Crépuscule civil, nautique et astronomique, de la première à la dernière lueur ; les stades qui n'existent pas à votre latitude sont simplement omis.
+• Phase et illumination de la Lune, lever et coucher de Lune, et distance de la Lune en kilomètres ou en milles.
+• Voyage dans le temps : allez à n'importe quelle date, une semaine plus tard ou un siècle plus tôt, et tout est recalculé.
+• Prévisions météo sur 7 jours en option pour vos lieux enregistrés.
 
-FONCTIONNALITÉS
+UN SIÈCLE D'ÉCLIPSES
+• Toutes les éclipses solaires et lunaires du siècle en cours, de 2000 à 2099.
+• Les instants de contact — premier contact, maximum, dernier contact — dans le fuseau horaire du lieu.
+• Filtre de visibilité : n'afficher que les éclipses visibles depuis votre position, ou toutes.
+• La magnitude de chaque éclipse et le type que vous verrez réellement depuis votre position, qui n'est pas toujours le type de l'éclipse pour la planète entière.
 
-* Soleil et Lune : heures précises de lever et de coucher, durée du jour et un arc solaire interactif montrant la position du Soleil tout au long de la journée.
-* Phases de la Lune : la phase actuelle avec son illumination et les noms traditionnels des pleines lunes, ainsi qu'une frise jour/nuit claire.
-* Éclipses : les prochaines éclipses solaires et lunaires avec début, maximum et fin.
-* Signes du zodiaque : le signe du Soleil et de la Lune pour n'importe quelle date.
-* Durée du jour : la durée d'ensoleillement pour chaque jour et chaque lieu.
-* Météo : des prévisions facultatives sur 7 jours pour vos lieux enregistrés.
-* Convertisseur de coordonnées : tout point affiché aux formats UTM et MGRS.
-* Règle : mesurez la distance entre deux points sur Terre avec une grande précision.
-* Ville la plus proche : trouvez la ville la plus proche de coordonnées données grâce à la formule de Haversine.
-* Lieux enregistrés : conservez vos endroits favoris et faites-les défiler d'un glissement.
+CARTE DU CIEL ET PLANÈTES
+• Tout le ciel sur un disque : étoiles jusqu'à 4,5 mag, constellations, limites UAI, Soleil, Lune et planètes.
+• Défilez un jour dans les deux sens ; le disque s'éclaircit jusqu'au jour.
+• Chaque planète : hauteur, azimut, lever, culmination, coucher, distance.
 
-À VOTRE FAÇON
+MGRS, UTM ET GÉODÉSIE
+• N'importe quel point en MGRS — zone de grille, digramme de 100 km, abscisse et ordonnée — et en UTM.
+• Distances WGS-84 par la formule inverse de Vincenty.
+• Recherche hors ligne parmi 42 900 villes du monde.
+• Convertisseur de coordonnées : décimal, DMS, DDM, UTM, MGRS.
 
-* Thèmes clair, sombre et système.
-* Choisissez vos unités : kilomètres ou miles, ainsi que m/s, km/h ou mph.
-* Format 12 ou 24 heures.
-* Disponible en plusieurs langues.
+RÈGLE D'ITINÉRAIRE ET COÛT DU CARBURANT
+• Itinéraires à plusieurs étapes : posez plusieurs points et mesurez tout le trajet.
+• Distance et azimut initial de chaque segment, distance totale, distance à vol d'oiseau et rapport de détour.
+• Calculateur de carburant : volume et coût du trajet à partir de votre consommation — l/100 km, km/l, MPG US ou MPG impérial — et de votre prix.
 
-POURQUOI COORDI ?
+COMPTEUR DE VITESSE ET ODOMÈTRE GPS
+• Vitesse actuelle et vitesse calculée en km/h, mph ou m/s.
+• Distance parcourue le long de votre trajet, distance directe depuis le départ, altitude et dénivelé.
+• Un chronomètre de trajet qui continue au-delà de 24 heures au lieu de repartir de zéro.
+• L'enregistrement continue écran éteint.
 
-* Fonctionne hors ligne : chaque calcul astronomique s'effectue sur votre appareil, sans connexion. Seules les prévisions météo facultatives utilisent Internet.
-* Une interface épurée et intuitive, simple à parcourir.
-* Des données précises et fiables pour tous vos besoins célestes.
-* Sans publicité.
-* En amélioration continue — vos retours façonnent les nouveautés.
+OPTIQUE ET ASTROPHOTOGRAPHIE
+• Profondeur de champ : distance hyperfocale, limites proche et lointaine, et la part située devant et derrière le sujet.
+• Champ de vision : angles horizontal, vertical et diagonal, et la couverture réelle à la distance du sujet.
+• Filés d'étoiles : la pose la plus longue avant que les étoiles ne filent, selon la règle des 500 et la règle NPF, à partir du pas de pixel de votre boîtier.
+• Préréglages de capteurs pour plein format, APS-C, APS-C Canon, Micro 4/3, 1 pouce et moyen format, ainsi qu'une bibliothèque de boîtiers.
 
-Explorez les merveilles du ciel, où que vous soyez. Téléchargez Coordi dès aujourd'hui et faites le premier pas vers la maîtrise des calculs célestes !
+CONÇU POUR ÊTRE JUSTE
+• Fuseaux horaires réels : chaque heure affichée est l'heure locale du lieu consulté, heure d'été comprise.
+• Fonctionne hors ligne — seules les prévisions météo facultatives nécessitent une connexion.
+• Sans publicité, sans pistage, sans compte.
+• Cinq thèmes : Ocean et Blossom sont clairs, Midnight et Ember sombres, et System suit votre appareil.
+• Kilomètres, milles, milles marins, mètres ou pieds ; m/s, km/h ou mph ; format 12 ou 24 heures.
+• Disponible en de nombreuses langues.

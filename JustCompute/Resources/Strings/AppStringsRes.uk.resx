@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -123,8 +123,8 @@
   <data name="AddLocationLabel" xml:space="preserve">
     <value>Додати місце</value>
   </data>
-  <data name="LocationActionLabel" xml:space="preserve">
-    <value>Дії</value>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Змінити місце</value>
   </data>
   <data name="AnnularEclipseLabel" xml:space="preserve">
     <value>Кільцеподібне</value>
@@ -288,8 +288,14 @@
   <data name="LocationNameLabel" xml:space="preserve">
     <value>Назва місця</value>
   </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Пошук недоступний. Торкніться, щоб повторити.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>Міст не знайдено</value>
+  </data>
   <data name="LocationPermissionDialogMessage" xml:space="preserve">
-    <value>Застосунку потрібен доступ до місцезнаходження пристрою для роботи</value>
+    <value>Доступ до геолокації потрібен, щоб показувати дані для вашого місця. Без нього можна вибрати місце вручну.</value>
   </data>
   <data name="LocationPermissionDialogTitle" xml:space="preserve">
     <value>Дозвіл на місцезнаходження</value>
@@ -302,9 +308,6 @@
   </data>
   <data name="LongitudeStringFormatLabel" xml:space="preserve">
     <value>Довгота: {0:0.#####}</value>
-  </data>
-  <data name="ManageSavedLocationsLabel" xml:space="preserve">
-    <value>Керувати збереженими місцями</value>
   </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
     <value>Час максимуму затемнення: {0}</value>
@@ -406,7 +409,7 @@
     <value>Час завершення напівтіньового затемнення: {0}</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
-    <value>Застосунку потрібен дозвіл на місцезнаходження для роботи. Перейдіть до налаштувань застосунку та надайте дозвіл або закрийте застосунок.</value>
+    <value>Доступ до геолокації потрібен, щоб показувати дані для вашого місця. Без нього можна вибрати місце вручну.</value>
   </data>
   <data name="PermissionRequiredDialogTitle" xml:space="preserve">
     <value>Потрібен дозвіл</value>
@@ -644,5 +647,347 @@
   </data>
   <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
     <value>Скасувати</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Сьогодні</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Лише затемнення, видимі звідси</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>Застосунок показує {0} як тимчасове місце. Вкажіть своє, щоб сходи, заходи, фази Місяця й затемнення були точними для вас.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Вкажіть своє місце</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Погода недоступна. Натисніть, щоб повторити.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Поточне місце</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Моє місцеперебування</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Часовий пояс</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Звідси не видно</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Оптика</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Об'єктив і сенсор</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Камера</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Фокусна відстань (мм)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Діафрагма (число f)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Відстань до об'єкта (м)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Ширина знімка (пікс.)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Схилення (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Зберегти за умовчанням</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Глибина різкості</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Гіперфокальна відстань</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Ближня межа</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Дальня межа</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Разом</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>Перед об'єктом</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>За об'єктом</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Поле зору</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>По горизонталі</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>По вертикалі</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>По діагоналі</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Витримка по зорях</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>Правило 500</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>Правило NPF</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Розмір пікселя</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Максимальна витримка, доки зорі не змастилися. NPF — суворіше правило, що враховує сенсор; схилення 0° — найгірший випадок.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Введіть фокусну відстань, діафрагму та відстань до об'єкта, щоб побачити глибину різкості та поле зору.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Має бути додатним числом.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Введіть ціле число пікселів.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Схилення має бути від −90 до 90.</value>
+  </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Океанський синій</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Квітковий рожевий</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Північ</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Помаранчевий жар</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Маршрут</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Додайте щонайменше дві точки, щоб виміряти маршрут.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Скасувати</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Очистити</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Разом</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Гак</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Пальне</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Витрата</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Ціна за одиницю</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Потрібно пального</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Вартість</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Вкажіть витрату, щоб оцінити пальне на цьому маршруті.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Одиниці</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>л/100 км</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>км/л</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>миль/гал (США)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>миль/гал (Велика Британія)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>л</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>гал</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>У цей період звідси не видно жодного затемнення.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Фаза: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Тіньова фаза: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Півтіньова фаза: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Стоп</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Сутінки</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>Перше світло</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Навігаційний світанок</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Громадянський світанок</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Громадянські сутінки</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Навігаційні сутінки</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Останнє світло</value>
+  </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Уночі ясно</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Уночі мінлива хмарність</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Уночі похмуро</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Небо цієї ночі</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Середня хмарність: {0} %</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Астрономічна ніч: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Цієї ночі астрономічної ночі не буде</value>
+  </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Уведіть коректну координату, щоб побачити всі формати.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Формати</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Десятковий</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>Г°Х′С″</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>Г°Х.х′</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Широта має бути коректним числом або DMS у діапазоні від -90 до 90.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Довгота має бути коректним числом або DMS у діапазоні від -180 до 180.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>Поза сіткою UTM/MGRS (від 80° пд. ш. до 84° пн. ш.)</value>
+  </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Планети</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Меркурій</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Венера</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Марс</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Юпітер</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Сатурн</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Уран</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Нептун</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Висота</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Азимут</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Відстань</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>Найвище</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Схід</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Захід</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Цілий день над горизонтом</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Сьогодні не сходить</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} а. о.</value>
+  </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Карта неба</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Лінії сузір’їв</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Межі</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>Пн</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>Сх</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>Пд</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>Зх</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Зараз</value>
   </data>
 </root>

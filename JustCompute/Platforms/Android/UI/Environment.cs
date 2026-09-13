@@ -1,5 +1,5 @@
 using AndroidX.Core.View;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 using JustCompute.Platforms.Android.Extensions;
 
 namespace JustCompute.Platforms.Android.UI

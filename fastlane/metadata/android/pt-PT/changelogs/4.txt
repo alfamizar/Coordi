@@ -1,0 +1,5 @@
+Nova carta do céu: todo o céu num disco — estrelas, figuras das constelações, limites da UAI, e o Sol, a Lua e os planetas identificados, percorrível um dia para cada lado.
+Novo ecrã Planetas: altura e azimute agora, nascer, culminação, pôr e distância à Terra.
+Novo conversor de coordenadas: graus decimais, DMS, DDM, UTM e MGRS.
+A app calcula para a posição indicada pelo dispositivo, até escolher outra.
+A permissão de localização é pedida uma vez, não a cada visita.

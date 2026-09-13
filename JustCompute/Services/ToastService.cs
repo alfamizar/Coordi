@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 
 namespace JustCompute.Shared.Popups
 {

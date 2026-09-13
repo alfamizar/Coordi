@@ -1,1 +1,1 @@
-Słońce, Księżyc i współrzędne offline: pogoda, wykresy i ciemny motyw.
+Mapa nieba offline, efemerydy Słońca i Księżyca, zaćmienia, MGRS/UTM, optyka.

@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCustomLocationLabel" xml:space="preserve">
+    <value>Özel konum ekle</value>
+  </data>
+  <data name="AddLocationLabel" xml:space="preserve">
+    <value>Konum Ekle</value>
+  </data>
+  <data name="EditLocationLabel" xml:space="preserve">
+    <value>Konumu Düzenle</value>
+  </data>
+  <data name="AnnularEclipseLabel" xml:space="preserve">
+    <value>Halkalı</value>
+  </data>
+  <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Halkalı veya tam tutulma başlangıcı: {0}</value>
+  </data>
+  <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
+    <value>Halkalı veya tam tutulma bitişi: {0}</value>
+  </data>
+  <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
+    <value>Halkalı veya tam tutulma süresi: {0}</value>
+  </data>
+  <data name="AquariusLabel" xml:space="preserve">
+    <value>Kova</value>
+  </data>
+  <data name="AriesLabel" xml:space="preserve">
+    <value>Koç</value>
+  </data>
+  <data name="AtTheseCoordinatesLabel" xml:space="preserve">
+    <value>Bu koordinatlarda:</value>
+  </data>
+  <data name="BeaverMoonLabel" xml:space="preserve">
+    <value>Kunduz Ayı</value>
+  </data>
+  <data name="BlueMoonLabel" xml:space="preserve">
+    <value>Mavi Ay</value>
+  </data>
+  <data name="BuckMoonLabel" xml:space="preserve">
+    <value>Geyik Ayı</value>
+  </data>
+  <data name="CancerLabel" xml:space="preserve">
+    <value>Yengeç</value>
+  </data>
+  <data name="CannotGetCurrentLocationLabel" xml:space="preserve">
+    <value>Geçerli konum alınamadı. Lütfen daha sonra tekrar deneyin, elle bir konum ekleyin veya veritabanındaki konum listesinden birini seçin</value>
+  </data>
+  <data name="CannotGetLocationLabel" xml:space="preserve">
+    <value>Hiçbir konum alınamıyor</value>
+  </data>
+  <data name="CapricornLabel" xml:space="preserve">
+    <value>Oğlak</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>Şehir</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="ColdMoonLabel" xml:space="preserve">
+    <value>Soğuk Ay</value>
+  </data>
+  <data name="ConvertersLabel" xml:space="preserve">
+    <value>Dönüştürücüler</value>
+  </data>
+  <data name="CoordinatesConverterLabel" xml:space="preserve">
+    <value>Koordinat Dönüştürücü</value>
+  </data>
+  <data name="CornMoonLabel" xml:space="preserve">
+    <value>Mısır Ayı</value>
+  </data>
+  <data name="CountryLabel" xml:space="preserve">
+    <value>Ülke</value>
+  </data>
+  <data name="DarkThemeLabel" xml:space="preserve">
+    <value>Koyu</value>
+  </data>
+  <data name="LightThemeLabel" xml:space="preserve">
+    <value>Açık</value>
+  </data>
+  <data name="SystemThemeLabel" xml:space="preserve">
+    <value>Sistem varsayılanı</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Tarih: {0:dd MMMM yyyy}</value>
+  </data>
+  <data name="DateWithTimeLabel" xml:space="preserve">
+    <value>Tarih: {0:dd MMMM yyyy hh:mm:ss}</value>
+  </data>
+  <data name="DayDurationLabel" xml:space="preserve">
+    <value>Gün süresi: {0}</value>
+  </data>
+  <data name="DeleteLabel" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="DigraphLabel" xml:space="preserve">
+    <value>Digraf (MGRS 100.000 metrelik kare tanımlayıcısı): {0}</value>
+  </data>
+  <data name="DistanceFormattedLabel" xml:space="preserve">
+    <value>Mesafe: {0:0.##} {1}</value>
+  </data>
+  <data name="SpeedAndDistanceLabel" xml:space="preserve">
+    <value>Hız ve Mesafe</value>
+  </data>
+  <data name="DistanceUnitLabel" xml:space="preserve">
+    <value>Mesafe Birimi</value>
+  </data>
+  <data name="EclipsesLabel" xml:space="preserve">
+    <value>Tutulmalar</value>
+  </data>
+  <data name="FeetsAbbreviationLabel" xml:space="preserve">
+    <value>ft</value>
+  </data>
+  <data name="FeetsLabel" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="FirstQuarterLabel" xml:space="preserve">
+    <value>İlk dördün</value>
+  </data>
+  <data name="FullMoonLabel" xml:space="preserve">
+    <value>Dolunay</value>
+  </data>
+  <data name="GeminiLabel" xml:space="preserve">
+    <value>İkizler</value>
+  </data>
+  <data name="GoToSettings" xml:space="preserve">
+    <value>Ayarlara git</value>
+  </data>
+  <data name="HuntersMoonLabel" xml:space="preserve">
+    <value>Avcı Ayı</value>
+  </data>
+  <data name="InverseFlatteningLabel" xml:space="preserve">
+    <value>Ters basıklık: {0}</value>
+  </data>
+  <data name="KilometersAbbreviationLabel" xml:space="preserve">
+    <value>km</value>
+  </data>
+  <data name="KmLabel" xml:space="preserve">
+    <value>Kilometre</value>
+  </data>
+  <data name="LastQuarterLabel" xml:space="preserve">
+    <value>Son dördün</value>
+  </data>
+  <data name="LatitudeLabel" xml:space="preserve">
+    <value>Enlem</value>
+  </data>
+  <data name="LatitudeStringFormatLabel" xml:space="preserve">
+    <value>Enlem: {0:0.#####}</value>
+  </data>
+  <data name="LatLabel" xml:space="preserve">
+    <value>Enl:</value>
+  </data>
+  <data name="LeoLabel" xml:space="preserve">
+    <value>Aslan</value>
+  </data>
+  <data name="LibraLabel" xml:space="preserve">
+    <value>Terazi</value>
+  </data>
+  <data name="LngLabel" xml:space="preserve">
+    <value>Boy:</value>
+  </data>
+  <data name="LocationLabel" xml:space="preserve">
+    <value>Konum:</value>
+  </data>
+  <data name="LocationNameInputPlaceholderLabel" xml:space="preserve">
+    <value>Benzersiz bir konum adı girin</value>
+  </data>
+  <data name="LocationNameLabel" xml:space="preserve">
+    <value>Konum Adı</value>
+  </data>
+  <data name="CitySearchFailedLabel" xml:space="preserve">
+    <value>Arama kullanılamıyor. Yeniden denemek için dokunun.</value>
+  </data>
+  <data name="NoCitiesFoundLabel" xml:space="preserve">
+    <value>Şehir bulunamadı</value>
+  </data>
+  <data name="LocationPermissionDialogMessage" xml:space="preserve">
+    <value>Konum erişimi, uygulamanın bulunduğunuz yere ait verileri göstermesini sağlar. Bu izin olmadan da bir yeri elle seçebilirsiniz.</value>
+  </data>
+  <data name="LocationPermissionDialogTitle" xml:space="preserve">
+    <value>Konum İzni</value>
+  </data>
+  <data name="LocationsLabel" xml:space="preserve">
+    <value>Konumlar</value>
+  </data>
+  <data name="LongitudeLabel" xml:space="preserve">
+    <value>Boylam</value>
+  </data>
+  <data name="LongitudeStringFormatLabel" xml:space="preserve">
+    <value>Boylam: {0:0.#####}</value>
+  </data>
+  <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
+    <value>En büyük tutulma saati: {0}</value>
+  </data>
+  <data name="MetersAbbreviationLabel" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="MetersLabel" xml:space="preserve">
+    <value>Metre</value>
+  </data>
+  <data name="MGRSEastingLabel" xml:space="preserve">
+    <value>MGRS doğu koordinatı: {0}</value>
+  </data>
+  <data name="MGRSLabel" xml:space="preserve">
+    <value>MGRS</value>
+  </data>
+  <data name="MGRSLatZoneLabel" xml:space="preserve">
+    <value>MGRS enlem kuşağı bölge tanımı: {0}</value>
+  </data>
+  <data name="MGRSLonZoneLabel" xml:space="preserve">
+    <value>MGRS boylam kuşağı bölge tanımı: {0}</value>
+  </data>
+  <data name="MGRSNorthingLabel" xml:space="preserve">
+    <value>MGRS kuzey koordinatı: {0}</value>
+  </data>
+  <data name="MGRSTypeLabel" xml:space="preserve">
+    <value>MGRS türü: {0}</value>
+  </data>
+  <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
+    <value>Tutulma ortası: {0}</value>
+  </data>
+  <data name="MilesAbbreviationLabel" xml:space="preserve">
+    <value>mi</value>
+  </data>
+  <data name="MilesLabel" xml:space="preserve">
+    <value>Mil</value>
+  </data>
+  <data name="MoonEclipsesLabel" xml:space="preserve">
+    <value>Ay Tutulmaları</value>
+  </data>
+  <data name="MoonInZodiacSignLabel" xml:space="preserve">
+    <value>Ay burcu: {0}</value>
+  </data>
+  <data name="MoonLabel" xml:space="preserve">
+    <value>Ay</value>
+  </data>
+  <data name="MoonNameLabel" xml:space="preserve">
+    <value>Dolunay adı: </value>
+  </data>
+  <data name="MoonPhaseLabel" xml:space="preserve">
+    <value>Ay evresi: </value>
+  </data>
+  <data name="MoonRiseDurationLabel" xml:space="preserve">
+    <value>Ay'ın gökyüzünde kalma süresi: {0}</value>
+  </data>
+  <data name="MoonRiseLabel" xml:space="preserve">
+    <value>Ay doğuşu: {0}</value>
+  </data>
+  <data name="MoonSetLabel" xml:space="preserve">
+    <value>Ay batışı: {0}</value>
+  </data>
+  <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
+    <value>nmi</value>
+  </data>
+  <data name="NauticalMilesLabel" xml:space="preserve">
+    <value>Deniz Mili</value>
+  </data>
+  <data name="NewMoonLabel" xml:space="preserve">
+    <value>Yeni Ay</value>
+  </data>
+  <data name="NoSavedLocationsLabel" xml:space="preserve">
+    <value>Henüz kayıtlı konumunuz yok. Lütfen elle bir konum ekleyin veya arama ekranındaki veritabanı listesinden birini seçin</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="PartialEclipseLabel" xml:space="preserve">
+    <value>Parçalı</value>
+  </data>
+  <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Parçalı tutulma başlangıcı: {0}</value>
+  </data>
+  <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Parçalı tutulma bitişi: {0}</value>
+  </data>
+  <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Parçalı tutulma başlangıcı: {0}</value>
+  </data>
+  <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Parçalı tutulma bitişi: {0}</value>
+  </data>
+  <data name="PenumbralEclipseLabel" xml:space="preserve">
+    <value>Yarı gölgeli</value>
+  </data>
+  <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Yarı gölgeli tutulma başlangıcı: {0}</value>
+  </data>
+  <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Yarı gölgeli tutulma bitişi: {0}</value>
+  </data>
+  <data name="PermissionRequiredDialogMessage" xml:space="preserve">
+    <value>Konum erişimi, uygulamanın bulunduğunuz yere ait verileri göstermesini sağlar. Bu izin olmadan da bir yeri elle seçebilirsiniz.</value>
+  </data>
+  <data name="PermissionRequiredDialogTitle" xml:space="preserve">
+    <value>İzin gerekli</value>
+  </data>
+  <data name="PinkMoonLabel" xml:space="preserve">
+    <value>Pembe Ay</value>
+  </data>
+  <data name="PiscesLabel" xml:space="preserve">
+    <value>Balık</value>
+  </data>
+  <data name="PlusAddLocationLabel" xml:space="preserve">
+    <value>+ Konum Ekle</value>
+  </data>
+  <data name="PopulationFormattedLabel" xml:space="preserve">
+    <value>Nüfus: {0:N0}</value>
+  </data>
+  <data name="PopulationLabel" xml:space="preserve">
+    <value>Nüfus</value>
+  </data>
+  <data name="SagittariusLabel" xml:space="preserve">
+    <value>Yay</value>
+  </data>
+  <data name="SavedLocationsLabel" xml:space="preserve">
+    <value>Kayıtlı konumlar:</value>
+  </data>
+  <data name="SaveLocationButtonText" xml:space="preserve">
+    <value>Konumu Kaydet</value>
+  </data>
+  <data name="ScorpioLabel" xml:space="preserve">
+    <value>Akrep</value>
+  </data>
+  <data name="SearchCityLabel" xml:space="preserve">
+    <value>Şehir ara</value>
+  </data>
+  <data name="SearchPlaceholderLabel" xml:space="preserve">
+    <value>Ara...</value>
+  </data>
+  <data name="SetsAndRisesLabel" xml:space="preserve">
+    <value>Doğuş ve Batışlar</value>
+  </data>
+  <data name="SettingsLabel" xml:space="preserve">
+    <value>Ayarlar</value>
+  </data>
+  <data name="SnowMoonLabel" xml:space="preserve">
+    <value>Kar Ayı</value>
+  </data>
+  <data name="SortByLabel" xml:space="preserve">
+    <value>Sıralama ölçütü</value>
+  </data>
+  <data name="StrawberryMoonLabel" xml:space="preserve">
+    <value>Çilek Ayı</value>
+  </data>
+  <data name="SturgeonMoonLabel" xml:space="preserve">
+    <value>Mersin Balığı Ayı</value>
+  </data>
+  <data name="SunAndMoonLabel" xml:space="preserve">
+    <value>Güneş ve Ay</value>
+  </data>
+  <data name="SunEclipsesLabel" xml:space="preserve">
+    <value>Güneş Tutulmaları</value>
+  </data>
+  <data name="SunEclispseTypeLabel" xml:space="preserve">
+    <value>Tür: {0}</value>
+  </data>
+  <data name="SunLabel" xml:space="preserve">
+    <value>Güneş</value>
+  </data>
+  <data name="SunRiseLabel" xml:space="preserve">
+    <value>Gün doğumu: {0}</value>
+  </data>
+  <data name="SunSetLabel" xml:space="preserve">
+    <value>Gün batımı: {0}</value>
+  </data>
+  <data name="TaurusLabel" xml:space="preserve">
+    <value>Boğa</value>
+  </data>
+  <data name="TimeLabel" xml:space="preserve">
+    <value>Saat: {0}</value>
+  </data>
+  <data name="TimeTravelLabel" xml:space="preserve">
+    <value>Zaman Yolculuğu</value>
+  </data>
+  <data name="TotalEclipseLabel" xml:space="preserve">
+    <value>Tam</value>
+  </data>
+  <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
+    <value>Tam tutulma başlangıcı: {0}</value>
+  </data>
+  <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
+    <value>Tam tutulma bitişi: {0}</value>
+  </data>
+  <data name="TwoValuesSeparatedByComa" xml:space="preserve">
+    <value>{}{0}, {1}</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Tür: {0}</value>
+  </data>
+  <data name="UnknownLocationLabel" xml:space="preserve">
+    <value>Bilinmeyen Konum</value>
+  </data>
+  <data name="Use24HourTimeFormatLabel" xml:space="preserve">
+    <value>24 saat biçimini kullan</value>
+  </data>
+  <data name="UTCTimeOffsetLabel" xml:space="preserve">
+    <value>UTC Saat Farkı</value>
+  </data>
+  <data name="UTMEastingLabel" xml:space="preserve">
+    <value>UTM doğu koordinatı: {0}</value>
+  </data>
+  <data name="UTMLabel" xml:space="preserve">
+    <value>UTM</value>
+  </data>
+  <data name="UTMLatZoneLabel" xml:space="preserve">
+    <value>UTM enlem kuşağı bölge tanımı: {0}</value>
+  </data>
+  <data name="UTMLonZoneLabel" xml:space="preserve">
+    <value>UTM boylam kuşağı bölge tanımı: {0}</value>
+  </data>
+  <data name="UTMNorthingLabel" xml:space="preserve">
+    <value>UTM kuzey koordinatı: {0}</value>
+  </data>
+  <data name="UTMTypeLabel" xml:space="preserve">
+    <value>UTM türü: {0}</value>
+  </data>
+  <data name="VirgoLabel" xml:space="preserve">
+    <value>Başak</value>
+  </data>
+  <data name="WaningCrescentLabel" xml:space="preserve">
+    <value>Küçülen hilal</value>
+  </data>
+  <data name="WaningGibbousLabel" xml:space="preserve">
+    <value>Küçülen şişkin ay</value>
+  </data>
+  <data name="WeatherLabel" xml:space="preserve">
+    <value>Hava durumu</value>
+  </data>
+  <data name="WaxingCrescentLabel" xml:space="preserve">
+    <value>Büyüyen hilal</value>
+  </data>
+  <data name="WaxingGibbousLabel" xml:space="preserve">
+    <value>Büyüyen şişkin ay</value>
+  </data>
+  <data name="WolfMoonLabel" xml:space="preserve">
+    <value>Kurt Ayı</value>
+  </data>
+  <data name="WormMoonLabel" xml:space="preserve">
+    <value>Solucan Ayı</value>
+  </data>
+  <data name="ZodiacSignLabel" xml:space="preserve">
+    <value>Burç: {0}</value>
+  </data>
+  <data name="Point1Label" xml:space="preserve">
+    <value>Nokta 1</value>
+  </data>
+  <data name="Point2Label" xml:space="preserve">
+    <value>Nokta 2</value>
+  </data>
+  <data name="CannotDeleteCurrentLocationToastMessage" xml:space="preserve">
+    <value>Geçerli konumu silemezsiniz!</value>
+  </data>
+  <data name="CannotStartListeningLocationToastMessage" xml:space="preserve">
+    <value>Konum dinleme başlatılamıyor</value>
+  </data>
+  <data name="DuplicatedLocationToastMessge" xml:space="preserve">
+    <value>Bu ada sahip bir konum zaten var</value>
+  </data>
+  <data name="AccuracyLabel" xml:space="preserve">
+    <value>Doğruluk</value>
+  </data>
+  <data name="AltitudeLabel" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="DirectDistanceLabel" xml:space="preserve">
+    <value>Doğrudan mesafe</value>
+  </data>
+  <data name="DirectionLabel" xml:space="preserve">
+    <value>Yön</value>
+  </data>
+  <data name="ElevationLabel" xml:space="preserve">
+    <value>Rakım</value>
+  </data>
+  <data name="FormattedDegreesLabel" xml:space="preserve">
+    <value>{0} derece</value>
+  </data>
+  <data name="FormattedDistanceLabel" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="FormattedSpeedLabel" xml:space="preserve">
+    <value>{0} m/s</value>
+  </data>
+  <data name="RulerLabel" xml:space="preserve">
+    <value>Cetvel</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Hız</value>
+  </data>
+  <data name="TravelledDistanceLabel" xml:space="preserve">
+    <value>Kat edilen mesafe</value>
+  </data>
+  <data name="VertialAccuracyLabel" xml:space="preserve">
+    <value>Dikey doğruluk</value>
+  </data>
+  <data name="ListeningLocationFailedToastMessage" xml:space="preserve">
+    <value>Konum dinleme başarısız oldu</value>
+  </data>
+  <data name="DistanceLabel" xml:space="preserve">
+    <value>Mesafe</value>
+  </data>
+  <data name="CannotStopListeningLocationToastMessage" xml:space="preserve">
+    <value>Konum dinleme durdurulamıyor</value>
+  </data>
+  <data name="CalculatedSpeedLabel" xml:space="preserve">
+    <value>Hesaplanan hız</value>
+  </data>
+  <data name="SpeedUnitLabel" xml:space="preserve">
+    <value>Hız Birimi</value>
+  </data>
+  <data name="MetersPerSecondLabel" xml:space="preserve">
+    <value>m/s</value>
+  </data>
+  <data name="KilometersPerHourLabel" xml:space="preserve">
+    <value>km/sa</value>
+  </data>
+  <data name="MilesPerHourLabel" xml:space="preserve">
+    <value>mph</value>
+  </data>
+  <data name="BackgroundLocationDisclosureTitle" xml:space="preserve">
+    <value>Arka planda konum</value>
+  </data>
+  <data name="BackgroundLocationDisclosureMessage" xml:space="preserve">
+    <value>Coordi simge durumundayken veya ekran kapalıyken yolculuğunuzun hızını, mesafesini ve rakımını takip edebilmesi için uygulamanın konumunuzu arka planda toplaması gerekir. Takip, kalıcı bir bildirimle çalışır ve yolculuğu bitirdiğiniz anda durur. Konumunuz bu cihazda kalır ve hiç kimseyle paylaşılmaz.</value>
+  </data>
+  <data name="BackgroundLocationDisclosureContinue" xml:space="preserve">
+    <value>Devam</value>
+  </data>
+  <data name="BackgroundLocationDisclosureCancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="TodayLabel" xml:space="preserve">
+    <value>Bugün</value>
+  </data>
+  <data name="OnlyVisibleEclipsesLabel" xml:space="preserve">
+    <value>Yalnızca buradan görülebilen tutulmalar</value>
+  </data>
+  <data name="PlaceholderLocationNoticeLabel" xml:space="preserve">
+    <value>Uygulama şu anda yer tutucu olarak {0} konumunu gösteriyor. Gün doğumu, gün batımı, ay evreleri ve tutulmaların bulunduğunuz yere göre doğru olması için konumunuzu ayarlayın.</value>
+  </data>
+  <data name="SetYourLocationLabel" xml:space="preserve">
+    <value>Konumunuzu ayarlayın</value>
+  </data>
+  <data name="WeatherUnavailableLabel" xml:space="preserve">
+    <value>Hava durumu alınamıyor. Yeniden denemek için dokunun.</value>
+  </data>
+  <data name="CurrentLocationLabel" xml:space="preserve">
+    <value>Geçerli konum</value>
+  </data>
+  <data name="UseMyLocationLabel" xml:space="preserve">
+    <value>Konumumu kullan</value>
+  </data>
+  <data name="TimeZoneLabel" xml:space="preserve">
+    <value>Saat dilimi</value>
+  </data>
+  <data name="NotVisibleFromHereLabel" xml:space="preserve">
+    <value>Buradan görülemez</value>
+  </data>
+  <data name="OpticsLabel" xml:space="preserve">
+    <value>Optik</value>
+  </data>
+  <data name="OpticsLensSensorLabel" xml:space="preserve">
+    <value>Objektif ve sensör</value>
+  </data>
+  <data name="OpticsCameraLabel" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
+  <data name="OpticsFocalLengthLabel" xml:space="preserve">
+    <value>Odak uzaklığı (mm)</value>
+  </data>
+  <data name="OpticsApertureLabel" xml:space="preserve">
+    <value>Diyafram (f değeri)</value>
+  </data>
+  <data name="OpticsSubjectDistanceLabel" xml:space="preserve">
+    <value>Özne mesafesi (m)</value>
+  </data>
+  <data name="OpticsImageWidthLabel" xml:space="preserve">
+    <value>Görüntü genişliği (px)</value>
+  </data>
+  <data name="OpticsDeclinationLabel" xml:space="preserve">
+    <value>Deklinasyon (°)</value>
+  </data>
+  <data name="OpticsSaveDefaultLabel" xml:space="preserve">
+    <value>Varsayılan olarak kaydet</value>
+  </data>
+  <data name="OpticsDofTitle" xml:space="preserve">
+    <value>Alan derinliği</value>
+  </data>
+  <data name="OpticsHyperfocalLabel" xml:space="preserve">
+    <value>Hiperfokal mesafe</value>
+  </data>
+  <data name="OpticsNearLimitLabel" xml:space="preserve">
+    <value>Yakın sınır</value>
+  </data>
+  <data name="OpticsFarLimitLabel" xml:space="preserve">
+    <value>Uzak sınır</value>
+  </data>
+  <data name="OpticsTotalLabel" xml:space="preserve">
+    <value>Toplam</value>
+  </data>
+  <data name="OpticsInFrontLabel" xml:space="preserve">
+    <value>Öznenin önünde</value>
+  </data>
+  <data name="OpticsBehindLabel" xml:space="preserve">
+    <value>Öznenin arkasında</value>
+  </data>
+  <data name="OpticsFovTitle" xml:space="preserve">
+    <value>Görüş alanı</value>
+  </data>
+  <data name="OpticsHorizontalLabel" xml:space="preserve">
+    <value>Yatay</value>
+  </data>
+  <data name="OpticsVerticalLabel" xml:space="preserve">
+    <value>Dikey</value>
+  </data>
+  <data name="OpticsDiagonalLabel" xml:space="preserve">
+    <value>Çapraz</value>
+  </data>
+  <data name="OpticsStarsTitle" xml:space="preserve">
+    <value>Yıldız pozlaması</value>
+  </data>
+  <data name="OpticsRule500Label" xml:space="preserve">
+    <value>500 kuralı</value>
+  </data>
+  <data name="OpticsRuleNpfLabel" xml:space="preserve">
+    <value>NPF kuralı</value>
+  </data>
+  <data name="OpticsPixelPitchLabel" xml:space="preserve">
+    <value>Piksel aralığı</value>
+  </data>
+  <data name="OpticsStarsHintLabel" xml:space="preserve">
+    <value>Yıldızlar iz bırakmadan önceki en uzun pozlama. NPF, sensörü hesaba katan daha sıkı kuraldır; 0° deklinasyon en kötü durumdur.</value>
+  </data>
+  <data name="OpticsHintLabel" xml:space="preserve">
+    <value>Alan derinliği ve görüş alanını görmek için odak uzaklığı, diyafram ve özne mesafesini girin.</value>
+  </data>
+  <data name="OpticsErrPositiveLabel" xml:space="preserve">
+    <value>Pozitif bir sayı olmalıdır.</value>
+  </data>
+  <data name="OpticsErrImageWidthLabel" xml:space="preserve">
+    <value>Piksel sayısını tam sayı olarak girin.</value>
+  </data>
+  <data name="OpticsErrDeclinationLabel" xml:space="preserve">
+    <value>Deklinasyon −90 ile 90 arasında olmalıdır.</value>
+  </data>
+  <data name="ThemeOceanLabel" xml:space="preserve">
+    <value>Okyanus mavisi</value>
+  </data>
+  <data name="ThemeBlossomLabel" xml:space="preserve">
+    <value>Çiçek pembesi</value>
+  </data>
+  <data name="ThemeMidnightLabel" xml:space="preserve">
+    <value>Gece yarısı</value>
+  </data>
+  <data name="ThemeEmberLabel" xml:space="preserve">
+    <value>Kor turuncusu</value>
+  </data>
+  <data name="RouteLabel" xml:space="preserve">
+    <value>Rota</value>
+  </data>
+  <data name="RouteHintLabel" xml:space="preserve">
+    <value>Bir rotayı ölçmek için en az iki nokta ekleyin.</value>
+  </data>
+  <data name="UndoLabel" xml:space="preserve">
+    <value>Geri al</value>
+  </data>
+  <data name="ClearLabel" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
+  <data name="TotalDistanceLabel" xml:space="preserve">
+    <value>Toplam</value>
+  </data>
+  <data name="DetourRatioLabel" xml:space="preserve">
+    <value>Sapma</value>
+  </data>
+  <data name="FuelLabel" xml:space="preserve">
+    <value>Yakıt</value>
+  </data>
+  <data name="FuelConsumptionLabel" xml:space="preserve">
+    <value>Tüketim</value>
+  </data>
+  <data name="FuelPriceLabel" xml:space="preserve">
+    <value>Birim fiyatı</value>
+  </data>
+  <data name="FuelNeededLabel" xml:space="preserve">
+    <value>Gereken yakıt</value>
+  </data>
+  <data name="FuelCostLabel" xml:space="preserve">
+    <value>Maliyet</value>
+  </data>
+  <data name="FuelHintLabel" xml:space="preserve">
+    <value>Bu rotanın yakıtını tahmin etmek için tüketimi girin.</value>
+  </data>
+  <data name="FuelUnitLabel" xml:space="preserve">
+    <value>Birimler</value>
+  </data>
+  <data name="FuelModeLitersPer100KmLabel" xml:space="preserve">
+    <value>L/100 km</value>
+  </data>
+  <data name="FuelModeKmPerLiterLabel" xml:space="preserve">
+    <value>km/L</value>
+  </data>
+  <data name="FuelModeMpgUsLabel" xml:space="preserve">
+    <value>mpg (ABD)</value>
+  </data>
+  <data name="FuelModeMpgUkLabel" xml:space="preserve">
+    <value>mpg (BK)</value>
+  </data>
+  <data name="LiterAbbreviationLabel" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="GallonAbbreviationLabel" xml:space="preserve">
+    <value>gal</value>
+  </data>
+  <data name="NoVisibleEclipsesLabel" xml:space="preserve">
+    <value>Bu dönemde buradan görülebilen tutulma yok.</value>
+  </data>
+  <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
+    <value>Büyüklük: {0}</value>
+  </data>
+  <data name="UmbralMagnitudeLabel" xml:space="preserve">
+    <value>Tam gölge büyüklüğü: {0}</value>
+  </data>
+  <data name="PenumbralMagnitudeLabel" xml:space="preserve">
+    <value>Yarı gölge büyüklüğü: {0}</value>
+  </data>
+  <data name="StartTrackingLabel" xml:space="preserve">
+    <value>Başlat</value>
+  </data>
+  <data name="StopTrackingLabel" xml:space="preserve">
+    <value>Durdur</value>
+  </data>
+  <data name="TwilightSectionLabel" xml:space="preserve">
+    <value>Alacakaranlık</value>
+  </data>
+  <data name="FirstLightLabel" xml:space="preserve">
+    <value>İlk ışık</value>
+  </data>
+  <data name="NauticalDawnLabel" xml:space="preserve">
+    <value>Denizcilik tanı</value>
+  </data>
+  <data name="CivilDawnLabel" xml:space="preserve">
+    <value>Sivil tan</value>
+  </data>
+  <data name="CivilDuskLabel" xml:space="preserve">
+    <value>Sivil akşam alacası</value>
+  </data>
+  <data name="NauticalDuskLabel" xml:space="preserve">
+    <value>Denizcilik akşam alacası</value>
+  </data>
+  <data name="LastLightLabel" xml:space="preserve">
+    <value>Son ışık</value>
+  </data>
+  <data name="SkyVerdictClearLabel" xml:space="preserve">
+    <value>Bu gece açık</value>
+  </data>
+  <data name="SkyVerdictPartlyLabel" xml:space="preserve">
+    <value>Bu gece parçalı bulutlu</value>
+  </data>
+  <data name="SkyVerdictCloudyLabel" xml:space="preserve">
+    <value>Bu gece bulutlu</value>
+  </data>
+  <data name="SkyVerdictUnknownLabel" xml:space="preserve">
+    <value>Bu gecenin gökyüzü</value>
+  </data>
+  <data name="AverageCloudLabel" xml:space="preserve">
+    <value>Ortalama bulutluluk: %{0}</value>
+  </data>
+  <data name="DarkSkyWindowLabel" xml:space="preserve">
+    <value>Astronomik karanlık: {0}</value>
+  </data>
+  <data name="NoAstronomicalDarkLabel" xml:space="preserve">
+    <value>Bu gece astronomik karanlık yok</value>
+  </data>
+  <data name="ConverterHintLabel" xml:space="preserve">
+    <value>Tüm biçimleri görmek için geçerli bir koordinat girin.</value>
+  </data>
+  <data name="ConverterFormatsLabel" xml:space="preserve">
+    <value>Biçimler</value>
+  </data>
+  <data name="ConverterDecimalLabel" xml:space="preserve">
+    <value>Ondalık</value>
+  </data>
+  <data name="ConverterDmsLabel" xml:space="preserve">
+    <value>DDS</value>
+  </data>
+  <data name="ConverterDdmLabel" xml:space="preserve">
+    <value>DDD</value>
+  </data>
+  <data name="ConverterLatitudeErrorLabel" xml:space="preserve">
+    <value>Enlem, -90 ile 90 arasında geçerli bir ondalık sayı veya DMS değeri olmalıdır.</value>
+  </data>
+  <data name="ConverterLongitudeErrorLabel" xml:space="preserve">
+    <value>Boylam, -180 ile 180 arasında geçerli bir ondalık sayı veya DMS değeri olmalıdır.</value>
+  </data>
+  <data name="ConverterOutsideGridLabel" xml:space="preserve">
+    <value>UTM/MGRS ızgarasının dışında (80° G – 84° K)</value>
+  </data>
+  <data name="PlanetsLabel" xml:space="preserve">
+    <value>Gezegenler</value>
+  </data>
+  <data name="PlanetMercuryLabel" xml:space="preserve">
+    <value>Merkür</value>
+  </data>
+  <data name="PlanetVenusLabel" xml:space="preserve">
+    <value>Venüs</value>
+  </data>
+  <data name="PlanetMarsLabel" xml:space="preserve">
+    <value>Mars</value>
+  </data>
+  <data name="PlanetJupiterLabel" xml:space="preserve">
+    <value>Jüpiter</value>
+  </data>
+  <data name="PlanetSaturnLabel" xml:space="preserve">
+    <value>Satürn</value>
+  </data>
+  <data name="PlanetUranusLabel" xml:space="preserve">
+    <value>Uranüs</value>
+  </data>
+  <data name="PlanetNeptuneLabel" xml:space="preserve">
+    <value>Neptün</value>
+  </data>
+  <data name="SkyAltitudeLabel" xml:space="preserve">
+    <value>Yükseklik</value>
+  </data>
+  <data name="SkyAzimuthLabel" xml:space="preserve">
+    <value>Azimut</value>
+  </data>
+  <data name="SkyDistanceLabel" xml:space="preserve">
+    <value>Uzaklık</value>
+  </data>
+  <data name="SkyHighestLabel" xml:space="preserve">
+    <value>En yüksek</value>
+  </data>
+  <data name="SkyRisesLabel" xml:space="preserve">
+    <value>Doğuş</value>
+  </data>
+  <data name="SkySetsLabel" xml:space="preserve">
+    <value>Batış</value>
+  </data>
+  <data name="SkyAlwaysUpLabel" xml:space="preserve">
+    <value>Gün boyu ufkun üzerinde</value>
+  </data>
+  <data name="SkyNeverUpLabel" xml:space="preserve">
+    <value>Bugün doğmuyor</value>
+  </data>
+  <data name="SkyDistanceAuLabel" xml:space="preserve">
+    <value>{0} AB</value>
+  </data>
+  <data name="SkyChartLabel" xml:space="preserve">
+    <value>Gökyüzü haritası</value>
+  </data>
+  <data name="SkyChartLinesLabel" xml:space="preserve">
+    <value>Takımyıldız çizgileri</value>
+  </data>
+  <data name="SkyChartBordersLabel" xml:space="preserve">
+    <value>Sınırlar</value>
+  </data>
+  <data name="CompassNorthLabel" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="CompassEastLabel" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="CompassSouthLabel" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="CompassWestLabel" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="NowLabel" xml:space="preserve">
+    <value>Şimdi</value>
+  </data>
+</root>

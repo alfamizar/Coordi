@@ -1,7 +1,8 @@
 using DeviceGeoLocation = Microsoft.Maui.Devices.Sensors.Location;
 using Location = Compute.Core.Domain.Entities.Models.Location;
-using DotNext;
+using Compute.Core.Common.Results;
 using Compute.Core.Domain.Errors;
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Services;
 using Compute.Core.Common.Exceptions.Location;
 using Polly.Retry;
@@ -24,14 +25,76 @@ namespace JustCompute.Services.LocationService
         public bool IsGettingDeviceLocation { get; private set; }
 
         private Location? _selectedLocation;
+        private Location? _placeholderLocation;
+        private Location? _adoptedDeviceLocation;
+        private Task? _restoreTask;
+        private readonly Lock _restoreGate = new();
+
+        /// <summary>
+        /// Never null: until the user picks somewhere (or the device fix arrives) this returns a
+        /// placeholder, so screens show real data instead of an error. Pair with
+        /// <see cref="ShouldPromptForLocation"/> to tell the two apart.
+        /// </summary>
         public Location? SelectedLocation
         {
-            get => _selectedLocation;
+            get => _selectedLocation ??= _placeholderLocation ??= Location.CreatePlaceholder();
             set
             {
                 _selectedLocation = value;
                 PersistSelectedLocationId(value?.Id);
+
+                // Only count it once we are genuinely off the placeholder. Every screen assigns
+                // this property during its own load, so treating any assignment as "the user
+                // chose somewhere" dismissed the onboarding card on the very first run and left
+                // London sitting in the list as though it were a place they had picked.
+                if (value != null && !ReferenceEquals(value, _placeholderLocation))
+                {
+                    // Assigning is a choice even when it lands on the device's own row, so the
+                    // adoption below is no longer standing in for one.
+                    _adoptedDeviceLocation = null;
+                    global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation = true;
+                }
             }
+        }
+
+        /// <summary>
+        /// Whether the selection is somewhere the user actually picked, rather than one of the two
+        /// stand-ins the app fills in for them: the invented placeholder, and the device's own fix
+        /// adopted by <see cref="AdoptDeviceLocation"/>. Both must give way to a persisted choice
+        /// when one is restored, and neither may block that restore.
+        /// </summary>
+        private bool IsUserChoice =>
+            LocationSelection.IsUserChoice(_selectedLocation, _placeholderLocation, _adoptedDeviceLocation);
+
+        public bool ShouldPromptForLocation =>
+            !global::JustCompute.Shared.Helpers.Settings.HasUserSetLocation
+            && (_selectedLocation is null || ReferenceEquals(_selectedLocation, _placeholderLocation));
+
+        /// <summary>
+        /// Makes the device's own fix the place the app computes from, for as long as the user has
+        /// not chosen one. Without this the app knew where it was, listed it, and still reported
+        /// the placeholder's London to every screen.
+        /// </summary>
+        /// <param name="previous">
+        /// The fix being replaced. The Locations screen moves a fresh fix onto the row already in
+        /// the list and hands that row back here, so a selection pointing at the old instance has
+        /// to follow it across or it silently goes stale.
+        /// </param>
+        private void AdoptDeviceLocation(Location? previous)
+        {
+            if (_deviceLocation is null) return;
+
+            if (!LocationSelection.ShouldAdoptDeviceFix(
+                    _selectedLocation, _placeholderLocation, _adoptedDeviceLocation, previous))
+            {
+                return;
+            }
+
+            // Deliberately not through the setter: the app is filling in a blank, not recording a
+            // decision. Persisting an id or setting HasUserSetLocation would dismiss the prompt to
+            // save a place and make the next launch treat a passing fix as a settled choice.
+            _selectedLocation = _deviceLocation;
+            _adoptedDeviceLocation = _deviceLocation;
         }
 
         private static void PersistSelectedLocationId(int? id)
@@ -46,9 +109,32 @@ namespace JustCompute.Services.LocationService
             }
         }
 
-        public async Task RestorePersistedSelectedLocation()
+        /// <summary>
+        /// Restores the location the user last chose. Runs at most once per launch and is safe to
+        /// await from anywhere, so every screen can gate its first read on it rather than relying
+        /// on the user happening to open the Locations screen.
+        /// </summary>
+        public Task RestorePersistedSelectedLocation()
         {
-            if (_selectedLocation != null) return;
+            // Locked, not just ??=: that reads and assigns in two steps, so two screens loading
+            // at once on a cold start could both find it null and both run the restore — two
+            // database reads, and two answers racing to become the selected location.
+            lock (_restoreGate)
+            {
+                return _restoreTask ??= RestorePersistedSelectedLocationCore();
+            }
+        }
+
+        private async Task RestorePersistedSelectedLocationCore()
+        {
+            // Reading the property hands back a placeholder and caches it, so "already set" is not
+            // the same as "chosen by the user" — any screen that asked first would otherwise block
+            // the restore and the app would forget the user's location on every cold start. An
+            // adopted device fix is a stand-in for the same reason and must not block it either.
+            if (IsUserChoice)
+            {
+                return;
+            }
 
             var id = Preferences.Default.Get(SelectedLocationIdKey, -1);
             if (id <= 0) return;
@@ -69,7 +155,10 @@ namespace JustCompute.Services.LocationService
             {
                 if (_deviceLocation != value)
                 {
+                    var previous = _deviceLocation;
                     _deviceLocation = value;
+                    AdoptDeviceLocation(previous);
+
                     if (_deviceLocation != null)
                     {
                         OnDeviceLocationChanged();
@@ -96,7 +185,12 @@ namespace JustCompute.Services.LocationService
         {
             try
             {
-                GettingDeviceLocationFinished = new TaskCompletionSource<bool>();
+                // RunContinuationsAsynchronously, deliberately: without it TrySetResult runs
+                // every awaiting continuation inline on whichever thread the platform delivered
+                // the fix on. Screens awaiting this then carried on off the UI thread, and their
+                // property changes stopped reaching the views — a spinner that never stopped.
+                GettingDeviceLocationFinished =
+                    new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
                 IsGettingDeviceLocation = true;
 
@@ -110,8 +204,9 @@ namespace JustCompute.Services.LocationService
                 DeviceLocation = await _locationService.GetLocationFromCoordinates(deviceLocation.Latitude, deviceLocation.Longitude);
                 DeviceLocation.IsCurrent = true;
 
-                SelectedLocation ??= DeviceLocation;
-
+                // No selection to make here: the property above never returns null, so the ??=
+                // that used to sit on this line could not fire. The DeviceLocation setter adopts
+                // the fix instead, which also covers the fixes that arrive from elsewhere.
                 return DeviceLocation;
             }
             catch (FeatureNotSupportedException)
@@ -151,6 +246,15 @@ namespace JustCompute.Services.LocationService
         {
             if (Interlocked.Increment(ref _listenerRefCount) > 1)
             {
+                // Already listening — but possibly not the way this caller needs. A trip that
+                // must keep recording with the screen off cannot be served by the foreground-only
+                // listener a screen started earlier, and silently returning success here left
+                // tracking that quietly stopped the moment the app was backgrounded.
+                if (backgroundCapable && !_backgroundCapable)
+                {
+                    return await UpgradeToBackgroundListening();
+                }
+
                 return true;
             }
 
@@ -163,6 +267,35 @@ namespace JustCompute.Services.LocationService
             {
                 Interlocked.Decrement(ref _listenerRefCount);
             }
+            return result;
+        }
+
+        /// <summary>
+        /// Swaps a running foreground-only listener for the background-capable platform service,
+        /// keeping the reference count intact — the screens already listening still are.
+        /// </summary>
+        private async Task<Result<bool, FaultCode>> UpgradeToBackgroundListening()
+        {
+            try
+            {
+                StopForegroundOnlyListening();
+            }
+            catch (Exception)
+            {
+                // Nothing useful to do: the platform listener is what matters, and it is next.
+            }
+
+            var result = await StartPlatformListening();
+            if (result.IsSuccessful)
+            {
+                _backgroundCapable = true;
+                return result;
+            }
+
+            // Put the foreground listener back so the callers already relying on updates keep
+            // getting them, rather than being left with nothing at all.
+            await StartForegroundOnlyListening();
+            Interlocked.Decrement(ref _listenerRefCount);
             return result;
         }
 
@@ -192,7 +325,7 @@ namespace JustCompute.Services.LocationService
             }
             catch (Exception)
             {
-                return new(FaultCode.CouldNotStopListeningDeciveGeoLocation);
+                return new(FaultCode.CouldNotStopListeningDeviceGeoLocation);
             }
         }
 
@@ -212,7 +345,7 @@ namespace JustCompute.Services.LocationService
             {
                 Geolocation.LocationChanged -= OnMauiLocationChanged;
                 Geolocation.ListeningFailed -= OnMauiListeningFailed;
-                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeciveGeoLocation);
+                return new Result<bool, FaultCode>(FaultCode.CouldNotStartListeningDeviceGeoLocation);
             }
         }
 
@@ -223,14 +356,19 @@ namespace JustCompute.Services.LocationService
             Geolocation.StopListeningForeground();
         }
 
+        // Marshalled, like the background-capable path already is: MAUI raises these on a
+        // platform thread, and every subscriber writes straight into properties a screen is bound
+        // to. Off the UI thread those writes are dropped frames at best.
         private void OnMauiLocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
         {
-            DeviceLocationUpdated?.Invoke(this, ToDomainUpdate(e.Location));
+            var update = ToDomainUpdate(e.Location);
+            MainThread.BeginInvokeOnMainThread(() => DeviceLocationUpdated?.Invoke(this, update));
         }
 
         private void OnMauiListeningFailed(object? sender, GeolocationListeningFailedEventArgs e)
         {
-            DeviceLocationListeningFailed?.Invoke(this, new DeviceLocationListeningFailure(e.Error.ToString()));
+            var failure = new DeviceLocationListeningFailure(e.Error.ToString());
+            MainThread.BeginInvokeOnMainThread(() => DeviceLocationListeningFailed?.Invoke(this, failure));
         }
 
         private partial Task<Result<bool, FaultCode>> StartPlatformListening();
@@ -253,6 +391,6 @@ namespace JustCompute.Services.LocationService
         }
 
         private static DeviceLocationUpdate ToDomainUpdate(DeviceGeoLocation l) =>
-            new(l.Latitude, l.Longitude, l.Speed, l.Course, l.Accuracy, l.VerticalAccuracy, l.Altitude);
+            new(l.Latitude, l.Longitude, l.Speed, l.Course, l.Accuracy, l.VerticalAccuracy, l.Altitude, l.Timestamp);
     }
 }

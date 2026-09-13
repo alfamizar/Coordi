@@ -1,56 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Compute.Core.Domain.Entities.Models.Eclipses;
 using Compute.Core.Domain.Services.Sun;
-using CoordinateSharp;
+using JustCompute.Features.Eclipses;
 using JustCompute.Shared.ViewModels;
-using static Compute.Core.Helpers.GroupingHelper;
+using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Features.SunEclipses
 {
-    public partial class SunEclipsesViewModel : BaseViewModel, ICompute
+    public partial class SunEclipsesViewModel(ViewModelServices services, ISunService sunService)
+        : EclipsesViewModel<SolarEclipseInfo>(services)
     {
-        private readonly ISunService _sunService;
+        private readonly ISunService _sunService = sunService;
 
-        [ObservableProperty]
-        private List<Group<string, SolarEclipseDetails>> groupedEclipseList = [];
-
-        List<SolarEclipseDetails> eclipseList = [];
-
-        public SunEclipsesViewModel(ViewModelServices services, ISunService sunService)
-            : base(services)
-        {
-            _sunService = sunService;
-            Commands.Add("ToggleGroupCommand", new Command<Group<string, SolarEclipseDetails>>(ToggleGroup));
-        }
-
-        protected override async Task GetData(double lat, double lng, int timeZoneOffset)
-        {
-            eclipseList = await _sunService.GetSunEclipsesAsync(lat, lng, DateTime.Now);
-
-            GroupedEclipseList = [.. GetGroupedData(eclipseList, item => item.Date.ToString("yyyy"))];
-        }
-
-        protected override void ClearData()
-        {
-            eclipseList = [];
-            GroupedEclipseList = [];
-        }
-
-        private void ToggleGroup(Group<string, SolarEclipseDetails> group)
-        {
-            group.IsExpanded = !group.IsExpanded;
-
-            var items = group.ToList();
-            group.Clear();
-
-            if (group.IsExpanded)
-            {
-                var groupKey = group.Key;
-                group.InsertRange(
-                    eclipseList
-                    .Where(x => x.Date
-                    .ToString("yyyy") == groupKey)
-                    .ToList());
-            }
-        }
+        /// <summary>Contact times come back in the location's own zone, like the rest of the app.</summary>
+        protected override Task<List<SolarEclipseInfo>> ComputeEclipsesAsync(Location location, DateTime utcNow) =>
+            _sunService.GetSunEclipsesAsync(location, utcNow);
     }
 }

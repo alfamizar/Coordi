@@ -27,111 +27,23 @@
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout Padding="8" HorizontalOptions="FillAndExpand" Spacing="4">
+    <!-- 12 is where every other screen's content edge falls (a 4 content inset plus the
+         implicit Border margin of 8). This page has no cards to inherit that, so it states
+         the same inset directly and lines up with the rest of the app. -->
+    <VerticalStackLayout Padding="{StaticResource PageEdgeInset}" HorizontalOptions="FillAndExpand" Spacing="4">
 
         <Label Text="{localization:Localize ThemeLabel}" />
-        <Border StrokeShape="RoundRectangle 12"
-                StrokeThickness="0"
-                Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
-                Padding="3"
-                Margin="0,0,0,4">
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
-
-                <Border Grid.Column="0"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsSystemThemeSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
-                                              CommandParameter="Unspecified" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize SystemThemeLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsSystemThemeSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
-
-                <Border Grid.Column="1"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsLightThemeSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
-                                              CommandParameter="Light" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize LightThemeLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsLightThemeSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
-
-                <Border Grid.Column="2"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsDarkThemeSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectThemeCommand}"
-                                              CommandParameter="Dark" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize DarkThemeLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsDarkThemeSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
-
-            </Grid>
-        </Border>
+        <Picker x:Name="ThemePicker"
+                Title="{Binding SelectedThemeOption.Name}"
+                ItemsSource="{Binding ThemeOptions}"
+                SelectedItem="{Binding SelectedThemeOption}"
+                Margin="0,0,0,4" />
 
         <Label Text="{localization:Localize DistanceUnitLabel}" />
         <Picker x:Name="DistanceTypePicker"
                 Title="{Binding SelectedDistanceUnitOfMeasure.DistanceUomName}"
                 ItemsSource="{Binding DistanceUnitOfMeasures}"
-                SelectedItem="{Binding SelectedDistanceUnitOfMeasure}">
-            <Picker.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
-                                                Command="{Binding SaveSelectedDistanceTypeToSettingsCommand}">
-                </toolkit:EventToCommandBehavior>
-            </Picker.Behaviors>
-        </Picker>
+                SelectedItem="{Binding SelectedDistanceUnitOfMeasure}" />
 
         <Label Text="{localization:Localize SpeedUnitLabel}" />
         <Border StrokeShape="RoundRectangle 12"
@@ -148,7 +60,7 @@
                                      Binding="{Binding IsMetersPerSecondSelected}"
                                      Value="True">
                             <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                                    Value="{DynamicResource ThemePrimary}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -175,7 +87,7 @@
                                      Binding="{Binding IsKilometersPerHourSelected}"
                                      Value="True">
                             <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                                    Value="{DynamicResource ThemePrimary}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -202,7 +114,7 @@
                                      Binding="{Binding IsMilesPerHourSelected}"
                                      Value="True">
                             <Setter Property="Background"
-                                    Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+                                    Value="{DynamicResource ThemePrimary}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>

@@ -1,0 +1,5 @@
+Nueva pantalla Hoy: amanecer, ocaso, duración del día y arco solar en vivo para cualquier fecha, con fase lunar y previsión opcional de 7 días.
+Nueva calculadora óptica: profundidad de campo, campo de visión y exposición máxima sin rastro de estrellas (reglas 500 y NPF).
+Los eclipses usan la zona horaria de cada lugar; el filtro de visibilidad está ahí.
+Zonas horarias con fronteras reales y horario de verano.
+Edita y elimina lugares desde la lista.

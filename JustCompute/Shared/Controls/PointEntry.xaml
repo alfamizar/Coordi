@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="JustCompute.Shared.Controls.PointEntry"
@@ -18,13 +18,14 @@
                Grid.Column="1"
                Grid.ColumnSpan="3"
                Text="{Binding PointTitle}"
-               FontSize="Large"
+               FontSize="{StaticResource FontSizeHeader}"
+               FontAttributes="Bold"
                HorizontalOptions="Center"
                IsVisible="{Binding IsPointLabelVisible}" />
         <Label Grid.Row="1"
                Grid.Column="1"
                Grid.ColumnSpan="3"
-               FontSize="Medium"
+               FontSize="{StaticResource FontSizeTitle}"
                HorizontalOptions="Center"
                IsVisible="{Binding IsPointCityCountryLabelVisible}">
             <Label.FormattedText>
@@ -33,8 +34,8 @@
                         <Span>
                             <Span.Text>
                                 <MultiBinding StringFormat="{}{0}, {1}">
-                                    <Binding Path="Location.City.CityName" />
-                                    <Binding Path="Location.City.CountryName" />
+                                    <Binding Path="Location.CityName" />
+                                    <Binding Path="Location.CountryName" />
                                 </MultiBinding>
                             </Span.Text>
                         </Span>
@@ -65,7 +66,7 @@
                     ConverterParameter='latitude'}"
                              Value="False">
                     <Setter Property="TextColor"
-                            Value="Red" />
+                            Value="{DynamicResource ThemeError}" />
                 </DataTrigger>
             </Entry.Triggers>
         </Entry>
@@ -93,16 +94,17 @@
                     ConverterParameter='longitude'}"
                              Value="False">
                     <Setter Property="TextColor"
-                            Value="Red" />
+                            Value="{DynamicResource ThemeError}" />
                 </DataTrigger>
             </Entry.Triggers>
         </Entry>
 
         <ImageButton Grid.Column="4"
                      Grid.Row="2"
-                     WidthRequest="32"
-                     HeightRequest="32"
-                     CornerRadius="16"
+                     WidthRequest="{StaticResource MinTouchTarget}"
+                     HeightRequest="{StaticResource MinTouchTarget}"
+                     Padding="8"
+                     CornerRadius="24"
                      Margin="8,0,8,0"
                      Background="Transparent"
                      Source="{Binding ImageButtonIconSource}"

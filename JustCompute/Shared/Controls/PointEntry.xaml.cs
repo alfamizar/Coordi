@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Xaml;
-using Location = Compute.Core.Domain.Entities.Models.Location;
+using JustCompute.Shared.ViewModels;
 
 namespace JustCompute.Shared.Controls
 {
@@ -84,12 +84,12 @@ namespace JustCompute.Shared.Controls
         public static readonly BindableProperty LocationProperty =
             BindableProperty.Create(
                 propertyName: nameof(Location),
-                returnType: typeof(Location),
+                returnType: typeof(EditableLocation),
                 declaringType: typeof(PointEntry));
 
-        public Location Location
+        public EditableLocation Location
         {
-            get => (Location)GetValue(LocationProperty);
+            get => (EditableLocation)GetValue(LocationProperty);
             set => SetValue(LocationProperty, value);
         }
 

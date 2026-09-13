@@ -4,7 +4,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
            xmlns:dialogs="clr-namespace:JustCompute.Shared.Popups"
-           xmlns:core="clr-namespace:Compute.Core.UI;assembly=Compute.Core"
+           xmlns:core="clr-namespace:JustCompute.Shared.Abstractions.UI;assembly=Compute.Core"
            x:TypeArguments="core:DialogResult"
            x:DataType="dialogs:NoOutsideTapDismissPopup"
            x:Name="this"
@@ -29,7 +29,7 @@
         <StackLayout  Grid.Row="2"
                       Orientation="Horizontal"
                       HorizontalOptions="Fill"
-                      Spacing="8">
+                      Spacing="{StaticResource CardGap}">
 
             <Button Style="{StaticResource DialogButton}"
                     Clicked="NegativeButtonClicked"

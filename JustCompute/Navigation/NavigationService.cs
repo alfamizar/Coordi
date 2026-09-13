@@ -1,6 +1,5 @@
-﻿using Compute.Core.Navigation;
+using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Features.InputLocation;
-using JustCompute.Features.SavedLocations;
 using JustCompute.Features.SearchByCity;
 
 namespace JustCompute.Navigation
@@ -12,7 +11,6 @@ namespace JustCompute.Navigation
         public NavigationService()
         {
             Register<InputLocationViewModel, InputLocationPage>();
-            Register<SavedLocationsViewModel, SavedLocationsPage>();
             Register<SearchByCityViewModel, SearchByCityPage>();
         }
 
@@ -40,6 +38,8 @@ namespace JustCompute.Navigation
                 }
             }
         }
+
+        public Task NavigateToShellRouteAsync(string route) => Shell.Current.GoToAsync($"//{route}");
 
         public async Task NavigateBackAsync(object? result = null)
         {

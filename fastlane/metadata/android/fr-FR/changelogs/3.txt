@@ -1,0 +1,5 @@
+Nouvel écran Aujourd'hui : lever, coucher, durée du jour et arc solaire en direct pour toute date, avec phase lunaire et météo optionnelle sur 7 jours.
+Nouveau calculateur optique : profondeur de champ, champ de vision et pose maximale sans filé d'étoiles (règles 500 et NPF).
+Les éclipses utilisent le fuseau du lieu ; le filtre de visibilité s'y trouve.
+Fuseaux avec vraies frontières et heure d'été.
+Modifiez et supprimez vos lieux depuis la liste.

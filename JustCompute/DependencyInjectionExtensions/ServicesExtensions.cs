@@ -1,4 +1,4 @@
-﻿#if IOS
+#if IOS
 using Environment = JustCompute.Platforms.iOS.UI.Environment;
 #elif ANDROID
 using Environment = JustCompute.Platforms.Android.UI.Environment;
@@ -7,9 +7,9 @@ using Environment = System.Object;
 #endif
 using JustCompute.Shared.Helpers;
 using JustCompute.Services;
-using Compute.Core.Navigation;
+using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Navigation;
-using Compute.Core.UI;
+using JustCompute.Shared.Abstractions.UI;
 using Compute.Core.Domain.Services.Moon;
 using Compute.Core.Domain.Services.Sun;
 using Compute.Core.Domain.Services.Weather;
@@ -22,6 +22,7 @@ using Compute.Core.Repository;
 using JustCompute.Persistence.Repository;
 using JustCompute.Persistence.Repository.Models;
 using JustCompute.Shared.ViewModels;
+using JustCompute.Services.Weather;
 
 namespace JustCompute.DependencyInjectionExtensions;
 
@@ -45,8 +46,11 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         builder.Services.AddSingleton<IMessagingService, MessagingService>();
         builder.Services.AddSingleton<ViewModelServices>();
-        builder.Services.AddSingleton<ILocationsRepository, SavedLocationsRepository>();
-        builder.Services.AddSingleton<IWorldCitiesRepository<WorldCityTable>, WorldCitiesRepository>();
+        builder.Services.AddSingleton<DistanceFormatter>();
+        // One connection for the file both repositories read; see AppDatabaseConnection.
+        builder.Services.AddSingleton<AppDatabaseConnection>();
+        builder.Services.AddSingleton<ISavedLocationsRepository, SavedLocationsRepository>();
+        builder.Services.AddSingleton<IWorldCitiesRepository, WorldCitiesRepository>();
 
         return builder;
     }

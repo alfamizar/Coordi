@@ -413,3 +413,6 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/test_output/
 # (screenshot output goes under artifacts/, already ignored above)
+
+.local/
+Library/

@@ -21,7 +21,7 @@ public partial class SortOptionsPopup : Popup<SortOptionsPopupResult>
         if (e is TappedEventArgs { Parameter: SelectableSortingCriterion tappedItem })
         {
             var viewModel = BindingContext as SortOptionsPopupViewModel;
-            viewModel?.Commands["SelectSortCriterionCommand"].Execute(tappedItem);
+            viewModel?.SelectSortCriterionCommand.Execute(tappedItem);
 
             if (viewModel?.SelectedSortCriterion is null)
             {

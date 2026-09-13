@@ -1,4 +1,5 @@
-using CoordinateSharp;
+using Compute.Astro;
+using Compute.Core.Domain.Entities.Models.Eclipses;
 using JustCompute.Resources.Strings;
 using JustCompute.Services;
 using Microsoft.Extensions.Localization;
@@ -12,6 +13,18 @@ namespace JustCompute.Features.MoonEclipses
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
+            // The whole row is bound, not just the type: an eclipse that misses this location is
+            // still listed, and says so, rather than quietly showing a type nobody here will see.
+            if (value is LunarEclipseInfo info)
+            {
+                if (!info.IsVisible)
+                {
+                    return _localizer.GetString("NotVisibleFromHereLabel");
+                }
+
+                value = info.Type;
+            }
+
             if (value is LunarEclipseType lunarEclipseType)
             {
                 switch (lunarEclipseType)
