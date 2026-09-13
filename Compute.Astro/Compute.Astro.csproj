@@ -31,11 +31,12 @@
     </Description>
     <PackageTags>astronomy;ephemeris;sun;moon;eclipse;geodesy;vincenty;utm;mgrs;meeus</PackageTags>
     <!--
-      Apache-2.0, deliberately permissive: this is a clean-room implementation written
-      from published algorithms, so it is not bound by the AGPL of the CoordinateSharp
-      dependency it replaces.
+      AGPL-3.0, the same licence as the rest of the repository. The AGPLv3 text is what
+      LICENSE carries, with no "or later" notice applied, so the expression is -only.
+      Packages already published under Apache-2.0 stay Apache-2.0: that grant cannot be
+      withdrawn, and this changes the terms from here on rather than retroactively.
     -->
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

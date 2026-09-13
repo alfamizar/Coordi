@@ -14,9 +14,8 @@ listings), with five themes.
 ![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-blue)
 ![.NET](https://img.shields.io/badge/.NET-10-512BD4)
 ![MAUI](https://img.shields.io/badge/.NET%20MAUI-10.0-512BD4)
-![Tests](https://img.shields.io/badge/tests-378%20passing-brightgreen)
-![License](https://img.shields.io/badge/app-AGPL--3.0-green)
-![Astro](https://img.shields.io/badge/Compute.Astro-Apache--2.0-blue)
+![Tests](https://img.shields.io/badge/tests-415%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-AGPL--3.0-green)
 
 ---
 
@@ -101,7 +100,7 @@ listings), with five themes.
 
 The astronomy and geodesy are not a dependency — they are a library in this repo, published
 separately as [`CuteCompute.Astro`](https://www.nuget.org/packages/CuteCompute.Astro) under
-**Apache-2.0**.
+**AGPL-3.0**, the same licence as everything else here.
 
 It is a clean-room implementation written from published algorithms (Meeus, *Astronomical
 Algorithms* 2nd ed.; Vincenty 1975; Snyder/USGS PP 1395) with no third-party runtime
@@ -247,11 +246,10 @@ Coordi/
 
 ## License
 
-The **app** is licensed under the **GNU Affero General Public License v3.0** — see
-[LICENSE](LICENSE).
+The whole repository is licensed under the **GNU Affero General Public License v3.0** — see
+[LICENSE](LICENSE). That includes `Compute.Astro/`, which carries the same text so the NuGet
+package is self-contained, and is published as `CuteCompute.Astro` under it.
 
-**`Compute.Astro/` is licensed under Apache-2.0** — see
-[`Compute.Astro/LICENSE`](Compute.Astro/LICENSE) — and is published on NuGet as
-`CuteCompute.Astro` under that licence. It is a clean-room implementation written from
-published algorithms, deliberately permissive so it can be used freely, including in closed
-source. The AGPL above covers the rest of the repository.
+`Compute.Astro` was Apache-2.0 until September 2026. Versions published before then keep that
+licence — a granted permission cannot be withdrawn — so use the licence stated on the package
+version you actually take.
