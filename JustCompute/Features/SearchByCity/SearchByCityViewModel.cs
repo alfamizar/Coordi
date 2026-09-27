@@ -1,3 +1,6 @@
+using JustCompute.Shared.Helpers;
+using JustCompute.Presentation.Tasks;
+using Compute.Core.Domain.Services;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -17,6 +20,8 @@ namespace JustCompute.Features.SearchByCity
 {
     public partial class SearchByCityViewModel : BaseViewModel, IQueryParameter
     {
+        private readonly ILocationService _locationService;
+
         private SearchLocationContext? _searchLocationContext;
         private List<Sorting> _sortingCriteria = [];
         private readonly ViewModelServices _services;
@@ -45,9 +50,11 @@ namespace JustCompute.Features.SearchByCity
 
         public SearchByCityViewModel(
             ViewModelServices services,
+            ILocationService locationService,
             IStringLocalizer<AppStringsRes> localizer)
             : base(services)
         {
+            _locationService = locationService;
             _services = services;
             _localizer = localizer;
             _selectedSortCriterion = new(SortCriterion.City, _localizer.GetString("CityLabel"));
@@ -72,38 +79,55 @@ namespace JustCompute.Features.SearchByCity
 
         private async void HandlePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SelectedSortCriterion))
+            if (e.PropertyName != nameof(SelectedSortCriterion)) return;
+
+            // async void: anything escaping here takes the process down. The comment above this
+            // used to say so and then only had a finally, which saved the busy indicator and let
+            // the exception through anyway.
+            try
             {
-                // async void: anything escaping here takes the process down, and a throw part-way
-                // would strand the busy indicator on screen.
-                try
-                {
-                    IsBusy = true;
-                    LocationsSearchResult = await SortLocationsInBackground(LocationsSearchResult);
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
+                IsBusy = true;
+
+                // Two quick changes of sort order used to race, and whichever finished last won
+                // even if it was the older request. The newer one now supersedes the older.
+                var (superseded, sorted) = await _sorting.RunAsync(
+                    _ => SortLocationsInBackground(LocationsSearchResult));
+
+                if (superseded) return;
+
+                LocationsSearchResult = sorted ?? LocationsSearchResult;
+                IsBusy = false;
+            }
+            catch (Exception ex)
+            {
+                IsBusy = false;
+                Diagnostics.Report(nameof(SearchByCityViewModel), ex);
             }
         }
 
-        private async Task<List<Location>> SortLocationsInBackground(List<Location> locations)
-        {
-            return await Task.Run(() => SortLocations(locations));
-        }
+        private readonly SupersedingTask _sorting = new();
 
-        private List<Location> SortLocations(List<Location> locations)
+        private static Task<List<Location>> SortLocationsInBackground(List<Location> locations, SortCriterion criterion, SortDirection direction) =>
+            Task.Run(() => SortLocations(locations, criterion, direction));
+
+        private Task<List<Location>> SortLocationsInBackground(List<Location> locations) =>
+            SortLocationsInBackground(locations, SelectedSortCriterion.Criterion, SelectedSortCriterion.Direction);
+
+        /// <summary>
+        /// Takes the criterion rather than reading the property: this runs on a worker thread,
+        /// and the property belongs to the UI, which may change it while the sort is under way.
+        /// </summary>
+        private static List<Location> SortLocations(List<Location> locations, SortCriterion criterion, SortDirection direction)
         {
-            Func<Location, IComparable> keySelector = SelectedSortCriterion.Criterion switch
+            Func<Location, IComparable> keySelector = criterion switch
             {
                 SortCriterion.City => location => location.City.CityName,
                 SortCriterion.Country => location => location.City.CountryName,
                 SortCriterion.Population => location => location.City.Population,
-                _ => throw new ArgumentOutOfRangeException($"Unexpected sort criterion: '{SelectedSortCriterion.Criterion}'")
+                _ => throw new ArgumentOutOfRangeException(nameof(criterion), criterion, "Unexpected sort criterion")
             };
 
-            var sortedLocations = SelectedSortCriterion.Direction == SortDirection.Ascending
+            var sortedLocations = direction == SortDirection.Ascending
                 ? locations.OrderBy(keySelector)
                 : locations.OrderByDescending(keySelector);
 

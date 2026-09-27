@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Astro;
 using JustCompute.Resources.Strings;
+using JustCompute.Shared.Abstractions.Screenshots;
 using JustCompute.Shared.ViewModels;
 using Microsoft.Extensions.Localization;
 using AppSettings = JustCompute.Shared.Helpers.Settings;
@@ -26,15 +27,20 @@ namespace JustCompute.Features.SkyChart
         private const double RangeHours = 24.0;
 
         private readonly IStringLocalizer<AppStringsRes> _localizer;
+        private readonly IScreenshotSeed _screenshotSeed;
 
         /// <summary>UTC at the moment the screen settled on "now", so the slider has a fixed anchor.</summary>
         private DateTime _anchorUtc = DateTime.UtcNow;
         private double _offsetHours;
 
-        public SkyChartViewModel(ViewModelServices services, IStringLocalizer<AppStringsRes> localizer)
+        public SkyChartViewModel(
+            ViewModelServices services,
+            IStringLocalizer<AppStringsRes> localizer,
+            IScreenshotSeed screenshotSeed)
             : base(services)
         {
             _localizer = localizer;
+            _screenshotSeed = screenshotSeed;
         }
 
         /// <summary>The compass letters, in the order the chart draws them: N, E, S, W.</summary>
@@ -105,12 +111,11 @@ namespace JustCompute.Features.SkyChart
         /// Normally zero — the chart opens on now. The screenshot harness can ask for a
         /// particular local hour instead, because a capture that happens to run at five in the
         /// afternoon produces a blue disc with no stars on it, which is the one thing this
-        /// screen exists to show. Compiled out of Release with the rest of the harness.
+        /// screen exists to show. Release builds are given a seed that never asks.
         /// </summary>
         private double OpeningOffsetHours()
         {
-#if DEBUG
-            if (global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededSkyHour is int hour)
+            if (_screenshotSeed.SkyHour is int hour)
             {
                 // Hours to the next time the local clock reads that hour, inside the slider's
                 // own range so the thumb lands somewhere the reader could have dragged it.
@@ -120,7 +125,6 @@ namespace JustCompute.Features.SkyChart
 
                 return Math.Clamp((wanted - localNow).TotalHours, -RangeHours, RangeHours);
             }
-#endif
             return 0.0;
         }
 

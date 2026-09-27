@@ -206,19 +206,19 @@ namespace JustCompute.Shared.Helpers
                 return;
             }
 
-            IGPSLocationService? gps = ServicesProvider.GetService<IGPSLocationService>();
-            if (gps is null)
+            ILocationSelection? selection = ServicesProvider.GetService<ILocationSelection>();
+            if (selection is null)
             {
                 return;
             }
 
-            gps.SelectedLocation = new Location
+            selection.Select(new Location
             {
                 Name = Pick(NameFromPlatform, NameEnv) ?? "Screenshot",
                 Latitude = lat,
                 Longitude = lon,
                 IsCurrent = true,
-            };
+            });
         }
 
         /// <summary>Adds the listed places to the user's saved locations, skipping any already there.</summary>
@@ -232,7 +232,7 @@ namespace JustCompute.Shared.Helpers
 
             // Fire and forget: the harness runs during window creation and must not block it.
             // A duplicate run is harmless because existing names are skipped.
-            _ = Task.Run(async () =>
+            Task.Run(async () =>
             {
                 try
                 {
@@ -250,7 +250,7 @@ namespace JustCompute.Shared.Helpers
                 {
                     Debug.WriteLine($"Screenshot harness could not seed saved locations: {ex}");
                 }
-            });
+            }).Forget(nameof(SeedSavedLocations));
         }
 
         private static void SeedRouteStops() =>

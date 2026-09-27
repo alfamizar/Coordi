@@ -1,3 +1,4 @@
+using Compute.Core.Domain.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Common.Messaging;
@@ -8,7 +9,6 @@ using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.ViewModels.Messages;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using Location = Compute.Core.Domain.Entities.Models.Location;
@@ -17,6 +17,8 @@ namespace JustCompute.Features.InputLocation
 {
     public partial class InputLocationViewModel : BaseViewModel, IQueryParameter
     {
+        private readonly ILocationService _locationService;
+
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly IMessagingService _messagingService;
@@ -25,8 +27,8 @@ namespace JustCompute.Features.InputLocation
         [ObservableProperty]
         private TimeZoneOffset selectedTimeZoneOffset;
 
-        [ObservableProperty]
-        private ObservableCollection<TimeZoneOffset> timeZoneOffsets;
+        /// <summary>The picker's choices. Fixed, so there is nothing to observe.</summary>
+        public IReadOnlyList<TimeZoneOffset> TimeZoneOffsets => TimeZoneOffset.WholeHourOffsets;
 
         [ObservableProperty]
         private EditableLocation location = new();
@@ -41,19 +43,20 @@ namespace JustCompute.Features.InputLocation
 
         public InputLocationViewModel(
             ViewModelServices services,
+            ILocationService locationService,
             IToastService toastService,
             IMessagingService messagingService,
             IStringLocalizer<AppStringsRes> localizer
             )
             : base(services)
         {
+            _locationService = locationService;
             _toastService = toastService;
             _messagingService = messagingService;
             _localizer = localizer;
 
 
             pageTitle = localizer.GetString("AddLocationLabel");
-            timeZoneOffsets = TimeZoneOffset.GetUtcOffsets();
             selectedTimeZoneOffset = TimeZoneOffset.DefaultTimeZoneOffset;
 
             PropertyChanged += OnPropertyChanged;
@@ -151,15 +154,15 @@ namespace JustCompute.Features.InputLocation
         {
             if (Location == null || IsBusy) return;
 
-            if (_gpsLocationService.DeviceLocation is null)
+            if (_device.DeviceLocation is null)
             {
                 IsBusy = true;
-                await _gpsLocationService.GetDeviceGeoLocation();
+                await _device.GetDeviceGeoLocation();
                 IsBusy = false;
             }
 
-            Location.Latitude = _gpsLocationService.DeviceLocation?.Latitude ?? Location.Latitude;
-            Location.Longitude = _gpsLocationService.DeviceLocation?.Longitude ?? Location.Longitude;
+            Location.Latitude = _device.DeviceLocation?.Latitude ?? Location.Latitude;
+            Location.Longitude = _device.DeviceLocation?.Longitude ?? Location.Longitude;
         }
 
         public void ApplyQueryParameter(object? parameter)

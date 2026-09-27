@@ -137,16 +137,6 @@ public static class Settings
     }
 
     /// <summary>
-    /// False until the user explicitly picks a location. While false the app is showing the
-    /// placeholder, and the onboarding card says so rather than pretending the data is theirs.
-    /// </summary>
-    public static bool HasUserSetLocation
-    {
-        get => Preferences.Get(nameof(HasUserSetLocation), false);
-        set => Preferences.Set(nameof(HasUserSetLocation), value);
-    }
-
-    /// <summary>
     /// Whether the app has ever raised the location permission request by itself. It gets one
     /// chance, on the first visit to the Locations screen, so someone who would have granted it
     /// is not left hunting for a button. After that only an explicit "Use my location" asks —

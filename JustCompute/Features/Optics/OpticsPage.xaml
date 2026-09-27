@@ -28,7 +28,7 @@
 
                     <Label Text="{localization:Localize OpticsCameraLabel}" />
                     <Picker ItemsSource="{Binding Bodies}"
-                            ItemDisplayBinding="{Binding Label}"
+                            ItemDisplayBinding="{Binding Label, x:DataType=bodies:CameraBody}"
                             SelectedItem="{Binding SelectedBody, Mode=TwoWay}"
                             Title="{localization:Localize OpticsCameraLabel}" />
 
@@ -58,7 +58,7 @@
                            Style="{StaticResource ErrorLabel}" />
 
                     <Picker ItemsSource="{Binding Formats}"
-                            ItemDisplayBinding="{Binding Label}"
+                            ItemDisplayBinding="{Binding Label, x:DataType=optics:Optics+SensorFormat}"
                             SelectedItem="{Binding SelectedFormat, Mode=TwoWay}" />
 
                     <!-- Sensor width plus these pixels give the pitch the NPF rule needs;

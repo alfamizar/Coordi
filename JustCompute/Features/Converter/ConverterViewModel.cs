@@ -89,7 +89,7 @@ namespace JustCompute.Features.Converter
         [RelayCommand]
         private void UseMyLocation()
         {
-            Location? here = _gpsLocationService.DeviceLocation ?? _gpsLocationService.SelectedLocation;
+            Location? here = _device.DeviceLocation ?? _selection.SelectedLocation;
             if (here is null) return;
 
             // Unconditionally: asking for it is asking for it to replace whatever is there.

@@ -5,6 +5,7 @@ using MoonName = Compute.Core.Domain.Entities.Models.Moon.MoonName;
 using MoonPhase = Compute.Core.Domain.Entities.Models.Moon.MoonPhase;
 using Compute.Core.Domain.Services.Moon;
 using Compute.Core.Domain.Services.Sun;
+using Compute.Core.Domain.ReadModels;
 
 namespace Compute.Core.Tests.Domain
 {

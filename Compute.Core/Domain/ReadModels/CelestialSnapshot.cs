@@ -1,8 +1,10 @@
 using Compute.Astro;
 using Compute.Core.Utils;
 using AstroZodiacSign = Compute.Core.Domain.Entities.Models.AstroSign.AstroZodiacSign;
+using MoonPhase = Compute.Core.Domain.Entities.Models.Moon.MoonPhase;
+using Compute.Core.Domain.Entities.Models;
 
-namespace Compute.Core.Domain.Entities.Models
+namespace Compute.Core.Domain.ReadModels
 {
     /// <summary>
     /// Everything the "at this location" dashboard shows for one place on one date:
@@ -51,7 +53,7 @@ namespace Compute.Core.Domain.Entities.Models
         public double MoonIllumination { get; init; }
 
         /// <summary>The Moon's visible phase.</summary>
-        public Moon.MoonPhase MoonPhase { get; init; }
+        public MoonPhase MoonPhase { get; init; }
 
         /// <summary>The Sun's tropical zodiac sign.</summary>
         public AstroZodiacSign ZodiacSign { get; init; }
@@ -95,7 +97,7 @@ namespace Compute.Core.Domain.Entities.Models
                 MoonSet = CelestialTimeUtils.ToLocalTime(day, moonEvents.MoonsetUtcMinutes, offsetHours),
                 MoonDistanceKm = moonPosition.DistanceKm,
                 MoonIllumination = Astro.Moon.IlluminatedFraction(jdNoon),
-                MoonPhase = (Moon.MoonPhase)MoonPhaseNaming.At(jdNoon),
+                MoonPhase = (MoonPhase)MoonPhaseNaming.At(jdNoon),
                 ZodiacSign = CelestialTimeUtils.ToAstroZodiacSign(Zodiac.OfSun(jdNoon)),
                 MoonSign = CelestialTimeUtils.ToAstroZodiacSign(Zodiac.OfMoon(jdNoon)),
                 Utm = TryUtm(latitude, longitude),

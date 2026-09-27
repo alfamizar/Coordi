@@ -1,6 +1,6 @@
 using Compute.Astro;
 
-namespace Compute.Core.Domain.Entities.Models
+namespace Compute.Core.Domain.ReadModels
 {
     /// <summary>A UTM grid reference, shaped for display.</summary>
     public class UtmInfo

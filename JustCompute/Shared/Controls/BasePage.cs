@@ -1,3 +1,4 @@
+using JustCompute.Shared.Helpers;
 using JustCompute.Shared.ViewModels;
 
 namespace JustCompute.Shared.Controls
@@ -91,11 +92,7 @@ namespace JustCompute.Shared.Controls
             }
             catch (Exception ex)
             {
-                // Console rather than Debug: Debug.WriteLine is compiled out of Release, so a
-                // page-lifecycle failure left no trace at all in a shipped build — which is how
-                // a spinner turning forever went unexplained. This is the only place these
-                // exceptions surface, so it must survive the Release build.
-                Console.WriteLine($"[{source}] unhandled exception: {ex}");
+                Diagnostics.Report(source, ex);
             }
         }
 

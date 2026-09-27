@@ -1,14 +1,11 @@
+using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Entities.Models.Distance;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace JustCompute.Features.Distance
 {
     public class KilometersToTargetDistanceTypeConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -27,8 +24,8 @@ namespace JustCompute.Features.Distance
                     DistanceType.NauticalMiles => "NauticalMilesAbbreviationLabel",
                     _ => "KilometersAbbreviationLabel"
                 };
-                string distanceLabel = _localizer.GetString(distanceLabelKey);
-                string abbreviationLabel = _localizer.GetString(abbreviationLabelKey);
+                string distanceLabel = Strings.Get(distanceLabelKey);
+                string abbreviationLabel = Strings.Get(abbreviationLabelKey);
 
                 return $"{string.Format(distanceLabel, distance.GetByType(distanceType), abbreviationLabel)}";
             }

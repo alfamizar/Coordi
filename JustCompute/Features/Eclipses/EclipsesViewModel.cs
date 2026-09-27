@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models.Eclipses;
 using JustCompute.Shared.ViewModels;
-using static Compute.Core.Helpers.GroupingHelper;
+using static JustCompute.Presentation.Collections.GroupingHelper;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Features.Eclipses
@@ -124,15 +124,6 @@ namespace JustCompute.Features.Eclipses
 
             HasNoLocation = _all.Count == 0;
             HasNoVisibleMatches = _all.Count > 0 && groups.Count == 0;
-        }
-
-        protected override void ClearData()
-        {
-            _computedLocation = null;
-            _shown = [];
-            _all = [];
-            FilterSummary = string.Empty;
-            GroupedEclipseList = [];
         }
 
         [RelayCommand]

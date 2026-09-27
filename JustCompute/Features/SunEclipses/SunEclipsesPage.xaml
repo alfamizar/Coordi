@@ -5,7 +5,7 @@
              x:Class="JustCompute.Features.SunEclipses.SunEclipsesPage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.SunEclipses"
-             xmlns:helpers="clr-namespace:Compute.Core.Helpers;assembly=Compute.Core"
+             xmlns:helpers="clr-namespace:JustCompute.Presentation.Collections;assembly=JustCompute.Presentation"
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models.Eclipses;assembly=Compute.Core"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"

@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Compute.Core.Helpers
+namespace JustCompute.Presentation.Collections
 {
     public class RangeEnabledObservableCollection<T> : ObservableCollection<T>
     {

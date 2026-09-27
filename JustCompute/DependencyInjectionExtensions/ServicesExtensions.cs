@@ -10,6 +10,7 @@ using JustCompute.Services;
 using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Navigation;
 using JustCompute.Shared.Abstractions.UI;
+using JustCompute.Shared.Abstractions.Screenshots;
 using Compute.Core.Domain.Services.Moon;
 using Compute.Core.Domain.Services.Sun;
 using Compute.Core.Domain.Services.Weather;
@@ -31,10 +32,21 @@ public static class ServicesExtensions
     public static MauiAppBuilder ConfigureServices(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<ThemeHandler>();
-        builder.Services.AddSingleton<IGPSLocationService, GPSLocationService>();
+        // One device service, registered under the two things it is: consumers take a one-shot
+        // fix or a continuous stream, and never the whole of it.
+        builder.Services.AddSingleton<GPSLocationService>();
+        builder.Services.AddSingleton<IDeviceLocationProvider>(services => services.GetRequiredService<GPSLocationService>());
+        builder.Services.AddSingleton<IDeviceLocationTracker>(services => services.GetRequiredService<GPSLocationService>());
+        builder.Services.AddSingleton<ILocationSelectionStore, PreferencesLocationSelectionStore>();
+        builder.Services.AddSingleton<ILocationSelection, LocationSelectionService>();
         builder.Services.AddSingleton<ILocationService, LocationService>();
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<IToastService, ToastService>();
+#if DEBUG
+        builder.Services.AddSingleton<IScreenshotSeed, HarnessScreenshotSeed>();
+#else
+        builder.Services.AddSingleton<IScreenshotSeed, NoScreenshotSeed>();
+#endif
         builder.Services.AddSingleton<IDevicePermissionsService<PermissionStatus>, DevicePermissionsService>();
         builder.Services.AddSingleton<IPermissionGateService, PermissionGateService>();
         builder.Services.AddSingleton<IMoonService, MoonService>();
@@ -48,6 +60,8 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<ViewModelServices>();
         builder.Services.AddSingleton<DistanceFormatter>();
         // One connection for the file both repositories read; see AppDatabaseConnection.
+        // One set of paths for the installer and the connections, so they cannot disagree.
+        builder.Services.AddSingleton(DatabasePaths.Default);
         builder.Services.AddSingleton<AppDatabaseConnection>();
         builder.Services.AddSingleton<ISavedLocationsRepository, SavedLocationsRepository>();
         builder.Services.AddSingleton<IWorldCitiesRepository, WorldCitiesRepository>();

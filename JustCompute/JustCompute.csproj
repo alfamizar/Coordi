@@ -22,6 +22,9 @@
     <PublishAot>False</PublishAot>
     <!-- Compile XAML bindings into source where possible: faster runtime binding, fewer reflection calls. -->
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <!-- A binding XamlC cannot compile (XC0022) or whose property does not exist (XC0045) only
+         surfaces in Release, since Debug inflates XAML at runtime. As warnings they went unseen. -->
+    <WarningsAsErrors>$(WarningsAsErrors);XC0022;XC0045</WarningsAsErrors>
   </PropertyGroup>
   <!-- Android: keep only modern device + x64 emulator RIDs. Dropped android-x86 (no real devices). -->
   <PropertyGroup Condition="$(TargetFramework.Contains('-android'))">
@@ -185,6 +188,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Compute.Core\Compute.Core.csproj" />
     <ProjectReference Include="..\JustCompute.Persistence\JustCompute.Persistence.csproj" />
+    <ProjectReference Include="..\JustCompute.Presentation\JustCompute.Presentation.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Platforms\Android\Services\" />

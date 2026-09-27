@@ -12,12 +12,12 @@ namespace JustCompute.Persistence.Repository
     /// locations along with it. Separate files also mean the two connections no longer contend for
     /// the same shared-cache locks.
     /// </summary>
-    public sealed class AppDatabaseConnection
+    public sealed class AppDatabaseConnection(DatabasePaths paths)
     {
-        public SQLiteAsyncConnection UserData { get; } =
-            new(RepositoryConstants.UserDatabasePath, RepositoryConstants.Flags);
+        public DatabasePaths Paths { get; } = paths;
 
-        public SQLiteAsyncConnection Catalogue { get; } =
-            new(RepositoryConstants.CataloguePath, RepositoryConstants.Flags);
+        public SQLiteAsyncConnection UserData { get; } = new(paths.UserData, RepositoryConstants.Flags);
+
+        public SQLiteAsyncConnection Catalogue { get; } = new(paths.Catalogue, RepositoryConstants.Flags);
     }
 }

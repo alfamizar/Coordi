@@ -36,10 +36,12 @@ public sealed class WeatherService(HttpClient httpClient) : IWeatherService
                 .GetFromJsonAsync<OpenMeteoResponse>(url, cancellationToken)
                 .ConfigureAwait(false);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             // A superseded or abandoned request is not a failure — let the caller tell the two
             // apart instead of reporting "weather unavailable" for a load nobody is waiting on.
+            // Only when it was the caller who cancelled, though: HttpClient raises its own timeout
+            // as the same exception, and that one is a failure and belongs in the catch below.
             throw;
         }
         catch (Exception)

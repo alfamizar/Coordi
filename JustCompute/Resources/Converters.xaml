@@ -39,6 +39,8 @@
                                          ConditionType="Any" />
     <toolkit:IsNullConverter x:Key="IsNullConverter" />
     <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <converters:LatitudeToDmsConverter x:Key="LatitudeToDmsConverter" />
+    <converters:LongitudeToDmsConverter x:Key="LongitudeToDmsConverter" />
     <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
 
     <weather:WeatherConditionToIconConverter x:Key="WeatherConditionToIconConverter" />

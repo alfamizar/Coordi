@@ -1,4 +1,4 @@
-﻿namespace Compute.Core.Helpers
+namespace JustCompute.Presentation.Collections
 {
     public interface IGroupHeader
     {

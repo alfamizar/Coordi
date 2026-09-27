@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Presentation logic that has no business in the domain and no need of MAUI: collections a
+    view binds to, the list bookkeeping behind the Locations screen, and the task plumbing view
+    models share. It sits between Compute.Core and the app so it can be unit tested - the app
+    project targets Android and iOS and cannot be referenced from a test project, which is how
+    pure logic in it went untested and how SupersedingTask shipped a bug a two-line test catches.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Compute.Core\Compute.Core.csproj" />
+  </ItemGroup>
+
+</Project>

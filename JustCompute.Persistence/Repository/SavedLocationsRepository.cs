@@ -11,12 +11,14 @@ namespace JustCompute.Persistence.Repository
     public class SavedLocationsRepository : ISavedLocationsRepository
     {
         private readonly SQLiteAsyncConnection _database;
+        private readonly DatabasePaths _paths;
         private readonly SemaphoreSlim _initializeGate = new(1, 1);
         private Task? _initialized;
 
         public SavedLocationsRepository(AppDatabaseConnection connection)
         {
             _database = connection.UserData;
+            _paths = connection.Paths;
         }
 
         /// <summary>
@@ -58,21 +60,25 @@ namespace JustCompute.Persistence.Repository
             await _database.ExecuteAsync(RepositoryConstants.CreateCitiesTableStatement).ConfigureAwait(false);
             await _database.ExecuteAsync(RepositoryConstants.CreateLocationsTableStatement).ConfigureAwait(false);
             await AddTimeZoneIdColumnIfMissingAsync().ConfigureAwait(false);
-            await MigrateFromCatalogueAsync().ConfigureAwait(false);
+            await MigrateLegacyPlacesAsync().ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Moves locations saved by an earlier version, which kept them inside the shipped
-        /// catalogue file, into the user's own database.
+        /// Moves places saved by a version from before the split into the user's own database.
         ///
-        /// Ids are carried across verbatim so the persisted "current location" preference still
-        /// points at the right row, and the originals are dropped once copied so a second run
-        /// cannot duplicate them. Anything that goes wrong leaves the old file untouched — the
-        /// user keeps their data on the old schema rather than losing it to a half-finished move.
+        /// They are read from the parked copy the installer moved aside when it replaced the
+        /// catalogue, or from the catalogue itself if it was never replaced. Ids are carried
+        /// across verbatim so the persisted "current location" preference still points at the
+        /// right row. Anything that goes wrong leaves the source untouched — the user keeps
+        /// their data on the old schema rather than losing it to a half-finished move — and the
+        /// next launch tries again.
         /// </summary>
-        private async Task MigrateFromCatalogueAsync()
+        private async Task MigrateLegacyPlacesAsync()
         {
-            if (!File.Exists(RepositoryConstants.CataloguePath))
+            string? source = File.Exists(_paths.LegacyUserData) ? _paths.LegacyUserData
+                : File.Exists(_paths.Catalogue) ? _paths.Catalogue
+                : null;
+            if (source is null)
             {
                 return;
             }
@@ -88,14 +94,14 @@ namespace JustCompute.Persistence.Repository
 
             try
             {
-                await _database.ExecuteAsync(RepositoryConstants.AttachCatalogueStatement,
-                    RepositoryConstants.CataloguePath).ConfigureAwait(false);
+                await _database.ExecuteAsync(RepositoryConstants.AttachCatalogueStatement, source).ConfigureAwait(false);
             }
-            catch (Exception)
+            catch (SQLiteException)
             {
                 return;
             }
 
+            bool copied = false;
             try
             {
                 var legacyTables = await _database
@@ -104,15 +110,35 @@ namespace JustCompute.Persistence.Repository
 
                 if (legacyTables == 2)
                 {
-                    await _database.ExecuteAsync(RepositoryConstants.CopyLegacyCitiesStatement).ConfigureAwait(false);
-                    await _database.ExecuteAsync(RepositoryConstants.CopyLegacyLocationsStatement).ConfigureAwait(false);
-                    await _database.ExecuteAsync(RepositoryConstants.DropLegacyLocationsStatement).ConfigureAwait(false);
-                    await _database.ExecuteAsync(RepositoryConstants.DropLegacyCitiesStatement).ConfigureAwait(false);
+                    var columns = await _database
+                        .QueryAsync<TableColumnInfo>(RepositoryConstants.LegacyLocationsColumnsQuery)
+                        .ConfigureAwait(false);
+                    bool hasTimeZoneId = columns.Any(column =>
+                        string.Equals(column.Name, "TimeZoneId", StringComparison.OrdinalIgnoreCase));
+
+                    // One transaction, so a failure part-way leaves neither a half-copied list
+                    // here nor a source already emptied of it.
+                    await _database.RunInTransactionAsync(connection =>
+                    {
+                        connection.Execute(RepositoryConstants.CopyLegacyCitiesStatement);
+                        connection.Execute(RepositoryConstants.CopyLegacyLocationsStatement(hasTimeZoneId));
+
+                        // Only the catalogue keeps living after this; its copies are dropped so a
+                        // second run cannot bring the same rows across twice. The parked file is
+                        // removed whole, below, once it is detached.
+                        if (source == _paths.Catalogue)
+                        {
+                            connection.Execute(RepositoryConstants.DropLegacyLocationsStatement);
+                            connection.Execute(RepositoryConstants.DropLegacyCitiesStatement);
+                        }
+                    }).ConfigureAwait(false);
+
+                    copied = true;
                 }
             }
-            catch (Exception)
+            catch (SQLiteException)
             {
-                // Leave the old file as it was; the next launch can try again.
+                // Leave the source as it was; the next launch can try again.
             }
             finally
             {
@@ -120,10 +146,15 @@ namespace JustCompute.Persistence.Repository
                 {
                     await _database.ExecuteAsync(RepositoryConstants.DetachCatalogueStatement).ConfigureAwait(false);
                 }
-                catch (Exception)
+                catch (SQLiteException)
                 {
                     // Detaching a database that never attached is not worth reporting.
                 }
+            }
+
+            if (copied && source == _paths.LegacyUserData)
+            {
+                File.Delete(_paths.LegacyUserData);
             }
         }
 

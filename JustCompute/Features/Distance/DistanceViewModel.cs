@@ -1,3 +1,4 @@
+using Compute.Astro;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models.Distance;
@@ -5,6 +6,7 @@ using Compute.Core.Domain.Entities.Models.Fuel;
 using Compute.Core.Domain.Entities.Models.Route;
 using JustCompute.Features.SearchByCity;
 using JustCompute.Shared.Abstractions.Navigation;
+using JustCompute.Shared.Abstractions.Screenshots;
 using JustCompute.Shared.ViewModels;
 using JustCompute.Shared.Helpers;
 using System.Collections.ObjectModel;
@@ -133,14 +135,17 @@ namespace JustCompute.Features.Distance
 
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly DistanceFormatter _distanceFormatter;
+        private readonly IScreenshotSeed _screenshotSeed;
 
         public DistanceViewModel(
             ViewModelServices services,
             IStringLocalizer<AppStringsRes> localizer,
-            DistanceFormatter distanceFormatter) : base(services)
+            DistanceFormatter distanceFormatter,
+            IScreenshotSeed screenshotSeed) : base(services)
         {
             _localizer = localizer;
             _distanceFormatter = distanceFormatter;
+            _screenshotSeed = screenshotSeed;
 
             FuelUnits =
             [
@@ -178,19 +183,17 @@ namespace JustCompute.Features.Distance
 
                 if (Stops.Count == 0)
                 {
-#if DEBUG
                     // A screenshot run can hand the Ruler a real route. The pins live in memory,
                     // so unlike a saved place this cannot be arranged before the app starts.
-                    if (global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededRouteStops.Count > 1)
+                    if (_screenshotSeed.RouteStops.Count > 1)
                     {
-                        foreach (var stop in global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededRouteStops)
+                        foreach (var stop in _screenshotSeed.RouteStops)
                         {
                             Add(stop);
                         }
                         Renumber();
                         return Task.CompletedTask;
                     }
-#endif
                     Add(location.Clone());
                     return Task.CompletedTask;
                 }
@@ -203,13 +206,6 @@ namespace JustCompute.Features.Distance
             return Task.CompletedTask;
         }
 
-        protected override void ClearData()
-        {
-            ForgetAll();
-            Stops.Clear();
-            Recalculate();
-        }
-
         [RelayCommand]
         private async Task AddFromSearch() =>
             await _navigationService.NavigateToAsync<SearchByCityViewModel>(SearchLocationContext.ReturnResult);
@@ -217,7 +213,7 @@ namespace JustCompute.Features.Distance
         [RelayCommand]
         private void AddCurrentLocation()
         {
-            Location? here = _gpsLocationService.DeviceLocation ?? _gpsLocationService.SelectedLocation;
+            Location? here = _device.DeviceLocation ?? _selection.SelectedLocation;
             if (here is null) return;
 
             Add(here.Clone());
@@ -339,7 +335,9 @@ namespace JustCompute.Features.Distance
             {
                 Location at = stop.Location;
                 stop.Name = at.Name;
-                stop.Coordinates = $"{at.LatitudeDms}   {at.LongitudeDms}";
+                stop.Coordinates =
+                    $"{GeoFormat.FormatDms(at.Latitude, GeoFormat.Axis.Latitude)}   " +
+                    $"{GeoFormat.FormatDms(at.Longitude, GeoFormat.Axis.Longitude)}";
                 stop.Leg = string.Empty;
                 stop.HasLeg = false;
             }

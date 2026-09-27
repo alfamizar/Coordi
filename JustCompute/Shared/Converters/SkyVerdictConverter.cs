@@ -1,8 +1,6 @@
+using JustCompute.Shared.Helpers;
 using System.Globalization;
 using Compute.Core.Domain.Entities.Models;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 
 namespace JustCompute.Shared.Converters
 {
@@ -34,11 +32,9 @@ namespace JustCompute.Shared.Converters
     /// <summary>The verdict's headline, in the reader's language.</summary>
     public class SkyVerdictToTextConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer =
-            ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
-            _localizer.GetString(value is SkyVerdict verdict
+            Strings.Get(value is SkyVerdict verdict
                 ? verdict switch
                 {
                     SkyVerdict.Clear => "SkyVerdictClearLabel",
@@ -46,7 +42,7 @@ namespace JustCompute.Shared.Converters
                     SkyVerdict.Cloudy => "SkyVerdictCloudyLabel",
                     _ => "SkyVerdictUnknownLabel",
                 }
-                : "SkyVerdictUnknownLabel").Value;
+                : "SkyVerdictUnknownLabel");
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
             throw new NotImplementedException();

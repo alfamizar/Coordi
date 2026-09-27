@@ -1,15 +1,12 @@
+using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Entities.Models.AstroSign;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace JustCompute.Shared.Converters
 {
     public class ZodiacSignEnumToLocalizedStringConverter : IValueConverter
     {
-        private static readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -44,7 +41,7 @@ namespace JustCompute.Shared.Converters
                     _ => null
                 };
 
-                return resourceKey == null ? null : _localizer.GetString(resourceKey).Value;
+                return resourceKey == null ? null : Strings.Get(resourceKey);
             }
             else
             {
