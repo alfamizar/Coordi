@@ -74,6 +74,26 @@ export COORDI_KEY_PASS="…"
 
 ## 4. Build & publish
 
+### A production release in one command
+
+```bash
+scripts/publish-coordi.sh --play            # build, upload, notes, listing
+scripts/publish-coordi.sh --play --draft    # the same, but leave the release a draft
+scripts/publish-coordi.sh --play --dry-run  # print every step, change nothing
+```
+
+It reads the version from `JustCompute.csproj`, refuses a dirty tree, and checks every locale has
+`changelogs/<versionCode>.txt`. It then asks for the keystore passwords (without echo, unless
+`COORDI_KEYSTORE_PASS` / `COORDI_KEY_PASS` are already set) and tries them on the keystore.
+Next it runs the tests, `validate_metadata` and `check_play_key`; the last also refuses a version
+code Play already has. Only then does it build and verify the signed AAB and send it to
+production. The binary, its release notes and the listing (four batches) go up as separate Play
+edits, so one failure cannot take the others down; each step prints the lane it runs, so a
+failed one can be re-run on its own. Keystore and key paths default to `~/.secrets/` as in
+sections 1 and 3. Same shape as Penombre's `scripts/publish-penombre.sh --play`.
+
+### Lane by lane
+
 ```bash
 fastlane android validate_metadata  # check listing text against Play's limits first
 fastlane android build_aab   # dotnet publish -> signed *-Signed.aab (passwords are not logged)

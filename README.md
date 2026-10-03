@@ -238,7 +238,7 @@ Coordi/
 │   ├── Platforms/            # Android / iOS platform code
 │   └── Resources/            # Styles, fonts, images, localized strings
 ├── docs/                     # Store-assets guide, design masters, screenshots
-├── scripts/                  # Localized screenshot automation
+├── scripts/                  # Localized screenshot automation, Play release script
 └── fastlane/                 # Play Store metadata (19 localized listings)
 ```
 
