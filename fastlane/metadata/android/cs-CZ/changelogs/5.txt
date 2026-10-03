@@ -1,0 +1,4 @@
+Minulá zatmění jsou sbalená v jedné skupině nahoře, takže oba seznamy začínají tím příštím.
+Počasí se na pomalém připojení už nenačítá donekonečna; místo toho nabídne nový pokus.
+Uložená místa z prvních verzí se při aktualizaci zachovají.
+Opravy zabezpečení a stability.

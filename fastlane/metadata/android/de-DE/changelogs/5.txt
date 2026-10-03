@@ -1,0 +1,4 @@
+Vergangene Finsternisse sind oben in einer Gruppe zusammengefasst, beide Listen beginnen mit der nächsten.
+Das Wetter lädt bei langsamer Verbindung nicht mehr endlos, sondern bietet einen neuen Versuch an.
+Gespeicherte Orte aus den ersten Versionen bleiben beim Update erhalten.
+Sicherheits- und Stabilitätskorrekturen.
