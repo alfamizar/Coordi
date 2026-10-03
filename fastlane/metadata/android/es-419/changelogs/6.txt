@@ -1,0 +1,4 @@
+Se abre al instante en el lugar de la última vez y luego comprueba dónde estás ahora.
+Si te fuiste a otra ciudad, pregunta antes de cambiar.
+Atrás en la pantalla Hoy ahora cierra la app.
+Tu ubicación se encuentra más rápido.

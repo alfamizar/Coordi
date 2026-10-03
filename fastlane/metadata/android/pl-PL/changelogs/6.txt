@@ -1,0 +1,4 @@
+Aplikacja od razu otwiera się w miejscu z ostatniego razu, a potem sprawdza, gdzie jesteś teraz.
+Jeśli jesteś w innym mieście, przed zmianą zapyta.
+Przycisk Wstecz na ekranie Dziś zamyka teraz aplikację.
+Twoja lokalizacja jest ustalana szybciej.

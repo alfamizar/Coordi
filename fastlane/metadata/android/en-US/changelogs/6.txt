@@ -1,0 +1,4 @@
+Opens straight away on where you were last time, then checks where you are now.
+If you have moved to another city, it asks before switching.
+Back on the Today screen now closes the app.
+Your location is found faster.

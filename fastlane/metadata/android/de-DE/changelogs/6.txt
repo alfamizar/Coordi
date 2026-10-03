@@ -1,0 +1,4 @@
+Die App öffnet sofort mit dem Ort vom letzten Mal und prüft dann, wo Sie gerade sind.
+Sind Sie in einer anderen Stadt, fragt sie vor dem Wechsel nach.
+Zurück auf dem Bildschirm Heute schließt jetzt die App.
+Ihr Standort wird schneller ermittelt.

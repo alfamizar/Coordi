@@ -1,0 +1,4 @@
+Uygulama son seferki konumla hemen açılır, ardından şu an nerede olduğunuzu denetler.
+Başka bir şehirdeyseniz, değiştirmeden önce sorar.
+Bugün ekranında Geri artık uygulamayı kapatır.
+Konumunuz daha hızlı bulunur.
