@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # Publish Coordi to Google Play: build the signed AAB, send it to production, attach the release
-# notes, then upload the listing in four batches.
+# notes, then bring the listing up to date in four batches — text, and only the screenshots and
+# graphics Play does not already have.
 #
 # The same release Penombre's scripts/publish-penombre.sh --play does, with the steps Coordi's own
 # releases taught: the binary, the notes and the listing go up as separate Play edits. Play
@@ -182,8 +183,11 @@ run env COORDI_TRACK=production COORDI_VERSION_CODE="$VERSION_CODE" \
 # The listing is uploaded in batches because supply puts an entire run into one Play edit and
 # commits it at the end. One edit carrying every locale's screenshots has died on a Google 500
 # near the finish; four edits mean a failure costs one batch. The lane slices the locales itself.
+#
+# Images are compared with Play's by checksum, so a release that recaptured nothing uploads
+# none of them; the text is sent again, which changes nothing that has not changed.
 BATCHES=4
-say "Play: listing and screenshots, $BATCHES batches"
+say "Play: listing, $BATCHES batches (only changed images upload)"
 for b in $(seq 1 "$BATCHES"); do
   run env COORDI_TRACK=production COORDI_VERSION_CODE="$VERSION_CODE" \
     fastlane android upload_listing_batch "batch:$b" "of:$BATCHES"

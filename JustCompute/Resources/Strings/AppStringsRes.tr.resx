@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>Konumlar</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>Şehir değiştirilsin mi?</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>Şu anda {0} konumunda görünüyorsunuz. {1} yerine geçilsin mi?</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>{0} konumuna geç</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>{0} kalsın</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Boylam</value>
   </data>

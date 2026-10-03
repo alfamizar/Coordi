@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>위치</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>도시를 변경할까요?</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>지금 {0}에 계신 것 같습니다. {1}에서 바꿀까요?</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>{0}(으)로 변경</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>{0} 유지</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>경도</value>
   </data>

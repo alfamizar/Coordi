@@ -72,7 +72,19 @@ namespace JustCompute.Services.LocationService
         public event EventHandler<DeviceLocationUpdate>? DeviceLocationUpdated;
         public event EventHandler<DeviceLocationListeningFailure>? DeviceLocationListeningFailed;
 
-        public async Task<Result<Location, FaultCode>> GetDeviceGeoLocation()
+        public Task<Result<Location, FaultCode>> GetDeviceGeoLocation() => RequestFixAsync(announce: true);
+
+        public Task<Result<Location, FaultCode>> FetchDeviceGeoLocationAsync() => RequestFixAsync(announce: false);
+
+        public void PublishDeviceLocation(Location position)
+        {
+            ArgumentNullException.ThrowIfNull(position);
+
+            position.IsCurrent = true;
+            SetDeviceLocation(position);
+        }
+
+        private async Task<Result<Location, FaultCode>> RequestFixAsync(bool announce)
         {
             try
             {
@@ -84,7 +96,11 @@ namespace JustCompute.Services.LocationService
 
                 IsGettingDeviceLocation = true;
 
-                GeolocationRequest request = new(GeolocationAccuracy.Best, TimeSpan.FromSeconds(30));
+                // Medium, not Best: the network's answer arrives in a second or two, where the GPS
+                // chip can take the whole half minute indoors. Nothing here needs more — a
+                // kilometre east or west moves sunrise by about three seconds. Speed and Distance
+                // asks for its own, precise stream and is not affected.
+                GeolocationRequest request = new(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(30));
 
                 _cancelTokenSource = new CancellationTokenSource();
 
@@ -96,7 +112,13 @@ namespace JustCompute.Services.LocationService
                 // Marked before it is announced. It used to be set after, so every listener saw
                 // the device's own position claim not to be the device's own position.
                 fix.IsCurrent = true;
-                SetDeviceLocation(fix);
+
+                // Announced before the request settles, so a screen waiting on it finds the fix
+                // already in place. Not announced at all when the caller decides first.
+                if (announce)
+                {
+                    SetDeviceLocation(fix);
+                }
 
                 return fix;
             }

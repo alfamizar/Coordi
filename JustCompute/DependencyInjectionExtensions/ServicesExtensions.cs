@@ -38,7 +38,9 @@ public static class ServicesExtensions
         builder.Services.AddSingleton<IDeviceLocationProvider>(services => services.GetRequiredService<GPSLocationService>());
         builder.Services.AddSingleton<IDeviceLocationTracker>(services => services.GetRequiredService<GPSLocationService>());
         builder.Services.AddSingleton<ILocationSelectionStore, PreferencesLocationSelectionStore>();
+        builder.Services.AddSingleton(TimeProvider.System);
         builder.Services.AddSingleton<ILocationSelection, LocationSelectionService>();
+        builder.Services.AddSingleton<CityChangePrompt>();
         builder.Services.AddSingleton<ILocationService, LocationService>();
         builder.Services.AddSingleton<IDialogService, DialogService>();
         builder.Services.AddSingleton<IToastService, ToastService>();

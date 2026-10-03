@@ -89,7 +89,8 @@ Next it runs the tests, `validate_metadata` and `check_play_key`; the last also 
 code Play already has. Only then does it build and verify the signed AAB and send it to
 production. The binary, its release notes and the listing (four batches) go up as separate Play
 edits, so one failure cannot take the others down; each step prints the lane it runs, so a
-failed one can be re-run on its own. Keystore and key paths default to `~/.secrets/` as in
+failed one can be re-run on its own. The listing lanes compare images with Play's by checksum
+(`sync_image_upload`), so a release that recaptured no screenshots uploads none. Keystore and key paths default to `~/.secrets/` as in
 sections 1 and 3. Same shape as Penombre's `scripts/publish-penombre.sh --play`.
 
 ### Lane by lane

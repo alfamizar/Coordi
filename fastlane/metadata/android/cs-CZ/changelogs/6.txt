@@ -1,0 +1,4 @@
+Aplikace se hned otevře tam, kde jste byli naposledy, a pak ověří, kde jste teď.
+Když jste v jiném městě, před přepnutím se zeptá.
+Tlačítko Zpět na obrazovce Dnes teď aplikaci zavře.
+Vaše poloha se zjistí rychleji.

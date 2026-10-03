@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>Místa</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>Změnit město?</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>Zdá se, že jste teď v místě {0}. Přepnout z místa {1}?</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>Přepnout: {0}</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>Ponechat: {0}</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Zeměpisná délka</value>
   </data>

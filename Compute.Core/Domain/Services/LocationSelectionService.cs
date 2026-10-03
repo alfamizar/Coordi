@@ -18,6 +18,11 @@ namespace Compute.Core.Domain.Services
     /// placeholder was created lazily with a non-atomic ??=, and two threads could have made two
     /// of them, after which the identity checks below misfire. State is now guarded by one lock
     /// and the placeholder is created once.
+    ///
+    /// While the selection follows the device, the position it last had is kept, and a launch
+    /// opens on it at once rather than waiting up to half a minute for a fix. The fresh fix that
+    /// follows is taken silently if it is in the same town; if it is in another, it is held back
+    /// and the reader is asked first, the way Jakdojade asks before changing city.
     /// </summary>
     public sealed class LocationSelectionService : ILocationSelection
     {
@@ -25,9 +30,14 @@ namespace Compute.Core.Domain.Services
         private readonly IPermissionGateService _permissions;
         private readonly ILocationService _locations;
         private readonly ILocationSelectionStore _store;
+        private readonly TimeProvider _time;
+
+        /// <summary>How long the app has to be away before coming back asks the device again.</summary>
+        public static readonly TimeSpan RefreshAfterAway = TimeSpan.FromMinutes(30);
 
         private readonly Location _placeholder = Location.CreatePlaceholder();
         private readonly WeakEvent<EventArgs> _deviceFixAdopted = new();
+        private readonly WeakEvent<CityChangeProposedEventArgs> _cityChangeProposed = new();
         private readonly Lock _gate = new();
 
         /// <summary>What the user picked or the app filled in; null means "on the placeholder".</summary>
@@ -36,6 +46,20 @@ namespace Compute.Core.Domain.Services
         /// <summary>The fix standing in for a choice, when the selection is one.</summary>
         private Location? _adoptedFix;
 
+        /// <summary>
+        /// The town on screen that the next fresh fix is compared with, and the only one: it is the
+        /// town the reader was last shown, which is what makes moving away from it worth a question.
+        /// The kept position at launch, or whatever is on screen when the app returns after a while
+        /// away. Cleared by the fix it was waiting for, and by anything the user picks.
+        /// </summary>
+        private Location? _confirmAgainst;
+
+        /// <summary>A fix in another town, held back until the reader answers.</summary>
+        private Location? _proposed;
+
+        /// <summary>When a fresh fix was last taken or offered. Null until then: one look per launch.</summary>
+        private DateTimeOffset? _refreshedAt;
+
         private Task<bool>? _restore;
         private int _fillInFlight;
 
@@ -43,12 +67,14 @@ namespace Compute.Core.Domain.Services
             IDeviceLocationProvider device,
             IPermissionGateService permissions,
             ILocationService locations,
-            ILocationSelectionStore store)
+            ILocationSelectionStore store,
+            TimeProvider time)
         {
             _device = device;
             _permissions = permissions;
             _locations = locations;
             _store = store;
+            _time = time;
 
             // A method group, not a lambda: the provider may hold its subscribers weakly.
             _device.DeviceLocationChanged += OnDeviceLocationChanged;
@@ -58,6 +84,12 @@ namespace Compute.Core.Domain.Services
         {
             add => _deviceFixAdopted.Add(value);
             remove => _deviceFixAdopted.Remove(value);
+        }
+
+        public event EventHandler<CityChangeProposedEventArgs> CityChangeProposed
+        {
+            add => _cityChangeProposed.Add(value);
+            remove => _cityChangeProposed.Remove(value);
         }
 
         public Location SelectedLocation
@@ -90,6 +122,9 @@ namespace Compute.Core.Domain.Services
             {
                 // The placeholder can appear as a row when the list would otherwise be empty.
                 // Tapping it is not a choice of anywhere, so it clears rather than records one.
+                // A pick of any kind settles the question the town on screen was waiting to raise.
+                _confirmAgainst = null;
+
                 if (ReferenceEquals(location, _placeholder))
                 {
                     _selected = null;
@@ -104,6 +139,13 @@ namespace Compute.Core.Domain.Services
                 _adoptedFix = null;
                 _store.SelectedLocationId = location.IsSaved ? location.Id : null;
                 _store.HasUserChosen = true;
+
+                // Picking the device's own row means following the device, so its position is
+                // the one to open on next time.
+                if (location.IsCurrent)
+                {
+                    _store.LastDevicePosition = new GeoPoint(location.Latitude, location.Longitude);
+                }
             }
         }
 
@@ -139,7 +181,11 @@ namespace Compute.Core.Domain.Services
                     wanted = _store.SelectedLocationId;
                 }
 
-                if (wanted is not int id) return true;
+                if (wanted is not int id)
+                {
+                    await RestoreLastDevicePositionAsync().ConfigureAwait(false);
+                    return true;
+                }
 
                 var saved = await _locations.GetSavedLocations().ConfigureAwait(false);
                 var match = saved.FirstOrDefault(location => location.Id == id);
@@ -165,12 +211,41 @@ namespace Compute.Core.Domain.Services
             }
         }
 
-        public async Task FillFromDeviceIfUnchosenAsync()
+        /// <summary>
+        /// Opens on where the device was last time, when the selection follows it. Without this
+        /// every launch drew nothing until a fresh fix arrived — up to half a minute indoors, and
+        /// the London placeholder when none did.
+        /// </summary>
+        private async Task RestoreLastDevicePositionAsync()
         {
-            if (!ShouldPromptForLocation) return;
+            if (_store.LastDevicePosition is not GeoPoint kept) return;
+
+            // Named the way a fresh fix is, from the bundled catalogue: no network involved.
+            var position = await _locations.GetLocationFromCoordinates(kept.Latitude, kept.Longitude).ConfigureAwait(false);
+            position.IsCurrent = true;
+
+            lock (_gate)
+            {
+                // A fix or a pick that landed while the town was being looked up is newer.
+                if (_selected is not null) return;
+
+                _selected = position;
+                _adoptedFix = position;
+                _confirmAgainst = position;
+            }
+
+            // Announced only now, with the selection already on it, so following it moves nothing
+            // and no screen reloads for the place it is about to compute anyway. The Locations
+            // screen shows it as the device's row until a fresh fix replaces it.
+            _device.PublishDeviceLocation(position);
+        }
+
+        public async Task RefreshFromDeviceAsync()
+        {
+            if (!ShouldRefreshFromDevice) return;
 
             // One request between all the screens that ask: they share this service, and several
-            // first loads landing together would otherwise each start their own.
+            // loads landing together would otherwise each start their own.
             if (Interlocked.Exchange(ref _fillInFlight, 1) == 1) return;
 
             try
@@ -180,12 +255,114 @@ namespace Compute.Core.Domain.Services
                 if (!await _permissions.RefreshLocationPermissionState()) return;
                 if (_device.IsGettingDeviceLocation) return;
 
-                await _device.GetDeviceGeoLocation();
+                bool somethingToCompare;
+                lock (_gate)
+                {
+                    somethingToCompare = _confirmAgainst is not null;
+                }
+
+                if (!somethingToCompare)
+                {
+                    // Nothing on screen a fix could carry the reader away from — the placeholder at
+                    // most. Taken as it comes, and announced before the request settles, so a
+                    // screen waiting on it finds the selection already moved.
+                    if ((await _device.GetDeviceGeoLocation()).IsSuccessful)
+                    {
+                        lock (_gate)
+                        {
+                            _refreshedAt = _time.GetUtcNow();
+                        }
+                    }
+
+                    return;
+                }
+
+                var fetched = await _device.FetchDeviceGeoLocationAsync();
+                if (fetched.IsSuccessful)
+                {
+                    TakeOrPropose(fetched.Value);
+                }
             }
             finally
             {
                 // Reset so a later load can try again: permission may be granted by then.
                 Volatile.Write(ref _fillInFlight, 0);
+            }
+        }
+
+        public Task RefreshOnReturnAsync()
+        {
+            lock (_gate)
+            {
+                // Only once this launch has had its look, and only after a real absence: a glance
+                // at another app and back is not a journey.
+                if (_refreshedAt is not { } last || _time.GetUtcNow() - last < RefreshAfterAway) return Task.CompletedTask;
+                if (!IsFollowingDevice || _selected is not { IsCurrent: true } onScreen) return Task.CompletedTask;
+
+                _refreshedAt = null;
+                _confirmAgainst = onScreen;
+            }
+
+            return RefreshFromDeviceAsync();
+        }
+
+        /// <summary>The same town is taken silently; another one is held back and offered.</summary>
+        private void TakeOrPropose(Location fresh)
+        {
+            Location? from = null;
+
+            lock (_gate)
+            {
+                _refreshedAt = _time.GetUtcNow();
+                var shown = _confirmAgainst;
+                _confirmAgainst = null;
+
+                // Still on the town the question is about, still following the device, and the
+                // fix is somewhere else: nothing moves until the reader says so.
+                if (shown is not null
+                    && ReferenceEquals(_selected, shown)
+                    && IsFollowingDevice
+                    && LocationSelection.IsDifferentTown(shown, fresh))
+                {
+                    _proposed = fresh;
+                    from = shown;
+                }
+            }
+
+            if (from is not null)
+            {
+                _cityChangeProposed.Raise(this, new CityChangeProposedEventArgs(from, fresh));
+                return;
+            }
+
+            // The same town, or nothing left to ask about: the fix is simply where the device is.
+            _device.PublishDeviceLocation(fresh);
+        }
+
+        public void AcceptProposedCityChange()
+        {
+            Location? fresh;
+            lock (_gate)
+            {
+                fresh = _proposed;
+                _proposed = null;
+            }
+
+            // Announced, and the selection follows it the way it follows any fix — unless the
+            // user has picked a place of their own in the meantime, which it then leaves alone.
+            if (fresh is not null)
+            {
+                _device.PublishDeviceLocation(fresh);
+            }
+        }
+
+        public void DeclineProposedCityChange()
+        {
+            // Neither announced nor kept: the town on screen stays the device's position for the
+            // rest of this launch, and the next launch opens on it and asks again.
+            lock (_gate)
+            {
+                _proposed = null;
             }
         }
 
@@ -207,6 +384,16 @@ namespace Compute.Core.Domain.Services
                 moved = !ReferenceEquals(_selected, e.Current);
                 _selected = e.Current;
                 if (!wasUserChoice) _adoptedFix = e.Current;
+
+                // Kept for the next launch to open on.
+                _store.LastDevicePosition = new GeoPoint(e.Current.Latitude, e.Current.Longitude);
+
+                // Any fix but the kept position itself answers what that position was waiting to ask.
+                if (!ReferenceEquals(e.Current, _confirmAgainst))
+                {
+                    _confirmAgainst = null;
+                    _refreshedAt = _time.GetUtcNow();
+                }
             }
 
             // Outside the lock: a handler reads SelectedLocation straight back.
@@ -215,6 +402,26 @@ namespace Compute.Core.Domain.Services
                 _deviceFixAdopted.Raise(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Following the device and not yet refreshed this launch. Following means no saved place
+        /// is the choice: nothing picked, or the device's own row picked. The second used to be
+        /// missed, so someone who had once tapped their own position opened on London ever after.
+        /// </summary>
+        private bool ShouldRefreshFromDevice
+        {
+            get
+            {
+                lock (_gate)
+                {
+                    return _refreshedAt is null && IsFollowingDevice;
+                }
+            }
+        }
+
+        /// <summary>Must be read under <see cref="_gate"/>.</summary>
+        private bool IsFollowingDevice =>
+            _store.SelectedLocationId is null && (_selected is null || _selected.IsCurrent);
 
         /// <summary>Must be read under <see cref="_gate"/>.</summary>
         private bool IsUserChoice => LocationSelection.IsUserChoice(_selected, _placeholder, _adoptedFix);

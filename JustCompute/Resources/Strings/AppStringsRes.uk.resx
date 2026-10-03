@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>Місця</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>Змінити місто?</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>Схоже, ви зараз в іншому місті: {0}. Перемкнути? Зараз вибрано: {1}.</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>Змінити на: {0}</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>Залишити: {0}</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Довгота</value>
   </data>

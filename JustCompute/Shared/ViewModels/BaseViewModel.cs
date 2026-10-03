@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using JustCompute.Shared.Abstractions.Navigation;
 using JustCompute.Shared.Helpers;
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Services;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
@@ -80,12 +81,19 @@ namespace JustCompute.Shared.ViewModels
                 // own choice has been read back from storage. Restoring runs once per launch.
                 await _selection.RestorePersistedSelectionAsync();
 
-                // Unawaited: the platform can sit on this for up to 30 seconds, and there is a
-                // placeholder to draw in the meantime. When the fix lands it becomes the
-                // selection, and DeviceFixAdopted brings this screen back to reload.
-                _selection.FillFromDeviceIfUnchosenAsync().Forget(nameof(ILocationSelection.FillFromDeviceIfUnchosenAsync));
+                // Unawaited: the platform can sit on this for up to 30 seconds. When a fix is
+                // taken it becomes the selection, and DeviceFixAdopted brings this screen back to
+                // reload; when it is in another town the reader is asked first.
+                _selection.RefreshFromDeviceAsync().Forget(nameof(ILocationSelection.RefreshFromDeviceAsync));
 
-                await _device.WaitForPendingFixAsync();
+                // Waited on only while there is nothing better than the placeholder to draw: a
+                // first launch, or one with no position kept from the last. Every other launch
+                // draws the kept position at once — it used to wait for the fix every time, and
+                // showed an empty screen for as long as the GPS took.
+                if (LocationIdentity.IsPlaceholder(_selection.SelectedLocation))
+                {
+                    await _device.WaitForPendingFixAsync();
+                }
 
                 var location = _selection.SelectedLocation;
                 _loadedFor = location;
@@ -140,11 +148,12 @@ namespace JustCompute.Shared.ViewModels
 
         public virtual Task OnPageDisappearingAsync() => Task.CompletedTask;
 
-        public virtual bool OnBackButtonPressed()
-        {
-            _navigationService.NavigateToDefaultShellItem();
-            return true;
-        }
+        /// <summary>
+        /// Back from any top-level screen returns to Today; on Today it is left to Android, which
+        /// closes the app. It used to be consumed there as well — "navigating" to the screen
+        /// already showing — so Back did nothing at all on Today and could never leave the app.
+        /// </summary>
+        public virtual bool OnBackButtonPressed() => _navigationService.NavigateToDefaultShellItem();
 
         public virtual void OnNavigatedFrom() { }
 
