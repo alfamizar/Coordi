@@ -51,9 +51,14 @@ namespace JustCompute.Navigation
             }
         }
 
-        public void NavigateToDefaultShellItem()
+        public bool NavigateToDefaultShellItem()
         {
-            Shell.Current.CurrentItem = Shell.Current.Items.First();
+            var shell = Shell.Current;
+            var home = shell?.Items.FirstOrDefault();
+            if (shell is null || home is null || shell.CurrentItem == home) return false;
+
+            shell.CurrentItem = home;
+            return true;
         }
 
         public void QuitApp() => Application.Current?.Quit();

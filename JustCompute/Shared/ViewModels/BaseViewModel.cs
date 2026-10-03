@@ -140,11 +140,12 @@ namespace JustCompute.Shared.ViewModels
 
         public virtual Task OnPageDisappearingAsync() => Task.CompletedTask;
 
-        public virtual bool OnBackButtonPressed()
-        {
-            _navigationService.NavigateToDefaultShellItem();
-            return true;
-        }
+        /// <summary>
+        /// Back from any top-level screen returns to Today; on Today it is left to Android, which
+        /// closes the app. It used to be consumed there as well — "navigating" to the screen
+        /// already showing — so Back did nothing at all on Today and could never leave the app.
+        /// </summary>
+        public virtual bool OnBackButtonPressed() => _navigationService.NavigateToDefaultShellItem();
 
         public virtual void OnNavigatedFrom() { }
 

@@ -11,7 +11,13 @@ namespace JustCompute.Shared.Abstractions.Navigation
         /// </summary>
         Task NavigateToShellRouteAsync(string route);
         Task NavigateBackAsync(object? result = null);
-        void NavigateToDefaultShellItem();
+
+        /// <summary>
+        /// Shows the default screen (Today). False when it is already showing, so a back press
+        /// there can be handed to the system — which is what lets Back close the app.
+        /// </summary>
+        bool NavigateToDefaultShellItem();
+
         void QuitApp();
     }
 }
