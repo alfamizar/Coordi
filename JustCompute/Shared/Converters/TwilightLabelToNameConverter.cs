@@ -1,8 +1,6 @@
+using JustCompute.Shared.Helpers;
 using System.Globalization;
 using Compute.Astro;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 
 namespace JustCompute.Shared.Converters
 {
@@ -13,12 +11,10 @@ namespace JustCompute.Shared.Converters
     /// </summary>
     public class TwilightLabelToNameConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer =
-            ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
             value is TwilightLabel label
-                ? _localizer.GetString(label switch
+                ? Strings.Get(label switch
                 {
                     TwilightLabel.FirstLight => "FirstLightLabel",
                     TwilightLabel.NauticalDawn => "NauticalDawnLabel",
@@ -26,7 +22,7 @@ namespace JustCompute.Shared.Converters
                     TwilightLabel.CivilDusk => "CivilDuskLabel",
                     TwilightLabel.NauticalDusk => "NauticalDuskLabel",
                     _ => "LastLightLabel",
-                }).Value
+                })
                 : null;
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>

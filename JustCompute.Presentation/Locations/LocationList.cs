@@ -1,6 +1,6 @@
 using Compute.Core.Domain.Entities.Models;
 
-namespace Compute.Core.Helpers
+namespace JustCompute.Presentation.Locations
 {
     /// <summary>
     /// Merging places into the list the Locations screen shows.

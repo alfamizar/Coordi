@@ -1,4 +1,5 @@
 using Compute.Core.Domain.Services;
+using JustCompute.Persistence.Repository;
 using JustCompute.Persistence.Repository.Constants;
 using JustCompute.Shared.Helpers;
 using System.Reflection;
@@ -11,27 +12,26 @@ public partial class App : Application
     private readonly ThemeHandler _themeHandler;
     private readonly IPermissionGateService _permissionGate;
 
-    public App(ThemeHandler themeHandler, IPermissionGateService permissionGate)
+    public App(ThemeHandler themeHandler, IPermissionGateService permissionGate, DatabasePaths databasePaths)
     {
         InitializeComponent();
 
         _themeHandler = themeHandler;
         _permissionGate = permissionGate;
 
-        // Reinstalled on every new version, not just the first launch ever. That is only safe
-        // now the user's saved places live in their own file: this overwrites the shipped city
-        // catalogue wholesale, which used to mean overwriting their locations along with it.
-        if (VersionTracking.Default.IsFirstLaunchForCurrentVersion
-            || !File.Exists(RepositoryConstants.CataloguePath))
-        {
-            InstallDatabase();
-        }
+        // Reinstalled on every new version, but never over a user's places: a catalogue from before
+        // the split still holds them, and the installer parks it before writing a fresh one. The
+        // old code here truncated it outright, before the migration had read anything out of it.
+        CatalogueInstaller.Install(
+            databasePaths,
+            () => typeof(App).Assembly.GetManifestResourceStream(RepositoryConstants.PreinstalledDatabasePath),
+            isNewVersion: VersionTracking.Default.IsFirstLaunchForCurrentVersion);
 
         // Off the UI thread on purpose: the first zone lookup pays a one-off ~23 ms to load
         // GeoTimeZone's dataset, and left to itself it lands on whichever screen first asks a
         // location for its time. Fire and forget — nothing waits on it, and any failure just
         // means the first real lookup pays the cost as it did before.
-        _ = Task.Run(TimeZoneUtils.Prewarm);
+        Task.Run(TimeZoneUtils.Prewarm).Forget(nameof(TimeZoneUtils.Prewarm));
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
@@ -117,20 +117,5 @@ public partial class App : Application
             window.Stopped -= OnWindowStopped;
             window.Destroying -= OnWindowDestroying;
         }
-    }
-
-    private static void InstallDatabase()
-    {
-        var assembly = IntrospectionExtensions.GetTypeInfo(typeof(App)).Assembly;
-        using Stream? stream = assembly.GetManifestResourceStream(RepositoryConstants.PreinstalledDatabasePath);
-        if (stream is null)
-        {
-            return;
-        }
-
-        Directory.CreateDirectory(Path.GetDirectoryName(RepositoryConstants.CataloguePath)!);
-
-        using FileStream fileStream = File.Create(RepositoryConstants.CataloguePath);
-        stream.CopyTo(fileStream);
     }
 }

@@ -1,15 +1,12 @@
+using JustCompute.Shared.Helpers;
 using Compute.Astro;
 using Compute.Core.Domain.Entities.Models.Eclipses;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace JustCompute.Features.MoonEclipses
 {
     public class MoonEclipseTypeToNameConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -19,7 +16,7 @@ namespace JustCompute.Features.MoonEclipses
             {
                 if (!info.IsVisible)
                 {
-                    return _localizer.GetString("NotVisibleFromHereLabel");
+                    return Strings.Get("NotVisibleFromHereLabel");
                 }
 
                 value = info.Type;
@@ -31,15 +28,15 @@ namespace JustCompute.Features.MoonEclipses
                 {
                     case LunarEclipseType.Total:
                         {
-                            return _localizer.GetString("TotalEclipseLabel");
+                            return Strings.Get("TotalEclipseLabel");
                         }
                     case LunarEclipseType.Penumbral:
                         {
-                            return _localizer.GetString("PenumbralEclipseLabel");
+                            return Strings.Get("PenumbralEclipseLabel");
                         }
                     case LunarEclipseType.Partial:
                         {
-                            return _localizer.GetString("PartialEclipseLabel");
+                            return Strings.Get("PartialEclipseLabel");
                         }
                 }
                 return null;

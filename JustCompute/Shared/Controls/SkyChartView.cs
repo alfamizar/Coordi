@@ -1,6 +1,7 @@
 using Compute.Astro;
 using Compute.Core.Domain.Entities.Models;
 using Microsoft.Maui.Graphics;
+using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Shared.Controls
 {

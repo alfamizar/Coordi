@@ -1,0 +1,4 @@
+Minione zaćmienia są zwinięte w jedną grupę na górze, więc obie listy zaczynają się od najbliższego.
+Pogoda nie ładuje się już bez końca przy wolnym połączeniu; zamiast tego można spróbować ponownie.
+Miejsca zapisane w pierwszych wersjach zostają zachowane po aktualizacji.
+Poprawki bezpieczeństwa i stabilności.

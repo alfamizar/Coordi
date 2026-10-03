@@ -1,6 +1,6 @@
 using Compute.Astro;
 
-namespace Compute.Core.Domain.Entities.Models
+namespace Compute.Core.Domain.ReadModels
 {
     /// <summary>
     /// The sky over one place at one instant, flattened onto a disc.

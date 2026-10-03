@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Compute.Core.Domain.Entities.Models.Speed;
 using Compute.Core.Domain.Services;
 using JustCompute.Shared.Abstractions.UI;
+using JustCompute.Shared.Abstractions.Screenshots;
 using Compute.Core.Utils;
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Common.Results;
@@ -19,6 +20,10 @@ namespace JustCompute.Features.SpeedAndDistance
 {
     public partial class SpeedAndDistanceViewModel : BaseViewModel
     {
+        private readonly IDeviceLocationTracker _tracker;
+        private readonly IDialogService _dialogService;
+        private readonly IScreenshotSeed _screenshotSeed;
+
         private const double MaxTrustedFixAccuracyMeters = 30;
         private const double MaxPlausibleGroundSpeedMps = 100;
 
@@ -142,12 +147,18 @@ namespace JustCompute.Features.SpeedAndDistance
 
         public SpeedAndDistanceViewModel(
             ViewModelServices services,
+            IDeviceLocationTracker tracker,
+            IDialogService dialogService,
             IToastService toastService,
             IStringLocalizer<AppStringsRes> localizer,
-            DistanceFormatter distanceFormatter
+            DistanceFormatter distanceFormatter,
+            IScreenshotSeed screenshotSeed
             )
             : base(services)
         {
+            _tracker = tracker;
+            _dialogService = dialogService;
+            _screenshotSeed = screenshotSeed;
             _toastService = toastService;
             _localizer = localizer;
             _distanceFormatter = distanceFormatter;
@@ -376,11 +387,10 @@ namespace JustCompute.Features.SpeedAndDistance
                 return;
             }
 
-#if DEBUG
             // A finished trip for the store screenshots. The summary only exists while tracking,
             // which a deep link cannot produce, and an empty screen shows none of what the card
-            // is for. Debug-only, and it never runs unless the harness was given a trip.
-            if (global::JustCompute.Shared.Helpers.ScreenshotHarness.SeededTrip is { } demo)
+            // is for. Release builds get a seed with no trip, so this never runs there.
+            if (_screenshotSeed.Trip is { } demo)
             {
                 TravelledDistance = demo.Travelled;
                 DirectDistance = demo.Direct;
@@ -404,7 +414,6 @@ namespace JustCompute.Features.SpeedAndDistance
                     : string.Empty;
                 return;
             }
-#endif
 
             var startedListeningLocationResult = await StartListeningLocation();
             if (startedListeningLocationResult.IsSuccessful)
@@ -423,14 +432,14 @@ namespace JustCompute.Features.SpeedAndDistance
 
         private async Task<Result<bool, FaultCode>> StartListeningLocation(bool backgroundCapable = false)
         {
-            _gpsLocationService.DeviceLocationUpdated += OnDeviceLocationUpdated;
-            _gpsLocationService.DeviceLocationListeningFailed += OnDeviceLocationListeningFailed;
+            _tracker.DeviceLocationUpdated += OnDeviceLocationUpdated;
+            _tracker.DeviceLocationListeningFailed += OnDeviceLocationListeningFailed;
 
-            var result = await _gpsLocationService.StartListeningForDeviceGeoLocation(backgroundCapable);
+            var result = await _tracker.StartListeningForDeviceGeoLocation(backgroundCapable);
             if (!result.IsSuccessful)
             {
-                _gpsLocationService.DeviceLocationUpdated -= OnDeviceLocationUpdated;
-                _gpsLocationService.DeviceLocationListeningFailed -= OnDeviceLocationListeningFailed;
+                _tracker.DeviceLocationUpdated -= OnDeviceLocationUpdated;
+                _tracker.DeviceLocationListeningFailed -= OnDeviceLocationListeningFailed;
                 await _toastService.ShowToast(_localizer.GetString("CannotStartListeningLocationToastMessage"));
             }
             return result;
@@ -438,10 +447,10 @@ namespace JustCompute.Features.SpeedAndDistance
 
         private async Task<Result<bool, FaultCode>> StopListeningLocation()
         {
-            _gpsLocationService.DeviceLocationUpdated -= OnDeviceLocationUpdated;
-            _gpsLocationService.DeviceLocationListeningFailed -= OnDeviceLocationListeningFailed;
+            _tracker.DeviceLocationUpdated -= OnDeviceLocationUpdated;
+            _tracker.DeviceLocationListeningFailed -= OnDeviceLocationListeningFailed;
 
-            var result = _gpsLocationService.StopListeningForDeviceLocation();
+            var result = _tracker.StopListeningForDeviceLocation();
             if (!result.IsSuccessful)
             {
                 await _toastService.ShowToast(_localizer.GetString("CannotStopListeningLocationToastMessage"));

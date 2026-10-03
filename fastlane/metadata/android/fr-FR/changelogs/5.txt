@@ -1,0 +1,4 @@
+Les éclipses passées sont repliées dans un seul groupe en haut : les deux listes commencent par la prochaine.
+La météo ne charge plus indéfiniment sur une connexion lente ; elle propose de réessayer.
+Les lieux enregistrés dans les premières versions sont conservés lors de la mise à jour.
+Corrections de sécurité et de stabilité.

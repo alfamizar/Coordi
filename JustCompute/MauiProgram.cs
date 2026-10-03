@@ -25,6 +25,16 @@ public static class MauiProgram
         DebugCulture.ApplyOverrideIfPresent();
 
         var builder = MauiApp.CreateBuilder();
+
+        // View model lifetimes, so a new feature picks one on purpose rather than by copying:
+        //   * a Shell root (a ShellContent in AppShell.xaml) is a singleton. Shell realises
+        //     those pages once and keeps them, so a transient one would only look transient,
+        //     and the Ruler's route and a running trip have to survive leaving the screen;
+        //   * a page pushed on top of one, like the location editor, is transient, so every
+        //     visit starts from nothing;
+        //   * two documented exceptions: the eclipse pages are transient over a singleton view
+        //     model (see SunEclipsesFeature), and city search is a pushed singleton so the
+        //     results survive a trip to the editor and back (see its OnNavigatedToAsync).
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()

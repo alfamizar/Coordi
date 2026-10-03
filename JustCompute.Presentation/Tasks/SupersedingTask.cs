@@ -1,13 +1,12 @@
-namespace JustCompute.Shared.Helpers
+namespace JustCompute.Presentation.Tasks
 {
     /// <summary>
     /// Runs work of which only the most recent request matters.
     ///
     /// Stepping the date or changing location fires a fresh fetch without waiting for the one
-    /// already in flight, so two overlap and the slower one must not publish over the newer.
-    /// Both screens that fetch weather grew their own cancellation-token field, a Cancel/Dispose
-    /// helper and a "was I superseded?" check around this; the bookkeeping is identical, while
-    /// what each does with the answer is not — so only the bookkeeping lives here.
+    /// already in flight, so two overlap and the slower one must not publish over the newer. The
+    /// same holds for re-sorting search results. The bookkeeping is identical in every case while
+    /// what each caller does with the answer is not, so only the bookkeeping lives here.
     /// </summary>
     public sealed class SupersedingTask : IDisposable
     {
@@ -33,11 +32,16 @@ namespace JustCompute.Shared.Helpers
                 T result = await work(cancellation.Token).ConfigureAwait(false);
                 return (cancellation.IsCancellationRequested, result);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
             {
                 // Superseded or abandoned — not a failure, and nothing is waiting on it.
                 return (true, default);
             }
+            // Filtered, not caught wholesale: a cancellation this token did not ask for is a
+            // failure wearing the same exception. HttpClient reports its own timeout as a
+            // TaskCanceledException, and treating that as "superseded" made the caller publish
+            // nothing at all — the weather skeleton spun forever on a slow network, with no retry
+            // card, because nothing newer was ever coming to replace it.
             // Anything else is a real failure and belongs to the caller: only it knows whether
             // that means an error card, a retry, or a shrug.
         }

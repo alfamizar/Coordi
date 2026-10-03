@@ -1,15 +1,12 @@
+using JustCompute.Shared.Helpers;
 using Compute.Astro;
 using Compute.Core.Domain.Entities.Models.Eclipses;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace JustCompute.Features.SunEclipses
 {
     public class SunEclipseTypeToNameConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -19,7 +16,7 @@ namespace JustCompute.Features.SunEclipses
             {
                 if (!info.IsVisible)
                 {
-                    return _localizer.GetString("NotVisibleFromHereLabel");
+                    return Strings.Get("NotVisibleFromHereLabel");
                 }
 
                 // LocalType, not Type. Type is the geocentric classification — what the eclipse is
@@ -34,11 +31,11 @@ namespace JustCompute.Features.SunEclipses
             {
                 return localType switch
                 {
-                    SolarEclipseLocalType.Total => _localizer.GetString("TotalEclipseLabel"),
-                    SolarEclipseLocalType.Annular => _localizer.GetString("AnnularEclipseLabel"),
-                    SolarEclipseLocalType.Partial => _localizer.GetString("PartialEclipseLabel"),
+                    SolarEclipseLocalType.Total => Strings.Get("TotalEclipseLabel"),
+                    SolarEclipseLocalType.Annular => Strings.Get("AnnularEclipseLabel"),
+                    SolarEclipseLocalType.Partial => Strings.Get("PartialEclipseLabel"),
                     // Visible but classified as nothing is a contradiction; say the honest half.
-                    _ => _localizer.GetString("NotVisibleFromHereLabel"),
+                    _ => Strings.Get("NotVisibleFromHereLabel"),
                 };
             }
 

@@ -9,6 +9,7 @@ using JustCompute.Shared.ViewModels;
 using Microsoft.Extensions.Localization;
 using AppSettings = JustCompute.Shared.Helpers.Settings;
 using Location = Compute.Core.Domain.Entities.Models.Location;
+using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Features.Planets
 {
@@ -55,13 +56,6 @@ namespace JustCompute.Features.Planets
             // alone is quietly wrong by the time anyone has read it.
             _clock.Start(_offsetHours);
             return Task.CompletedTask;
-        }
-
-        protected override void ClearData()
-        {
-            _clock.Stop();
-            _location = null;
-            Planets.Clear();
         }
 
         public override Task OnPageDisappearingAsync()

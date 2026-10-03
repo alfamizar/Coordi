@@ -7,7 +7,8 @@ using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Entities.Models.Weather;
 using Compute.Core.Domain.Services;
 using Compute.Core.Domain.Services.Weather;
-using Compute.Core.Helpers;
+using JustCompute.Presentation.Collections;
+using JustCompute.Presentation.Locations;
 using JustCompute.Shared.Abstractions.UI;
 using Compute.Core.Common.Results;
 using JustCompute.Features.InputLocation;
@@ -20,6 +21,7 @@ using Microsoft.Maui.ApplicationModel;
 using System.Collections.Specialized;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
+using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Features.Locations
 {
@@ -27,6 +29,9 @@ namespace JustCompute.Features.Locations
     {
 
         private readonly IDevicePermissionsService<PermissionStatus> _devicePermissionsService;
+        private readonly ILocationService _locationService;
+        private readonly IDialogService _dialogService;
+        private readonly IPermissionGateService _permissionGate;
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly IToastService _toastService;
         private readonly LocationClock _clock;
@@ -80,18 +85,24 @@ namespace JustCompute.Features.Locations
 
         public LocationsViewModel(
             ViewModelServices services,
+            ILocationService locationService,
+            IDialogService dialogService,
+            IPermissionGateService permissionGate,
             IStringLocalizer<AppStringsRes> localizer,
             IDevicePermissionsService<PermissionStatus> devicePermissionsService,
             IMessagingService messagerService,
             IToastService toastService)
             : base(services)
         {
+            _locationService = locationService;
+            _dialogService = dialogService;
+            _permissionGate = permissionGate;
             _localizer = localizer;
             _clock = new LocationClock(time => CurrentTime = time);
             _devicePermissionsService = devicePermissionsService;
             _toastService = toastService;
 
-            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
+            IsPlaceholderLocation = _selection.ShouldPromptForLocation;
             CanRequestDeviceLocation = _permissionGate.LastKnownLocationPermissionGranted != true;
 
             Locations.CollectionChanged += Locations_CollectionChanged;
@@ -105,7 +116,7 @@ namespace JustCompute.Features.Locations
 
             if (isGranted)
             {
-                _ = InitViewModelAsync(forceRefreshDeviceLocation: true);
+                InitViewModelAsync(forceRefreshDeviceLocation: true).Forget(nameof(LocationsViewModel));
             }
         }
 
@@ -125,7 +136,7 @@ namespace JustCompute.Features.Locations
 
             // Before the permission check, not after: with a fix already in hand and no refresh
             // asked for there is nothing here to need permission for.
-            if (!forceRefresh && _gpsLocationService.DeviceLocation != null) return true;
+            if (!forceRefresh && _device.DeviceLocation != null) return true;
 
             if (!await HandlePermissions(userInitiated)) return false;
 
@@ -136,11 +147,11 @@ namespace JustCompute.Features.Locations
 
             try
             {
-                var locationResult = await _gpsLocationService.GetDeviceGeoLocation();
+                var locationResult = await _device.GetDeviceGeoLocation();
 
                 if (!locationResult.IsSuccessful)
                 {
-                    return _gpsLocationService.DeviceLocation != null;
+                    return _device.DeviceLocation != null;
                 }
 
                 return true;
@@ -166,12 +177,12 @@ namespace JustCompute.Features.Locations
 
         private void EnsureKnownLocationsVisible()
         {
-            if (_gpsLocationService.DeviceLocation is not null)
+            if (_device.DeviceLocation is not null)
             {
-                MarkAsCurrentDeviceLocation(_gpsLocationService.DeviceLocation);
+                MarkAsCurrentDeviceLocation(_device.DeviceLocation);
             }
 
-            if (_gpsLocationService.SelectedLocation is { } selected)
+            if (_selection.SelectedLocation is { } selected)
             {
                 // The placeholder is a fallback so the other screens have data before anywhere is
                 // picked - not a place the user chose - so it earns a row only while there is
@@ -216,7 +227,7 @@ namespace JustCompute.Features.Locations
                 // Move the fix onto the entry already in the list: the carousel is bound to that
                 // instance, so replacing it would lose the user's place in it.
                 LocationList.CopyPositionInto(deviceSlot, deviceLocation);
-                _gpsLocationService.DeviceLocation = deviceSlot;
+                _device.KeepListInstance(deviceSlot);
                 return;
             }
 
@@ -297,12 +308,12 @@ namespace JustCompute.Features.Locations
 
         public override void OnAppWindowResumed()
         {
-            _ = InitViewModelAsync();
+            InitViewModelAsync().Forget(nameof(LocationsViewModel));
         }
 
         public override Task OnNavigatedToAsync()
         {
-            _ = InitViewModelAsync();
+            InitViewModelAsync().Forget(nameof(LocationsViewModel));
             return Task.CompletedTask;
         }
 
@@ -322,15 +333,15 @@ namespace JustCompute.Features.Locations
             // along with the preference that remembers it across launches.
             if (value is null) return;
 
-            if (ReferenceEquals(value, _gpsLocationService.SelectedLocation)) return;
+            if (ReferenceEquals(value, _selection.SelectedLocation)) return;
 
-            _gpsLocationService.SelectedLocation = value;
+            _selection.Select(value);
             UpdateAtThisLocationInfo(value);
         }
 
         private void UpdateAtThisLocationInfo(Location? location)
         {
-            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
+            IsPlaceholderLocation = _selection.ShouldPromptForLocation;
 
             if (location is null)
             {
@@ -462,7 +473,7 @@ namespace JustCompute.Features.Locations
                 {
                     _suppressSelectionWriteBack = true;
                     EnsureKnownLocationsVisible();
-                    SelectedLocation ??= _gpsLocationService.SelectedLocation;
+                    SelectedLocation ??= _selection.SelectedLocation;
                     _suppressSelectionWriteBack = false;
                 });
 
@@ -470,15 +481,15 @@ namespace JustCompute.Features.Locations
                 // behind the device fix below, which meant a place the user had just added stayed
                 // invisible for the 30 seconds that fix takes to give up.
                 await UpdateSavedLocations();
-                await _gpsLocationService.RestorePersistedSelectedLocation();
+                await _selection.RestorePersistedSelectionAsync();
 
-                await ApplySelection(_gpsLocationService.SelectedLocation);
+                await ApplySelection(_selection.SelectedLocation);
 
                 // A denied or unavailable device fix is not fatal — the app falls back to a
                 // placeholder — so it runs last and only adds to what is already on screen.
                 await InitDeviceLocation(forceRefreshDeviceLocation, userInitiated);
 
-                await ApplySelection(_gpsLocationService.SelectedLocation);
+                await ApplySelection(_selection.SelectedLocation);
             }
             finally
             {
@@ -489,7 +500,7 @@ namespace JustCompute.Features.Locations
                     _initializationPending = false;
                     bool wasUserInitiated = _pendingUserInitiated;
                     _pendingUserInitiated = false;
-                    _ = InitViewModelAsync(wasUserInitiated, wasUserInitiated);
+                    InitViewModelAsync(wasUserInitiated, wasUserInitiated).Forget(nameof(LocationsViewModel));
                 }
             }
         }
@@ -522,7 +533,7 @@ namespace JustCompute.Features.Locations
                         var locationToDeleteIndex = Locations.IndexOf(locationToDelete);
                         Locations.RemoveAt(locationToDeleteIndex);
 
-                        if (_gpsLocationService.SelectedLocation?.Id == message.Location.Id)
+                        if (_selection.SelectedLocation?.Id == message.Location.Id)
                         {
                             SelectedLocation = Locations.FirstOrDefault();
                         }

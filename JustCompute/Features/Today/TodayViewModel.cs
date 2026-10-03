@@ -6,9 +6,11 @@ using Compute.Core.Domain.Services.Weather;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
+using JustCompute.Presentation.Tasks;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using JustCompute.Resources.Strings;
+using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Features.Today
 {
@@ -238,7 +240,7 @@ namespace JustCompute.Features.Today
                 _hasUserChosenDate = true;
             }
 
-            _ = LoadItems();
+            LoadItems().Forget(nameof(TodayViewModel));
         }
 
         protected override async Task GetData(Location location)
@@ -264,7 +266,7 @@ namespace JustCompute.Features.Today
             var offsetHours = location.GetUtcOffsetHours(DateTime.SpecifyKind(date, DateTimeKind.Utc));
 
             LocationName = location.Name;
-            IsPlaceholderLocation = _gpsLocationService.ShouldPromptForLocation;
+            IsPlaceholderLocation = _selection.ShouldPromptForLocation;
 
             // The snapshot is pure computation, so keep it off the UI thread — a year of
             // timezone lookups plus the lunar series is not free.
@@ -293,19 +295,10 @@ namespace JustCompute.Features.Today
             }
         }
 
-        protected override void ClearData()
-        {
-            _weather.Cancel();
-            Snapshot = null;
-            WeatherForecast = null;
-            LocationName = string.Empty;
-            Location = null;
-        }
-
         [RelayCommand]
         private async Task RetryWeather()
         {
-            var location = _gpsLocationService.SelectedLocation;
+            var location = _selection.SelectedLocation;
             if (location == null || !IsDateWithinForecast) return;
 
             await LoadWeatherForecastAsync(location.Latitude, location.Longitude, SelectedDate.Date);

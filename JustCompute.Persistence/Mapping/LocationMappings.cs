@@ -23,7 +23,6 @@ namespace JustCompute.Persistence.Mapping
             Name = row.Name ?? string.Empty,
             Latitude = row.Latitude,
             Longitude = row.Longitude,
-            IsActive = row.IsActive,
             IsCurrent = row.IsCurrent,
             City = new City
             {
@@ -58,7 +57,8 @@ namespace JustCompute.Persistence.Mapping
             Latitude = location.Latitude,
             Longitude = location.Longitude,
             CityId = location.City.Id,
-            IsActive = location.IsActive ? 1 : 0,
+            // Nothing reads this column any more; it stays so the schema matches every build.
+            IsActive = 0,
             IsCurrent = location.IsCurrent ? 1 : 0,
             TimeZoneId = location.TimeZoneId,
             // Legacy whole-hour column, kept so an older build reading this database still works.
@@ -71,7 +71,6 @@ namespace JustCompute.Persistence.Mapping
             Name = row.City,
             Latitude = row.Lat,
             Longitude = row.Lng,
-            IsActive = true,
             IsCurrent = false,
             City = new City
             {

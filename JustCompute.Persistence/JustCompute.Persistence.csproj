@@ -8,8 +8,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<!--
+		  sqlite-net-pcl brings its own SQLite: SQLitePCLRaw 3.x with SourceGear.sqlite3 on Android
+		  and desktop, and the system library on iOS. A SQLitePCLRaw.bundle_green 2.1.11 pin used to
+		  sit here as well, left over from before sqlite-net moved to 3.x. It added nothing but a
+		  second copy of libe_sqlite3.so in the APK - the vulnerable 2.1.11 one, GHSA-2m69-gcr7-jv3q -
+		  and which of the two the packager kept came down to the order it met them in.
+		-->
 		<PackageReference Include="sqlite-net-pcl" Version="1.11.285" />
-		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
 	</ItemGroup>
 
 	<ItemGroup>

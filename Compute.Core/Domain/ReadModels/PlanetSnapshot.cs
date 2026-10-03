@@ -1,6 +1,6 @@
 using Compute.Astro;
 
-namespace Compute.Core.Domain.Entities.Models
+namespace Compute.Core.Domain.ReadModels
 {
     /// <summary>
     /// What one planet is doing, for one place, on one day: where it stands now and the crossing

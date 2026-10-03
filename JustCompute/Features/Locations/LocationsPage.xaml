@@ -72,13 +72,13 @@
                             <Label Grid.Row="1" Grid.Column="0"
                                    Text="{localization:Localize LatitudeLabel}" />
                             <Label Grid.Row="1" Grid.Column="1"
-                                   Text="{Binding SelectedLocation.LatitudeDms}"
+                                   Text="{Binding SelectedLocation.Latitude, Converter={StaticResource LatitudeToDmsConverter}}"
                                    HorizontalTextAlignment="End" />
 
                             <Label Grid.Row="2" Grid.Column="0"
                                    Text="{localization:Localize LongitudeLabel}" />
                             <Label Grid.Row="2" Grid.Column="1"
-                                   Text="{Binding SelectedLocation.LongitudeDms}"
+                                   Text="{Binding SelectedLocation.Longitude, Converter={StaticResource LongitudeToDmsConverter}}"
                                    HorizontalTextAlignment="End" />
 
                             <Label Grid.Row="3" Grid.Column="0"
@@ -152,9 +152,9 @@
                                                                  VerticalOptions="Center">
                                                 <Label Text="{Binding Name}"
                                                        FontAttributes="Bold" />
-                                                <Label Text="{Binding LatitudeDms}"
+                                                <Label Text="{Binding Latitude, Converter={StaticResource LatitudeToDmsConverter}}"
                                                        Style="{StaticResource CaptionLabel}" />
-                                                <Label Text="{Binding LongitudeDms}"
+                                                <Label Text="{Binding Longitude, Converter={StaticResource LongitudeToDmsConverter}}"
                                                        Style="{StaticResource CaptionLabel}" />
                                             </VerticalStackLayout>
 

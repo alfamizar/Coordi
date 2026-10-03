@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using JustCompute.Shared.Abstractions.Navigation;
-using JustCompute.Shared.Abstractions.UI;
+using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Services;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
@@ -10,11 +10,13 @@ namespace JustCompute.Shared.ViewModels
 {
     public abstract partial class BaseViewModel : ObservableObject
     {
-        protected readonly IDialogService _dialogService;
-        protected readonly IGPSLocationService _gpsLocationService;
-        protected readonly ILocationService _locationService;
         protected readonly INavigationService _navigationService;
-        protected readonly IPermissionGateService _permissionGate;
+
+        /// <summary>The place every screen computes from.</summary>
+        protected readonly ILocationSelection _selection;
+
+        /// <summary>Where the device is, when a screen wants that rather than the selection.</summary>
+        protected readonly IDeviceLocationProvider _device;
 
         public static readonly int TotalNumberOfDaysInTheCurrentYear = DateTime.IsLeapYear(DateTime.UtcNow.Year) ? 366 : 365;
 
@@ -26,13 +28,16 @@ namespace JustCompute.Shared.ViewModels
 
         protected BaseViewModel(ViewModelServices services)
         {
-            _dialogService = services.DialogService;
-            _gpsLocationService = services.GpsLocationService;
-            _locationService = services.LocationService;
-            _navigationService = services.NavigationService;
-            _permissionGate = services.PermissionGate;
+            _navigationService = services.Navigation;
+            _selection = services.Selection;
+            _device = services.Device;
 
-            _gpsLocationService.DeviceLocationChanged += OnDeviceLocationChanged;
+            // Only screens that load location data have anything to redo. A method group, not a
+            // lambda: the event holds its subscribers weakly.
+            if (this is ICompute)
+            {
+                _selection.DeviceFixAdopted += OnDeviceFixAdopted;
+            }
         }
 
         /// <summary>
@@ -41,54 +46,15 @@ namespace JustCompute.Shared.ViewModels
         /// </summary>
         private Location? _loadedFor;
 
-        /// <summary>
-        /// One device-location request between all the screens: they share a service, and several
-        /// first loads landing together would otherwise each start their own.
-        /// </summary>
-        private static int _adoptionInFlight;
-
-        private void OnDeviceLocationChanged(object? sender, EventArgs e)
+        private void OnDeviceFixAdopted(object? sender, EventArgs e)
         {
-            // A fix becomes the place the app computes from all by itself when the user has not
-            // chosen one. Screens read that once per load, so without this they would go on
-            // showing the placeholder's answers for a location the app has already left behind.
+            // The app moved to the device's fix because nothing was chosen. Screens read the
+            // selection once per load, so without this they would go on showing the placeholder's
+            // answers for a location the app has already left behind.
             if (!_hasLoadedOnce) return;
-            if (ReferenceEquals(_loadedFor, _gpsLocationService.SelectedLocation)) return;
+            if (ReferenceEquals(_loadedFor, _selection.SelectedLocation)) return;
 
-            _ = LoadItems();
-        }
-
-        /// <summary>
-        /// Asks the device where it is when the app has nowhere real to compute from, so a first
-        /// run works out of the box instead of quietly reporting the placeholder's city.
-        /// </summary>
-        private async Task AdoptDeviceLocationIfNothingChosen()
-        {
-            if (!_gpsLocationService.ShouldPromptForLocation) return;
-
-            if (Interlocked.Exchange(ref _adoptionInFlight, 1) == 1) return;
-
-            try
-            {
-                // Checked, never requested: being asked for location by a screen the user opened
-                // to read a moon phase is the wrong moment to ask. The Locations screen is where
-                // that request belongs, and it still makes it. Left denied, nothing changes and
-                // the onboarding card goes on asking for a place instead.
-                if (!await _permissionGate.RefreshLocationPermissionState()) return;
-                if (_gpsLocationService.IsGettingDeviceLocation) return;
-
-                await _gpsLocationService.GetDeviceGeoLocation();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Adopting the device location failed: {ex}");
-            }
-            finally
-            {
-                // Reset so a later load can try again: permission may be granted by then, or the
-                // platform may have a fix it did not have a moment ago.
-                _adoptionInFlight = 0;
-            }
+            LoadItems().Forget(GetType().Name);
         }
 
         /// <summary>
@@ -112,26 +78,16 @@ namespace JustCompute.Shared.ViewModels
             {
                 // Whichever screen loads first must not read the placeholder before the user's
                 // own choice has been read back from storage. Restoring runs once per launch.
-                await _gpsLocationService.RestorePersistedSelectedLocation();
+                await _selection.RestorePersistedSelectionAsync();
 
-                // Fire and forget: the platform can sit on this for up to 30 seconds, and there
-                // is a placeholder to draw in the meantime. When the fix lands it becomes the
-                // selection and DeviceLocationChanged brings this screen back to reload.
-                _ = AdoptDeviceLocationIfNothingChosen();
+                // Unawaited: the platform can sit on this for up to 30 seconds, and there is a
+                // placeholder to draw in the meantime. When the fix lands it becomes the
+                // selection, and DeviceFixAdopted brings this screen back to reload.
+                _selection.FillFromDeviceIfUnchosenAsync().Forget(nameof(ILocationSelection.FillFromDeviceIfUnchosenAsync));
 
-                if (_gpsLocationService.IsGettingDeviceLocation && _gpsLocationService.GettingDeviceLocationFinished is not null)
-                {
-                    await _gpsLocationService.GettingDeviceLocationFinished.Task;
-                }
+                await _device.WaitForPendingFixAsync();
 
-                var location = _gpsLocationService.SelectedLocation;
-
-                if (location == null)
-                {
-                    await MainThread.InvokeOnMainThreadAsync(ClearData);
-                    return;
-                }
-
+                var location = _selection.SelectedLocation;
                 _loadedFor = location;
 
                 // Started on the UI thread on purpose. Everything above can hand back on a
@@ -161,8 +117,6 @@ namespace JustCompute.Shared.ViewModels
         {
             return Task.CompletedTask;
         }
-
-        protected virtual void ClearData() { }
 
         /// <summary>
         /// Loads the screen's data the first time it is shown.

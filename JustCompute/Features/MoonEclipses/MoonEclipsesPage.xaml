@@ -5,7 +5,7 @@
              x:Class="JustCompute.Features.MoonEclipses.MoonEclipsesPage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.MoonEclipses"
-             xmlns:helpers="clr-namespace:Compute.Core.Helpers;assembly=Compute.Core"
+             xmlns:helpers="clr-namespace:JustCompute.Presentation.Collections;assembly=JustCompute.Presentation"
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models.Eclipses;assembly=Compute.Core"
              xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
@@ -75,8 +75,16 @@
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="helpers:IGroupHeader">
                     <StackLayout Padding="0,4">
-                        <Label Text="{Binding Key}"
-                               Style="{StaticResource SectionHeaderLabel}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding Title}"
+                                   Style="{StaticResource SectionHeaderLabel}" />
+                            <!-- Open or closed. Without it the folded past is a heading with
+                                 nothing under it, and nothing says a tap opens it. -->
+                            <Label Grid.Column="1"
+                                   Text="{Binding IsExpanded, Converter={StaticResource ExpandMarkerConverter}}"
+                                   Style="{StaticResource SectionHeaderLabel}"
+                                   FontSize="{StaticResource FontSizeBody}" />
+                        </Grid>
                         <BoxView Style="{StaticResource DividerStyle}" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:MoonEclipsesViewModel}}, Path=ToggleGroupCommand, x:DataType=ViewModels:MoonEclipsesViewModel}"

@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using Compute.Core.Utils;
 
 namespace Compute.Core.Domain.Entities.Models.Time
@@ -21,11 +20,10 @@ namespace Compute.Core.Domain.Entities.Models.Time
         /// places get their offset from the tz database instead — this list exists only so a
         /// location can be pinned by hand when the lookup is wrong or the coordinates are made up.
         /// </summary>
-        public static ObservableCollection<TimeZoneOffset> GetUtcOffsets() =>
-        [
-            .. Enumerable
+        public static IReadOnlyList<TimeZoneOffset> WholeHourOffsets { get; } =
+            Enumerable
                 .Range(-12, 25)
                 .Select(hours => FromOffset(TimeSpan.FromHours(hours)))
-        ];
+                .ToArray();
     }
 }

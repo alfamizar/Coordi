@@ -1,0 +1,4 @@
+Past eclipses are folded into one group at the top, so both eclipse lists open on the next one.
+Weather no longer loads forever on a slow connection; it offers a retry instead.
+Saved places from the earliest versions are kept when you update.
+Security and stability fixes.

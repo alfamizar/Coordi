@@ -1,8 +1,8 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
-using Compute.Core.Helpers;
+using JustCompute.Presentation.Collections;
 
-namespace Compute.Core.Tests.Helpers
+namespace JustCompute.Presentation.Tests.Collections
 {
     /// <summary>
     /// The bulk operations bypass Add and Remove to avoid raising an event per item. That means

@@ -1,16 +1,14 @@
+using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Entities.Models.Moon;
 using Compute.Core.Domain.Entities.Models;
-using JustCompute.Resources.Strings;
-using JustCompute.Services;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 using static Compute.Core.Domain.Entities.Models.BaseCelestialBodyCycle;
+using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Shared.Converters
 {
     public class CoordinateToMoonPhaseConverter : IValueConverter
     {
-        private readonly IStringLocalizer<AppStringsRes> _localizer = ServicesProvider.GetService<IStringLocalizer<AppStringsRes>>();
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null) return null;
@@ -22,14 +20,14 @@ namespace JustCompute.Shared.Converters
 
             string localizedMoonPhaseName = moonPhase switch
             {
-                MoonPhase.NewMoon => _localizer.GetString("NewMoonLabel"),
-                MoonPhase.WaxingCrescent => _localizer.GetString("WaxingCrescentLabel"),
-                MoonPhase.FirstQuarter => _localizer.GetString("FirstQuarterLabel"),
-                MoonPhase.WaxingGibbous => _localizer.GetString("WaxingGibbousLabel"),
-                MoonPhase.FullMoon => _localizer.GetString("FullMoonLabel"),
-                MoonPhase.WaningGibbous => _localizer.GetString("WaningGibbousLabel"),
-                MoonPhase.LastQuarter => _localizer.GetString("LastQuarterLabel"),
-                MoonPhase.WaningCrescent => _localizer.GetString("WaningCrescentLabel"),
+                MoonPhase.NewMoon => Strings.Get("NewMoonLabel"),
+                MoonPhase.WaxingCrescent => Strings.Get("WaxingCrescentLabel"),
+                MoonPhase.FirstQuarter => Strings.Get("FirstQuarterLabel"),
+                MoonPhase.WaxingGibbous => Strings.Get("WaxingGibbousLabel"),
+                MoonPhase.FullMoon => Strings.Get("FullMoonLabel"),
+                MoonPhase.WaningGibbous => Strings.Get("WaningGibbousLabel"),
+                MoonPhase.LastQuarter => Strings.Get("LastQuarterLabel"),
+                MoonPhase.WaningCrescent => Strings.Get("WaningCrescentLabel"),
                 _ => throw new Exception($"MoonPhase {nameof(moonPhase)} does not exist!"),
             };
 

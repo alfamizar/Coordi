@@ -16,6 +16,9 @@ namespace JustCompute.Persistence.Repository.Constants
         /// </summary>
         public const string UserDatabaseFilename = "user_locations.db";
 
+        /// <summary>Where a pre-split catalogue holding saved places is parked before a release replaces it.</summary>
+        public const string LegacyUserDatabaseFilename = "geo_world.legacy.db";
+
         public const string LocationsTable = "locations";
         public const string CitiesTable = "cities";
 
@@ -50,15 +53,6 @@ namespace JustCompute.Persistence.Repository.Constants
             SQLite.SQLiteOpenFlags.Create |
             SQLite.SQLiteOpenFlags.SharedCache;
 
-        private static string BasePath =>
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-        /// <summary>The shipped catalogue, safe to replace wholesale.</summary>
-        public static string CataloguePath => Path.Combine(BasePath, CatalogueDatabaseFilename);
-
-        /// <summary>The user's saved places, never overwritten by an install.</summary>
-        public static string UserDatabasePath => Path.Combine(BasePath, UserDatabaseFilename);
-
         /// <summary>
         /// Copies any locations still living in the catalogue file into the user file. Runs once:
         /// after it, the catalogue's copies are dropped so the same rows cannot arrive twice.
@@ -73,9 +67,22 @@ namespace JustCompute.Persistence.Repository.Constants
             $"INSERT INTO {CitiesTable} (Id, CityName, CountryName, Population) " +
             $"SELECT Id, CityName, CountryName, Population FROM legacy.{CitiesTable};";
 
-        public const string CopyLegacyLocationsStatement =
+        /// <summary>
+        /// Copies the legacy saved places across.
+        ///
+        /// A method, not a constant, because the source schema varies. Builds 1 and 2 — the ones
+        /// that shipped with places inside the catalogue — never had a TimeZoneId column; it was
+        /// added just before the split. The old fixed statement named it regardless, failed with
+        /// "no such column" on exactly the databases it existed to rescue, and a catch swallowed
+        /// the error. Those rows fall back to resolving their zone from their coordinates.
+        /// </summary>
+        public static string CopyLegacyLocationsStatement(bool legacyHasTimeZoneId) =>
             $"INSERT INTO {LocationsTable} (Id, Name, Latitude, Longitude, CityId, IsActive, IsCurrent, TimeZoneOffset, TimeZoneId) " +
-            $"SELECT Id, Name, Latitude, Longitude, CityId, IsActive, IsCurrent, TimeZoneOffset, TimeZoneId FROM legacy.{LocationsTable};";
+            $"SELECT Id, Name, Latitude, Longitude, CityId, IsActive, IsCurrent, TimeZoneOffset, " +
+            (legacyHasTimeZoneId ? "TimeZoneId" : "NULL") +
+            $" FROM legacy.{LocationsTable};";
+
+        public const string LegacyLocationsColumnsQuery = $"PRAGMA legacy.table_info({LocationsTable});";
 
         public const string DropLegacyLocationsStatement = $"DROP TABLE legacy.{LocationsTable};";
         public const string DropLegacyCitiesStatement = $"DROP TABLE legacy.{CitiesTable};";

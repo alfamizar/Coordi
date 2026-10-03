@@ -1,0 +1,4 @@
+Geçmiş tutulmalar en üstte tek bir kapalı grupta toplanır; iki liste de bir sonrakiyle başlar.
+Hava durumu yavaş bağlantıda artık sonsuza dek yüklenmiyor; bunun yerine yeniden denemeyi öneriyor.
+İlk sürümlerde kaydedilen yerler güncellemede korunur.
+Güvenlik ve kararlılık düzeltmeleri.

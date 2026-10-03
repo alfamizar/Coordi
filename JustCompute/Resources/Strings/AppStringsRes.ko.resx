@@ -348,6 +348,9 @@
   <data name="MoonEclipsesLabel" xml:space="preserve">
     <value>월식</value>
   </data>
+  <data name="PastEclipsesHeader" xml:space="preserve">
+    <value>지난 일식·월식 ({0})</value>
+  </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
     <value>달의 별자리: {0}</value>
   </data>

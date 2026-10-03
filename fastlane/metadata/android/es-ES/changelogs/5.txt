@@ -1,0 +1,4 @@
+Los eclipses pasados se agrupan arriba en un solo grupo plegado, así que ambas listas empiezan por el próximo.
+El tiempo ya no se queda cargando sin fin con una conexión lenta; ahora ofrece reintentar.
+Los lugares guardados en las primeras versiones se conservan al actualizar.
+Correcciones de seguridad y estabilidad.

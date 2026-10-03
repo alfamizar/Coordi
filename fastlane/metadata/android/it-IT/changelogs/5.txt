@@ -1,0 +1,4 @@
+Le eclissi passate sono raccolte in un gruppo chiuso in alto: entrambe le liste partono dalla prossima.
+Il meteo non resta più in caricamento con una connessione lenta: propone di riprovare.
+I luoghi salvati nelle prime versioni vengono conservati con l'aggiornamento.
+Correzioni di sicurezza e stabilità.

@@ -14,14 +14,17 @@
     <ApplicationId>com.cutecompute.coordi</ApplicationId>
     <ApplicationIdGuid>b09e0a6c-4e76-48d3-8aa1-0d34c37b1c47</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.2.0</ApplicationDisplayVersion>
-    <ApplicationVersion>4</ApplicationVersion>
+    <ApplicationDisplayVersion>1.3.0</ApplicationDisplayVersion>
+    <ApplicationVersion>5</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
     <ValidateXcodeVersion>false</ValidateXcodeVersion>
     <PublishAot>False</PublishAot>
     <!-- Compile XAML bindings into source where possible: faster runtime binding, fewer reflection calls. -->
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <!-- A binding XamlC cannot compile (XC0022) or whose property does not exist (XC0045) only
+         surfaces in Release, since Debug inflates XAML at runtime. As warnings they went unseen. -->
+    <WarningsAsErrors>$(WarningsAsErrors);XC0022;XC0045</WarningsAsErrors>
   </PropertyGroup>
   <!-- Android: keep only modern device + x64 emulator RIDs. Dropped android-x86 (no real devices). -->
   <PropertyGroup Condition="$(TargetFramework.Contains('-android'))">
@@ -94,10 +97,7 @@
     <!-- Two adaptive layers, not one image used as both. A single file is copied into the
          background layer as well, and the launcher slides that layer against the foreground
          under parallax, so the globe ghosts behind itself. The background is now flat. -->
-    <MauiIcon Include="Resources\AppIcon\appicon.png"
-              ForegroundFile="Resources\AppIcon\appiconfg.png"
-              ForegroundScale="$(AppIconForegroundScale)"
-              Color="#050E38" />
+    <MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\appiconfg.png" ForegroundScale="$(AppIconForegroundScale)" Color="#050E38" />
     <!-- Splash Screen -->
     <!-- Same mark and same navy as the app icon: launch, icon and first screen now read as
          one thing. The old splash was unrelated artwork on #1f1f1f grey, which matched
@@ -171,20 +171,21 @@
     <EmbeddedResource Include="Database\geo_world.db" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.100" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <!-- The MVVM toolkit belongs here, where the view models are. It used to arrive
          transitively through Compute.Core, which made the domain library carry a presentation
          dependency for the app's benefit. -->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
-    <PackageReference Include="Polly" Version="8.7.0" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
+    <PackageReference Include="Polly" Version="8.8.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compute.Core\Compute.Core.csproj" />
     <ProjectReference Include="..\JustCompute.Persistence\JustCompute.Persistence.csproj" />
+    <ProjectReference Include="..\JustCompute.Presentation\JustCompute.Presentation.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Platforms\Android\Services\" />

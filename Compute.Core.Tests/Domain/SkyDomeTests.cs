@@ -1,5 +1,6 @@
 using Compute.Astro;
 using Compute.Core.Domain.Entities.Models;
+using Compute.Core.Domain.ReadModels;
 
 namespace Compute.Core.Tests.Domain
 {

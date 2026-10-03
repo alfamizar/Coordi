@@ -1,4 +1,3 @@
-using Compute.Astro;
 using Compute.Core.Domain.Entities.Models.Time;
 using Compute.Core.Utils;
 
@@ -60,12 +59,6 @@ namespace Compute.Core.Domain.Entities.Models
             TimeZoneId = "Europe/London",
         };
 
-        /// <summary>Latitude as degrees/minutes/seconds, e.g. <c>N 51° 30' 26.64"</c>.</summary>
-        public string LatitudeDms => GeoFormat.FormatDms(Latitude, GeoFormat.Axis.Latitude);
-
-        /// <summary>Longitude as degrees/minutes/seconds, e.g. <c>W 0° 7' 40.08"</c>.</summary>
-        public string LongitudeDms => GeoFormat.FormatDms(Longitude, GeoFormat.Axis.Longitude);
-
         /// <summary>
         /// True once this place exists as a row in the user's database. The device's own position
         /// and the Greenwich placeholder are neither editable nor deletable, and both are told
@@ -73,8 +66,11 @@ namespace Compute.Core.Domain.Entities.Models
         /// </summary>
         public bool IsSaved => Id > 0;
 
-        public bool IsActive { get; set; }
-
+        /// <summary>
+        /// Where this location came from: true when it is the device's own fix rather than a
+        /// place picked or typed. Provenance, not screen state — the identity rules depend on it,
+        /// since there is only ever one "where I am now" however far it has moved.
+        /// </summary>
         public bool IsCurrent { get; set; }
 
         /// <summary>
@@ -141,7 +137,6 @@ namespace Compute.Core.Domain.Entities.Models
             Name = Name,
             Latitude = Latitude,
             Longitude = Longitude,
-            IsActive = IsActive,
             IsCurrent = IsCurrent,
             TimeZoneId = TimeZoneId,
             City = new City

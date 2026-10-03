@@ -31,6 +31,9 @@
                                               AscendingImage="arrow_upward_icon_light.png"
                                               DescendingImage="arrow_downward_icon_light.png"/>
     <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+    <!-- Group headers: open ▼, closed ▶. FE0E keeps ▶ a text glyph; on its own it can come out
+         as the play-button emoji. The small ▾ ▸ pair was too slight to notice. -->
+    <toolkit:BoolToObjectConverter x:Key="ExpandMarkerConverter" TrueObject="&#x25BC;" FalseObject="&#x25B6;&#xFE0E;" />
     <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
     <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
     <toolkit:VariableMultiValueConverter x:Key="AllTrueConverter"
@@ -39,6 +42,8 @@
                                          ConditionType="Any" />
     <toolkit:IsNullConverter x:Key="IsNullConverter" />
     <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <converters:LatitudeToDmsConverter x:Key="LatitudeToDmsConverter" />
+    <converters:LongitudeToDmsConverter x:Key="LongitudeToDmsConverter" />
     <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
 
     <weather:WeatherConditionToIconConverter x:Key="WeatherConditionToIconConverter" />

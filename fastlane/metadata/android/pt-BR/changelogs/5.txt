@@ -1,0 +1,4 @@
+Os eclipses passados ficam recolhidos em um grupo no topo, e as duas listas começam pelo próximo.
+A previsão do tempo não fica mais carregando sem fim em conexões lentas; agora oferece tentar de novo.
+Os locais salvos nas primeiras versões são mantidos ao atualizar.
+Correções de segurança e estabilidade.
