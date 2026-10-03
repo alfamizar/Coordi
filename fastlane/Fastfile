@@ -148,7 +148,12 @@ platform :android do
       # featureGraphic.png upload when present; phone and tablet screenshot folders
       # are picked up automatically by whichever of them exist.
       skip_upload_images: false,
-      skip_upload_screenshots: false
+      skip_upload_screenshots: false,
+      # Checked against what Play already has by SHA-256, so an image that has not changed is
+      # not sent again. Without it every run cleared and re-uploaded all 456 screenshots, even
+      # for a release that recaptured none. Screenshots keep their order: matching ones are
+      # skipped, and from the first that differs, the rest are replaced.
+      sync_image_upload: true
     )
   end
 
@@ -182,7 +187,9 @@ platform :android do
         skip_upload_aab: true,
         skip_upload_changelogs: true,
         skip_upload_images: false,
-        skip_upload_screenshots: false
+        skip_upload_screenshots: false,
+        # Only images Play does not already have; see upload_listing_and_screenshots.
+        sync_image_upload: true
       )
       UI.success("Batch #{batch}/#{total} uploaded: #{slice.join(', ')}")
     ensure
