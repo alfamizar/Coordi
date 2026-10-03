@@ -348,6 +348,9 @@
   <data name="MoonEclipsesLabel" xml:space="preserve">
     <value>Zatmění Měsíce</value>
   </data>
+  <data name="PastEclipsesHeader" xml:space="preserve">
+    <value>Minulá zatmění ({0})</value>
+  </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
     <value>Měsíc ve znamení: {0}</value>
   </data>

@@ -348,6 +348,9 @@
   <data name="MoonEclipsesLabel" xml:space="preserve">
     <value>Eclipses lunares</value>
   </data>
+  <data name="PastEclipsesHeader" xml:space="preserve">
+    <value>Eclipses passados ({0})</value>
+  </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
     <value>Lua em: {0}</value>
   </data>

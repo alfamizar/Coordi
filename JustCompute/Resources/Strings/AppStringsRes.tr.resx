@@ -348,6 +348,9 @@
   <data name="MoonEclipsesLabel" xml:space="preserve">
     <value>Ay Tutulmaları</value>
   </data>
+  <data name="PastEclipsesHeader" xml:space="preserve">
+    <value>Geçmiş tutulmalar ({0})</value>
+  </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
     <value>Ay burcu: {0}</value>
   </data>

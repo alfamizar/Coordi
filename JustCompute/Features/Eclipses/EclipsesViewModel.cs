@@ -1,14 +1,19 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 using Compute.Core.Domain.Entities.Models.Eclipses;
+using JustCompute.Presentation.Collections;
+using JustCompute.Resources.Strings;
 using JustCompute.Shared.ViewModels;
+using Microsoft.Extensions.Localization;
 using static JustCompute.Presentation.Collections.GroupingHelper;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Features.Eclipses
 {
     /// <summary>
-    /// A century of eclipses, grouped by year, optionally narrowed to the ones visible from here.
+    /// A century of eclipses, optionally narrowed to the ones visible from here: everything
+    /// already over folded into one closed group at the top, and the rest grouped by year.
     ///
     /// The Sun and Moon screens differ in exactly two things: the kind of eclipse they list and
     /// the service that computes it. Everything else — the cache, the filter, the year grouping,
@@ -33,11 +38,21 @@ namespace JustCompute.Features.Eclipses
 
         private Location? _computedLocation;
 
+        private readonly IStringLocalizer<AppStringsRes> _localizer;
+
         /// <summary>
-        /// Years the reader has collapsed. ApplyFilter rebuilds the groups from scratch, so
-        /// without this every flip of the filter silently re-expanded whatever they had folded away.
+        /// Groups the reader has opened or closed, and which way. ApplyFilter rebuilds the groups
+        /// from scratch, so without this every flip of the filter silently undid what they had
+        /// folded away — or, for the past, shut it again while they were reading it.
         /// </summary>
-        private readonly HashSet<string> _collapsedYears = [];
+        private readonly Dictionary<string, bool> _expandedByReader = [];
+
+        /// <summary>
+        /// Today at the place the table was computed for, which is the zone every eclipse date is
+        /// in. Fixed for one build of the groups so a tap re-fills a group with the same members
+        /// it was built with, even across midnight.
+        /// </summary>
+        private DateTime _today;
 
         /// <summary>
         /// Lives on this screen rather than in Settings: it is a property of the list you are
@@ -65,7 +80,11 @@ namespace JustCompute.Features.Eclipses
         [ObservableProperty]
         private bool hasNoVisibleMatches;
 
-        protected EclipsesViewModel(ViewModelServices services) : base(services) { }
+        protected EclipsesViewModel(ViewModelServices services, IStringLocalizer<AppStringsRes> localizer)
+            : base(services)
+        {
+            _localizer = localizer;
+        }
 
         /// <summary>The century of eclipses for this place, in its own time zone.</summary>
         protected abstract Task<List<TEclipse>> ComputeEclipsesAsync(Location location, DateTime utcNow);
@@ -112,12 +131,24 @@ namespace JustCompute.Features.Eclipses
 
             FilterSummary = _all.Count == 0 ? string.Empty : $"{_shown.Count} / {_all.Count}";
 
-            var groups = GetGroupedData(_shown, YearOf).ToList();
+            _today = TodayAtComputedPlace();
+            var groups = GetGroupedData(_shown, GroupKeyOf).ToList();
 
-            foreach (var group in groups.Where(g => _collapsedYears.Contains(g.Key)))
+            foreach (var group in groups)
             {
-                group.IsExpanded = false;
-                group.Clear();
+                if (group.Key == TimelineGroups.PastKey)
+                {
+                    // Counted before the group is closed and emptied: the number is what tells
+                    // the reader there is something behind a header with nothing under it.
+                    group.Title = string.Format(
+                        CultureInfo.CurrentCulture, _localizer["PastEclipsesHeader"], group.Count);
+                }
+
+                if (!IsExpanded(group.Key))
+                {
+                    group.IsExpanded = false;
+                    group.Clear();
+                }
             }
 
             GroupedEclipseList = groups;
@@ -130,19 +161,29 @@ namespace JustCompute.Features.Eclipses
         private void ToggleGroup(Group<string, TEclipse> group)
         {
             group.IsExpanded = !group.IsExpanded;
-
-            if (group.IsExpanded) _collapsedYears.Remove(group.Key);
-            else _collapsedYears.Add(group.Key);
+            _expandedByReader[group.Key] = group.IsExpanded;
 
             group.Clear();
 
             if (group.IsExpanded)
             {
-                var year = group.Key;
-                group.InsertRange([.. _shown.Where(e => YearOf(e) == year)]);
+                var key = group.Key;
+                group.InsertRange([.. _shown.Where(e => GroupKeyOf(e) == key)]);
             }
         }
 
-        private static string YearOf(TEclipse eclipse) => eclipse.Date.ToString("yyyy");
+        /// <summary>The past starts closed and every year starts open, until the reader says otherwise.</summary>
+        private bool IsExpanded(string key) =>
+            _expandedByReader.TryGetValue(key, out var expanded) ? expanded : key != TimelineGroups.PastKey;
+
+        private string GroupKeyOf(TEclipse eclipse) => TimelineGroups.KeyOf(eclipse.Date, _today);
+
+        private DateTime TodayAtComputedPlace()
+        {
+            var utcNow = DateTime.UtcNow;
+            return _computedLocation is { } place
+                ? utcNow.AddHours(place.GetUtcOffsetHours(utcNow)).Date
+                : utcNow.Date;
+        }
     }
 }
