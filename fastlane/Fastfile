@@ -36,8 +36,32 @@ platform :android do
     key = ENV["SUPPLY_JSON_KEY"]
     UI.user_error!("Set SUPPLY_JSON_KEY to the path of your Play service-account JSON (see docs/google-play-release.md)") if key.nil? || key.empty?
     UI.user_error!("SUPPLY_JSON_KEY points to a missing file: #{key}") unless File.exist?(key)
-    validate_play_store_json_key(json_key: key)
-    UI.success("Service-account key is valid.")
+
+    # validate_play_store_json_key only logs a failed connection and returns, so this lane used
+    # to print "valid" on the line after "Could not establish a connection" and let a release
+    # carry on to a full build. Reading a track goes through the same client and raises.
+    pkg = ENV["COORDI_PACKAGE_NAME"] || "com.cutecompute.coordi"
+    production = google_play_track_version_codes(track: "production", package_name: pkg, json_key: key).map(&:to_i)
+    UI.success("Service-account key is valid. Production has #{production.empty? ? 'nothing' : production.join(', ')}.")
+
+    # Play takes a version code once, across every track, and says so only after the upload.
+    # Given the code about to be released (scripts/publish-coordi.sh passes it), refuse here.
+    wanted = ENV["COORDI_VERSION_CODE"].to_i
+    next if wanted.zero?
+
+    taken = { "production" => production }
+    %w[beta alpha internal].each do |t|
+      begin
+        taken[t] = google_play_track_version_codes(track: t, package_name: pkg, json_key: key).map(&:to_i)
+      rescue => e
+        UI.message("#{t}: not read (#{e.message}); only the tracks that answered are checked")
+      end
+    end
+    clash = taken.select { |_, codes| codes.any? { |c| c >= wanted } }
+    unless clash.empty?
+      where = clash.map { |t, codes| "#{t} #{codes.max}" }.join(", ")
+      UI.user_error!("Version code #{wanted} is not new: #{where}. Raise ApplicationVersion past it.")
+    end
   end
 
   desc "Check every locale's listing text against Google Play's limits before uploading"
