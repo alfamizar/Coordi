@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>地点</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>切换城市？</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>你现在似乎在{0}。要从{1}切换过去吗？</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>切换到{0}</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>保留{0}</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>经度</value>
   </data>

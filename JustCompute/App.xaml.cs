@@ -1,6 +1,7 @@
 using Compute.Core.Domain.Services;
 using JustCompute.Persistence.Repository;
 using JustCompute.Persistence.Repository.Constants;
+using JustCompute.Services.LocationService;
 using JustCompute.Shared.Helpers;
 using System.Reflection;
 using Compute.Core.Utils;
@@ -11,13 +12,24 @@ public partial class App : Application
 {
     private readonly ThemeHandler _themeHandler;
     private readonly IPermissionGateService _permissionGate;
+    private readonly ILocationSelection _selection;
 
-    public App(ThemeHandler themeHandler, IPermissionGateService permissionGate, DatabasePaths databasePaths)
+    public App(
+        ThemeHandler themeHandler,
+        IPermissionGateService permissionGate,
+        DatabasePaths databasePaths,
+        ILocationSelection selection,
+        CityChangePrompt cityChangePrompt)
     {
         InitializeComponent();
 
         _themeHandler = themeHandler;
         _permissionGate = permissionGate;
+        _selection = selection;
+
+        // Listening before any screen loads: the first fresh fix of a launch can arrive a second
+        // later, and an offer of a new town with nobody to ask would be lost.
+        cityChangePrompt.Start();
 
         // Reinstalled on every new version, but never over a user's places: a catalogue from before
         // the split still holds them, and the installer parks it before writing a fresh one. The
@@ -83,6 +95,11 @@ public partial class App : Application
         {
             System.Diagnostics.Debug.WriteLine($"PermissionGate refresh failed: {ex}");
         }
+
+        // After the permission check, which it relies on. Android keeps the process alive between
+        // uses, so a return after a while away is a launch to the person holding the phone, and
+        // the device is asked again where it is.
+        _selection.RefreshOnReturnAsync().Forget(nameof(ILocationSelection.RefreshOnReturnAsync));
     }
 
     private void OnWindowBackgrounding(object? sender, BackgroundingEventArgs e)

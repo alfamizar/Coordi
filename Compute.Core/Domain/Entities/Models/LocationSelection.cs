@@ -33,5 +33,26 @@ namespace Compute.Core.Domain.Entities.Models
             Location? selected, Location? placeholder, Location? adoptedFix, Location? replacedFix) =>
             !IsUserChoice(selected, placeholder, adoptedFix)
             || (replacedFix is not null && ReferenceEquals(selected, replacedFix));
+
+        /// <summary>A move shorter than this is never a change of town, whatever the nearest town says.</summary>
+        public const double MinimumTownChangeMeters = 5_000;
+
+        /// <summary>
+        /// Whether <paramref name="fresh"/> puts the device in another town than <paramref name="shown"/>:
+        /// the nearest town differs, and it has moved further than a town's edge can wobble.
+        ///
+        /// Both, because either alone misfires. Living between two towns, a network fix a few hundred
+        /// metres out flips the nearest one on alternate launches; and a big city is wider than any
+        /// distance worth asking about. Towns are compared by name and country, because the catalogue
+        /// they come from gives its rows no ids.
+        /// </summary>
+        public static bool IsDifferentTown(Location shown, Location fresh) =>
+            !IsSameTown(shown.City, fresh.City)
+            && new GeoPoint(shown.Latitude, shown.Longitude)
+                .DistanceMetersTo(new GeoPoint(fresh.Latitude, fresh.Longitude)) > MinimumTownChangeMeters;
+
+        private static bool IsSameTown(City a, City b) =>
+            string.Equals(a.CityName, b.CityName, StringComparison.Ordinal)
+            && string.Equals(a.CountryName, b.CountryName, StringComparison.Ordinal);
     }
 }

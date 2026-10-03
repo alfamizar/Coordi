@@ -1,3 +1,4 @@
+using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Repository;
 
 namespace JustCompute.Services.LocationService
@@ -13,6 +14,8 @@ namespace JustCompute.Services.LocationService
     {
         private const string SelectedLocationIdKey = "selected_location_id";
         private const string HasUserChosenKey = "HasUserSetLocation";
+        private const string LastDeviceLatitudeKey = "last_device_latitude";
+        private const string LastDeviceLongitudeKey = "last_device_longitude";
 
         public int? SelectedLocationId
         {
@@ -38,6 +41,36 @@ namespace JustCompute.Services.LocationService
         {
             get => Preferences.Default.Get(HasUserChosenKey, false);
             set => Preferences.Default.Set(HasUserChosenKey, value);
+        }
+
+        public GeoPoint? LastDevicePosition
+        {
+            get
+            {
+                // Both or neither: a half-written pair is no position at all.
+                if (!Preferences.Default.ContainsKey(LastDeviceLatitudeKey) ||
+                    !Preferences.Default.ContainsKey(LastDeviceLongitudeKey))
+                {
+                    return null;
+                }
+
+                return new GeoPoint(
+                    Preferences.Default.Get(LastDeviceLatitudeKey, 0.0),
+                    Preferences.Default.Get(LastDeviceLongitudeKey, 0.0));
+            }
+            set
+            {
+                if (value is { } position)
+                {
+                    Preferences.Default.Set(LastDeviceLatitudeKey, position.Latitude);
+                    Preferences.Default.Set(LastDeviceLongitudeKey, position.Longitude);
+                }
+                else
+                {
+                    Preferences.Default.Remove(LastDeviceLatitudeKey);
+                    Preferences.Default.Remove(LastDeviceLongitudeKey);
+                }
+            }
         }
     }
 }

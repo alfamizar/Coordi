@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>地点</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>都市を変更しますか？</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>現在地は{0}のようです。{1}から切り替えますか？</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>{0}に切り替え</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>{0}のまま</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>経度</value>
   </data>

@@ -303,6 +303,18 @@
   <data name="LocationsLabel" xml:space="preserve">
     <value>Standorte</value>
   </data>
+  <data name="CityChangeTitle" xml:space="preserve">
+    <value>Stadt wechseln?</value>
+  </data>
+  <data name="CityChangeMessage" xml:space="preserve">
+    <value>Sie scheinen jetzt in {0} zu sein. Von {1} wechseln?</value>
+  </data>
+  <data name="CityChangeSwitch" xml:space="preserve">
+    <value>Zu {0} wechseln</value>
+  </data>
+  <data name="CityChangeKeep" xml:space="preserve">
+    <value>{0} behalten</value>
+  </data>
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Längengrad</value>
   </data>
