@@ -24,9 +24,9 @@ namespace Compute.Core.Domain.Entities.Models
         /// Whether an arriving device fix should take the slot.
         /// </summary>
         /// <param name="replacedFix">
-        /// The fix this one supersedes. The Locations screen moves a fresh fix onto the row
-        /// already in the list and hands that row back, so a selection still pointing at the
-        /// superseded instance has to follow it across or it quietly goes stale — the one case
+        /// The fix this one supersedes. Every fresh fix is a new object, so a selection that is
+        /// the device's own row — picked by the user, or filled in by the app — still points at
+        /// the superseded one and has to follow it across, or it quietly goes stale. The one case
         /// where a genuine user choice is re-pointed rather than left alone.
         /// </param>
         public static bool ShouldAdoptDeviceFix(

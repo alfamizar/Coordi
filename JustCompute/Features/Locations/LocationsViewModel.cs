@@ -21,7 +21,6 @@ using Microsoft.Maui.ApplicationModel;
 using System.Collections.Specialized;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
-using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Features.Locations
 {
@@ -76,8 +75,6 @@ namespace JustCompute.Features.Locations
         [ObservableProperty]
         private Location? selectedLocation;
 
-        [ObservableProperty]
-        private CelestialSnapshot? coordinate;
 
         [ObservableProperty]
         private DateTime currentTime = DateTime.Now;
@@ -218,19 +215,18 @@ namespace JustCompute.Features.Locations
             }
         }
 
+        /// <summary>
+        /// The device's row is the fix itself, replaced whole when a fresh one arrives.
+        ///
+        /// It used to have the new position copied onto the row's existing object, a habit from
+        /// when this list was a carousel that lost its place whenever an item was swapped. Nothing
+        /// told the list about the copy, so the row went on showing the old coordinates until it
+        /// happened to redraw, while the card above it showed the new ones. A vertical list keeps
+        /// its scroll position through a replace, and the selection follows the device to its new
+        /// fix by itself, so the row can simply be the fix.
+        /// </summary>
         private void MarkAsCurrentDeviceLocation(Location deviceLocation)
         {
-            var deviceSlot = Locations.FirstOrDefault(LocationIdentity.IsDeviceSlot);
-
-            if (deviceSlot is not null && !ReferenceEquals(deviceSlot, deviceLocation))
-            {
-                // Move the fix onto the entry already in the list: the carousel is bound to that
-                // instance, so replacing it would lose the user's place in it.
-                LocationList.CopyPositionInto(deviceSlot, deviceLocation);
-                _device.KeepListInstance(deviceSlot);
-                return;
-            }
-
             deviceLocation.IsCurrent = true;
             UpsertLocation(deviceLocation, insertAtStart: true);
         }
@@ -339,26 +335,25 @@ namespace JustCompute.Features.Locations
             UpdateAtThisLocationInfo(value);
         }
 
+        /// <summary>
+        /// Keeps the clock on the card running for the place shown.
+        ///
+        /// It used to compute a full celestial snapshot here as well — the moonrise search alone is
+        /// a few milliseconds on a phone — on the UI thread, on every tap in the list and twice
+        /// on every return to the app. Nothing has displayed it since the Today dashboard took that
+        /// content over, so it is gone rather than moved off the thread.
+        /// </summary>
         private void UpdateAtThisLocationInfo(Location? location)
         {
             IsPlaceholderLocation = _selection.ShouldPromptForLocation;
 
             if (location is null)
             {
-                Coordinate = null;
                 _clock.Stop();
                 return;
             }
 
-            var offsetHours = location.GetUtcOffsetHours(DateTime.UtcNow);
-
-            Coordinate = CelestialSnapshot.For(
-                location.Latitude,
-                location.Longitude,
-                DateTime.UtcNow.AddHours(offsetHours),
-                offsetHours);
-
-            RestartTimer(offsetHours);
+            RestartTimer(location.GetUtcOffsetHours(DateTime.UtcNow));
         }
 
         /// <summary>

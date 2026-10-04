@@ -1,0 +1,3 @@
+L'écran Emplacements réagit plus fluidement quand vous changez de lieu.
+Les heures s'affichent sans à-coup sur le premier écran après l'ouverture.
+La recherche de votre position est plus fiable.

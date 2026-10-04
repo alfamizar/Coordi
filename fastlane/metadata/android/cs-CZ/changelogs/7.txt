@@ -1,0 +1,3 @@
+Obrazovka Místa reaguje při přepínání míst plynuleji.
+Časy se na první obrazovce po spuštění zobrazí bez zaškobrtnutí.
+Zjišťování vaší polohy je spolehlivější.

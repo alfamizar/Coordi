@@ -1,0 +1,3 @@
+Konumlar ekranı yer değiştirirken daha akıcı yanıt veriyor.
+Saatler, açılıştan sonraki ilk ekranda takılmadan görünüyor.
+Konumunuz daha güvenilir şekilde bulunuyor.

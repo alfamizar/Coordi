@@ -5,6 +5,7 @@ using Compute.Core.Domain.Errors;
 using Compute.Core.Domain.Entities.Models;
 using Compute.Core.Domain.Services;
 using Compute.Core.Common.Exceptions.Location;
+using JustCompute.Presentation.Tasks;
 using Polly.Retry;
 
 namespace JustCompute.Services.LocationService
@@ -31,6 +32,19 @@ namespace JustCompute.Services.LocationService
         /// <summary>Private: callers wait on the request, they do not get to finish it.</summary>
         private TaskCompletionSource<bool>? _pendingFix;
 
+        /// <summary>
+        /// The one fix request out at a time. Requests used to run side by side and overwrite each
+        /// other's pending task and cancellation source: the first to finish declared nothing in
+        /// flight while the second was still out, and released its waiters early.
+        /// </summary>
+        private readonly SharedRequest<(Result<Location, FaultCode> Result, bool Announced)> _fixRequest = new();
+
+        /// <summary>
+        /// Whether anyone sharing the run wants its fix announced. Read when the fix lands, so it
+        /// is announced before the request settles and a screen waiting on it finds it in place.
+        /// </summary>
+        private volatile bool _announceRequested;
+
         public bool IsGettingDeviceLocation { get; private set; }
 
         private Location? _deviceLocation;
@@ -39,20 +53,6 @@ namespace JustCompute.Services.LocationService
 
         public Task WaitForPendingFixAsync() =>
             IsGettingDeviceLocation && _pendingFix is { } pending ? pending.Task : Task.CompletedTask;
-
-        public void KeepListInstance(Location listInstance)
-        {
-            ArgumentNullException.ThrowIfNull(listInstance);
-
-            // Only the device's own row may stand for the device. Anything else here would make
-            // a saved place, or the placeholder, silently become "where I am".
-            if (!LocationIdentity.IsDeviceSlot(listInstance))
-            {
-                throw new ArgumentException("Only the device's own row can stand for its position.", nameof(listInstance));
-            }
-
-            SetDeviceLocation(listInstance);
-        }
 
         private void SetDeviceLocation(Location next)
         {
@@ -86,6 +86,22 @@ namespace JustCompute.Services.LocationService
 
         private async Task<Result<Location, FaultCode>> RequestFixAsync(bool announce)
         {
+            // Said before joining, so a run already out announces its fix for this caller too.
+            if (announce) _announceRequested = true;
+
+            var (result, announced) = await _fixRequest.RunAsync(RunFixRequestAsync);
+
+            // Joined after the run had decided: announce it now. A no-op for the same object.
+            if (announce && !announced && result.IsSuccessful)
+            {
+                SetDeviceLocation(result.Value);
+            }
+
+            return result;
+        }
+
+        private async Task<(Result<Location, FaultCode> Result, bool Announced)> RunFixRequestAsync()
+        {
             try
             {
                 // RunContinuationsAsynchronously, deliberately: without it TrySetResult runs
@@ -114,36 +130,39 @@ namespace JustCompute.Services.LocationService
                 fix.IsCurrent = true;
 
                 // Announced before the request settles, so a screen waiting on it finds the fix
-                // already in place. Not announced at all when the caller decides first.
+                // already in place — when anyone sharing the run asked for that. A caller deciding
+                // first, the way the launch-time refresh does, gets it unannounced.
+                bool announce = _announceRequested;
                 if (announce)
                 {
                     SetDeviceLocation(fix);
                 }
 
-                return fix;
+                return (fix, announce);
             }
             catch (FeatureNotSupportedException)
             {
-                return new(FaultCode.FeatureNotSupported);
+                return (new(FaultCode.FeatureNotSupported), false);
             }
             catch (FeatureNotEnabledException)
             {
-                return new(FaultCode.FeatureNotEnabled);
+                return (new(FaultCode.FeatureNotEnabled), false);
             }
             catch (PermissionException)
             {
-                return new(FaultCode.PermissionException);
+                return (new(FaultCode.PermissionException), false);
             }
             catch (DeviceLocationUnavailableException)
             {
-                return new(FaultCode.DeviceLocationUnavailable);
+                return (new(FaultCode.DeviceLocationUnavailable), false);
             }
             catch (Exception)
             {
-                return new(FaultCode.GenericGetLocationException);
+                return (new(FaultCode.GenericGetLocationException), false);
             }
             finally
             {
+                _announceRequested = false;
                 IsGettingDeviceLocation = false;
                 _pendingFix?.TrySetResult(true);
             }

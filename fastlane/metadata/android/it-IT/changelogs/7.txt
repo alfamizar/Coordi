@@ -1,0 +1,3 @@
+La schermata Posizioni risponde in modo più fluido quando cambi luogo.
+Gli orari compaiono senza scatti nella prima schermata dopo l'avvio.
+Trovare la tua posizione è più affidabile.

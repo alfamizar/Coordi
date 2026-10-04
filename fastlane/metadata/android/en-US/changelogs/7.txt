@@ -1,0 +1,3 @@
+The Locations screen responds more smoothly when you switch places.
+Times appear without a stutter on the first screen after launch.
+Finding your location is more reliable.
