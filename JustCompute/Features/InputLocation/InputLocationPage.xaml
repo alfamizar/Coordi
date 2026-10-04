@@ -36,6 +36,21 @@
                            Text="{Binding Location.Name, Mode=TwoWay}">
                     </Entry>
 
+                    <!-- The coordinates straight after the name: they are what a place is, and in
+                         landscape on a 7" tablet they sat last, below the fold with nothing to
+                         say they were there. The offset follows them, being worked out from them;
+                         country and city are labels and go last. -->
+                    <views:PointEntry Location="{Binding Location}"
+                                      IsPointLabelVisible="False"
+                                      IsPointCityCountryLabelVisible="False"
+                                      ImageButtonIconSource="{AppThemeBinding Light=my_location_icon_dark.png, Dark=my_location_icon_light.png}"
+                                      ImageButtonClickedCommand="{Binding PrefillCoordinatesCommand}" />
+
+                    <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
+                    <Picker Title="{Binding Location.TimeZoneOffset}"
+                            ItemsSource="{Binding TimeZoneOffsets}"
+                            SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
+
                     <Label Text="{localization:Localize CountryLabel}" />
                     <Entry x:Name="CountryEntry"
                            Placeholder="{localization:Localize CountryLabel}"
@@ -45,17 +60,6 @@
                     <Entry x:Name="CityEntry"
                            Placeholder="{localization:Localize CityLabel}"
                            Text="{Binding Location.CityName, Mode=TwoWay}" />
-
-                    <Label Text="{localization:Localize UTCTimeOffsetLabel}" />
-                    <Picker Title="{Binding Location.TimeZoneOffset}"
-                            ItemsSource="{Binding TimeZoneOffsets}"
-                            SelectedItem="{Binding Location.TimeZoneOffset, Mode=TwoWay}" />
-
-                    <views:PointEntry Location="{Binding Location}"
-                                      IsPointLabelVisible="False"
-                                      IsPointCityCountryLabelVisible="False"
-                                      ImageButtonIconSource="{AppThemeBinding Light=my_location_icon_dark.png, Dark=my_location_icon_light.png}"
-                                      ImageButtonClickedCommand="{Binding PrefillCoordinatesCommand}" />
 
                 </StackLayout>
 

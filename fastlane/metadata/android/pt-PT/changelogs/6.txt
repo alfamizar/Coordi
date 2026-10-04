@@ -2,3 +2,4 @@ Abre de imediato no local da última vez e depois confirma onde está agora.
 Se mudou de cidade, pergunta antes de trocar.
 Retroceder no ecrã Hoje fecha agora a app.
 A sua localização é encontrada mais depressa.
+As coordenadas introduzidas são agora lidas corretamente em todas as línguas, e editar o local atual aplica-se de imediato.

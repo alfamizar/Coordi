@@ -2,3 +2,4 @@ Aplikace se hned otevře tam, kde jste byli naposledy, a pak ověří, kde jste 
 Když jste v jiném městě, před přepnutím se zeptá.
 Tlačítko Zpět na obrazovce Dnes teď aplikaci zavře.
 Vaše poloha se zjistí rychleji.
+Zadané souřadnice se nyní čtou správně ve všech jazycích a úprava aktuálního místa se projeví hned.

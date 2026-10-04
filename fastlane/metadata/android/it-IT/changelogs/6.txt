@@ -2,3 +2,4 @@ L'app si apre subito sul luogo dell'ultima volta, poi controlla dove sei ora.
 Se sei in un'altra città, chiede prima di cambiare.
 Indietro nella schermata Oggi ora chiude l'app.
 La tua posizione viene trovata più in fretta.
+Le coordinate digitate ora vengono lette correttamente in ogni lingua e la modifica del luogo attuale si applica subito.

@@ -524,6 +524,22 @@ namespace JustCompute.Features.Locations
                         if (locationToUpdate == null) break;
                         var locationToUpdateIndex = Locations.IndexOf(locationToUpdate);
                         Locations[locationToUpdateIndex] = message.Location;
+
+                        // The place every screen computes from was the one edited: point the
+                        // selection at the edited copy. Left on the old one, every other screen
+                        // went on with the old name and coordinates until the next launch, and
+                        // this one put the old copy straight back into the list when it next came
+                        // up, so the edit looked as if it had not been saved at all.
+                        if (_selection.SelectedLocation.Id == message.Location.Id)
+                        {
+                            _selection.Select(message.Location);
+
+                            _suppressSelectionWriteBack = true;
+                            SelectedLocation = message.Location;
+                            _suppressSelectionWriteBack = false;
+
+                            UpdateAtThisLocationInfo(message.Location);
+                        }
                         break;
                     }
                 case LocationInputContext.Delete:

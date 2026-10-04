@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using JustCompute.Shared.ViewModels;
 using Location = Compute.Core.Domain.Entities.Models.Location;
+using JustCompute.Presentation.Locations;
 
 namespace JustCompute.Features.Distance
 {

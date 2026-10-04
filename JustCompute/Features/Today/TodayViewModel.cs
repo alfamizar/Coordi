@@ -27,6 +27,19 @@ namespace JustCompute.Features.Today
         private readonly IStringLocalizer<AppStringsRes> _localizer;
         private readonly SupersedingTask _weather = new();
 
+        /// <summary>How long a forecast on screen is reused before it is fetched again.</summary>
+        private static readonly TimeSpan ForecastLifetime = TimeSpan.FromMinutes(30);
+
+        /// <summary>
+        /// Where, for which local day, and when the forecast on screen was fetched. The seven days
+        /// it covers are the same whichever of them is showing, and this screen used to fetch the
+        /// identical forecast again on every visit and every step to another day.
+        /// </summary>
+        private (double Latitude, double Longitude, DateTime LocalDate, DateTime FetchedUtc)? _forecastFor;
+
+        /// <summary>Set by pull-to-refresh, which is asking for a fresh forecast whatever is on screen.</summary>
+        private bool _refreshForecast;
+
         // Set once the user moves off "now" — after that the date is theirs and a location change
         // must not silently drag it somewhere else.
         private bool _hasUserChosenDate;
@@ -208,6 +221,7 @@ namespace JustCompute.Features.Today
         {
             try
             {
+                _refreshForecast = true;
                 await LoadItems();
             }
             finally
@@ -282,9 +296,17 @@ namespace JustCompute.Features.Today
 
             Snapshot = snapshot;
 
+            // Read once, whichever branch runs: a refresh pulled on a day with no forecast must
+            // not linger and force the next ordinary visit to fetch.
+            var refresh = _refreshForecast;
+            _refreshForecast = false;
+
             if (IsDateWithinForecast)
             {
-                await LoadWeatherForecastAsync(latitude, longitude, date);
+                if (refresh || !IsForecastCurrentFor(latitude, longitude))
+                {
+                    await LoadWeatherForecastAsync(latitude, longitude, date);
+                }
             }
             else
             {
@@ -294,6 +316,18 @@ namespace JustCompute.Features.Today
                 IsWeatherFailed = false;
             }
         }
+
+        /// <summary>
+        /// The forecast on screen still answers for this place: fetched here, for the local day it
+        /// is now there, and recently. A new day at the location starts a new forecast.
+        /// </summary>
+        private bool IsForecastCurrentFor(double latitude, double longitude) =>
+            WeatherForecast is not null
+            && _forecastFor is { } fetched
+            && fetched.Latitude == latitude
+            && fetched.Longitude == longitude
+            && fetched.LocalDate == LocationNow.Date
+            && DateTime.UtcNow - fetched.FetchedUtc < ForecastLifetime;
 
         [RelayCommand]
         private async Task RetryWeather()
@@ -321,6 +355,11 @@ namespace JustCompute.Features.Today
 
                 if (superseded || SelectedDate.Date != forDate) return;
 
+                // Only a forecast that arrived is worth reusing; a failure is tried again next time.
+                _forecastFor = forecast is null
+                    ? null
+                    : (latitude, longitude, LocationNow.Date, DateTime.UtcNow);
+
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     WeatherForecast = forecast;
@@ -332,6 +371,7 @@ namespace JustCompute.Features.Today
             {
                 if (SelectedDate.Date != forDate) return;
 
+                _forecastFor = null;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
                     WeatherForecast = null;

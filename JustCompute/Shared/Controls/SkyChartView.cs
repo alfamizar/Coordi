@@ -136,6 +136,10 @@ namespace JustCompute.Shared.Controls
             private static readonly Color BodyLabel = Color.FromArgb("#E6F0FF");
             private static readonly Color BodyRing = Color.FromArgb("#99FFFFFF");
             private static readonly Color StarLabel = Color.FromArgb("#A8C6E8");
+            private static readonly Color HotStar = Color.FromArgb("#CFE3FF");
+            private static readonly Color CoolStar = Color.FromArgb("#FFD2A6");
+
+            private static readonly double[] AltitudeRings = [30.0, 60.0];
 
             /// <summary>Space kept outside the disc for the compass letters.</summary>
             private const float CardinalGap = 20f;
@@ -156,7 +160,12 @@ namespace JustCompute.Shared.Controls
             private readonly List<(string Text, float X, float Y, Color Colour, float Size)> _labels = [];
 
             private double _epochJd = double.NaN;
-            private (double Ra, double Dec, double Magnitude, double Bv, string? Name)[] _stars = [];
+            /// <summary>
+            /// Each star with its colour already worked out. It used to be derived on every frame —
+            /// two colours parsed from text and a third made from them, for nine hundred stars —
+            /// which was most of what a frame of a dragged slider allocated.
+            /// </summary>
+            private (double Ra, double Dec, double Magnitude, Color Colour, string? Name)[] _stars = [];
             private double[][] _figures = [];
             private double[][] _borders = [];
 
@@ -184,7 +193,7 @@ namespace JustCompute.Shared.Controls
                 if (ShowStickFigures) DrawPolylines(canvas, dome, cx, cy, radius, _figures, FigureLine, 1.1f);
 
                 DrawStars(canvas, dome, cx, cy, radius, sunAltitude);
-                DrawSolarSystem(canvas, dome, cx, cy, radius);
+                DrawSolarSystem(canvas, dome, cx, cy, radius, sun);
 
                 canvas.RestoreState();
 
@@ -206,7 +215,7 @@ namespace JustCompute.Shared.Controls
 
                 canvas.StrokeColor = AltitudeRing;
                 canvas.StrokeSize = 1f;
-                foreach (var altitude in new[] { 30.0, 60.0 })
+                foreach (var altitude in AltitudeRings)
                 {
                     canvas.DrawCircle(cx, cy, radius * (float)((90.0 - altitude) / 90.0));
                 }
@@ -218,7 +227,7 @@ namespace JustCompute.Shared.Controls
                 // there right now" at noon, and saying so quietly is better than an empty disc.
                 var visibility = (float)Math.Clamp(0.25 - sunAltitude / 12.0, 0.18, 1.0);
 
-                foreach (var (ra, dec, magnitude, bv, name) in _stars)
+                foreach (var (ra, dec, magnitude, colour, name) in _stars)
                 {
                     var h = dome.Horizontal(ra, dec);
                     if (SkyDome.Project(h.AzimuthDeg, h.AltitudeDeg) is not { } at) continue;
@@ -231,7 +240,7 @@ namespace JustCompute.Shared.Controls
                     var x = cx + (float)at.X * radius;
                     var y = cy + (float)at.Y * radius;
 
-                    canvas.FillColor = StarColour(bv).WithAlpha(Math.Min(1f, 0.35f + 0.65f * brightness) * visibility);
+                    canvas.FillColor = colour.WithAlpha(Math.Min(1f, 0.35f + 0.65f * brightness) * visibility);
                     canvas.FillCircle(x, y, size);
 
                     if (name is null || magnitude > NamedStarMagnitude) continue;
@@ -257,7 +266,7 @@ namespace JustCompute.Shared.Controls
             private static Color StarColour(double bv)
             {
                 var t = (float)Math.Clamp((bv + 0.3) / 1.8, 0.0, 1.0);
-                return Lerp(Color.FromArgb("#CFE3FF"), Color.FromArgb("#FFD2A6"), t);
+                return Lerp(HotStar, CoolStar, t);
             }
 
             private static void DrawPolylines(
@@ -293,9 +302,8 @@ namespace JustCompute.Shared.Controls
                 }
             }
 
-            private void DrawSolarSystem(ICanvas canvas, SkyDome dome, float cx, float cy, float radius)
+            private void DrawSolarSystem(ICanvas canvas, SkyDome dome, float cx, float cy, float radius, SunPosition sun)
             {
-                var sun = Sun.PositionAt(JdUtc);
                 DrawBody(canvas, dome, cx, cy, radius, sun.RightAscension, sun.Declination, SunDisc, 6f, "☉");
 
                 var moon = Moon.PositionAt(JdUtc);
@@ -388,7 +396,7 @@ namespace JustCompute.Shared.Controls
                     .. BrightStars.All.Select(star =>
                     {
                         var eq = Coordinates.PrecessEquatorial(AstroTime.J2000, JdUtc, star.RaDeg, star.DecDeg);
-                        return (eq.RightAscensionDeg, eq.DeclinationDeg, star.Magnitude, star.Bv, star.Name);
+                        return (eq.RightAscensionDeg, eq.DeclinationDeg, star.Magnitude, StarColour(star.Bv), star.Name);
                     })
                 ];
 

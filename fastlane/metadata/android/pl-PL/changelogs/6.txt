@@ -2,3 +2,4 @@ Aplikacja od razu otwiera się w miejscu z ostatniego razu, a potem sprawdza, gd
 Jeśli jesteś w innym mieście, przed zmianą zapyta.
 Przycisk Wstecz na ekranie Dziś zamyka teraz aplikację.
 Twoja lokalizacja jest ustalana szybciej.
+Wpisane współrzędne są teraz poprawnie odczytywane w każdym języku, a edycja bieżącego miejsca działa od razu.

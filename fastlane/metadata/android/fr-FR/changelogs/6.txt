@@ -2,3 +2,4 @@ L'application s'ouvre aussitôt sur le lieu de la dernière fois, puis vérifie 
 Si vous avez changé de ville, elle vous demande avant de basculer.
 Retour sur l'écran Aujourd'hui ferme désormais l'application.
 Votre position est trouvée plus vite.
+Les coordonnées saisies sont désormais lues correctement dans toutes les langues, et modifier le lieu actuel s'applique aussitôt.

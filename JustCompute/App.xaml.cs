@@ -3,7 +3,6 @@ using JustCompute.Persistence.Repository;
 using JustCompute.Persistence.Repository.Constants;
 using JustCompute.Services.LocationService;
 using JustCompute.Shared.Helpers;
-using System.Reflection;
 using Compute.Core.Utils;
 
 namespace JustCompute;
@@ -36,7 +35,7 @@ public partial class App : Application
         // old code here truncated it outright, before the migration had read anything out of it.
         CatalogueInstaller.Install(
             databasePaths,
-            () => typeof(App).Assembly.GetManifestResourceStream(RepositoryConstants.PreinstalledDatabasePath),
+            OpenPackagedCatalogue,
             isNewVersion: VersionTracking.Default.IsFirstLaunchForCurrentVersion);
 
         // Off the UI thread on purpose: the first zone lookup pays a one-off ~23 ms to load
@@ -44,6 +43,25 @@ public partial class App : Application
         // location for its time. Fire and forget — nothing waits on it, and any failure just
         // means the first real lookup pays the cost as it did before.
         Task.Run(TimeZoneUtils.Prewarm).Forget(nameof(TimeZoneUtils.Prewarm));
+    }
+
+    /// <summary>
+    /// The catalogue as shipped, or null if the package somehow lacks it. Waited on in place: on
+    /// both platforms the call is synchronous underneath — an Android asset stream, a file in the
+    /// iOS bundle — so there is nothing here that could deadlock the thread it blocks.
+    /// </summary>
+    private static Stream? OpenPackagedCatalogue()
+    {
+        try
+        {
+            return FileSystem.OpenAppPackageFileAsync(RepositoryConstants.PackagedCatalogueAsset)
+                .GetAwaiter()
+                .GetResult();
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

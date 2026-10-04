@@ -2,3 +2,4 @@ Die App öffnet sofort mit dem Ort vom letzten Mal und prüft dann, wo Sie gerad
 Sind Sie in einer anderen Stadt, fragt sie vor dem Wechsel nach.
 Zurück auf dem Bildschirm Heute schließt jetzt die App.
 Ihr Standort wird schneller ermittelt.
+Eingegebene Koordinaten werden jetzt in jeder Sprache richtig gelesen, und Änderungen am aktuellen Ort gelten sofort.

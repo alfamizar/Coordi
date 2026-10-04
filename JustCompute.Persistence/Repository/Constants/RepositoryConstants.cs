@@ -2,7 +2,8 @@ namespace JustCompute.Persistence.Repository.Constants
 {
     public class RepositoryConstants
     {
-        public const string PreinstalledDatabasePath = "JustCompute.Database.geo_world.db";
+        /// <summary>The catalogue as packaged with the app, by its asset name.</summary>
+        public const string PackagedCatalogueAsset = "geo_world.db";
 
         /// <summary>The shipped, read-only world-city catalogue. Replaceable on any release.</summary>
         public const string CatalogueDatabaseFilename = "geo_world.db";
