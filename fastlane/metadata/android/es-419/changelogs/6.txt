@@ -2,3 +2,4 @@ Se abre al instante en el lugar de la última vez y luego comprueba dónde está
 Si te fuiste a otra ciudad, pregunta antes de cambiar.
 Atrás en la pantalla Hoy ahora cierra la app.
 Tu ubicación se encuentra más rápido.
+Las coordenadas que escribes ahora se leen bien en todos los idiomas, y editar tu lugar actual se aplica al instante.
