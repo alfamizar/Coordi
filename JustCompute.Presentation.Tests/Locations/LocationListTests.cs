@@ -35,8 +35,8 @@ namespace JustCompute.Presentation.Tests.Locations
         [Fact]
         public void Upsert_OfTheVerySameInstance_ChangesNothing()
         {
-            // Re-assigning the identical instance raises a Replace, which resets the carousel
-            // to the first item and discards the user's selection.
+            // Re-assigning the identical instance raises a Replace, which redraws the row for
+            // nothing and can drop the selection the list is showing.
             var held = Saved(1, "A");
             List<Location> list = [held];
 
@@ -53,26 +53,6 @@ namespace JustCompute.Presentation.Tests.Locations
 
             Assert.Equal("B", list[0].Name);
             Assert.Equal("A", list[1].Name);
-        }
-
-        [Fact]
-        public void CopyPositionInto_MovesTheFixOntoTheExistingEntry()
-        {
-            var slot = new Location { IsCurrent = true, Name = "old", Latitude = 1, Longitude = 1 };
-            var fix = new Location
-            {
-                Name = "Kyoto",
-                Latitude = 35.0117,
-                Longitude = 135.7683,
-                City = new City { CityName = "Kyoto" },
-            };
-
-            LocationList.CopyPositionInto(slot, fix);
-
-            Assert.Equal("Kyoto", slot.Name);
-            Assert.Equal(35.0117, slot.Latitude);
-            Assert.Equal("Kyoto", slot.City.CityName);
-            Assert.True(slot.IsCurrent);
         }
     }
 }

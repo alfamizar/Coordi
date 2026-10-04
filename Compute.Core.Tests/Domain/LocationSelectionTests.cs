@@ -59,9 +59,9 @@ namespace Compute.Core.Tests.Domain
         [Fact]
         public void ASelectionOnTheSupersededFixFollowsItAcross()
         {
-            // The Locations screen moves a fresh fix onto the row already in the list and hands
-            // that row back, so the instance the selection points at stops being the live one.
-            // The single case where a real choice is re-pointed rather than left alone.
+            // Every fresh fix is a new object, so the instance the selection points at stops
+            // being the live one. The single case where a real choice is re-pointed rather than
+            // left alone.
             var placeholder = Placeholder();
             var oldFix = Fix();
 

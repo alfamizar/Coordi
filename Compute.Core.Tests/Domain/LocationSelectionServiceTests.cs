@@ -196,18 +196,18 @@ namespace Compute.Core.Tests.Domain
         }
 
         [Fact]
-        public void ADeviceRowTheUserChoseFollowsTheFixOntoTheListsObject_AndStaysTheirChoice()
+        public void ADeviceRowTheUserChoseFollowsTheNextFix_AndStaysTheirChoice()
         {
             var h = new Harness();
             var fresh = Fix();
             h.Device.Arrive(fresh);
             h.Service.Select(fresh);
 
-            // The Locations screen moves the fix onto the row it already shows.
-            var row = Fix();
-            h.Device.Replace(row);
+            // The next fix is a new object, and it becomes the device's row.
+            var next = Fix();
+            h.Device.Replace(next);
 
-            Assert.Same(row, h.Service.SelectedLocation);
+            Assert.Same(next, h.Service.SelectedLocation);
             Assert.True(h.Store.HasUserChosen);
         }
 
@@ -466,8 +466,6 @@ namespace Compute.Core.Tests.Domain
                 Requests++;
                 return NextFix ?? Fix();
             }
-
-            public void KeepListInstance(Location listInstance) => Replace(listInstance);
 
             public void Arrive(Location fix) => Replace(fix);
 

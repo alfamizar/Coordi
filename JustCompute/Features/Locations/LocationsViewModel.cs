@@ -215,19 +215,18 @@ namespace JustCompute.Features.Locations
             }
         }
 
+        /// <summary>
+        /// The device's row is the fix itself, replaced whole when a fresh one arrives.
+        ///
+        /// It used to have the new position copied onto the row's existing object, a habit from
+        /// when this list was a carousel that lost its place whenever an item was swapped. Nothing
+        /// told the list about the copy, so the row went on showing the old coordinates until it
+        /// happened to redraw, while the card above it showed the new ones. A vertical list keeps
+        /// its scroll position through a replace, and the selection follows the device to its new
+        /// fix by itself, so the row can simply be the fix.
+        /// </summary>
         private void MarkAsCurrentDeviceLocation(Location deviceLocation)
         {
-            var deviceSlot = Locations.FirstOrDefault(LocationIdentity.IsDeviceSlot);
-
-            if (deviceSlot is not null && !ReferenceEquals(deviceSlot, deviceLocation))
-            {
-                // Move the fix onto the entry already in the list: the carousel is bound to that
-                // instance, so replacing it would lose the user's place in it.
-                LocationList.CopyPositionInto(deviceSlot, deviceLocation);
-                _device.KeepListInstance(deviceSlot);
-                return;
-            }
-
             deviceLocation.IsCurrent = true;
             UpsertLocation(deviceLocation, insertAtStart: true);
         }

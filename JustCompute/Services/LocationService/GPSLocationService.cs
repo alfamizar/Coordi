@@ -54,20 +54,6 @@ namespace JustCompute.Services.LocationService
         public Task WaitForPendingFixAsync() =>
             IsGettingDeviceLocation && _pendingFix is { } pending ? pending.Task : Task.CompletedTask;
 
-        public void KeepListInstance(Location listInstance)
-        {
-            ArgumentNullException.ThrowIfNull(listInstance);
-
-            // Only the device's own row may stand for the device. Anything else here would make
-            // a saved place, or the placeholder, silently become "where I am".
-            if (!LocationIdentity.IsDeviceSlot(listInstance))
-            {
-                throw new ArgumentException("Only the device's own row can stand for its position.", nameof(listInstance));
-            }
-
-            SetDeviceLocation(listInstance);
-        }
-
         private void SetDeviceLocation(Location next)
         {
             if (ReferenceEquals(_deviceLocation, next)) return;

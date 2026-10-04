@@ -28,8 +28,8 @@ namespace JustCompute.Presentation.Locations
 
             if (existing is not null)
             {
-                // Re-assigning the identical instance still raises a Replace, which snaps the
-                // carousel back to the first item and throws away the user's selection.
+                // Re-assigning the identical instance still raises a Replace, which redraws the
+                // row for nothing and can drop the selection the list is showing.
                 if (ReferenceEquals(existing, location)) return false;
 
                 list[list.IndexOf(existing)] = location;
@@ -46,20 +46,6 @@ namespace JustCompute.Presentation.Locations
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Moves a fresh device fix onto the entry already in the list, rather than replacing it.
-        /// The list item is what the carousel is bound to, so swapping the instance loses the
-        /// user's place in it.
-        /// </summary>
-        public static void CopyPositionInto(Location target, Location source)
-        {
-            target.Name = source.Name;
-            target.Latitude = source.Latitude;
-            target.Longitude = source.Longitude;
-            target.City = source.City;
-            target.IsCurrent = true;
         }
     }
 }

@@ -34,15 +34,6 @@ namespace Compute.Core.Domain.Services
         /// <summary>Makes <paramref name="position"/> the device's position and announces it.</summary>
         void PublishDeviceLocation(Location position);
 
-        /// <summary>
-        /// Makes <paramref name="listInstance"/> the object that stands for the device's position.
-        ///
-        /// The Locations screen moves each fresh fix onto the row it already shows, because the
-        /// list is bound to that row and replacing it would lose the reader's place. This is how
-        /// it says so. Only the device's own row qualifies: anything else is rejected.
-        /// </summary>
-        void KeepListInstance(Location listInstance);
-
         /// <summary>Raised whenever <see cref="DeviceLocation"/> changes to a different object.</summary>
         event EventHandler<DeviceLocationChangedEventArgs> DeviceLocationChanged;
     }
