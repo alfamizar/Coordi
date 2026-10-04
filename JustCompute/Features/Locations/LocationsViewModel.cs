@@ -21,7 +21,6 @@ using Microsoft.Maui.ApplicationModel;
 using System.Collections.Specialized;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
-using Compute.Core.Domain.ReadModels;
 
 namespace JustCompute.Features.Locations
 {
@@ -76,8 +75,6 @@ namespace JustCompute.Features.Locations
         [ObservableProperty]
         private Location? selectedLocation;
 
-        [ObservableProperty]
-        private CelestialSnapshot? coordinate;
 
         [ObservableProperty]
         private DateTime currentTime = DateTime.Now;
@@ -339,26 +336,25 @@ namespace JustCompute.Features.Locations
             UpdateAtThisLocationInfo(value);
         }
 
+        /// <summary>
+        /// Keeps the clock on the card running for the place shown.
+        ///
+        /// It used to compute a full celestial snapshot here as well — the moonrise search alone is
+        /// a few milliseconds on a phone — on the UI thread, on every tap in the list and twice
+        /// on every return to the app. Nothing has displayed it since the Today dashboard took that
+        /// content over, so it is gone rather than moved off the thread.
+        /// </summary>
         private void UpdateAtThisLocationInfo(Location? location)
         {
             IsPlaceholderLocation = _selection.ShouldPromptForLocation;
 
             if (location is null)
             {
-                Coordinate = null;
                 _clock.Stop();
                 return;
             }
 
-            var offsetHours = location.GetUtcOffsetHours(DateTime.UtcNow);
-
-            Coordinate = CelestialSnapshot.For(
-                location.Latitude,
-                location.Longitude,
-                DateTime.UtcNow.AddHours(offsetHours),
-                offsetHours);
-
-            RestartTimer(offsetHours);
+            RestartTimer(location.GetUtcOffsetHours(DateTime.UtcNow));
         }
 
         /// <summary>
