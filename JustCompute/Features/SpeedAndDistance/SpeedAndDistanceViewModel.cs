@@ -33,7 +33,13 @@ namespace JustCompute.Features.SpeedAndDistance
         private readonly DistanceFormatter _distanceFormatter;
         private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(1);
         private Timer? _timer;
-        private DateTime _lastUpdate = DateTime.MinValue;
+        /// <summary>
+        /// When the last fix was taken in, on the monotonic clock; zero before the first. It was
+        /// the wall clock, local time, and a clock that went back — the autumn change at 3:00, or
+        /// a drive west into an earlier zone — made every fix look too soon after the last one,
+        /// so a trip stopped counting for an hour.
+        /// </summary>
+        private long _lastUpdateTimestamp;
 
         // The raw Speed / CalculatedSpeed values are kept in m/s (as reported by the GPS service and
         // the distance calculator); the formatted properties below convert them to the unit chosen
@@ -269,12 +275,14 @@ namespace JustCompute.Features.SpeedAndDistance
 
         private void OnDeviceLocationUpdated(object? sender, DeviceLocationUpdate update)
         {
-            var now = DateTime.Now;
-            if (now - _lastUpdate < _updateInterval)
+            var now = Stopwatch.GetTimestamp();
+            var sinceLastUpdate = _lastUpdateTimestamp == 0
+                ? TimeSpan.MaxValue
+                : Stopwatch.GetElapsedTime(_lastUpdateTimestamp, now);
+            if (sinceLastUpdate < _updateInterval)
                 return;
 
-            var sinceLastUpdate = now - _lastUpdate;
-            _lastUpdate = now;
+            _lastUpdateTimestamp = now;
 
             UpdateLiveReadouts(update);
 
