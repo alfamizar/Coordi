@@ -31,8 +31,9 @@ namespace JustCompute.Features.Eclipses
 
         /// <summary>
         /// The whole century, kept so flipping the filter re-slices what is already computed.
-        /// Recomputing the table costs a few hundred milliseconds; the user is only narrowing
-        /// a list they can already see.
+        /// The solar table is the slowest thing the app computes: about 0.3 s on a desktop, so
+        /// one to three seconds on a phone (the lunar one is under a millisecond). The user is
+        /// only narrowing a list they can already see.
         /// </summary>
         private List<TEclipse> _all = [];
 
