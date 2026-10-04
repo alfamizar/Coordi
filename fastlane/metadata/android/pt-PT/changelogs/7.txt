@@ -1,0 +1,3 @@
+O ecrã Locais responde com mais fluidez quando muda de local.
+As horas aparecem sem soluços no primeiro ecrã depois de abrir a app.
+Encontrar a sua localização é mais fiável.

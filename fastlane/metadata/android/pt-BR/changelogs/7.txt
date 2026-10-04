@@ -1,0 +1,3 @@
+A tela Locais responde com mais fluidez quando você troca de lugar.
+Os horários aparecem sem travadas na primeira tela depois de abrir o app.
+Encontrar sua localização ficou mais confiável.

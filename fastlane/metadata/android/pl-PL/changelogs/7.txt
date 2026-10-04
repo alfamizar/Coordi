@@ -1,0 +1,3 @@
+Ekran Lokalizacje reaguje płynniej przy zmianie miejsca.
+Godziny pojawiają się bez przycięć na pierwszym ekranie po uruchomieniu.
+Ustalanie lokalizacji jest bardziej niezawodne.

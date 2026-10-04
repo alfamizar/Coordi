@@ -1,0 +1,3 @@
+Der Bildschirm Standorte reagiert beim Wechseln flüssiger.
+Zeiten erscheinen auf dem ersten Bildschirm nach dem Start ohne Ruckeln.
+Ihr Standort wird zuverlässiger ermittelt.
