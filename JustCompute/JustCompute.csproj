@@ -14,8 +14,8 @@
     <ApplicationId>com.cutecompute.coordi</ApplicationId>
     <ApplicationIdGuid>b09e0a6c-4e76-48d3-8aa1-0d34c37b1c47</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>1.3.1</ApplicationDisplayVersion>
-    <ApplicationVersion>6</ApplicationVersion>
+    <ApplicationDisplayVersion>1.3.2</ApplicationDisplayVersion>
+    <ApplicationVersion>7</ApplicationVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <!-- Android 7.0. Play's automatic protection refuses an App Bundle whose minSdk is below 24,
          and only says so at upload, after the build is signed. -->
