@@ -52,7 +52,7 @@
                VerticalOptions="Center"
                Placeholder="{localization:Localize LatitudeLabel}"
                HorizontalTextAlignment="Center"
-               Text="{Binding Location.Latitude, Mode=TwoWay}"
+               Text="{Binding Location.LatitudeText, Mode=TwoWay}"
                Keyboard="Numeric">
             <Entry.Behaviors>
                 <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
@@ -61,9 +61,7 @@
             </Entry.Behaviors>
             <Entry.Triggers>
                 <DataTrigger TargetType="Entry"
-                             Binding="{Binding Location.Latitude, 
-                    Converter={StaticResource CoordinateRangeValidatorToBoolConverter}, 
-                    ConverterParameter='latitude'}"
+                             Binding="{Binding Location.IsLatitudeValid}"
                              Value="False">
                     <Setter Property="TextColor"
                             Value="{DynamicResource ThemeError}" />
@@ -80,7 +78,7 @@
                VerticalOptions="Center"
                Placeholder="{localization:Localize LongitudeLabel}"
                HorizontalTextAlignment="Center"
-               Text="{Binding Location.Longitude, Mode=TwoWay}"
+               Text="{Binding Location.LongitudeText, Mode=TwoWay}"
                Keyboard="Numeric">
             <Entry.Behaviors>
                 <toolkit:UserStoppedTypingBehavior Command="{Binding UserStoppedTypingCommand}"
@@ -89,9 +87,7 @@
             </Entry.Behaviors>
             <Entry.Triggers>
                 <DataTrigger TargetType="Entry"
-                             Binding="{Binding Location.Longitude, 
-                    Converter={StaticResource CoordinateRangeValidatorToBoolConverter},
-                    ConverterParameter='longitude'}"
+                             Binding="{Binding Location.IsLongitudeValid}"
                              Value="False">
                     <Setter Property="TextColor"
                             Value="{DynamicResource ThemeError}" />

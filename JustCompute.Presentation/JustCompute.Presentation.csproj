@@ -14,6 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- The same MVVM toolkit the app uses: editable models here raise the change notifications
+         the app's bindings listen to. -->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Compute.Core\Compute.Core.csproj" />
   </ItemGroup>
 

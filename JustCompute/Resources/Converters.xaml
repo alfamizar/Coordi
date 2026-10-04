@@ -15,7 +15,6 @@
     <sunEclipses:SunEclipseTypeToNameConverter x:Key="SunEclipseTypeToNameConverter" />
     <moonEclipses:MoonEclipseTypeToNameConverter x:Key="MoonEclipseTypeToNameConverter" />
     <converters:IsDateTimeSetConverter x:Key="IsDateTimeSetConverter" />
-    <converters:CoordinateRangeValidatorToBoolConverter x:Key="CoordinateRangeValidatorToBoolConverter" />
     <converters:IsTimeSpanSetConverter x:Key="IsTimeSpanSetConverter" />
     <converters:MagnitudeConverter x:Key="MagnitudeConverter" />
     <converters:TwilightLabelToNameConverter x:Key="TwilightLabelToNameConverter" />

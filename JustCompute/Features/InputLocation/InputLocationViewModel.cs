@@ -12,6 +12,7 @@ using Microsoft.Extensions.Localization;
 using System.ComponentModel;
 using System.Windows.Input;
 using Location = Compute.Core.Domain.Entities.Models.Location;
+using JustCompute.Presentation.Locations;
 
 namespace JustCompute.Features.InputLocation
 {
@@ -67,28 +68,23 @@ namespace JustCompute.Features.InputLocation
         {
             if (e.PropertyName == nameof(Location) ||
                 e.PropertyName == nameof(Location.Name) ||
-                e.PropertyName == nameof(Location.Latitude) ||
-                e.PropertyName == nameof(Location.Longitude))
+                e.PropertyName == nameof(Location.IsLatitudeValid) ||
+                e.PropertyName == nameof(Location.IsLongitudeValid))
             {
                 SaveLocationCommand.NotifyCanExecuteChanged();
             }
         }
 
+        /// <summary>
+        /// Judged on what the fields hold, not on the numbers behind them: a field that does not
+        /// read as a coordinate leaves the last one that did in place, and saving that would store
+        /// a place the user never typed.
+        /// </summary>
         private bool CanSaveLocation()
         {
             return !string.IsNullOrWhiteSpace(Location?.Name)
-                   && IsValidLatitude(Location.Latitude)
-                   && IsValidLongitude(Location.Longitude);
-        }
-
-        private static bool IsValidLatitude(double latitude)
-        {
-            return latitude >= -90 && latitude <= 90;
-        }
-
-        private static bool IsValidLongitude(double longitude)
-        {
-            return longitude >= -180 && longitude <= 180;
+                   && Location.IsLatitudeValid
+                   && Location.IsLongitudeValid;
         }
 
         [RelayCommand]

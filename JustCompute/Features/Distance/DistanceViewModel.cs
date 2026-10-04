@@ -15,6 +15,7 @@ using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 using System.ComponentModel;
+using JustCompute.Presentation.Locations;
 
 namespace JustCompute.Features.Distance
 {
