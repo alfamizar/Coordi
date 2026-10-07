@@ -38,6 +38,14 @@ namespace Compute.Astro
         /// Horizontal coordinates from an hour angle H, declination δ, and observer
         /// latitude φ (all degrees). Pure spherical trig (Meeus ch. 13); azimuth is
         /// converted from Meeus's from-South convention to from-North.
+        ///
+        /// The azimuth is Meeus's formula with numerator and denominator both multiplied through by
+        /// cos δ. That is the same angle — atan2 reads a direction, not a magnitude, so scaling both
+        /// arguments by a positive number cannot move it — but it removes the tan δ, which runs off
+        /// to 10^16 as a body approaches the celestial pole. The old form gave the right answer even
+        /// there, atan2 being well behaved with a huge denominator; it simply computed it by way of
+        /// a number sixteen orders of magnitude larger than anything else in the expression, and
+        /// threw away precision doing it.
         /// </summary>
         public static Horizontal FromHourAngle(double hourAngleDeg, double declinationDeg, double latitudeDeg)
         {
@@ -48,7 +56,10 @@ namespace Compute.Astro
             // is sin^2 + cos^2, which in IEEE arithmetic lands on 1.0000000000000002 often enough,
             // and asin of that is NaN — an altitude that poisons every number downstream of it.
             var altitude = Math.Asin(Clamp(Math.Sin(phi) * Math.Sin(dec) + Math.Cos(phi) * Math.Cos(dec) * Math.Cos(h), -1.0, 1.0));
-            var azimuthFromSouth = Math.Atan2(Math.Sin(h), Math.Cos(h) * Math.Sin(phi) - Math.Tan(dec) * Math.Cos(phi));
+            var cosDec = Math.Cos(dec);
+            var azimuthFromSouth = Math.Atan2(
+                Math.Sin(h) * cosDec,
+                Math.Cos(h) * Math.Sin(phi) * cosDec - Math.Sin(dec) * Math.Cos(phi));
             return new Horizontal(
                 AzimuthDeg: NormalizeDegrees(ToDegrees(azimuthFromSouth) + 180.0),
                 AltitudeDeg: ToDegrees(altitude));
