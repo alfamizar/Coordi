@@ -127,6 +127,70 @@ namespace Compute.Astro
         public readonly record struct GroundPoint(double LatDeg, double LonEastDeg);
 
         /// <summary>
+        /// Distance of the shadow axis from the Earth's centre at <paramref name="jdTd"/>, in Earth
+        /// radii — the quantity whose least value defines greatest eclipse.
+        ///
+        /// Computed from the Sun and Moon themselves, so a search on it answers the question
+        /// directly rather than trusting a periodic series fitted to it.
+        /// </summary>
+        public static double AxisDistance(double jdTd)
+        {
+            var sun = Sun.PositionAt(jdTd);
+            var moon = Moon.PositionAt(jdTd);
+            var rSun = Sun.RadiusVectorAu(jdTd) * AuKm / EarthRadiusKm;
+            var rMoon = moon.DistanceKm / EarthRadiusKm;
+
+            var sunDec = ToRadians(sun.Declination);
+            var sunRa = ToRadians(sun.RightAscension);
+            var xs = rSun * Math.Cos(sunDec) * Math.Cos(sunRa);
+            var ys = rSun * Math.Cos(sunDec) * Math.Sin(sunRa);
+            var zs = rSun * Math.Sin(sunDec);
+            var moonDec = ToRadians(moon.DeclinationDeg);
+            var moonRa = ToRadians(moon.RightAscensionDeg);
+            var xm = rMoon * Math.Cos(moonDec) * Math.Cos(moonRa);
+            var ym = rMoon * Math.Cos(moonDec) * Math.Sin(moonRa);
+            var zm = rMoon * Math.Sin(moonDec);
+
+            var aRad = Math.Atan2(ys - ym, xs - xm);
+            var dRad = Math.Asin((zs - zm) / Math.Sqrt((xs - xm) * (xs - xm) + (ys - ym) * (ys - ym) + (zs - zm) * (zs - zm)));
+            var x = -xm * Math.Sin(aRad) + ym * Math.Cos(aRad);
+            var y = -xm * Math.Sin(dRad) * Math.Cos(aRad) - ym * Math.Sin(dRad) * Math.Sin(aRad) + zm * Math.Cos(dRad);
+            return Math.Sqrt(x * x + y * y);
+        }
+
+        /// <summary>
+        /// The instant of greatest eclipse near <paramref name="jdTdGuess"/>: when the shadow axis
+        /// passes closest to the Earth's centre.
+        ///
+        /// Meeus' series for it is published as good to about ±0.3 minutes, and that is what it
+        /// delivers — for 12 August 2026 it lands 17 seconds from NASA's canon, which is twenty
+        /// seconds on every contact time the app prints. Half a minute either side of the guess,
+        /// bisected on the axis distance, costs a few dozen evaluations and settles it to a second.
+        /// </summary>
+        public static double RefineGreatestEclipse(double jdTdGuess)
+        {
+            var low = jdTdGuess - SearchHalfMinutes / 1440.0;
+            var high = jdTdGuess + SearchHalfMinutes / 1440.0;
+            // Golden-section on a smooth single-minimum function.
+            for (var i = 0; i < GreatestIterations; i++)
+            {
+                var third = (high - low) / 3.0;
+                var a = low + third;
+                var b = high - third;
+                if (AxisDistance(a) < AxisDistance(b)) high = b;
+                else low = a;
+            }
+
+            return (low + high) / 2.0;
+        }
+
+        /// <summary>Half-width of the refinement window: comfortably wider than the series' own error.</summary>
+        private const double SearchHalfMinutes = 3.0;
+
+        /// <summary>Enough thirds-halvings to bring three minutes down to well under a second.</summary>
+        private const int GreatestIterations = 30;
+
+        /// <summary>
         /// The geographic point where the shadow <b>axis</b> pierces the Earth at Dynamical Time
         /// <paramref name="jdTd"/> — the central-line point — or null when the axis misses the globe
         /// (no central eclipse at that instant). Spherical-Earth intersection with a

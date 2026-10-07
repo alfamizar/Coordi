@@ -86,8 +86,9 @@ NASA eclipse circumstances.
 | Vincenty distance | ~0.5 mm |
 | UTM/MGRS round-trip | sub-millimetre across 80°S–84°N |
 
-ΔT is the full piecewise Espenak–Meeus model: ≲1 s across the telescopic era, growing for
-ancient dates and extrapolated beyond ~2015.
+ΔT follows USNO's measured series from 2005 and its predictions to 2033, then the long-term
+Espenak–Meeus curve shifted to meet them. Before 2005 it is the full piecewise Espenak–Meeus
+model: ≲1 s across the telescopic era, growing for ancient dates.
 
 ### Known limits
 

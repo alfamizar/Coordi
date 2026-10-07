@@ -51,16 +51,23 @@ public class DeltaTValidationTests
     }
 
     [Fact]
-    public void DeltaT_ModernSegmentUnchangedFromPreviousModel()
+    public void DeltaT_ModernSegmentLeavesThePublishedExtrapolationBehind()
     {
-        // 2005–2050 must still be the same polynomial the eclipse tests were
-        // validated with (62.92 + 0.32217 t + 0.005589 t²).
-        foreach (var year in new[] { 2005, 2017, 2024, 2026, 2049 })
+        // This test used to assert the opposite: that 2005–2050 stayed on Espenak–Meeus'
+        // extrapolation, 62.92 + 0.32217 t + 0.005589 t². That polynomial was fitted before the
+        // Earth stopped slowing down, and it has been drifting away from the measured value ever
+        // since — five seconds out by 2020, six by 2026, eleven by 2033. What it asserts now is
+        // that the library no longer follows it, and by how much, so the divergence is on the
+        // record rather than a surprise.
+        foreach (var (year, drift) in new[] { (2005, 0.3), (2017, 2.5), (2026, 6.3), (2033, 8.0) })
         {
             var y = year + 6.5 / 12.0;
             var t = y - 2000.0;
-            var legacy = 62.92 + 0.32217 * t + 0.005589 * t * t;
-            Assert.Equal(legacy, AstroTime.DeltaTSeconds(year), 1e-9);
+            var extrapolation = 62.92 + 0.32217 * t + 0.005589 * t * t;
+            var ours = AstroTime.DeltaTSeconds(year);
+            Assert.True(
+                Math.Abs(extrapolation - ours - drift) < 1.5,
+                $"at {year} the extrapolation is {extrapolation}, we say {ours}; expected a gap near {drift} s");
         }
     }
 }
