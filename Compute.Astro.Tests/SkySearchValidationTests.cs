@@ -74,6 +74,74 @@ public class SkySearchValidationTests
             Assert.Null(h.Illumination);
         }
     }
+
+    /// <summary>
+    /// Due north from Łódź the Sun only ever crosses at lower culmination, at h = φ + δ − 90°, which
+    /// is −14.8° at its highest, at the June solstice. Asked for the horizon there, the search finds
+    /// nothing — and its nearest crossing has to be that one, on that date. Without refraction, so
+    /// the closed form is the whole answer.
+    /// </summary>
+    [Fact]
+    public void AnEmptySearchSaysHowCloseItCame()
+    {
+        var start = AstroTime.JulianDay(2026, 1, 1);
+        var result = SkySearch.Search(
+            SkyBody.Sun, start, start + 365.0, Lat, Lon,
+            azimuthDeg: 0.0, altitudeDeg: 0.0, altitudeTolDeg: 0.5, applyRefraction: false);
+        Assert.True(result.Alignments.Count == 0, "the Sun is never on the north horizon at this latitude");
+        Assert.True(result.Closest is not null, "the Sun crosses due north every night");
+        var closest = result.Closest!.Value;
+        // The obliquity of the ecliptic in 2026, nutation included.
+        var expected = Lat + 23.438 - 90.0;
+        Assert.True(Math.Abs(closest.AltitudeDeg - expected) < 0.05, $"closest at {closest.AltitudeDeg}°, expected {expected}°");
+        var solstice = AstroTime.JulianDay(2026, 6, 21, 8, 24);
+        Assert.True(Math.Abs(closest.JdUt - solstice) < 1.5, $"closest {closest.JdUt - solstice} days from the solstice");
+    }
+
+    /// <summary>With matches to choose from, the nearest crossing is the best of them.</summary>
+    [Fact]
+    public void WhenThereAreMatchesTheClosestIsTheBestOfThem()
+    {
+        var start = AstroTime.JulianDay(2026, 1, 1);
+        var result = SkySearch.Search(
+            SkyBody.Sun, start, start + 365.0, Lat, Lon,
+            azimuthDeg: 270.0, altitudeDeg: 10.0, altitudeTolDeg: 1.0);
+        Assert.NotEmpty(result.Alignments);
+        Assert.Equal(result.Alignments.MinBy(a => Math.Abs(a.AltitudeDeg - 10.0)), result.Closest);
+        Assert.False(result.Truncated, $"{result.Alignments.Count} moments are not a hundred");
+    }
+
+    /// <summary>A search cut off by its cap says so, rather than passing for a complete count.</summary>
+    [Fact]
+    public void ACappedSearchSaysItStoppedEarly()
+    {
+        var start = AstroTime.JulianDay(2026, 1, 1);
+        var result = SkySearch.Search(
+            SkyBody.Sun, start, start + 365.0, Lat, Lon,
+            azimuthDeg: 270.0, altitudeDeg: 10.0, altitudeTolDeg: 1.0, maxResults: 3);
+        Assert.Equal(3, result.Alignments.Count);
+        Assert.True(result.Truncated);
+    }
+
+    /// <summary>
+    /// The window ends where it says. The scan's steps run on a fixed grid, and the last one used to
+    /// run past the end: here the grid puts a step from 8 minutes before the crossing to exactly on
+    /// it, the window ends 2 minutes before it, and the crossing came back anyway.
+    /// </summary>
+    [Fact]
+    public void ACrossingJustPastTheEndOfTheWindowIsNotInIt()
+    {
+        var t0 = AstroTime.JulianDay(2026, 8, 12, 17, 0);
+        var at = HorizontalCoordinates.OfSun(t0, Lat, Lon, applyRefraction: true);
+        // 0.4 days is 72 steps of 8 minutes, so t0 sits on the grid.
+        var end = t0 - 2.0 / 1440.0;
+        var hits = SkySearch.FindAlignments(
+            SkyBody.Sun, t0 - 0.4, end, Lat, Lon,
+            azimuthDeg: at.AzimuthDeg, altitudeDeg: at.AltitudeDeg, altitudeTolDeg: 0.5);
+        Assert.True(
+            hits.All(h => h.JdUt <= end),
+            $"found {string.Join(", ", hits.Select(h => (h.JdUt - end) * 1440.0))} minutes past the end");
+    }
 }
 
 /// <summary>Ground-track checks for the Besselian central-line solver.</summary>
