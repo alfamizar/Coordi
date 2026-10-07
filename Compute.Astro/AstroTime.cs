@@ -40,8 +40,11 @@ namespace Compute.Astro
                 m += 12;
             }
 
-            var a = y / 100;
-            var b = 2 - a + a / 4;
+            // FloorDiv, not /: Meeus' INT() is a floor, and C#'s division truncates toward zero.
+            // They agree for every year AD and disagree for every century BC, where truncation puts
+            // the Gregorian correction a day out.
+            var a = AstroMath.FloorDiv(y, 100);
+            var b = 2 - a + AstroMath.FloorDiv(a, 4);
             var dayFraction = day + (hour + minute / 60.0 + second / 3600.0) / 24.0;
             return Math.Floor(365.25 * (y + 4716)) +
                    Math.Floor(30.6001 * (m + 1)) +

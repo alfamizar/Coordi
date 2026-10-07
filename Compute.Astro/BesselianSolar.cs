@@ -152,7 +152,9 @@ namespace Compute.Astro
             var zm = rMoon * Math.Sin(moonDec);
 
             var aRad = Math.Atan2(ys - ym, xs - xm);
-            var dRad = Math.Asin((zs - zm) / Math.Sqrt((xs - xm) * (xs - xm) + (ys - ym) * (ys - ym) + (zs - zm) * (zs - zm)));
+            // The ratio is a component over the length that contains it, so it cannot exceed one —
+            // except by the rounding of the division itself, which is all asin needs to return NaN.
+            var dRad = Math.Asin(Clamp((zs - zm) / Math.Sqrt((xs - xm) * (xs - xm) + (ys - ym) * (ys - ym) + (zs - zm) * (zs - zm)), -1.0, 1.0));
             var x = -xm * Math.Sin(aRad) + ym * Math.Cos(aRad);
             var y = -xm * Math.Sin(dRad) * Math.Cos(aRad) - ym * Math.Sin(dRad) * Math.Sin(aRad) + zm * Math.Cos(dRad);
             return Math.Sqrt(x * x + y * y);
@@ -220,7 +222,7 @@ namespace Compute.Astro
             var dz = zs - zm;
             var g = Math.Sqrt(dx * dx + dy * dy + dz * dz);
             var aRad = Math.Atan2(dy, dx);
-            var dRad = Math.Asin(dz / g);
+            var dRad = Math.Asin(Clamp(dz / g, -1.0, 1.0));
             var sinD = Math.Sin(dRad);
             var cosD = Math.Cos(dRad);
 
@@ -297,7 +299,7 @@ namespace Compute.Astro
             var dz = zs - zm;
             var g = Math.Sqrt(dx * dx + dy * dy + dz * dz);
             var aRad = Math.Atan2(dy, dx);
-            var dRad = Math.Asin(dz / g);
+            var dRad = Math.Asin(Clamp(dz / g, -1.0, 1.0));
             var sinA = Math.Sin(aRad);
             var cosA = Math.Cos(aRad);
             var sinD = Math.Sin(dRad);

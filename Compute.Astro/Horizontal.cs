@@ -44,7 +44,10 @@ namespace Compute.Astro
             var h = ToRadians(hourAngleDeg);
             var dec = ToRadians(declinationDeg);
             var phi = ToRadians(latitudeDeg);
-            var altitude = Math.Asin(Math.Sin(phi) * Math.Sin(dec) + Math.Cos(phi) * Math.Cos(dec) * Math.Cos(h));
+            // Clamped because the sum is not the identity it looks like. At phi = dec and h = 0 it
+            // is sin^2 + cos^2, which in IEEE arithmetic lands on 1.0000000000000002 often enough,
+            // and asin of that is NaN — an altitude that poisons every number downstream of it.
+            var altitude = Math.Asin(Clamp(Math.Sin(phi) * Math.Sin(dec) + Math.Cos(phi) * Math.Cos(dec) * Math.Cos(h), -1.0, 1.0));
             var azimuthFromSouth = Math.Atan2(Math.Sin(h), Math.Cos(h) * Math.Sin(phi) - Math.Tan(dec) * Math.Cos(phi));
             return new Horizontal(
                 AzimuthDeg: NormalizeDegrees(ToDegrees(azimuthFromSouth) + 180.0),

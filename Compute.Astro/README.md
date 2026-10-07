@@ -94,7 +94,9 @@ model: ≲1 s across the telescopic era, growing for ancient dates.
 
 - Polar UPS grid regions (MGRS bands A/B/Y/Z) are not handled; `GridReference` covers the
   standard 80°S–84°N band.
-- Vincenty can fail to converge for near-antipodal pairs; the best iterate is returned.
+- Vincenty does not converge for near-antipodal pairs. Those are solved as two converged legs
+  through a point a quarter of the way round, within a metre of GeographicLib, and exactly
+  opposite points are told from identical ones by cos σ.
 - `SkySearch` intentionally ignores near-zenith passes, where azimuth sweeps too fast for the
   coarse scan.
 - Planetary elements are the JPL 1800–2050 set; accuracy degrades outside that window.

@@ -198,7 +198,10 @@ namespace Compute.Astro
                 1 => "JKLMNPQR",
                 _ => "STUVWXYZ",
             };
-            var colIndex = (int)Math.Floor(utm.Easting / 100_000.0) - 1;
+            // Clamped rather than trusted. Inside a zone's own band the easting is 100..900 km and
+            // this lands in 0..7 on its own; a point converted well outside its zone put the index
+            // off either end of the set and took the caller down with it.
+            var colIndex = Clamp((int)Math.Floor(utm.Easting / 100_000.0) - 1, 0, colSet.Length - 1);
             var colLetter = colSet[colIndex];
 
             // Row letter: 20-letter cycle every 2 000 000 m; even zones start at 'F' (+5).

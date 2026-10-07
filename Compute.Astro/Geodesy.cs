@@ -19,8 +19,9 @@ namespace Compute.Astro
     /// Verified against known WGS84 values: 1° of longitude at the equator =
     /// 111319.4908 m; 1° of latitude near the equator = 110574.389 m.
     ///
-    /// Accurate to ~0.5 mm. For near-antipodal pairs Vincenty can fail to converge;
-    /// this returns the best iterate reached.
+    /// Accurate to ~0.5 mm. Vincenty does not converge for nearly antipodal pairs; those are
+    /// solved as two converged legs through a point a quarter of the way round (see
+    /// <c>AntipodalInverse</c>), which keeps them within a metre of GeographicLib.
     /// </summary>
     public static class Geodesy
     {
@@ -76,12 +77,18 @@ namespace Compute.Astro
                 var termA = cosU2 * sinLambdaIt;
                 var termB = cosU1 * sinU2 - sinU1 * cosU2 * cosLambdaIt;
                 sinSigma = Math.Sqrt(termA * termA + termB * termB);
+                cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambdaIt;
                 if (sinSigma == 0.0)
                 {
-                    return new GeodesicResult(0.0, 0.0, 0.0); // coincident points
+                    // No angle between the points, which happens two ways and they are opposites:
+                    // the same place, or opposite ends of the planet. cosSigma is the only thing
+                    // that tells them apart. A leg of AntipodalInverse spans about a quarter of the
+                    // globe, so it is never the second case.
+                    return cosSigma > 0.0 || !allowAntipodalFallback
+                        ? new GeodesicResult(0.0, 0.0, 0.0)
+                        : AntipodalInverse(lat1Deg, lon1Deg, lat2Deg, lon2Deg);
                 }
 
-                cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambdaIt;
                 sigma = Math.Atan2(sinSigma, cosSigma);
                 var sinAlpha = cosU1 * cosU2 * sinLambdaIt / sinSigma;
                 cosSqAlpha = 1.0 - sinAlpha * sinAlpha;
