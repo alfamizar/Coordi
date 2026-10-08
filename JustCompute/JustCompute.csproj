@@ -344,9 +344,6 @@
     <MauiXaml Update="Shared\Controls\PointEntry.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Shared\Controls\FloatingActionButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </MauiXaml>
     <MauiXaml Update="Resources\Converters.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

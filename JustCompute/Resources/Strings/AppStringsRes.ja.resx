@@ -130,13 +130,13 @@
     <value>金環</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>金環または皆既食の開始時刻: {0}</value>
+    <value>金環または皆既食の開始時刻</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>金環または皆既食の終了時刻: {0}</value>
+    <value>金環または皆既食の終了時刻</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>金環または皆既食の継続時間: {0}</value>
+    <value>金環または皆既食の継続時間</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>みずがめ座</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>テーマ</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>日付: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>日付: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>昼の長さ: {0}</value>
+    <value>昼の長さ</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>削除</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>ダイグラフ (MGRS 100,000 m 方眼識別子): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>距離: {0:0.##} {1}</value>
+    <value>ダイグラフ (MGRS 100,000 m 方眼識別子)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>速度と距離</value>
@@ -250,7 +244,7 @@
     <value>ハンターズムーン</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>逆扁平率: {0}</value>
+    <value>逆扁平率</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>緯度</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>緯度: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>緯度:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>経度</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>経度: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>食の最大時刻: {0}</value>
+    <value>食の最大時刻</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>メートル</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS 東距: {0}</value>
+    <value>MGRS 東距</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>MGRS 緯度帯グリッドゾーン指定: {0}</value>
+    <value>MGRS 緯度帯グリッドゾーン指定</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>MGRS 経度帯グリッドゾーン指定: {0}</value>
+    <value>MGRS 経度帯グリッドゾーン指定</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS 北距: {0}</value>
+    <value>MGRS 北距</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>MGRS 形式: {0}</value>
+    <value>MGRS 形式</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>食の中心時刻: {0}</value>
+    <value>食の中心時刻</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>過去の日食・月食 ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>月の星座: {0}</value>
+    <value>月の星座</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>月</value>
@@ -373,16 +361,16 @@
     <value>満月の名称: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>月相: </value>
+    <value>月相</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>月の出ている時間: {0}</value>
+    <value>月の出ている時間</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>月の出: {0}</value>
+    <value>月の出</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>月の入り: {0}</value>
+    <value>月の入り</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>部分</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>部分食の開始時刻: {0}</value>
+    <value>部分食の開始時刻</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>部分食の終了時刻: {0}</value>
+    <value>部分食の終了時刻</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>部分食の開始時刻: {0}</value>
+    <value>部分食の開始時刻</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>部分食の終了時刻: {0}</value>
+    <value>部分食の終了時刻</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>半影</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>半影食の開始時刻: {0}</value>
+    <value>半影食の開始時刻</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>半影食の終了時刻: {0}</value>
+    <value>半影食の終了時刻</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>位置情報へのアクセスを許可すると、現在地のデータを表示できます。許可しない場合でも、地点は手動で選べます。</value>
@@ -493,10 +481,10 @@
     <value>太陽</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>日の出: {0}</value>
+    <value>日の出</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>日の入り: {0}</value>
+    <value>日の入り</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>おうし座</value>
@@ -511,16 +499,13 @@
     <value>皆既</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>皆既食の開始時刻: {0}</value>
+    <value>皆既食の開始時刻</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>皆既食の終了時刻: {0}</value>
+    <value>皆既食の終了時刻</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>種類: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>不明な地点</value>
@@ -532,22 +517,22 @@
     <value>UTC からの時差</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM 東距: {0}</value>
+    <value>UTM 東距</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>UTM 緯度帯グリッドゾーン指定: {0}</value>
+    <value>UTM 緯度帯グリッドゾーン指定</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>UTM 経度帯グリッドゾーン指定: {0}</value>
+    <value>UTM 経度帯グリッドゾーン指定</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM 北距: {0}</value>
+    <value>UTM 北距</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>UTM 形式: {0}</value>
+    <value>UTM 形式</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>おとめ座</value>
@@ -574,7 +559,7 @@
     <value>ワームムーン</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>星座: {0}</value>
+    <value>星座</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>地点 1</value>
@@ -850,13 +835,13 @@
     <value>この期間にここから見える食はありません。</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>食分: {0}</value>
+    <value>食分</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>本影食分: {0}</value>
+    <value>本影食分</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>半影食分: {0}</value>
+    <value>半影食分</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>開始</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>今</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>地点を削除</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>{0}を保存済みの地点から削除しますか？</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>キャンセル</value>
   </data>
 </root>

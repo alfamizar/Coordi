@@ -21,9 +21,9 @@
          to be able to read off the screen when reporting a problem. -->
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
-            <Grid Padding="16,20"
+            <Grid Padding="{StaticResource TextPageInset}"
                   BackgroundColor="{DynamicResource ThemeHeaderBackground}">
-                <VerticalStackLayout Spacing="2"
+                <VerticalStackLayout Spacing="{StaticResource SpacingMicro}"
                                      VerticalOptions="Center">
                     <Label Text="{x:Static localization:AppMetadata.Name}"
                            FontSize="{StaticResource FontSizeDisplay}"

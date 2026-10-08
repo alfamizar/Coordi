@@ -130,13 +130,13 @@
     <value>Кольцевой</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала кольцеобразного или полного затмения: {0}</value>
+    <value>Время начала кольцеобразного или полного затмения</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания кольцевого или полного затмения: {0}</value>
+    <value>Время окончания кольцевого или полного затмения</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Продолжительность кольцеобразного или полного затмения: {0}</value>
+    <value>Продолжительность кольцеобразного или полного затмения</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Водолей</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Тема</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Дата: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Дата: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Продолжительность дня: {0}</value>
+    <value>Продолжительность дня</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Удалить</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Диграф (идентификатор MGRS 100 000 квадратных метров): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Расстояние: {0:0.##} {1}</value>
+    <value>Диграф (идентификатор MGRS 100 000 квадратных метров)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Скорость и расстояние</value>
@@ -250,7 +244,7 @@
     <value>Охотничья Луна</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Обратная Сплюснутость: {0}</value>
+    <value>Обратная Сплюснутость</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>км</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Широта</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Широта: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Шир:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Долгота</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Долгота: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Время максимального затмения: {0}</value>
+    <value>Время максимального затмения</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>м</value>
@@ -331,25 +319,25 @@
     <value>Метры</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>Восток MGRS: {0}</value>
+    <value>Восток MGRS</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>Обозначение зоны сетки широтного диапазона MGRS: {0}</value>
+    <value>Обозначение зоны сетки широтного диапазона MGRS</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>Обозначение зоны координатной сетки полосы долготы MGRS: {0}</value>
+    <value>Обозначение зоны координатной сетки полосы долготы MGRS</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>Северное направление MGRS: {0}</value>
+    <value>Северное направление MGRS</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>Тип MGRS: {0}</value>
+    <value>Тип MGRS</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Время середины затмения: {0}</value>
+    <value>Время середины затмения</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>ми</value>
@@ -364,7 +352,7 @@
     <value>Прошедшие затмения ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Луна в: {0}</value>
+    <value>Луна в</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Луна</value>
@@ -373,16 +361,16 @@
     <value>Название луны: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Фаза луны: </value>
+    <value>Фаза луны</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Продолжительность восхода луны: {0}</value>
+    <value>Продолжительность восхода луны</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Восход луны: {0}</value>
+    <value>Восход луны</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Закат луны: {0}</value>
+    <value>Закат луны</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>НМИ</value>
@@ -403,25 +391,25 @@
     <value>Частичное</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала частичного затмения: {0}</value>
+    <value>Время начала частичного затмения</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания частичного затмения: {0}</value>
+    <value>Время окончания частичного затмения</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала частичного затмения: {0}</value>
+    <value>Время начала частичного затмения</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания частичного затмения: {0}</value>
+    <value>Время окончания частичного затмения</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Полутень</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала полутеневого затмения: {0}</value>
+    <value>Время начала полутеневого затмения</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Время окончания полутеневого затмения: {0}</value>
+    <value>Время окончания полутеневого затмения</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Доступ к геолокации нужен, чтобы показывать данные для вашего места. Без него можно выбрать место вручную.</value>
@@ -493,10 +481,10 @@
     <value>Солнце</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Восход солнца: {0}</value>
+    <value>Восход солнца</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Закат: {0}</value>
+    <value>Закат</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Телец</value>
@@ -511,16 +499,13 @@
     <value>Полное затмение</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Время начала полного затмения: {0}</value>
+    <value>Время начала полного затмения</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Общее время окончания полного затмения: {0}</value>
+    <value>Общее время окончания полного затмения</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Тип: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Неизвестное местоположение</value>
@@ -532,22 +517,22 @@
     <value>UTC пояс</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM-ориентация на восток: {0}</value>
+    <value>UTM-ориентация на восток</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>Обозначение зоны сетки UTM Latitude Band: {0}</value>
+    <value>Обозначение зоны сетки UTM Latitude Band</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>Обозначение зоны сетки полосы долготы UTM: {0}</value>
+    <value>Обозначение зоны сетки полосы долготы UTM</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>Северное направление UTM: {0}</value>
+    <value>Северное направление UTM</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>Тип UTM: {0}</value>
+    <value>Тип UTM</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Дева</value>
@@ -571,7 +556,7 @@
     <value>Червячная Луна</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Знак зодиака: {0}</value>
+    <value>Знак зодиака</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Точка 1</value>
@@ -850,13 +835,13 @@
     <value>В этот период отсюда не видно ни одного затмения.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Фаза: {0}</value>
+    <value>Фаза</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Теневая фаза: {0}</value>
+    <value>Теневая фаза</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Полутеневая фаза: {0}</value>
+    <value>Полутеневая фаза</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Старт</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Сейчас</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Удалить место</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>Убрать {0} из сохранённых мест?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Отмена</value>
   </data>
 </root>

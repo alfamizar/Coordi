@@ -2,6 +2,7 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:Class="JustCompute.Features.Optics.OpticsPage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.Optics"
@@ -11,7 +12,7 @@
 
     <ScrollView VerticalScrollBarVisibility="Never">
 
-        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+        <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                              Spacing="{StaticResource CardGap}">
 
             <!-- Inputs. The camera picker comes first because choosing a body writes two of the
@@ -20,7 +21,7 @@
             <Border>
 
                 <StackLayout Padding="0"
-                             Spacing="{StaticResource CardGap}">
+                             Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize OpticsLensSensorLabel}"
                            Style="{StaticResource TitleLabel}" />
@@ -80,8 +81,8 @@
                     <!-- Last, under everything it would keep. Off by default: a calculator that
                          silently remembers is one that quietly hands you someone else's answer. -->
                     <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="{StaticResource CardGap}"
-                          Margin="0,4,0,0">
+                          ColumnSpacing="{StaticResource SpacingSmall}"
+                          Margin="{design:Inset Top=Micro}">
                         <CheckBox Grid.Column="0"
                                   IsChecked="{Binding RememberInputs, Mode=TwoWay}"
                                   VerticalOptions="Center" />
@@ -96,16 +97,15 @@
 
             <Label Text="{localization:Localize OpticsHintLabel}"
                    IsVisible="{Binding HasResults, Converter={StaticResource InvertedBoolConverter}}"
-                   HorizontalTextAlignment="Center"
-                   Padding="16" />
+                   Style="{StaticResource HintLabel}" />
 
             <Border IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
+                <StackLayout Padding="0" Spacing="{StaticResource RowGap}">
                     <Label Text="{localization:Localize OpticsDofTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" Style="{StaticResource KeyValueGrid}">
                         <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsHyperfocalLabel}" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding HyperfocalText}" FontAttributes="Bold" />
                         <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsNearLimitLabel}" />
@@ -123,12 +123,12 @@
             </Border>
 
             <Border IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
+                <StackLayout Padding="0" Spacing="{StaticResource RowGap}">
                     <Label Text="{localization:Localize OpticsStarsTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" Style="{StaticResource KeyValueGrid}">
                         <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsRule500Label}" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding Rule500Text}" />
                         <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsRuleNpfLabel}" />
@@ -143,12 +143,12 @@
             </Border>
 
             <Border IsVisible="{Binding HasResults}">
-                <StackLayout Padding="0" Spacing="{StaticResource CardGap}">
+                <StackLayout Padding="0" Spacing="{StaticResource RowGap}">
                     <Label Text="{localization:Localize OpticsFovTitle}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
-                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" Style="{StaticResource KeyValueGrid}">
                         <Label Grid.Row="0" Grid.Column="0" Text="{localization:Localize OpticsHorizontalLabel}" />
                         <Label Grid.Row="0" Grid.Column="1" Text="{Binding HorizontalText}" />
                         <Label Grid.Row="1" Grid.Column="0" Text="{localization:Localize OpticsVerticalLabel}" />

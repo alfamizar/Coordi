@@ -130,13 +130,13 @@
     <value>Halkalı</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Halkalı veya tam tutulma başlangıcı: {0}</value>
+    <value>Halkalı veya tam tutulma başlangıcı</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Halkalı veya tam tutulma bitişi: {0}</value>
+    <value>Halkalı veya tam tutulma bitişi</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Halkalı veya tam tutulma süresi: {0}</value>
+    <value>Halkalı veya tam tutulma süresi</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Kova</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Tema</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Tarih: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Tarih: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Gün süresi: {0}</value>
+    <value>Gün süresi</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Sil</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Digraf (MGRS 100.000 metrelik kare tanımlayıcısı): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Mesafe: {0:0.##} {1}</value>
+    <value>Digraf (MGRS 100.000 metrelik kare tanımlayıcısı)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Hız ve Mesafe</value>
@@ -250,7 +244,7 @@
     <value>Avcı Ayı</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Ters basıklık: {0}</value>
+    <value>Ters basıklık</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Enlem</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Enlem: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Enl:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Boylam</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Boylam: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>En büyük tutulma saati: {0}</value>
+    <value>En büyük tutulma saati</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>Metre</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS doğu koordinatı: {0}</value>
+    <value>MGRS doğu koordinatı</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>MGRS enlem kuşağı bölge tanımı: {0}</value>
+    <value>MGRS enlem kuşağı bölge tanımı</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>MGRS boylam kuşağı bölge tanımı: {0}</value>
+    <value>MGRS boylam kuşağı bölge tanımı</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS kuzey koordinatı: {0}</value>
+    <value>MGRS kuzey koordinatı</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>MGRS türü: {0}</value>
+    <value>MGRS türü</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Tutulma ortası: {0}</value>
+    <value>Tutulma ortası</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>Geçmiş tutulmalar ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Ay burcu: {0}</value>
+    <value>Ay burcu</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Ay</value>
@@ -373,16 +361,16 @@
     <value>Dolunay adı: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Ay evresi: </value>
+    <value>Ay evresi</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Ay'ın gökyüzünde kalma süresi: {0}</value>
+    <value>Ay'ın gökyüzünde kalma süresi</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Ay doğuşu: {0}</value>
+    <value>Ay doğuşu</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Ay batışı: {0}</value>
+    <value>Ay batışı</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>Parçalı</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Parçalı tutulma başlangıcı: {0}</value>
+    <value>Parçalı tutulma başlangıcı</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Parçalı tutulma bitişi: {0}</value>
+    <value>Parçalı tutulma bitişi</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Parçalı tutulma başlangıcı: {0}</value>
+    <value>Parçalı tutulma başlangıcı</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Parçalı tutulma bitişi: {0}</value>
+    <value>Parçalı tutulma bitişi</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Yarı gölgeli</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Yarı gölgeli tutulma başlangıcı: {0}</value>
+    <value>Yarı gölgeli tutulma başlangıcı</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Yarı gölgeli tutulma bitişi: {0}</value>
+    <value>Yarı gölgeli tutulma bitişi</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Konum erişimi, uygulamanın bulunduğunuz yere ait verileri göstermesini sağlar. Bu izin olmadan da bir yeri elle seçebilirsiniz.</value>
@@ -493,10 +481,10 @@
     <value>Güneş</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Gün doğumu: {0}</value>
+    <value>Gün doğumu</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Gün batımı: {0}</value>
+    <value>Gün batımı</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Boğa</value>
@@ -511,16 +499,13 @@
     <value>Tam</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Tam tutulma başlangıcı: {0}</value>
+    <value>Tam tutulma başlangıcı</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Tam tutulma bitişi: {0}</value>
+    <value>Tam tutulma bitişi</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Tür: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Bilinmeyen Konum</value>
@@ -532,22 +517,22 @@
     <value>UTC Saat Farkı</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM doğu koordinatı: {0}</value>
+    <value>UTM doğu koordinatı</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>UTM enlem kuşağı bölge tanımı: {0}</value>
+    <value>UTM enlem kuşağı bölge tanımı</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>UTM boylam kuşağı bölge tanımı: {0}</value>
+    <value>UTM boylam kuşağı bölge tanımı</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM kuzey koordinatı: {0}</value>
+    <value>UTM kuzey koordinatı</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>UTM türü: {0}</value>
+    <value>UTM türü</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Başak</value>
@@ -574,7 +559,7 @@
     <value>Solucan Ayı</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Burç: {0}</value>
+    <value>Burç</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Nokta 1</value>
@@ -850,13 +835,13 @@
     <value>Bu dönemde buradan görülebilen tutulma yok.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Büyüklük: {0}</value>
+    <value>Büyüklük</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Tam gölge büyüklüğü: {0}</value>
+    <value>Tam gölge büyüklüğü</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Yarı gölge büyüklüğü: {0}</value>
+    <value>Yarı gölge büyüklüğü</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Başlat</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Şimdi</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Konumu sil</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>{0} kayıtlı konumlardan kaldırılsın mı?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>İptal</value>
   </data>
 </root>

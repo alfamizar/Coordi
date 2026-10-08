@@ -9,7 +9,7 @@
 
     <ScrollView VerticalScrollBarVisibility="Never">
 
-        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+        <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                              Spacing="{StaticResource CardGap}">
 
             <!-- The two fields take any of the angular forms, so a coordinate read off a map or
@@ -19,7 +19,7 @@
             <Border>
 
                 <StackLayout Padding="0"
-                             Spacing="{StaticResource CardGap}">
+                             Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize AtTheseCoordinatesLabel}"
                            Style="{StaticResource TitleLabel}" />
@@ -38,6 +38,7 @@
                            Style="{StaticResource ErrorLabel}" />
 
                     <Button Text="{localization:Localize UseMyLocationLabel}"
+                            Style="{StaticResource OutlinedButton}"
                             Command="{Binding UseMyLocationCommand}"
                             HorizontalOptions="Fill" />
 
@@ -47,45 +48,44 @@
 
             <Label Text="{localization:Localize ConverterHintLabel}"
                    IsVisible="{Binding HasResults, Converter={StaticResource InvertedBoolConverter}}"
-                   HorizontalTextAlignment="Center"
-                   Padding="16" />
+                   Style="{StaticResource HintLabel}" />
 
             <!-- Stacked rather than in a value column: MGRS and UTM are long enough to wrap on a
                  phone, and a label beside them leaves too little room to read either. -->
             <Border IsVisible="{Binding HasResults}">
 
                 <StackLayout Padding="0"
-                             Spacing="{StaticResource CardGap}">
+                             Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize ConverterFormatsLabel}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
-                    <VerticalStackLayout Spacing="2">
+                    <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
                         <Label Text="{localization:Localize ConverterDecimalLabel}" />
                         <Label Text="{Binding DecimalText}"
                                FontAttributes="Bold" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="2">
+                    <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
                         <Label Text="{localization:Localize ConverterDmsLabel}" />
                         <Label Text="{Binding DmsText}"
                                FontAttributes="Bold" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="2">
+                    <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
                         <Label Text="{localization:Localize ConverterDdmLabel}" />
                         <Label Text="{Binding DdmText}"
                                FontAttributes="Bold" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="2">
+                    <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
                         <Label Text="{localization:Localize UTMLabel}" />
                         <Label Text="{Binding UtmText}"
                                FontAttributes="Bold" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Spacing="2">
+                    <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
                         <Label Text="{localization:Localize MGRSLabel}" />
                         <Label Text="{Binding MgrsText}"
                                FontAttributes="Bold" />

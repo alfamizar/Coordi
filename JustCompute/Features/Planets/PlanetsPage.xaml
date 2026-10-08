@@ -12,7 +12,7 @@
         <!-- One card per planet, in order out from the Sun. Deliberately not sorted by how high
              each stands: the order would then change between one evening and the next, and a
              reader looking for Saturn would have to search for it. -->
-        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+        <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                              Spacing="{StaticResource CardGap}"
                              BindableLayout.ItemsSource="{Binding Planets}">
 
@@ -22,12 +22,12 @@
                     <Border>
 
                         <StackLayout Padding="0"
-                                     Spacing="{StaticResource CardGap}">
+                                     Spacing="{StaticResource RowGap}">
 
                             <!-- The dot marks the ones that are up: the first thing anyone wants
                                  off this screen is which of them they could go and look at. -->
                             <Grid ColumnDefinitions="*,Auto"
-                                  ColumnSpacing="{StaticResource CardGap}">
+                                  ColumnSpacing="{StaticResource SpacingSmall}">
                                 <Label Grid.Column="0"
                                        Text="{Binding Name}"
                                        Style="{StaticResource TitleLabel}" />
@@ -42,8 +42,7 @@
 
                             <Grid ColumnDefinitions="*,Auto"
                                   RowDefinitions="Auto,Auto"
-                                  ColumnSpacing="12"
-                                  RowSpacing="6">
+                                  Style="{StaticResource KeyValueGrid}">
 
                                 <Label Grid.Row="0" Grid.Column="0"
                                        Text="{localization:Localize SkyAltitudeLabel}" />
@@ -72,8 +71,7 @@
                                  outer rows collapse on a planet that neither rises nor sets. -->
                             <Grid ColumnDefinitions="*,Auto"
                                   RowDefinitions="Auto,Auto,Auto,Auto"
-                                  ColumnSpacing="12"
-                                  RowSpacing="6">
+                                  Style="{StaticResource KeyValueGrid}">
 
                                 <Label Grid.Row="0" Grid.Column="0"
                                        Text="{localization:Localize SkyRisesLabel}"

@@ -3,8 +3,8 @@ namespace JustCompute.Shared.Controls
     /// <summary>
     /// A placeholder that mimics the shape of the seven-day weather strip while the forecast is
     /// in flight, so the card keeps its height and the layout below does not jump when the data
-    /// lands. Hand-rolled on <see cref="GraphicsView"/> to match <see cref="SunPathView"/> and
-    /// <c>DayNightTimelineBar</c> rather than pulling in a dependency for one control.
+    /// lands. Hand-rolled on <see cref="GraphicsView"/> to match <see cref="SunPathView"/> rather
+    /// than pulling in a dependency for one control.
     /// </summary>
     public class ShimmerSkeletonView : GraphicsView
     {

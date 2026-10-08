@@ -130,13 +130,13 @@
     <value>금환</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>금환 또는 개기식 시작 시각: {0}</value>
+    <value>금환 또는 개기식 시작 시각</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>금환 또는 개기식 종료 시각: {0}</value>
+    <value>금환 또는 개기식 종료 시각</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>금환 또는 개기식 지속 시간: {0}</value>
+    <value>금환 또는 개기식 지속 시간</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>물병자리</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>테마</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>날짜: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>날짜: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>낮 길이: {0}</value>
+    <value>낮 길이</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>삭제</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>다이그래프(MGRS 100,000미터 사각형 식별자): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>거리: {0:0.##} {1}</value>
+    <value>다이그래프(MGRS 100,000미터 사각형 식별자)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>속도 및 거리</value>
@@ -250,7 +244,7 @@
     <value>헌터스 문</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>역편평률: {0}</value>
+    <value>역편평률</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>위도</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>위도: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>위도:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>경도</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>경도: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>식의 최대 시각: {0}</value>
+    <value>식의 최대 시각</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>미터</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS 동거: {0}</value>
+    <value>MGRS 동거</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>MGRS 위도대 그리드 존 지정: {0}</value>
+    <value>MGRS 위도대 그리드 존 지정</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>MGRS 경도대 그리드 존 지정: {0}</value>
+    <value>MGRS 경도대 그리드 존 지정</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS 북거: {0}</value>
+    <value>MGRS 북거</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>MGRS 형식: {0}</value>
+    <value>MGRS 형식</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>식의 중심 시각: {0}</value>
+    <value>식의 중심 시각</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>지난 일식·월식 ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>달의 별자리: {0}</value>
+    <value>달의 별자리</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>달</value>
@@ -373,16 +361,16 @@
     <value>보름달 이름: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>달의 위상: </value>
+    <value>달의 위상</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>달이 떠 있는 시간: {0}</value>
+    <value>달이 떠 있는 시간</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>월출: {0}</value>
+    <value>월출</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>월몰: {0}</value>
+    <value>월몰</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>부분</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>부분식 시작 시각: {0}</value>
+    <value>부분식 시작 시각</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>부분식 종료 시각: {0}</value>
+    <value>부분식 종료 시각</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>부분식 시작 시각: {0}</value>
+    <value>부분식 시작 시각</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>부분식 종료 시각: {0}</value>
+    <value>부분식 종료 시각</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>반영</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>반영식 시작 시각: {0}</value>
+    <value>반영식 시작 시각</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>반영식 종료 시각: {0}</value>
+    <value>반영식 종료 시각</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>위치 접근을 허용하면 현재 있는 곳의 데이터를 보여줄 수 있습니다. 허용하지 않아도 위치를 직접 선택할 수 있습니다.</value>
@@ -493,10 +481,10 @@
     <value>태양</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>일출: {0}</value>
+    <value>일출</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>일몰: {0}</value>
+    <value>일몰</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>황소자리</value>
@@ -511,16 +499,13 @@
     <value>개기</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>개기식 시작 시각: {0}</value>
+    <value>개기식 시작 시각</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>개기식 종료 시각: {0}</value>
+    <value>개기식 종료 시각</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>유형: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>알 수 없는 위치</value>
@@ -532,22 +517,22 @@
     <value>UTC 시차</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM 동거: {0}</value>
+    <value>UTM 동거</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>UTM 위도대 그리드 존 지정: {0}</value>
+    <value>UTM 위도대 그리드 존 지정</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>UTM 경도대 그리드 존 지정: {0}</value>
+    <value>UTM 경도대 그리드 존 지정</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM 북거: {0}</value>
+    <value>UTM 북거</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>UTM 형식: {0}</value>
+    <value>UTM 형식</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>처녀자리</value>
@@ -574,7 +559,7 @@
     <value>웜 문</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>별자리: {0}</value>
+    <value>별자리</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>지점 1</value>
@@ -850,13 +835,13 @@
     <value>이 기간에 여기서 볼 수 있는 식이 없습니다.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>식분: {0}</value>
+    <value>식분</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>본영 식분: {0}</value>
+    <value>본영 식분</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>반영 식분: {0}</value>
+    <value>반영 식분</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>시작</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>지금</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>위치 삭제</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>저장된 위치에서 {0}을(를) 삭제할까요?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>취소</value>
   </data>
 </root>

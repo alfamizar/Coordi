@@ -16,15 +16,17 @@
 
         <ScrollView VerticalScrollBarVisibility="Never">
 
-            <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+            <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                                  Spacing="{StaticResource CardGap}">
 
                 <!-- Onboarding, shown until the user picks somewhere themselves. Today explains
-                     the placeholder; this is the screen where it gets acted on. -->
+                     the placeholder; this is the screen where it gets acted on. Using the device's
+                     position is the quickest way, so it is the filled one here; once a place is
+                     set, searching is the usual way to add another, and it is filled below. -->
                 <Border IsVisible="{Binding IsPlaceholderLocation}">
 
                     <StackLayout Padding="0"
-                                 Spacing="{StaticResource CardGap}">
+                                 Spacing="{StaticResource RowGap}">
 
                         <Label Text="{localization:Localize SetYourLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -36,10 +38,12 @@
                                 HorizontalOptions="Fill" />
 
                         <Button Text="{localization:Localize SearchCityLabel}"
+                                Style="{StaticResource OutlinedButton}"
                                 Command="{Binding GoToSearchByCityCommand}"
                                 HorizontalOptions="Fill" />
 
                         <Button Text="{localization:Localize AddCustomLocationLabel}"
+                                Style="{StaticResource OutlinedButton}"
                                 Command="{Binding GoToAddLocationCommand}"
                                 HorizontalOptions="Fill" />
 
@@ -51,7 +55,7 @@
                 <Border IsVisible="{Binding SelectedLocation, Converter={StaticResource IsNotNullConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="{StaticResource CardGap}">
+                                 Spacing="{StaticResource RowGap}">
 
                         <Label Text="{localization:Localize CurrentLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -59,8 +63,7 @@
 
                         <Grid ColumnDefinitions="Auto,*"
                               RowDefinitions="Auto,Auto,Auto,Auto"
-                              ColumnSpacing="12"
-                              RowSpacing="6">
+                              Style="{StaticResource KeyValueGrid}">
 
                             <Label Grid.Row="0" Grid.Column="0"
                                    Text="{localization:Localize LocationNameLabel}" />
@@ -97,7 +100,7 @@
                 <Border IsVisible="{Binding LocationsCount, Converter={StaticResource IsIntNotEqualZeroConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="{StaticResource CardGap}">
+                                 Spacing="{StaticResource RowGap}">
 
                         <Label Text="{localization:Localize LocationsLabel}"
                                Style="{StaticResource TitleLabel}" />
@@ -108,47 +111,17 @@
                                         SelectedItem="{Binding SelectedLocation, Mode=TwoWay}">
                             <CollectionView.ItemsLayout>
                                 <LinearItemsLayout Orientation="Vertical"
-                                                   ItemSpacing="2" />
+                                                   ItemSpacing="{StaticResource SpacingMicro}" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Location">
-                                    <!-- The row owns its selected look: left to the platform,
-                                         CollectionView paints a hard-edged full-bleed fill. -->
-                                    <Border Padding="12,10"
-                                            Margin="0,2"
-                                            StrokeThickness="1"
-                                            Stroke="Transparent"
-                                            BackgroundColor="Transparent"
-                                            StrokeShape="RoundRectangle 10">
-
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroupList>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualState x:Name="Normal">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor"
-                                                                    Value="Transparent" />
-                                                            <Setter Property="Stroke"
-                                                                    Value="Transparent" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Selected">
-                                                        <VisualState.Setters>
-                                                            <Setter Property="BackgroundColor"
-                                                                    Value="{DynamicResource ThemeMutedSurface}" />
-                                                            <Setter Property="Stroke"
-                                                                    Value="{DynamicResource ThemePrimary}" />
-                                                        </VisualState.Setters>
-                                                    </VisualState>
-                                                </VisualStateGroup>
-                                            </VisualStateGroupList>
-                                        </VisualStateManager.VisualStateGroups>
+                                    <Border Style="{StaticResource ListRow}">
 
                                         <Grid ColumnDefinitions="*,Auto,Auto"
                                               ColumnSpacing="0">
 
                                             <VerticalStackLayout Grid.Column="0"
-                                                                 Spacing="2"
+                                                                 Spacing="{StaticResource SpacingMicro}"
                                                                  VerticalOptions="Center">
                                                 <Label Text="{Binding Name}"
                                                        FontAttributes="Bold" />
@@ -160,61 +133,29 @@
 
                                             <!-- Only a place the user saved can be edited or removed:
                                                  the device's own position and the placeholder are not
-                                                 rows in the database. -->
-                                            <!-- 32dp of ink inside a 48dp target: the icon reads
-                                                 small, but the tap area still meets the platform
-                                                 minimum. The button itself is inert; the
-                                                 surrounding cell takes the tap. -->
+                                                 rows in the database. A chip of 32 inside a target of
+                                                 48: the icon reads small, the tap area still meets the
+                                                 minimum. -->
                                             <Grid Grid.Column="1"
-                                                  IsVisible="{Binding IsSaved}"
-                                                  WidthRequest="48"
-                                                  HeightRequest="48"
-                                                  VerticalOptions="Center">
+                                                  Style="{StaticResource IconTarget}"
+                                                  IsVisible="{Binding IsSaved}">
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=EditLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
                                                                           CommandParameter="{Binding .}" />
                                                 </Grid.GestureRecognizers>
-                                                <!-- Still an ImageButton: it is what draws these
-                                                     glyphs correctly on their filled ground. Inert
-                                                     here — the 48dp cell around it takes the tap. -->
-                                                <ImageButton InputTransparent="True"
-                                                             Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}"
-                                                             WidthRequest="32"
-                                                             HeightRequest="32"
-                                                             MinimumWidthRequest="32"
-                                                             MinimumHeightRequest="32"
-                                                             Padding="6"
-                                                             CornerRadius="8"
-                                                             HorizontalOptions="Center"
-                                                             VerticalOptions="Center" />
+                                                <ImageButton Style="{StaticResource FilledIconChip}"
+                                                             Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}" />
                                             </Grid>
 
-                                            <!-- 32dp of ink inside a 48dp target: the icon reads
-                                                 small, but the tap area still meets the platform
-                                                 minimum. The button itself is inert; the
-                                                 surrounding cell takes the tap. -->
                                             <Grid Grid.Column="2"
-                                                  IsVisible="{Binding IsSaved}"
-                                                  WidthRequest="48"
-                                                  HeightRequest="48"
-                                                  VerticalOptions="Center">
+                                                  Style="{StaticResource IconTarget}"
+                                                  IsVisible="{Binding IsSaved}">
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=DeleteLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
                                                                           CommandParameter="{Binding .}" />
                                                 </Grid.GestureRecognizers>
-                                                <!-- Still an ImageButton: it is what draws these
-                                                     glyphs correctly on their filled ground. Inert
-                                                     here — the 48dp cell around it takes the tap. -->
-                                                <ImageButton InputTransparent="True"
-                                                             Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
-                                                             WidthRequest="32"
-                                                             HeightRequest="32"
-                                                             MinimumWidthRequest="32"
-                                                             MinimumHeightRequest="32"
-                                                             Padding="6"
-                                                             CornerRadius="8"
-                                                             HorizontalOptions="Center"
-                                                             VerticalOptions="Center" />
+                                                <ImageButton Style="{StaticResource FilledIconChip}"
+                                                             Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}" />
                                             </Grid>
 
                                         </Grid>
@@ -232,13 +173,14 @@
                 <Border IsVisible="{Binding IsPlaceholderLocation, Converter={StaticResource InvertedBoolConverter}}">
 
                     <StackLayout Padding="0"
-                                 Spacing="{StaticResource CardGap}">
+                                 Spacing="{StaticResource RowGap}">
 
                         <Label Text="{localization:Localize AddLocationLabel}"
                                Style="{StaticResource TitleLabel}" />
                         <BoxView Style="{StaticResource DividerStyle}" />
 
                         <Button Text="{localization:Localize UseMyLocationLabel}"
+                                Style="{StaticResource OutlinedButton}"
                                 Command="{Binding UseMyLocationCommand}"
                                 IsVisible="{Binding CanRequestDeviceLocation}"
                                 HorizontalOptions="Fill" />
@@ -248,6 +190,7 @@
                                 HorizontalOptions="Fill" />
 
                         <Button Text="{localization:Localize AddCustomLocationLabel}"
+                                Style="{StaticResource OutlinedButton}"
                                 Command="{Binding GoToAddLocationCommand}"
                                 HorizontalOptions="Fill" />
 

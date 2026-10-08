@@ -130,13 +130,13 @@
     <value>Кільцеподібне</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Час початку кільцеподібного або повного затемнення: {0}</value>
+    <value>Час початку кільцеподібного або повного затемнення</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Час завершення кільцеподібного або повного затемнення: {0}</value>
+    <value>Час завершення кільцеподібного або повного затемнення</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Тривалість кільцеподібного або повного затемнення: {0}</value>
+    <value>Тривалість кільцеподібного або повного затемнення</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Водолій</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Тема</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Дата: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Дата: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Тривалість дня: {0}</value>
+    <value>Тривалість дня</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Видалити</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Диграф (ідентифікатор квадрата 100 000 метрів MGRS): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Відстань: {0:0.##} {1}</value>
+    <value>Диграф (ідентифікатор квадрата 100 000 метрів MGRS)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Швидкість і відстань</value>
@@ -250,7 +244,7 @@
     <value>Мисливський місяць</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Обернене стиснення: {0}</value>
+    <value>Обернене стиснення</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>км</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Широта</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Широта: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Шир:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Довгота</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Довгота: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Час максимуму затемнення: {0}</value>
+    <value>Час максимуму затемнення</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>м</value>
@@ -331,25 +319,25 @@
     <value>Метри</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS схід: {0}</value>
+    <value>MGRS схід</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>Позначення зони сітки широтної смуги MGRS: {0}</value>
+    <value>Позначення зони сітки широтної смуги MGRS</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>Позначення зони сітки довготної смуги MGRS: {0}</value>
+    <value>Позначення зони сітки довготної смуги MGRS</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS північ: {0}</value>
+    <value>MGRS північ</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>Тип MGRS: {0}</value>
+    <value>Тип MGRS</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Час середини затемнення: {0}</value>
+    <value>Час середини затемнення</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>ми</value>
@@ -364,7 +352,7 @@
     <value>Минулі затемнення ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Місяць у: {0}</value>
+    <value>Місяць у</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Місяць</value>
@@ -373,16 +361,16 @@
     <value>Назва місяця: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Фаза місяця: </value>
+    <value>Фаза місяця</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Тривалість сходу Місяця: {0}</value>
+    <value>Тривалість сходу Місяця</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Схід Місяця: {0}</value>
+    <value>Схід Місяця</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Захід Місяця: {0}</value>
+    <value>Захід Місяця</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>Часткове</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Час початку часткового затемнення: {0}</value>
+    <value>Час початку часткового затемнення</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Час завершення часткового затемнення: {0}</value>
+    <value>Час завершення часткового затемнення</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Час початку часткового затемнення: {0}</value>
+    <value>Час початку часткового затемнення</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Час завершення часткового затемнення: {0}</value>
+    <value>Час завершення часткового затемнення</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Напівтіньове</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Час початку напівтіньового затемнення: {0}</value>
+    <value>Час початку напівтіньового затемнення</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Час завершення напівтіньового затемнення: {0}</value>
+    <value>Час завершення напівтіньового затемнення</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Доступ до геолокації потрібен, щоб показувати дані для вашого місця. Без нього можна вибрати місце вручну.</value>
@@ -493,10 +481,10 @@
     <value>Сонце</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Схід Сонця: {0}</value>
+    <value>Схід Сонця</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Захід Сонця: {0}</value>
+    <value>Захід Сонця</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Телець</value>
@@ -511,16 +499,13 @@
     <value>Повне</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Час початку повного затемнення: {0}</value>
+    <value>Час початку повного затемнення</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Час завершення повного затемнення: {0}</value>
+    <value>Час завершення повного затемнення</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Тип: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Невідоме місце</value>
@@ -532,22 +517,22 @@
     <value>Зсув часу UTC</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM схід: {0}</value>
+    <value>UTM схід</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>Позначення зони сітки широтної смуги UTM: {0}</value>
+    <value>Позначення зони сітки широтної смуги UTM</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>Позначення зони сітки довготної смуги UTM: {0}</value>
+    <value>Позначення зони сітки довготної смуги UTM</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM північ: {0}</value>
+    <value>UTM північ</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>Тип UTM: {0}</value>
+    <value>Тип UTM</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Діва</value>
@@ -574,7 +559,7 @@
     <value>Черв'ячний місяць</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Зодіак: {0}</value>
+    <value>Зодіак</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Точка 1</value>
@@ -850,13 +835,13 @@
     <value>У цей період звідси не видно жодного затемнення.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Фаза: {0}</value>
+    <value>Фаза</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Тіньова фаза: {0}</value>
+    <value>Тіньова фаза</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Півтіньова фаза: {0}</value>
+    <value>Півтіньова фаза</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Старт</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Зараз</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Видалити місце</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>Прибрати {0} зі збережених місць?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Скасувати</value>
   </data>
 </root>

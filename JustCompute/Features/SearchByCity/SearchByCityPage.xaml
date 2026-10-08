@@ -2,6 +2,7 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:Class="JustCompute.Features.SearchByCity.SearchByCityPage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.SearchByCity"
@@ -19,20 +20,19 @@
 
     <Grid>
         <Grid RowDefinitions="Auto, *"
-              RowSpacing="4"
-              Padding="{StaticResource PageEdgeInset}">
+              RowSpacing="{StaticResource SpacingMicro}"
+              Padding="{StaticResource CardPageInset}">
             <Grid ColumnDefinitions="*,Auto"
                   Grid.Row="0"
-                  ColumnSpacing="{StaticResource CardGap}"
-                  Padding="0,4">
+                  ColumnSpacing="{StaticResource SpacingSmall}"
+                  Padding="{design:Inset Vertical=Micro}">
                 <SearchBar x:Name="searchBar"
                            Grid.Column="0"
                            Text="{Binding SearchTerm}"
                            Placeholder="{localization:Localize SearchPlaceholderLabel}"
                            IsReadOnly="{Binding IsBusy}"
                            HorizontalOptions="Fill"
-                           VerticalOptions="Center"
-                           MinimumHeightRequest="44">
+                           VerticalOptions="Center">
                     <SearchBar.Behaviors>
                         <toolkit:UserStoppedTypingBehavior BindingContext="{Binding Path=BindingContext, Source={x:Reference searchBar}, x:DataType=SearchBar}"
                                                            Command="{Binding PerformSearchLocationCommand}"
@@ -44,11 +44,7 @@
                 
                 <ImageButton x:Name="sortButton"
                              Grid.Column="1"
-                             Padding="6"
-                             Background="Transparent"
-                             WidthRequest="44"
-                             HeightRequest="44"
-                             CornerRadius="8"
+                             Style="{StaticResource IconButton}"
                              HorizontalOptions="End"
                              VerticalOptions="Center"
                              Source="{AppThemeBinding Light=sort_icon_dark.png, Dark=sort_icon_light.png}"
@@ -87,8 +83,7 @@
                    IsVisible="{Binding HasSearchFailed}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   HorizontalTextAlignment="Center"
-                   Padding="24">
+                   Style="{StaticResource HintLabel}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RetrySearchCommand}" />
                 </Label.GestureRecognizers>
@@ -98,7 +93,7 @@
                    Text="{localization:Localize NoCitiesFoundLabel}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   Padding="24">
+                   Style="{StaticResource HintLabel}">
                 <Label.IsVisible>
                     <MultiBinding Converter="{StaticResource AllTrueConverter}">
                         <Binding Path="LocationsSearchResult"
@@ -112,9 +107,7 @@
             </Label>
         </Grid>
 
-        <ActivityIndicator HeightRequest="50"
-                           WidthRequest="50"
-                           HorizontalOptions="Center"
+        <ActivityIndicator HorizontalOptions="Center"
                            VerticalOptions="Center"
                            IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}"/>

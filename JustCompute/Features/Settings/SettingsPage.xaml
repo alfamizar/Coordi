@@ -2,6 +2,7 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              xmlns:extendedcontrols="clr-namespace:JustCompute.Shared.Controls"
              x:Class="JustCompute.Features.Settings.SettingsPage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
@@ -12,130 +13,147 @@
              Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
+        <!-- One segment's tap target: the full 48, with the pill drawn inset inside it. The track
+             has no padding of its own, so the inset is part of what a tap can land on. -->
+        <Style x:Key="SegmentTargetStyle" TargetType="Grid">
+            <Setter Property="MinimumHeightRequest" Value="{StaticResource MinTouchTarget}" />
+            <Setter Property="Padding" Value="{design:Inset Micro}" />
+        </Style>
+
+        <!-- The pill: the track's 12 less the 4 it is inset by. -->
         <Style x:Key="SegmentBorderStyle" TargetType="Border">
-            <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+            <Setter Property="StrokeShape">
+                <Setter.Value>
+                    <RoundRectangle CornerRadius="{StaticResource ControlCornerRadius}" />
+                </Setter.Value>
+            </Setter>
             <Setter Property="StrokeThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="{design:Inset Horizontal=Small}" />
         </Style>
 
         <Style x:Key="SegmentLabelStyle" TargetType="Label">
             <Setter Property="HorizontalOptions" Value="Center" />
             <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="Padding" Value="8,10" />
         </Style>
     </ContentPage.Resources>
 
-    <!-- 12 is where every other screen's content edge falls (a 4 content inset plus the
-         implicit Border margin of 8). This page has no cards to inherit that, so it states
-         the same inset directly and lines up with the rest of the app. -->
-    <VerticalStackLayout Padding="{StaticResource PageEdgeInset}" HorizontalOptions="FillAndExpand" Spacing="4">
+    <!-- No cards on this screen, so the settings stand on the 16 text line themselves, where a
+         card's text would be. A label is kept closer to its control than to the setting above it. -->
+    <VerticalStackLayout Padding="{StaticResource TextPageInset}" Spacing="{StaticResource SpacingSmall}">
 
-        <Label Text="{localization:Localize ThemeLabel}" />
-        <Picker x:Name="ThemePicker"
-                Title="{Binding SelectedThemeOption.Name}"
-                ItemsSource="{Binding ThemeOptions}"
-                SelectedItem="{Binding SelectedThemeOption}"
-                Margin="0,0,0,4" />
+        <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
+            <Label Text="{localization:Localize ThemeLabel}" />
+            <Picker x:Name="ThemePicker"
+                    Title="{Binding SelectedThemeOption.Name}"
+                    ItemsSource="{Binding ThemeOptions}"
+                    SelectedItem="{Binding SelectedThemeOption}" />
+        </VerticalStackLayout>
 
-        <Label Text="{localization:Localize DistanceUnitLabel}" />
-        <Picker x:Name="DistanceTypePicker"
-                Title="{Binding SelectedDistanceUnitOfMeasure.DistanceUomName}"
-                ItemsSource="{Binding DistanceUnitOfMeasures}"
-                SelectedItem="{Binding SelectedDistanceUnitOfMeasure}" />
+        <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
+            <Label Text="{localization:Localize DistanceUnitLabel}" />
+            <Picker x:Name="DistanceTypePicker"
+                    Title="{Binding SelectedDistanceUnitOfMeasure.DistanceUomName}"
+                    ItemsSource="{Binding DistanceUnitOfMeasures}"
+                    SelectedItem="{Binding SelectedDistanceUnitOfMeasure}" />
+        </VerticalStackLayout>
 
-        <Label Text="{localization:Localize SpeedUnitLabel}" />
-        <Border StrokeShape="RoundRectangle 12"
-                StrokeThickness="0"
-                Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
-                Padding="3"
-                Margin="0,0,0,4">
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
+        <VerticalStackLayout Spacing="{StaticResource SpacingMicro}">
+            <Label Text="{localization:Localize SpeedUnitLabel}" />
+            <Border Background="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}"
+                    Padding="0">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
 
-                <Border Grid.Column="0"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsMetersPerSecondSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ThemePrimary}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
-                                              CommandParameter="MetersPerSecond" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize MetersPerSecondLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsMetersPerSecondSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
+                    <Grid Grid.Column="0"
+                          Style="{StaticResource SegmentTargetStyle}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                                  CommandParameter="MetersPerSecond" />
+                        </Grid.GestureRecognizers>
+                        <Border Style="{StaticResource SegmentBorderStyle}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsMetersPerSecondSelected}"
+                                             Value="True">
+                                    <Setter Property="Background"
+                                            Value="{DynamicResource ThemePrimary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Label Style="{StaticResource SegmentLabelStyle}"
+                                   Text="{localization:Localize MetersPerSecondLabel}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsMetersPerSecondSelected}"
+                                                 Value="True">
+                                        <Setter Property="TextColor"
+                                                Value="{DynamicResource ThemeOnPrimary}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Border>
+                    </Grid>
 
-                <Border Grid.Column="1"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsKilometersPerHourSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ThemePrimary}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
-                                              CommandParameter="KilometersPerHour" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize KilometersPerHourLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsKilometersPerHourSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
+                    <Grid Grid.Column="1"
+                          Style="{StaticResource SegmentTargetStyle}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                                  CommandParameter="KilometersPerHour" />
+                        </Grid.GestureRecognizers>
+                        <Border Style="{StaticResource SegmentBorderStyle}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsKilometersPerHourSelected}"
+                                             Value="True">
+                                    <Setter Property="Background"
+                                            Value="{DynamicResource ThemePrimary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Label Style="{StaticResource SegmentLabelStyle}"
+                                   Text="{localization:Localize KilometersPerHourLabel}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsKilometersPerHourSelected}"
+                                                 Value="True">
+                                        <Setter Property="TextColor"
+                                                Value="{DynamicResource ThemeOnPrimary}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Border>
+                    </Grid>
 
-                <Border Grid.Column="2"
-                        Style="{StaticResource SegmentBorderStyle}">
-                    <Border.Triggers>
-                        <DataTrigger TargetType="Border"
-                                     Binding="{Binding IsMilesPerHourSelected}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ThemePrimary}" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
-                                              CommandParameter="MilesPerHour" />
-                    </Border.GestureRecognizers>
-                    <Label Style="{StaticResource SegmentLabelStyle}"
-                           Text="{localization:Localize MilesPerHourLabel}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label"
-                                         Binding="{Binding IsMilesPerHourSelected}"
-                                         Value="True">
-                                <Setter Property="TextColor"
-                                        Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                </Border>
+                    <Grid Grid.Column="2"
+                          Style="{StaticResource SegmentTargetStyle}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectSpeedUnitCommand}"
+                                                  CommandParameter="MilesPerHour" />
+                        </Grid.GestureRecognizers>
+                        <Border Style="{StaticResource SegmentBorderStyle}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsMilesPerHourSelected}"
+                                             Value="True">
+                                    <Setter Property="Background"
+                                            Value="{DynamicResource ThemePrimary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Label Style="{StaticResource SegmentLabelStyle}"
+                                   Text="{localization:Localize MilesPerHourLabel}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding IsMilesPerHourSelected}"
+                                                 Value="True">
+                                        <Setter Property="TextColor"
+                                                Value="{DynamicResource ThemeOnPrimary}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Border>
+                    </Grid>
 
-            </Grid>
-        </Border>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
 
         <Grid ColumnDefinitions="Auto, *">
             <Label Grid.Column="0"

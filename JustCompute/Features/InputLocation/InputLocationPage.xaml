@@ -2,6 +2,7 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:Class="JustCompute.Features.InputLocation.InputLocationPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
@@ -21,14 +22,14 @@
 
     <ContentPage.Content>
 
-        <Grid RowDefinitions="*, 64"
-              Padding="{StaticResource PageEdgeInset}"
+        <Grid RowDefinitions="*,Auto"
+              Padding="{StaticResource TextPageInset}"
               IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
 
             <ScrollView Grid.Row="0">
 
-                <StackLayout Padding="0,8"
-                             Spacing="16">
+                <StackLayout Padding="{design:Inset Vertical=Small}"
+                             Spacing="{StaticResource SpacingLarge}">
 
                     <Label Text="{localization:Localize LocationNameLabel}" />
                     <Entry x:Name="LocationNameEntry"
@@ -69,11 +70,9 @@
                     Grid.Row="1"
                     Text="{localization:Localize SaveLocationButtonText}"
                     Command="{Binding SaveLocationCommand}"
-                    Margin="0,8" />
+                    Margin="{design:Inset Vertical=Small}" />
 
-            <ActivityIndicator HeightRequest="50"
-                               WidthRequest="50"
-                               HorizontalOptions="Center"
+            <ActivityIndicator HorizontalOptions="Center"
                                VerticalOptions="Center"
                                IsVisible="{Binding IsBusy}"
                                IsRunning="{Binding IsBusy}" />

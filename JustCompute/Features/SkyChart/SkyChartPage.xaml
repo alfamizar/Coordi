@@ -10,7 +10,7 @@
 
     <ScrollView VerticalScrollBarVisibility="Never">
 
-        <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+        <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                              Spacing="{StaticResource CardGap}">
 
             <!-- The chart carries its own sky colour, so it sits on the page without a card
@@ -31,17 +31,18 @@
             <Border>
 
                 <StackLayout Padding="0"
-                             Spacing="{StaticResource CardGap}">
+                             Spacing="{StaticResource RowGap}">
 
                     <!-- The instant on the chart, in the place's own clock, above the control
                          that changes it. -->
                     <Grid ColumnDefinitions="*,Auto"
-                          ColumnSpacing="{StaticResource CardGap}">
+                          ColumnSpacing="{StaticResource SpacingSmall}">
                         <Label Grid.Column="0"
                                Text="{Binding TimeLabel}"
                                Style="{StaticResource TitleLabel}"
                                VerticalOptions="Center" />
                         <Button Grid.Column="1"
+                                Style="{StaticResource OutlinedButton}"
                                 Text="{localization:Localize NowLabel}"
                                 Command="{Binding NowCommand}" />
                     </Grid>
@@ -53,7 +54,7 @@
                     <BoxView Style="{StaticResource DividerStyle}" />
 
                     <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="{StaticResource CardGap}">
+                          ColumnSpacing="{StaticResource SpacingSmall}">
                         <CheckBox Grid.Column="0"
                                   IsChecked="{Binding ShowStickFigures, Mode=TwoWay}"
                                   VerticalOptions="Center" />
@@ -65,7 +66,7 @@
                     <!-- Off by default: eighty-nine polygons over nine hundred stars reads as a
                          mesh on a phone, and the first thing anyone should see is the sky. -->
                     <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="{StaticResource CardGap}">
+                          ColumnSpacing="{StaticResource SpacingSmall}">
                         <CheckBox Grid.Column="0"
                                   IsChecked="{Binding ShowBorders, Mode=TwoWay}"
                                   VerticalOptions="Center" />
