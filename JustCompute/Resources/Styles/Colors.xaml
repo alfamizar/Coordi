@@ -57,7 +57,7 @@
     <Color x:Key="LightOnError">#FFFFFF</Color>
 
     <Color x:Key="DarkPrimary">#FF1E56</Color>
-    <Color x:Key="DarkOnPrimary">#FFFFFF</Color>
+    <Color x:Key="DarkOnPrimary">#000000</Color>
     <Color x:Key="DarkPrimaryVariant">#CC1845</Color>
     <Color x:Key="DarkSecondary">#FFAC41</Color>
     <Color x:Key="DarkOnSecondary">#000000</Color>
@@ -66,7 +66,7 @@
     <Color x:Key="DarkSurface">#323232</Color>
     <Color x:Key="DarkOnSurface">#FFFFFF</Color>
     <Color x:Key="DarkOutline">#4A4A4A</Color>
-    <Color x:Key="DarkError">#CF6679</Color>
+    <Color x:Key="DarkError">#FF8A80</Color>
     <Color x:Key="DarkOnError">#000000</Color>
 
     <!--
@@ -78,9 +78,9 @@
         applied at startup. The Light*/Dark* entries above remain as the palettes' source of
         record and for anything still keyed to the device's own light/dark setting.
     -->
-    <Color x:Key="ThemePrimary">#00A9FF</Color>
+    <Color x:Key="ThemePrimary">#0071AE</Color>
     <Color x:Key="ThemeOnPrimary">#FFFFFF</Color>
-    <Color x:Key="ThemePrimaryVariant">#0086CC</Color>
+    <Color x:Key="ThemePrimaryVariant">#00609A</Color>
     <Color x:Key="ThemeSecondary">#89CFF3</Color>
     <Color x:Key="ThemeOnSecondary">#000000</Color>
     <Color x:Key="ThemeBackground">#FFFFFF</Color>
@@ -90,9 +90,9 @@
     <Color x:Key="ThemeOutline">#89CFF3</Color>
     <Color x:Key="ThemeError">#B00020</Color>
     <Color x:Key="ThemeOnError">#FFFFFF</Color>
-    <Color x:Key="ThemeHeaderBackground">#00A9FF</Color>
+    <Color x:Key="ThemeHeaderBackground">#0071AE</Color>
     <Color x:Key="ThemeMutedSurface">#89CFF3</Color>
-    <Color x:Key="ThemeAccentStrong">#0086CC</Color>
+    <Color x:Key="ThemeAccentStrong">#00609A</Color>
 
     <Color x:Key="LightStatusBarColor">#DB2777</Color>
     <Color x:Key="DarkStatusBarColor">#323232</Color>
