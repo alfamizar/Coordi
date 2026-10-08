@@ -1,0 +1,3 @@
+Eclipse contact times are more accurate, by several seconds.
+A cleaner, more consistent layout on every screen, with clearer contrast in every theme.
+Deleting a saved place now asks you to confirm.

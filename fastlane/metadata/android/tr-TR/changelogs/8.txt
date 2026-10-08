@@ -1,0 +1,3 @@
+Tutulmaların temas saatleri birkaç saniye daha doğru.
+Her ekranda daha sade ve tutarlı bir düzen, tüm temalarda daha iyi kontrast.
+Kayıtlı bir konumu kaldırmadan önce artık onay isteniyor.
