@@ -40,8 +40,11 @@ namespace Compute.Astro
                 m += 12;
             }
 
-            var a = y / 100;
-            var b = 2 - a + a / 4;
+            // FloorDiv, not /: Meeus' INT() is a floor, and C#'s division truncates toward zero.
+            // They agree for every year AD and disagree for every century BC, where truncation puts
+            // the Gregorian correction a day out.
+            var a = AstroMath.FloorDiv(y, 100);
+            var b = 2 - a + AstroMath.FloorDiv(a, 4);
             var dayFraction = day + (hour + minute / 60.0 + second / 3600.0) / 24.0;
             return Math.Floor(365.25 * (y + 4716)) +
                    Math.Floor(30.6001 * (m + 1)) +
@@ -69,12 +72,21 @@ namespace Compute.Astro
         public static double JulianCenturies(double jd) => (jd - J2000) / JulianCentury;
 
         /// <summary>
-        /// ΔT = TD − UT, in seconds. Full piecewise Espenak–Meeus model (the polynomial
-        /// fit published with NASA's Five Millennium Canon of Solar Eclipses), valid from
-        /// deep antiquity through the extrapolated future. Accuracy: ≲1 s across the
-        /// telescopic era (1600–present), a few seconds either side of the fit range,
-        /// growing to minutes/hours for ancient dates (as does the underlying uncertainty
-        /// in Earth's rotation itself). Future values (&gt; ~2015) are an extrapolation.
+        /// ΔT = TD − UT, in seconds.
+        ///
+        /// Espenak–Meeus (the polynomial fit published with NASA's Five Millennium Canon of Solar
+        /// Eclipses) everywhere except the present day, where it is no longer true. Its post-2005
+        /// branch extrapolates a slowing Earth: it gives 75.5 s for 2026 and 81 s for 2035, while the
+        /// Earth has instead been speeding up and the measured value has sat near 69 s since 2019.
+        /// Six seconds is a mile of shadow track and six seconds of a ninety-second totality, on a
+        /// screen that prints contact times to the second.
+        ///
+        /// So 2005 onward comes from <see cref="DeltaTRecent"/> — the USNO monthly series through the
+        /// last observation, then USNO's own predictions — and past the end of that the long-term
+        /// curve resumes, shifted to meet it. Accuracy: a few hundredths of a second where observed,
+        /// USNO's own stated uncertainty (tenths of a second, growing) where predicted, and the
+        /// Espenak–Meeus figures elsewhere — ≲1 s over the telescopic era, minutes to hours in
+        /// antiquity, where the uncertainty is in the Earth's rotation itself rather than the fit.
         /// </summary>
         public static double DeltaTSeconds(int year, int month = 7)
         {
@@ -157,21 +169,57 @@ namespace Compute.Astro
                     t * (0.000651814 + t * 0.00002373599))));
             }
 
-            if (y < 2050)
+            if (y < DeltaTRecentFirstYear + DeltaTRecent.Length - 1)
             {
-                var t = y - 2000.0;
-                return 62.92 + t * (0.32217 + t * 0.005589);
+                // Observed, then predicted, linearly between whole years.
+                var index = (int)(y - DeltaTRecentFirstYear);
+                var fraction = y - DeltaTRecentFirstYear - index;
+                return DeltaTRecent[index] + fraction * (DeltaTRecent[index + 1] - DeltaTRecent[index]);
             }
 
             if (y < 2150)
             {
+                // Past the last prediction: the long-term parabola, offset to be continuous with
+                // it. The offset matters for the next few decades and is lost in the noise by
+                // the time the parabola has any authority of its own.
                 var u = (y - 1820.0) / 100.0;
-                return -20.0 + 32.0 * u * u - 0.5628 * (2150.0 - y);
+                return -20.0 + 32.0 * u * u - 0.5628 * (2150.0 - y) + DeltaTLongTermOffset;
             }
 
+            // The same shift, so 2150 is not a step either.
             var uFar = (y - 1820.0) / 100.0;
-            return -20.0 + 32.0 * uFar * uFar;
+            return -20.0 + 32.0 * uFar * uFar + DeltaTLongTermOffset;
         }
+
+        /// <summary>
+        /// ΔT year by year from 2005, at the start of each year.
+        ///
+        /// The first 22 are observations from the USNO monthly series (maia.usno.navy.mil,
+        /// ser7/deltat.data, read 2026-08-10); the rest are USNO's own predictions
+        /// (ser7/deltat.preds). Both are short tables of small numbers, which is what makes it
+        /// reasonable to carry them rather than model them: the Earth's rotation over the last
+        /// twenty years has not followed any polynomial anyone fitted to it beforehand.
+        /// </summary>
+        private static readonly double[] DeltaTRecent =
+        {
+            64.6876, 64.8452, 65.1464, 65.4573, 65.7768, 66.0699,
+            66.3246, 66.603, 66.9069, 67.281, 67.6439, 68.1024,
+            68.5927, 68.9676, 69.2202, 69.3612, 69.3594, 69.2945,
+            69.2039, 69.1752, 69.1377, 69.1099, 69.14, 69.34,
+            69.63, 69.97, 70.32, 70.62, 70.98,
+        };
+
+        private const int DeltaTRecentFirstYear = 2005;
+
+        /// <summary>
+        /// What the long-term parabola has to be shifted by to meet the end of
+        /// <see cref="DeltaTRecent"/>.
+        ///
+        /// Kept as a constant rather than computed so it is visible: the published model is
+        /// 11.6 seconds away from the measured Earth by 2033, and that is the size of the
+        /// correction being carried forward.
+        /// </summary>
+        private const double DeltaTLongTermOffset = 11.6468;
 
         /// <summary>Greenwich Mean Sidereal Time in degrees [0,360). Meeus eq. 12.4.</summary>
         public static double GreenwichMeanSiderealTimeDeg(double jd)

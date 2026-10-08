@@ -4,6 +4,10 @@ using System.Globalization;
 
 namespace JustCompute.Features.Distance
 {
+    /// <summary>
+    /// A distance in kilometres, in the unit the user chose, with its abbreviation: "377073.21 km".
+    /// The value alone — the row it sits in says what it is.
+    /// </summary>
     public class KilometersToTargetDistanceTypeConverter : IValueConverter
     {
 
@@ -14,7 +18,6 @@ namespace JustCompute.Features.Distance
                 global::Compute.Core.Domain.Entities.Models.Distance.Distance distance = new(distanceInKm);
                 DistanceType distanceType = global::JustCompute.Shared.Helpers.Settings.DistanceType;
 
-                string distanceLabelKey = "DistanceFormattedLabel";
                 string abbreviationLabelKey = distanceType switch
                 {
                     DistanceType.Meters => "MetersAbbreviationLabel",
@@ -24,10 +27,9 @@ namespace JustCompute.Features.Distance
                     DistanceType.NauticalMiles => "NauticalMilesAbbreviationLabel",
                     _ => "KilometersAbbreviationLabel"
                 };
-                string distanceLabel = Strings.Get(distanceLabelKey);
                 string abbreviationLabel = Strings.Get(abbreviationLabelKey);
 
-                return $"{string.Format(distanceLabel, distance.GetByType(distanceType), abbreviationLabel)}";
+                return string.Format(CultureInfo.CurrentCulture, "{0:0.##} {1}", distance.GetByType(distanceType), abbreviationLabel);
             }
 
             return $"Expected DistanceType type for {value?.ToString()}";

@@ -1,0 +1,3 @@
+Časy kontaktů zatmění jsou o několik sekund přesnější.
+Čistší a jednotnější vzhled všech obrazovek s lepším kontrastem ve všech motivech.
+Odebrání uloženého místa je nyní potřeba potvrdit.

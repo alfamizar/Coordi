@@ -1,0 +1,3 @@
+Gli orari dei contatti delle eclissi sono più precisi di alcuni secondi.
+Un layout più pulito e coerente in ogni schermata, con un contrasto migliore in tutti i temi.
+Ora rimuovere una posizione salvata richiede una conferma.

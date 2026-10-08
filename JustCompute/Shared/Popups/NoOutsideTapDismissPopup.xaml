@@ -10,53 +10,59 @@
            x:Name="this"
            Padding="0"
            Margin="0"
+           BackgroundColor="Transparent"
            BindingContext="{x:Reference this}">
 
-    <Grid Style="{StaticResource GridDialogContent}"
-          RowDefinitions="Auto,Auto,Auto"
-          Padding="16, 8">
+    <!-- A card raised over the screen: a card's surface and corner, a dialog's padding, the same
+         as the sort popup. The popup itself is transparent so the corners show the screen. -->
+    <Border Padding="{StaticResource DialogPadding}">
 
-        <Label Grid.Row="0"
-               Style="{StaticResource DialogTitle}"
-               Text="{Binding DialogTitle}"
-               IsVisible="{Binding DialogTitle, Converter={StaticResource EmptyStringToBoolConverter}}" />
+        <Grid Style="{StaticResource GridDialogContent}"
+              RowDefinitions="Auto,Auto,Auto">
 
-        <Label Grid.Row="1"
-               Text="{Binding DialogMessage}"
-               Style="{StaticResource DialogMessage}"
-               IsVisible="{Binding DialogMessage, Converter={StaticResource EmptyStringToBoolConverter}}" />
+            <Label Grid.Row="0"
+                   Style="{StaticResource DialogTitle}"
+                   Text="{Binding DialogTitle}"
+                   IsVisible="{Binding DialogTitle, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-        <StackLayout  Grid.Row="2"
-                      Orientation="Horizontal"
-                      HorizontalOptions="Fill"
-                      Spacing="{StaticResource CardGap}">
+            <Label Grid.Row="1"
+                   Text="{Binding DialogMessage}"
+                   Style="{StaticResource DialogMessage}"
+                   IsVisible="{Binding DialogMessage, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-            <Button Style="{StaticResource DialogButton}"
-                    Clicked="NegativeButtonClicked"
-                    Text="{Binding NegativeButtonText}"
-                    LineBreakMode="WordWrap"
-                    VerticalOptions="Fill"
-                    HorizontalOptions="FillAndExpand"
-                    IsVisible="{Binding NegativeButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+            <StackLayout  Grid.Row="2"
+                          Orientation="Horizontal"
+                          HorizontalOptions="Fill"
+                          Spacing="{StaticResource SpacingSmall}">
 
-            <Button Style="{StaticResource DialogButton}"
-                    Clicked="NeutralButtonClicked"
-                    Text="{Binding NeutralButtonText}"
-                    LineBreakMode="WordWrap"
-                    VerticalOptions="Fill"
-                    HorizontalOptions="FillAndExpand"
-                    IsVisible="{Binding NeutralButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+                <!-- The one action the dialog is for is filled; the ways out of it are outlined. -->
+                <Button Style="{StaticResource OutlinedButton}"
+                        Clicked="NegativeButtonClicked"
+                        Text="{Binding NegativeButtonText}"
+                        LineBreakMode="WordWrap"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding NegativeButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-            <Button Style="{StaticResource DialogButton}"
-                    Clicked="PositiveButtonClicked"
-                    Text="{Binding PositiveButtonText}"
-                    LineBreakMode="WordWrap"
-                    VerticalOptions="Fill"
-                    HorizontalOptions="FillAndExpand"
-                    IsVisible="{Binding PositiveButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
+                <Button Style="{StaticResource OutlinedButton}"
+                        Clicked="NeutralButtonClicked"
+                        Text="{Binding NeutralButtonText}"
+                        LineBreakMode="WordWrap"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding NeutralButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-        </StackLayout>
+                <Button Clicked="PositiveButtonClicked"
+                        Text="{Binding PositiveButtonText}"
+                        LineBreakMode="WordWrap"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding PositiveButtonText, Converter={StaticResource EmptyStringToBoolConverter}}" />
 
-    </Grid>
+            </StackLayout>
+
+        </Grid>
+
+    </Border>
 
 </mct:Popup>

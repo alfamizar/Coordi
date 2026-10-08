@@ -8,6 +8,25 @@ namespace Compute.Astro.Tests;
 /// </summary>
 public class HorizontalValidationTests
 {
+    /// <summary>
+    /// A body at the declination of the observer's latitude, on the meridian, is at the zenith:
+    /// the altitude sum is sin²φ + cos²φ, which rounds to 1.0000000000000002 often enough for asin
+    /// to return NaN. Before the clamp that happened at 740 of these 17 999 latitudes.
+    /// </summary>
+    [Fact]
+    public void FromHourAngle_ZenithIsNinetyDegreesAtEveryLatitude()
+    {
+        for (var i = -8999; i <= 8999; i++)
+        {
+            var phi = i / 100.0;
+            var altitude = HorizontalCoordinates.FromHourAngle(0.0, phi, phi).AltitudeDeg;
+            Assert.False(double.IsNaN(altitude), $"altitude is NaN at latitude {phi}");
+            // Not to the last digit: next to 1, asin turns a rounding of the sum a couple of units
+            // in the last place below 1 into about a millionth of a degree.
+            Assert.True(Math.Abs(altitude - 90.0) < 1e-5, $"altitude {altitude} at latitude {phi}");
+        }
+    }
+
     [Fact]
     public void FromHourAngle_MeeusExample13b()
     {

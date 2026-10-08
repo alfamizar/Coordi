@@ -1,0 +1,3 @@
+Les heures de contact des éclipses gagnent plusieurs secondes de précision.
+Une mise en page plus nette et plus cohérente sur chaque écran, avec un meilleur contraste dans tous les thèmes.
+Retirer un emplacement enregistré demande maintenant une confirmation.

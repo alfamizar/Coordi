@@ -130,13 +130,13 @@
     <value>Ringförmig</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Beginn der ringförmigen oder totalen Finsternis: {0}</value>
+    <value>Beginn der ringförmigen oder totalen Finsternis</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Ende der ringförmigen oder totalen Finsternis: {0}</value>
+    <value>Ende der ringförmigen oder totalen Finsternis</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Dauer der ringförmigen oder totalen Finsternis: {0}</value>
+    <value>Dauer der ringförmigen oder totalen Finsternis</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Wassermann</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Design</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Datum: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Datum: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Tageslänge: {0}</value>
+    <value>Tageslänge</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Löschen</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Digraph (MGRS-Bezeichnung des 100.000-Meter-Quadrats): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Entfernung: {0:0.##} {1}</value>
+    <value>Digraph (MGRS-Bezeichnung des 100.000-Meter-Quadrats)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Geschwindigkeit und Distanz</value>
@@ -250,7 +244,7 @@
     <value>Jägermond</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Inverse Abplattung: {0}</value>
+    <value>Inverse Abplattung</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Breitengrad</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Breitengrad: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Lat:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Längengrad</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Längengrad: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Zeitpunkt der maximalen Finsternis: {0}</value>
+    <value>Zeitpunkt der maximalen Finsternis</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>Meter</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS-Ostwert: {0}</value>
+    <value>MGRS-Ostwert</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>MGRS-Gitterzonenbezeichnung des Breitenbandes: {0}</value>
+    <value>MGRS-Gitterzonenbezeichnung des Breitenbandes</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>MGRS-Gitterzonenbezeichnung des Längenbandes: {0}</value>
+    <value>MGRS-Gitterzonenbezeichnung des Längenbandes</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS-Nordwert: {0}</value>
+    <value>MGRS-Nordwert</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>MGRS-Typ: {0}</value>
+    <value>MGRS-Typ</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Zeitpunkt der Finsternismitte: {0}</value>
+    <value>Zeitpunkt der Finsternismitte</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>Vergangene Finsternisse ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Mond in: {0}</value>
+    <value>Mond in</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Mond</value>
@@ -373,16 +361,16 @@
     <value>Mondname: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Mondphase: </value>
+    <value>Mondphase</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Dauer des Mondaufgangs: {0}</value>
+    <value>Dauer des Mondaufgangs</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Mondaufgang: {0}</value>
+    <value>Mondaufgang</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Monduntergang: {0}</value>
+    <value>Monduntergang</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>Partiell</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Beginn der partiellen Finsternis: {0}</value>
+    <value>Beginn der partiellen Finsternis</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Ende der partiellen Finsternis: {0}</value>
+    <value>Ende der partiellen Finsternis</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Beginn der partiellen Finsternis: {0}</value>
+    <value>Beginn der partiellen Finsternis</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Ende der partiellen Finsternis: {0}</value>
+    <value>Ende der partiellen Finsternis</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Halbschatten</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Beginn der Halbschattenfinsternis: {0}</value>
+    <value>Beginn der Halbschattenfinsternis</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Ende der Halbschattenfinsternis: {0}</value>
+    <value>Ende der Halbschattenfinsternis</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Mit Standortzugriff zeigt die App Daten für deinen Ort. Ohne ihn kannst du einen Ort manuell wählen.</value>
@@ -493,10 +481,10 @@
     <value>Sonne</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Sonnenaufgang: {0}</value>
+    <value>Sonnenaufgang</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Sonnenuntergang: {0}</value>
+    <value>Sonnenuntergang</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Stier</value>
@@ -511,16 +499,13 @@
     <value>Total</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Beginn der totalen Finsternis: {0}</value>
+    <value>Beginn der totalen Finsternis</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Ende der totalen Finsternis: {0}</value>
+    <value>Ende der totalen Finsternis</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Typ: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Unbekannter Standort</value>
@@ -532,22 +517,22 @@
     <value>UTC-Zeitverschiebung</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM-Ostwert: {0}</value>
+    <value>UTM-Ostwert</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>UTM-Gitterzonenbezeichnung des Breitenbandes: {0}</value>
+    <value>UTM-Gitterzonenbezeichnung des Breitenbandes</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>UTM-Gitterzonenbezeichnung des Längenbandes: {0}</value>
+    <value>UTM-Gitterzonenbezeichnung des Längenbandes</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM-Nordwert: {0}</value>
+    <value>UTM-Nordwert</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>UTM-Typ: {0}</value>
+    <value>UTM-Typ</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Jungfrau</value>
@@ -574,7 +559,7 @@
     <value>Wurmmond</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Tierkreis: {0}</value>
+    <value>Tierkreis</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Punkt 1</value>
@@ -850,13 +835,13 @@
     <value>In diesem Zeitraum ist von hier aus keine Finsternis sichtbar.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Größe: {0}</value>
+    <value>Größe</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Kernschattengröße: {0}</value>
+    <value>Kernschattengröße</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Halbschattengröße: {0}</value>
+    <value>Halbschattengröße</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Start</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Jetzt</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Standort löschen</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>{0} aus den gespeicherten Standorten entfernen?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
 </root>

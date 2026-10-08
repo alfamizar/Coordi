@@ -130,13 +130,13 @@
     <value>環食</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>環食或全食開始時間：{0}</value>
+    <value>環食或全食開始時間</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>環食或全食結束時間：{0}</value>
+    <value>環食或全食結束時間</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>環食或全食持續時間：{0}</value>
+    <value>環食或全食持續時間</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>水瓶座</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>主題</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>日期：{0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>日期：{0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>白晝長度：{0}</value>
+    <value>白晝長度</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>刪除</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>雙字母碼（MGRS 100,000 公尺方格識別碼）：{0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>距離：{0:0.##} {1}</value>
+    <value>雙字母碼（MGRS 100,000 公尺方格識別碼）</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>速度與距離</value>
@@ -250,7 +244,7 @@
     <value>獵人月</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>扁率倒數：{0}</value>
+    <value>扁率倒數</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>緯度</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>緯度：{0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>緯度：</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>經度</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>經度：{0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>食甚時間：{0}</value>
+    <value>食甚時間</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>公尺</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS 東距：{0}</value>
+    <value>MGRS 東距</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>MGRS 緯度帶網格區劃：{0}</value>
+    <value>MGRS 緯度帶網格區劃</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>MGRS 經度帶網格區劃：{0}</value>
+    <value>MGRS 經度帶網格區劃</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS 北距：{0}</value>
+    <value>MGRS 北距</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>MGRS 類型：{0}</value>
+    <value>MGRS 類型</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>食甚時間：{0}</value>
+    <value>食甚時間</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>過去的日月食 ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>月亮星座：{0}</value>
+    <value>月亮星座</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>月亮</value>
@@ -373,16 +361,16 @@
     <value>滿月名稱：</value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>月相：</value>
+    <value>月相</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>月亮在地平線上的時間：{0}</value>
+    <value>月亮在地平線上的時間</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>月出：{0}</value>
+    <value>月出</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>月落：{0}</value>
+    <value>月落</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>偏食</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>偏食開始時間：{0}</value>
+    <value>偏食開始時間</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>偏食結束時間：{0}</value>
+    <value>偏食結束時間</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>偏食開始時間：{0}</value>
+    <value>偏食開始時間</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>偏食結束時間：{0}</value>
+    <value>偏食結束時間</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>半影食</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>半影食開始時間：{0}</value>
+    <value>半影食開始時間</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>半影食結束時間：{0}</value>
+    <value>半影食結束時間</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>允許存取位置後，App 可顯示你所在位置的資料。不允許也可以手動選擇地點。</value>
@@ -493,10 +481,10 @@
     <value>太陽</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>日出：{0}</value>
+    <value>日出</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>日落：{0}</value>
+    <value>日落</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>金牛座</value>
@@ -511,16 +499,13 @@
     <value>全食</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>全食開始時間：{0}</value>
+    <value>全食開始時間</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>全食結束時間：{0}</value>
+    <value>全食結束時間</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>類型：{0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>未知地點</value>
@@ -532,22 +517,22 @@
     <value>UTC 時差</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM 東距：{0}</value>
+    <value>UTM 東距</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>UTM 緯度帶網格區劃：{0}</value>
+    <value>UTM 緯度帶網格區劃</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>UTM 經度帶網格區劃：{0}</value>
+    <value>UTM 經度帶網格區劃</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM 北距：{0}</value>
+    <value>UTM 北距</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>UTM 類型：{0}</value>
+    <value>UTM 類型</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>處女座</value>
@@ -574,7 +559,7 @@
     <value>蟲月</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>星座：{0}</value>
+    <value>星座</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>點 1</value>
@@ -850,13 +835,13 @@
     <value>此期間從這裡看不到任何日月食。</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>食分：{0}</value>
+    <value>食分</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>本影食分：{0}</value>
+    <value>本影食分</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>半影食分：{0}</value>
+    <value>半影食分</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>開始</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>現在</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>刪除地點</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>要從已儲存的地點中移除{0}嗎？</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>取消</value>
   </data>
 </root>

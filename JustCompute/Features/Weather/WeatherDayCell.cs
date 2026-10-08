@@ -1,4 +1,5 @@
 using System.Globalization;
+using JustCompute.Shared.Design;
 using JustCompute.Shared.Helpers;
 using Compute.Core.Domain.Entities.Models.Weather;
 
@@ -13,44 +14,26 @@ public sealed class WeatherDayCell : ContentView
         defaultValue: null,
         propertyChanged: static (b, _, _) => ((WeatherDayCell)b).Refresh());
 
-    private readonly Label _dayOfWeek = new()
-    {
-        FontSize = 11,
-        FontAttributes = FontAttributes.Bold,
-        HorizontalTextAlignment = TextAlignment.Center,
-    };
+    // On the type scale like every other screen: Micro is the step made for a column this narrow,
+    // a seventh of the card; the icon and today's temperature take the Display and Body steps the
+    // rest of the app reads at.
+    private readonly Label _dayOfWeek = Line("FontSizeMicro", FontAttributes.Bold);
 
-    private readonly Label _date = new()
-    {
-        FontSize = 10,
-        HorizontalTextAlignment = TextAlignment.Center,
-    };
+    private readonly Label _date = Line("FontSizeMicro");
 
-    private readonly Label _icon = new()
-    {
-        FontSize = 20,
-        HorizontalTextAlignment = TextAlignment.Center,
-    };
+    private readonly Label _icon = Line("FontSizeDisplay");
 
-    private readonly Label _currentTemp = new()
-    {
-        FontSize = 13,
-        FontAttributes = FontAttributes.Bold,
-        HorizontalTextAlignment = TextAlignment.Center,
-    };
+    private readonly Label _currentTemp = Line("FontSizeBody", FontAttributes.Bold);
 
-    private readonly Label _range = new()
-    {
-        FontSize = 11,
-        HorizontalTextAlignment = TextAlignment.Center,
-    };
+    private readonly Label _range = Line("FontSizeMicro");
 
     public WeatherDayCell()
     {
         Content = new VerticalStackLayout
         {
-            Spacing = 2,
-            Padding = new Thickness(2, 6),
+            Spacing = DesignTokens.Spacing(Space.Micro),
+            // Nothing at the sides: a date like "10 Oct" needs all of the column's seventh.
+            Padding = new Thickness(0, DesignTokens.Spacing(Space.Small)),
             HorizontalOptions = LayoutOptions.Fill,
             Children = { _dayOfWeek, _date, _icon, _currentTemp, _range },
         };
@@ -60,6 +43,20 @@ public sealed class WeatherDayCell : ContentView
     {
         get => (DailyForecast?)GetValue(DayProperty);
         set => SetValue(DayProperty, value);
+    }
+
+    private static Label Line(string fontSizeKey, FontAttributes attributes = FontAttributes.None)
+    {
+        var label = new Label
+        {
+            FontSize = DesignTokens.Size(fontSizeKey),
+            FontAttributes = attributes,
+            HorizontalTextAlignment = TextAlignment.Center,
+        };
+        // The strip is painted in the secondary colour, so its text is the colour made to go on
+        // that: the page's text colour was white on Midnight's amber, at 1.9:1.
+        label.SetDynamicResource(Label.TextColorProperty, "ThemeOnSecondary");
+        return label;
     }
 
     private void Refresh()

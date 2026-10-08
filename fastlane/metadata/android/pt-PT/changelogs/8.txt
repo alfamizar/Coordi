@@ -1,0 +1,3 @@
+As horas dos contactos dos eclipses estão alguns segundos mais precisas.
+Um aspeto mais limpo e coerente em todos os ecrãs, com melhor contraste em todos os temas.
+Remover um local guardado agora pede confirmação.

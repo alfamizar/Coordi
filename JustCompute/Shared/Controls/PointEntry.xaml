@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:Class="JustCompute.Shared.Controls.PointEntry"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
@@ -10,7 +11,7 @@
 
     <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
           RowDefinitions="Auto,Auto,Auto"
-          ColumnSpacing="4"
+          ColumnSpacing="{StaticResource SpacingMicro}"
           VerticalOptions="Center"
           BindingContext="{x:Reference this}"
           x:DataType="controls:PointEntry">
@@ -97,12 +98,8 @@
 
         <ImageButton Grid.Column="4"
                      Grid.Row="2"
-                     WidthRequest="{StaticResource MinTouchTarget}"
-                     HeightRequest="{StaticResource MinTouchTarget}"
-                     Padding="8"
-                     CornerRadius="24"
-                     Margin="8,0,8,0"
-                     Background="Transparent"
+                     Style="{StaticResource IconButton}"
+                     Margin="{design:Inset Horizontal=Small}"
                      Source="{Binding ImageButtonIconSource}"
                      VerticalOptions="Center"
                      HorizontalOptions="End"

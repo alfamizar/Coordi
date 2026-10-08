@@ -11,79 +11,46 @@
     <Border BindingContext="{x:Reference this}"
             x:DataType="controls:LocationItem">
 
-        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto"
-              ColumnDefinitions="*,*,Auto"
-              ColumnSpacing="{StaticResource CardGap}"
-              RowSpacing="{StaticResource CardGap}">
+        <!-- Read like a row of the Locations list: the place first, then where it is and how big,
+             as captions. -->
+        <Grid ColumnDefinitions="*,Auto"
+              ColumnSpacing="{StaticResource SpacingSmall}">
 
-            <Label Grid.Column="0"
-                   Grid.Row="0"
-                   Style="{StaticResource CollectionViewLabel}">
-                <Label.FormattedText>
-                    <MultiBinding StringFormat="{}{0}, {1}">
-                        <Binding Path="Location.City.CityName" />
-                        <Binding Path="Location.City.CountryName" />
-                    </MultiBinding>
-                </Label.FormattedText>
-            </Label>
+            <VerticalStackLayout Grid.Column="0"
+                                 Spacing="{StaticResource SpacingMicro}"
+                                 VerticalOptions="Center">
+                <Label FontAttributes="Bold">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}{0}, {1}">
+                            <Binding Path="Location.City.CityName" />
+                            <Binding Path="Location.City.CountryName" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+                <Label Text="{Binding Location.Name}"
+                       IsVisible="{Binding IsLocationNameVisible}"
+                       Style="{StaticResource CaptionLabel}" />
+                <Label Text="{Binding Location.Latitude, Converter={StaticResource LatitudeToDmsConverter}}"
+                       Style="{StaticResource CaptionLabel}" />
+                <Label Text="{Binding Location.Longitude, Converter={StaticResource LongitudeToDmsConverter}}"
+                       Style="{StaticResource CaptionLabel}" />
+                <Label Text="{Binding Location.City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}"
+                       Style="{StaticResource CaptionLabel}" />
+            </VerticalStackLayout>
 
-            <Label Grid.Column="1"
-                   Grid.Row="0"
-                   IsVisible="{Binding IsLocationNameVisible}"
-                   Style="{StaticResource CollectionViewLabel}"
-                   Text="{Binding Location.Name}" />
-
-            <BoxView Grid.ColumnSpan="2"
-                     Grid.Row="1"
-                     Style="{StaticResource DividerStyle}" />
-
-            <Label Grid.Column="0"
-                   Grid.Row="2"
-                   Style="{StaticResource CollectionViewLabel}"
-                   Text="{Binding Location.Latitude, StringFormat={localization:Localize LatitudeStringFormatLabel}}" />
-
-            <Label Grid.Column="1"
-                   Grid.Row="2"
-                   Style="{StaticResource CollectionViewLabel}"
-                   Text="{Binding Location.Longitude, StringFormat={localization:Localize LongitudeStringFormatLabel}}" />
-
-            <BoxView Grid.ColumnSpan="2"
-                     Grid.Row="3"
-                     Style="{StaticResource DividerStyle}" />
-
-            <Label Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   Grid.Row="4"
-                   Style="{StaticResource CollectionViewLabel}"
-                   Text="{Binding Location.City.Population, StringFormat={localization:Localize PopulationFormattedLabel}}" />
-
-            <Grid RowDefinitions="*,*"
-                  Grid.Column="2"
-                  Grid.RowSpan="5"
-                  IsVisible="{Binding IsButtonsVisible}">
-
-                <ImageButton Grid.Row="0"
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="{StaticResource SpacingSmall}"
+                                 VerticalOptions="Center"
+                                 IsVisible="{Binding IsButtonsVisible}">
+                <ImageButton Style="{StaticResource FilledIconButton}"
                              Source="{AppThemeBinding Light=edit_icon_light.png, Dark=edit_icon_dark.png}"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center"
                              Command="{Binding EditButtonClickedCommand}"
-                             CommandParameter="{Binding Location}"
-                             WidthRequest="{StaticResource MinTouchTarget}"
-                             HeightRequest="{StaticResource MinTouchTarget}"
-                             Padding="12"
-                             CornerRadius="8"/>
-                <ImageButton Grid.Row="1"
+                             CommandParameter="{Binding Location}" />
+                <ImageButton Style="{StaticResource FilledIconButton}"
                              Source="{AppThemeBinding Light=delete_icon_light.png, Dark=delete_icon_dark.png}"
-                             VerticalOptions="Center"
-                             HorizontalOptions="Center"
                              Command="{Binding DeleteButtonClickedCommand}"
-                             CommandParameter="{Binding Location}"
-                             WidthRequest="{StaticResource MinTouchTarget}"
-                             HeightRequest="{StaticResource MinTouchTarget}"
-                             Padding="12"
-                             CornerRadius="8" />
-
-            </Grid>
+                             CommandParameter="{Binding Location}" />
+            </VerticalStackLayout>
 
         </Grid>
 

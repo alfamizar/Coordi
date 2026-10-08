@@ -130,13 +130,13 @@
     <value>Annulaire</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Heure de début de l'éclipse annulaire ou totale : {0}</value>
+    <value>Heure de début de l'éclipse annulaire ou totale</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Heure de fin de l'éclipse annulaire ou totale : {0}</value>
+    <value>Heure de fin de l'éclipse annulaire ou totale</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Durée de l'éclipse annulaire ou totale : {0}</value>
+    <value>Durée de l'éclipse annulaire ou totale</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Verseau</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Thème</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Date : {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Date : {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Durée du jour : {0}</value>
+    <value>Durée du jour</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Supprimer</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Digramme (identifiant de carré de 100 000 mètres MGRS) : {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Distance : {0:0.##} {1}</value>
+    <value>Digramme (identifiant de carré de 100 000 mètres MGRS)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Vitesse et distance</value>
@@ -250,7 +244,7 @@
     <value>Lune du chasseur</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Aplatissement inverse : {0}</value>
+    <value>Aplatissement inverse</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Latitude</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Latitude : {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Lat :</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Longitude</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Longitude : {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Heure du maximum de l'éclipse : {0}</value>
+    <value>Heure du maximum de l'éclipse</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>Mètres</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>MGRS Est : {0}</value>
+    <value>MGRS Est</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>Désignation de la zone de grille de la bande de latitude MGRS : {0}</value>
+    <value>Désignation de la zone de grille de la bande de latitude MGRS</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>Désignation de la zone de grille de la bande de longitude MGRS : {0}</value>
+    <value>Désignation de la zone de grille de la bande de longitude MGRS</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>MGRS Nord : {0}</value>
+    <value>MGRS Nord</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>Type MGRS : {0}</value>
+    <value>Type MGRS</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Heure du milieu de l'éclipse : {0}</value>
+    <value>Heure du milieu de l'éclipse</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>Éclipses passées ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Lune en : {0}</value>
+    <value>Lune en</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Lune</value>
@@ -373,16 +361,16 @@
     <value>Nom de la lune : </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Phase lunaire : </value>
+    <value>Phase lunaire</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Durée du lever de lune : {0}</value>
+    <value>Durée du lever de lune</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Lever de la lune : {0}</value>
+    <value>Lever de la lune</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Coucher de la lune : {0}</value>
+    <value>Coucher de la lune</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>Partielle</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Heure de début de l'éclipse partielle : {0}</value>
+    <value>Heure de début de l'éclipse partielle</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Heure de fin de l'éclipse partielle : {0}</value>
+    <value>Heure de fin de l'éclipse partielle</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Heure de début de l'éclipse partielle : {0}</value>
+    <value>Heure de début de l'éclipse partielle</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Heure de fin de l'éclipse partielle : {0}</value>
+    <value>Heure de fin de l'éclipse partielle</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Pénombrale</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Heure de début de l'éclipse pénombrale : {0}</value>
+    <value>Heure de début de l'éclipse pénombrale</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Heure de fin de l'éclipse pénombrale : {0}</value>
+    <value>Heure de fin de l'éclipse pénombrale</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>L'accès à la position permet d'afficher les données de votre lieu. Sans lui, vous pouvez choisir un lieu manuellement.</value>
@@ -493,10 +481,10 @@
     <value>Soleil</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Lever du soleil : {0}</value>
+    <value>Lever du soleil</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Coucher du soleil : {0}</value>
+    <value>Coucher du soleil</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Taureau</value>
@@ -511,16 +499,13 @@
     <value>Totale</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Heure de début de l'éclipse totale : {0}</value>
+    <value>Heure de début de l'éclipse totale</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Heure de fin de l'éclipse totale : {0}</value>
+    <value>Heure de fin de l'éclipse totale</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Type : {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Emplacement inconnu</value>
@@ -532,22 +517,22 @@
     <value>Décalage horaire UTC</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>UTM Est : {0}</value>
+    <value>UTM Est</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>Désignation de la zone de grille de la bande de latitude UTM : {0}</value>
+    <value>Désignation de la zone de grille de la bande de latitude UTM</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>Désignation de la zone de grille de la bande de longitude UTM : {0}</value>
+    <value>Désignation de la zone de grille de la bande de longitude UTM</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>UTM Nord : {0}</value>
+    <value>UTM Nord</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>Type UTM : {0}</value>
+    <value>Type UTM</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Vierge</value>
@@ -574,7 +559,7 @@
     <value>Lune des vers</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Zodiaque : {0}</value>
+    <value>Zodiaque</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Point 1</value>
@@ -850,13 +835,13 @@
     <value>Aucune éclipse n'est visible d'ici sur cette période.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Magnitude : {0}</value>
+    <value>Magnitude</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Magnitude ombrale : {0}</value>
+    <value>Magnitude ombrale</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Magnitude pénombrale : {0}</value>
+    <value>Magnitude pénombrale</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Démarrer</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Maintenant</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Supprimer l'emplacement</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>Retirer {0} des emplacements enregistrés ?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Annuler</value>
   </data>
 </root>

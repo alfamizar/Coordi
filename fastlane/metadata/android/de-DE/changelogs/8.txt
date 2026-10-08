@@ -1,0 +1,3 @@
+Die Kontaktzeiten von Finsternissen sind um einige Sekunden genauer.
+Ein klareres, einheitliches Layout auf jedem Bildschirm, mit besserem Kontrast in allen Designs.
+Das Entfernen eines gespeicherten Standorts muss jetzt bestätigt werden.

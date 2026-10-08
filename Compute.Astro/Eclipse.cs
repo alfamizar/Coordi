@@ -221,7 +221,10 @@ namespace Compute.Astro
                 magnitude = (1.5433 + cm.U - g) / (0.5461 + 2.0 * cm.U);
             }
 
-            return new SolarEclipse(cm.Jde, cm.Gamma, cm.U, type, magnitude);
+            // The series gives the instant to about a third of a minute; the geometry gives it to a
+            // second. Everything downstream — contact times, the shadow's position, the whole path —
+            // is anchored to this, so it is worth the few dozen evaluations.
+            return new SolarEclipse(BesselianSolar.RefineGreatestEclipse(cm.Jde), cm.Gamma, cm.U, type, magnitude);
         }
 
         /// <summary>Lunar eclipse at the full moon of the given lunation, or null if none.</summary>

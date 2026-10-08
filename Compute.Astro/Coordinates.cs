@@ -28,7 +28,8 @@ namespace Compute.Astro
             var ra = Math.Atan2(
                 Math.Sin(lam) * Math.Cos(eps) - Math.Tan(beta) * Math.Sin(eps),
                 Math.Cos(lam));
-            var dec = Math.Asin(Math.Sin(beta) * Math.Cos(eps) + Math.Cos(beta) * Math.Sin(eps) * Math.Sin(lam));
+            // A sum of products, so it can land a bit-width outside [-1, 1] near the poles.
+            var dec = Math.Asin(Clamp(Math.Sin(beta) * Math.Cos(eps) + Math.Cos(beta) * Math.Sin(eps) * Math.Sin(lam), -1.0, 1.0));
             return new Equatorial(NormalizeDegrees(ToDegrees(ra)), ToDegrees(dec));
         }
 
@@ -81,7 +82,7 @@ namespace Compute.Astro
             var c = Math.Sin(theta) * Math.Cos(dec) * Math.Cos(ra + zeta) + Math.Cos(theta) * Math.Sin(dec);
 
             var raNew = Math.Atan2(a, b) + z;
-            var decNew = Math.Asin(c);
+            var decNew = Math.Asin(Clamp(c, -1.0, 1.0));
 
             return new Equatorial(NormalizeDegrees(ToDegrees(raNew)), ToDegrees(decNew));
         }

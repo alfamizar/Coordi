@@ -41,6 +41,16 @@ namespace Compute.Astro
         /// </summary>
         public static long RoundHalfUp(double value) => (long)Math.Floor(value + 0.5);
 
+        /// <summary>
+        /// Integer division rounded toward negative infinity, like Kotlin's <c>floorDiv</c>. C#'s
+        /// <c>/</c> truncates toward zero; the two agree unless the signs differ.
+        /// </summary>
+        public static int FloorDiv(int dividend, int divisor)
+        {
+            var quotient = dividend / divisor;
+            return dividend % divisor != 0 && (dividend < 0) != (divisor < 0) ? quotient - 1 : quotient;
+        }
+
         /// <summary>Constrains <paramref name="value"/> to [<paramref name="min"/>, <paramref name="max"/>].</summary>
         public static int Clamp(int value, int min, int max) => value < min ? min : (value > max ? max : value);
 

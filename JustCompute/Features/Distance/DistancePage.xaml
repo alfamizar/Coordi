@@ -2,6 +2,8 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="JustCompute.Features.Distance.DistancePage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.Distance"
@@ -15,40 +17,53 @@
          the reader hunting for the number they came for. The pins and the inputs scroll under it. -->
     <Grid RowDefinitions="*,Auto"
           RowSpacing="{StaticResource CardGap}"
-          Padding="{StaticResource PageEdgeInset}">
+          Padding="{StaticResource CardPageInset}">
 
     <ScrollView Grid.Row="0"
                 VerticalScrollBarVisibility="Never">
 
         <VerticalStackLayout Spacing="{StaticResource CardGap}">
 
-            <!-- Ways to add a pin. Paired two to a row so the four read as one set of choices
-                 rather than a column of unrelated buttons. -->
+            <!-- Ways to add a pin. Search takes the row, the way a map's search box does, with the
+                 locate button beside it as an icon: as half a row, "Use my location" lost its
+                 second line once the phone's text was scaled up. Undo and clear are the other pair. -->
             <Border>
 
-                <StackLayout Spacing="{StaticResource CardGap}">
+                <StackLayout Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize RouteLabel}"
                            Style="{StaticResource TitleLabel}" />
                     <BoxView Style="{StaticResource DividerStyle}" />
 
-                    <Grid ColumnDefinitions="*,*"
-                          ColumnSpacing="{StaticResource CardGap}">
-                        <Button Grid.Column="0"
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="{StaticResource SpacingSmall}">
+                        <Button x:Name="SearchCityButton"
+                                Grid.Column="0"
                                 Text="{localization:Localize SearchCityLabel}"
                                 Command="{Binding AddFromSearchCommand}" />
-                        <Button Grid.Column="1"
-                                Text="{localization:Localize UseMyLocationLabel}"
-                                Command="{Binding AddCurrentLocationCommand}" />
+                        <!-- Drawn in the buttons' text colour, which differs by palette: a fixed
+                             light or dark glyph would be wrong on one of them. -->
+                        <ImageButton Grid.Column="1"
+                                     Style="{StaticResource FilledIconButton}"
+                                     Source="my_location_icon_light.png"
+                                     SemanticProperties.Description="{localization:Localize UseMyLocationLabel}"
+                                     ToolTipProperties.Text="{localization:Localize UseMyLocationLabel}"
+                                     Command="{Binding AddCurrentLocationCommand}">
+                            <ImageButton.Behaviors>
+                                <toolkit:IconTintColorBehavior TintColor="{Binding TextColor, Source={x:Reference SearchCityButton}, x:DataType=Button}" />
+                            </ImageButton.Behaviors>
+                        </ImageButton>
                     </Grid>
 
                     <Grid ColumnDefinitions="*,*"
-                          ColumnSpacing="{StaticResource CardGap}">
+                          ColumnSpacing="{StaticResource SpacingSmall}">
                         <Button Grid.Column="0"
+                                Style="{StaticResource OutlinedButton}"
                                 Text="{localization:Localize UndoLabel}"
                                 Command="{Binding UndoCommand}"
                                 IsEnabled="{Binding HasStops}" />
                         <Button Grid.Column="1"
+                                Style="{StaticResource OutlinedButton}"
                                 Text="{localization:Localize ClearLabel}"
                                 Command="{Binding ClearCommand}"
                                 IsEnabled="{Binding HasStops}" />
@@ -61,16 +76,16 @@
                  coordinates by hand; the last pin has no leg, which is why HasLeg gates it. -->
             <Border IsVisible="{Binding HasStops}">
 
-                <StackLayout Spacing="4"
+                <StackLayout Spacing="{StaticResource SpacingMicro}"
                              BindableLayout.ItemsSource="{Binding Stops}">
 
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="ViewModels:RouteStop">
-                            <StackLayout Spacing="2">
+                            <StackLayout Spacing="{StaticResource SpacingMicro}">
 
-                                <Grid ColumnDefinitions="32,*,44"
-                                      ColumnSpacing="4"
-                                      Padding="0,6">
+                                <Grid ColumnDefinitions="32,*,Auto"
+                                      ColumnSpacing="{StaticResource SpacingMicro}"
+                                      Padding="{design:Inset Vertical=Small}">
 
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -81,7 +96,7 @@
                                     <Label Grid.Column="0"
                                            Text="{Binding Number}"
                                            FontAttributes="Bold"
-                                           TextColor="{DynamicResource ThemePrimary}"
+                                           TextColor="{DynamicResource ThemeAccentStrong}"
                                            VerticalOptions="Center" />
 
                                     <StackLayout Grid.Column="1"
@@ -93,18 +108,13 @@
                                                Style="{StaticResource CaptionLabel}" />
                                         <Label Text="{Binding Leg}"
                                                Style="{StaticResource CaptionLabel}"
-                                               TextColor="{DynamicResource ThemePrimary}"
+                                               TextColor="{DynamicResource ThemeAccentStrong}"
                                                IsVisible="{Binding HasLeg}" />
                                     </StackLayout>
 
-                                    <!-- Padding, not a size request: the implicit ImageButton
-                                         style sets a 44dp minimum for the touch target, which
-                                         silently wins over HeightRequest and leaves the glyph
-                                         filling it. Keep the target and inset the icon. -->
                                     <ImageButton Grid.Column="2"
+                                                 Style="{StaticResource IconButton}"
                                                  Source="{AppThemeBinding Light=delete_icon_dark.png, Dark=delete_icon_light.png}"
-                                                 Padding="11"
-                                                 BackgroundColor="Transparent"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:DistanceViewModel}}, Path=RemoveCommand, x:DataType=ViewModels:DistanceViewModel}"
                                                  CommandParameter="{Binding .}" />
                                 </Grid>
@@ -125,8 +135,7 @@
 
             <!-- Nothing to measure yet. -->
             <Label Text="{localization:Localize RouteHintLabel}"
-                   Margin="12,8"
-                   HorizontalTextAlignment="Center"
+                   Style="{StaticResource HintLabel}"
                    IsVisible="{Binding HasRoute, Converter={StaticResource InvertedBoolConverter}}" />
 
             <!-- What the route costs to drive. Volume and money are left unitless on purpose:
@@ -134,7 +143,7 @@
                  forints, and a wrong currency symbol is worse than none. -->
             <Border IsVisible="{Binding HasRoute}">
 
-                <StackLayout Spacing="{StaticResource CardGap}">
+                <StackLayout Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize FuelLabel}"
                            Style="{StaticResource TitleLabel}" />
@@ -171,7 +180,7 @@
         <Border Grid.Row="1"
                 IsVisible="{Binding HasRoute}">
 
-                <StackLayout Spacing="{StaticResource CardGap}">
+                <StackLayout Spacing="{StaticResource RowGap}">
 
                     <Label Text="{localization:Localize DistanceLabel}"
                            Style="{StaticResource TitleLabel}" />

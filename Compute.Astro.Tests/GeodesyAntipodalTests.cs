@@ -102,5 +102,54 @@ namespace Compute.Astro.Tests
             // London to Paris, which converges normally and must keep its accuracy.
             Assert.InRange(Geodesy.DistanceMeters(51.5074, -0.1278, 48.8566, 2.3522), 343_900, 343_950);
         }
+
+        // The cases of the Kotlin library's GeodesyAntipodalTest, with its bounds. They are looser
+        // than the GeographicLib rows above because the Kotlin fallback is a great circle; this
+        // one solves two converged legs instead, so it passes both.
+
+        /// <summary>Half a meridian, from the tables: about 20 004 km pole to pole.</summary>
+        [Fact]
+        public void PoleToPole_IsHalfAMeridianNotNothing()
+        {
+            var d = Geodesy.DistanceMeters(90.0, 0.0, -90.0, 0.0);
+            Assert.True(Math.Abs(d - 20_003_931.0) < 60_000.0, $"pole to pole came out {d} m");
+        }
+
+        /// <summary>And the same place is still the same place.</summary>
+        [Fact]
+        public void CoincidentPoints_AreStillZero()
+        {
+            Assert.Equal(0.0, Geodesy.DistanceMeters(48.8566, 2.3522, 48.8566, 2.3522));
+        }
+
+        /// <summary>
+        /// Round the equator the other way. The true ellipsoidal figure is 20 037 km; the sphere the
+        /// Kotlin fallback measures on gives 20 004, which is the half per cent it trades for an answer.
+        /// </summary>
+        [Fact]
+        public void AntipodalOnTheEquator_IsHalfTheWayRound()
+        {
+            var d = Geodesy.DistanceMeters(0.0, 0.0, 0.0, 180.0);
+            Assert.True(Math.Abs(d - 20_020_000.0) < 120_000.0, $"equatorial antipodes came out {d} m");
+        }
+
+        /// <summary>
+        /// Nearly-antipodal is the case that used to wander rather than converge. No exact figure is
+        /// claimed — only that it is the far side of the world and not a number from nowhere.
+        /// </summary>
+        [Fact]
+        public void NearlyAntipodal_LandsInTheRightOrderOfMagnitude()
+        {
+            var d = Geodesy.DistanceMeters(40.0, -3.0, -39.5, 176.0);
+            Assert.True(d > 19_000_000.0 && d < 20_100_000.0, $"near-antipodal came out {d} m");
+        }
+
+        /// <summary>The ordinary case must be untouched: Paris to London, a well-known 343.5 km.</summary>
+        [Fact]
+        public void AnOrdinaryPair_KeepsItsMillimetres()
+        {
+            var d = Geodesy.DistanceMeters(48.8566, 2.3522, 51.5074, -0.1278);
+            Assert.True(Math.Abs(d - 343_556.0) < 500.0, $"Paris to London came out {d} m");
+        }
     }
 }

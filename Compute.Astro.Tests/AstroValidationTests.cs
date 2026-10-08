@@ -36,6 +36,22 @@ public class AstroValidationTests
         Assert.Equal(2299160.5, AstroTime.JulianDay(1582, 10, 15), 1e-9);
     }
 
+    /// <summary>
+    /// Meeus' INT() is a floor, and C#'s integer division truncates toward zero. The two differ
+    /// only for a year BC that is a whole number of centuries, which the round trip above never
+    /// lands on. Expected values from Fliegel and Van Flandern's integer formula; truncation put
+    /// each of the first three a day late.
+    /// </summary>
+    [Theory]
+    [InlineData(-100, 1_684_594.5)]
+    [InlineData(-200, 1_648_070.5)]
+    [InlineData(-300, 1_611_546.5)]
+    [InlineData(-400, 1_575_022.5)]
+    public void JulianDay_CenturiesBeforeChrist(int year, double expected)
+    {
+        Assert.Equal(expected, AstroTime.JulianDay(year, 3, 1), 1e-9);
+    }
+
     [Fact]
     public void JulianDay_FromDateTimeMatchesComponents()
     {

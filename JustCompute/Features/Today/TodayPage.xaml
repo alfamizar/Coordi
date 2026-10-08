@@ -21,7 +21,7 @@
 
             <ScrollView VerticalScrollBarVisibility="Never">
 
-                <VerticalStackLayout Padding="{StaticResource PageEdgeInset}"
+                <VerticalStackLayout Padding="{StaticResource CardPageInset}"
                                      Spacing="{StaticResource CardGap}">
 
                     <!-- The night at a glance, before any table: a verdict, how much cloud, and
@@ -35,7 +35,7 @@
                             IsVisible="{Binding Snapshot, Converter={StaticResource IsNotNullConverter}}">
 
                         <StackLayout Padding="0"
-                                     Spacing="4">
+                                     Spacing="{StaticResource SpacingMicro}">
 
                             <Label Text="{Binding SelectedDate, Converter={StaticResource DateOnlyToShortDateConverter}}"
                                    Style="{StaticResource CaptionLabel}"
@@ -69,26 +69,29 @@
 
                     </Border>
 
-                    <!-- Date control: this is the time-travel surface. Every card below reacts to it. -->
+                    <!-- Date control: this is the time-travel surface. Every card below reacts to it.
+                         Stepping is outlined, so the card's buttons do not outshout the date. -->
                     <Border>
 
                         <StackLayout Padding="0"
-                                     Spacing="{StaticResource CardGap}">
+                                     Spacing="{StaticResource RowGap}">
 
                             <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto"
-                                  ColumnSpacing="4"
+                                  ColumnSpacing="{StaticResource SpacingMicro}"
                                   VerticalOptions="Center">
 
                                 <Button Grid.Column="0"
+                                        Style="{StaticResource OutlinedButton}"
                                         Text="&#x00AB;"
                                         Command="{Binding PreviousMonthCommand}"
-                                        WidthRequest="44"
+                                        WidthRequest="{StaticResource MinTouchTarget}"
                                         Padding="0" />
 
                                 <Button Grid.Column="1"
+                                        Style="{StaticResource OutlinedButton}"
                                         Text="&#x2039;"
                                         Command="{Binding PreviousDayCommand}"
-                                        WidthRequest="44"
+                                        WidthRequest="{StaticResource MinTouchTarget}"
                                         Padding="0" />
 
                                 <!-- Centred rather than stretched: filling the column left the
@@ -101,20 +104,23 @@
                                             HorizontalOptions="Center" />
 
                                 <Button Grid.Column="3"
+                                        Style="{StaticResource OutlinedButton}"
                                         Text="&#x203A;"
                                         Command="{Binding NextDayCommand}"
-                                        WidthRequest="44"
+                                        WidthRequest="{StaticResource MinTouchTarget}"
                                         Padding="0" />
 
                                 <Button Grid.Column="4"
+                                        Style="{StaticResource OutlinedButton}"
                                         Text="&#x00BB;"
                                         Command="{Binding NextMonthCommand}"
-                                        WidthRequest="44"
+                                        WidthRequest="{StaticResource MinTouchTarget}"
                                         Padding="0" />
 
                             </Grid>
 
                             <Button Text="{localization:Localize TodayLabel}"
+                                    Style="{StaticResource OutlinedButton}"
                                     Command="{Binding GoToTodayCommand}"
                                     IsVisible="{Binding IsShowingToday, Converter={StaticResource InvertedBoolConverter}}"
                                     HorizontalOptions="Center" />
@@ -128,7 +134,7 @@
                     <Border IsVisible="{Binding IsPlaceholderLocation}">
 
                         <StackLayout Padding="0"
-                                     Spacing="{StaticResource CardGap}">
+                                     Spacing="{StaticResource RowGap}">
 
                             <Label Text="{localization:Localize SetYourLocationLabel}"
                                    Style="{StaticResource TitleLabel}" />
@@ -150,7 +156,7 @@
                         <Border IsVisible="{Binding IsDateWithinForecast}">
 
                             <StackLayout Padding="0"
-                                         Spacing="{StaticResource CardGap}">
+                                         Spacing="{StaticResource RowGap}">
 
                                 <Label Text="{localization:Localize WeatherLabel}"
                                        Style="{StaticResource TitleLabel}" />
@@ -162,7 +168,7 @@
                                 <Label Text="{localization:Localize WeatherUnavailableLabel}"
                                        IsVisible="{Binding IsWeatherFailed}"
                                        HorizontalOptions="Center"
-                                       Margin="0,12">
+                                       Style="{StaticResource HintLabel}">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding RetryWeatherCommand}" />
                                     </Label.GestureRecognizers>
@@ -223,34 +229,36 @@
                         <Border>
 
                             <StackLayout Padding="0"
-                                         Spacing="{StaticResource CardGap}">
+                                         Spacing="{StaticResource RowGap}">
 
                                 <Label Text="{localization:Localize SunLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
-                                <Border Padding="0"
-                                        StrokeShape="RoundRectangle 12">
+                                <Border Padding="0">
                                     <extendedcontrols:SunPathView RiseTime="{Binding Snapshot.SunRise}"
                                                                   SetTime="{Binding Snapshot.SunSet}"
                                                                   CurrentTime="{Binding CurrentTime}" />
                                 </Border>
 
-                                <Label>
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{localization:Localize DayDurationLabel}">
-                                            <MultiBinding.Converter>
-                                                <converters:RiseAndSetToDurationConverter CelestialBody="Sun" />
-                                            </MultiBinding.Converter>
-                                            <Binding Path="Snapshot.SunRise" />
-                                            <Binding Path="Snapshot.SunSet" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-
-                                <Label Text="{Binding Snapshot.SunRise, StringFormat={localization:Localize SunRiseLabel},Converter={StaticResource TimeFormatConverter}}" />
-
-                                <Label Text="{Binding Snapshot.SunSet, StringFormat={localization:Localize SunSetLabel},Converter={StaticResource TimeFormatConverter}}" />
+                                <!-- Rise and set in the order they happen, then the day they make. -->
+                                <VerticalStackLayout Spacing="{StaticResource RowGap}">
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize SunRiseLabel}"
+                                                                  Value="{Binding Snapshot.SunRise, Converter={StaticResource TimeFormatConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize SunSetLabel}"
+                                                                  Value="{Binding Snapshot.SunSet, Converter={StaticResource TimeFormatConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize DayDurationLabel}">
+                                        <extendedcontrols:KeyValueRow.Value>
+                                            <MultiBinding StringFormat="{}{0}">
+                                                <MultiBinding.Converter>
+                                                    <converters:RiseAndSetToDurationConverter CelestialBody="Sun" />
+                                                </MultiBinding.Converter>
+                                                <Binding Path="Snapshot.SunRise" />
+                                                <Binding Path="Snapshot.SunSet" />
+                                            </MultiBinding>
+                                        </extendedcontrols:KeyValueRow.Value>
+                                    </extendedcontrols:KeyValueRow>
+                                </VerticalStackLayout>
 
                                 <!-- Twilight, in the order it happens: first light up to sunrise,
                                      then sunset down to last light. The list carries only the
@@ -264,12 +272,12 @@
                                        Style="{StaticResource SectionHeaderLabel}"
                                        IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
 
-                                <VerticalStackLayout Spacing="4"
+                                <VerticalStackLayout Spacing="{StaticResource RowGap}"
                                                      BindableLayout.ItemsSource="{Binding Snapshot.TwilightStages}">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="models:TwilightStage">
                                             <Grid ColumnDefinitions="*,Auto"
-                                                  ColumnSpacing="{StaticResource CardGap}">
+                                                  ColumnSpacing="{StaticResource SpacingSmall}">
                                                 <Label Grid.Column="0"
                                                        Text="{Binding Label, Converter={StaticResource TwilightLabelToNameConverter}}" />
                                                 <Label Grid.Column="1"
@@ -282,9 +290,8 @@
                                 <BoxView Style="{StaticResource DividerStyle}"
                                          IsVisible="{Binding Snapshot.TwilightStages, Converter={StaticResource IsListNotNullOrEmptyConverter}}" />
 
-                                <Label Text="{Binding Snapshot.ZodiacSign,
-                                       Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
-                                       StringFormat={localization:Localize ZodiacSignLabel}}" />
+                                <extendedcontrols:KeyValueRow Title="{localization:Localize ZodiacSignLabel}"
+                                                              Value="{Binding Snapshot.ZodiacSign, Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter}}" />
                             </StackLayout>
 
                         </Border>
@@ -292,42 +299,37 @@
                         <Border>
 
                             <StackLayout Padding="0"
-                                         Spacing="{StaticResource CardGap}">
+                                         Spacing="{StaticResource RowGap}">
 
                                 <Label Text="{localization:Localize MoonLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
-                                <Label>
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{localization:Localize MoonRiseDurationLabel}">
-                                            <MultiBinding.Converter>
-                                                <converters:RiseAndSetToDurationConverter CelestialBody="Moon" />
-                                            </MultiBinding.Converter>
-                                            <Binding Path="Snapshot.MoonRise" />
-                                            <Binding Path="Snapshot.MoonSet" />
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-
-                                <Label>
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{localization:Localize MoonPhaseLabel}" />
-                                            <Span Text="{Binding Snapshot, Converter={StaticResource CoordinateToMoonPhaseConverter}}" />
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-
-                                <Label Text="{Binding Snapshot.MoonDistanceKm, Converter={StaticResource KilometersToTargetDistanceTypeConverter}}" />
-
-                                <Label Text="{Binding Snapshot.MoonRise, StringFormat={localization:Localize MoonRiseLabel},Converter={StaticResource TimeFormatConverter}}" />
-
-                                <Label Text="{Binding Snapshot.MoonSet, StringFormat={localization:Localize MoonSetLabel},Converter={StaticResource TimeFormatConverter}}" />
-
-                                <Label Text="{Binding Snapshot.MoonSign,
-                                       Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter},
-                                       StringFormat={localization:Localize MoonInZodiacSignLabel}}" />
+                                <!-- In the Sun card's order: rise, set and the time between, then the
+                                     Moon's own state. -->
+                                <VerticalStackLayout Spacing="{StaticResource RowGap}">
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MoonRiseLabel}"
+                                                                  Value="{Binding Snapshot.MoonRise, Converter={StaticResource TimeFormatConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MoonSetLabel}"
+                                                                  Value="{Binding Snapshot.MoonSet, Converter={StaticResource TimeFormatConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MoonRiseDurationLabel}">
+                                        <extendedcontrols:KeyValueRow.Value>
+                                            <MultiBinding StringFormat="{}{0}">
+                                                <MultiBinding.Converter>
+                                                    <converters:RiseAndSetToDurationConverter CelestialBody="Moon" />
+                                                </MultiBinding.Converter>
+                                                <Binding Path="Snapshot.MoonRise" />
+                                                <Binding Path="Snapshot.MoonSet" />
+                                            </MultiBinding>
+                                        </extendedcontrols:KeyValueRow.Value>
+                                    </extendedcontrols:KeyValueRow>
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MoonPhaseLabel}"
+                                                                  Value="{Binding Snapshot, Converter={StaticResource CoordinateToMoonPhaseConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize DistanceLabel}"
+                                                                  Value="{Binding Snapshot.MoonDistanceKm, Converter={StaticResource KilometersToTargetDistanceTypeConverter}}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MoonInZodiacSignLabel}"
+                                                                  Value="{Binding Snapshot.MoonSign, Converter={StaticResource ZodiacSignEnumToLocalizedStringConverter}}" />
+                                </VerticalStackLayout>
                             </StackLayout>
 
                         </Border>
@@ -335,18 +337,26 @@
                         <Border IsVisible="{Binding Snapshot.Mgrs, Converter={StaticResource IsNotNullConverter}}">
 
                             <StackLayout Padding="0"
-                                         Spacing="{StaticResource CardGap}">
+                                         Spacing="{StaticResource RowGap}">
 
                                 <Label Text="{localization:Localize MGRSLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
-                                <Label Text="{Binding Snapshot.Mgrs.Digraph, StringFormat={localization:Localize DigraphLabel}}" />
-                                <Label Text="{Binding Snapshot.Mgrs.Easting, StringFormat={localization:Localize MGRSEastingLabel}}" />
-                                <Label Text="{Binding Snapshot.Mgrs.Northing, StringFormat={localization:Localize MGRSNorthingLabel}}" />
-                                <Label Text="{Binding Snapshot.Mgrs.LatZone, StringFormat={localization:Localize MGRSLatZoneLabel}}" />
-                                <Label Text="{Binding Snapshot.Mgrs.LongZone, StringFormat={localization:Localize MGRSLonZoneLabel}}" />
-                                <Label Text="{Binding Snapshot.Mgrs.SystemType, StringFormat={localization:Localize MGRSTypeLabel}}" />
+                                <VerticalStackLayout Spacing="{StaticResource RowGap}">
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize DigraphLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.Digraph, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MGRSEastingLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.Easting, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MGRSNorthingLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.Northing, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MGRSLatZoneLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.LatZone, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MGRSLonZoneLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.LongZone, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize MGRSTypeLabel}"
+                                                                  Value="{Binding Snapshot.Mgrs.SystemType, StringFormat='{0}'}" />
+                                </VerticalStackLayout>
 
                             </StackLayout>
                         </Border>
@@ -354,18 +364,26 @@
                         <Border IsVisible="{Binding Snapshot.Utm, Converter={StaticResource IsNotNullConverter}}">
 
                             <StackLayout Padding="0"
-                                         Spacing="{StaticResource CardGap}">
+                                         Spacing="{StaticResource RowGap}">
 
                                 <Label Text="{localization:Localize UTMLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
-                                <Label Text="{Binding Snapshot.Utm.InverseFlattening, StringFormat={localization:Localize InverseFlatteningLabel}}" />
-                                <Label Text="{Binding Snapshot.Utm.Easting, StringFormat={localization:Localize UTMEastingLabel}}" />
-                                <Label Text="{Binding Snapshot.Utm.Northing, StringFormat={localization:Localize UTMNorthingLabel}}" />
-                                <Label Text="{Binding Snapshot.Utm.LatZone, StringFormat={localization:Localize UTMLatZoneLabel}}" />
-                                <Label Text="{Binding Snapshot.Utm.LongZone, StringFormat={localization:Localize UTMLonZoneLabel}}" />
-                                <Label Text="{Binding Snapshot.Utm.SystemType, StringFormat={localization:Localize UTMTypeLabel}}" />
+                                <VerticalStackLayout Spacing="{StaticResource RowGap}">
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize InverseFlatteningLabel}"
+                                                                  Value="{Binding Snapshot.Utm.InverseFlattening, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize UTMEastingLabel}"
+                                                                  Value="{Binding Snapshot.Utm.Easting, StringFormat='{0:0.##}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize UTMNorthingLabel}"
+                                                                  Value="{Binding Snapshot.Utm.Northing, StringFormat='{0:0.##}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize UTMLatZoneLabel}"
+                                                                  Value="{Binding Snapshot.Utm.LatZone, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize UTMLonZoneLabel}"
+                                                                  Value="{Binding Snapshot.Utm.LongZone, StringFormat='{0}'}" />
+                                    <extendedcontrols:KeyValueRow Title="{localization:Localize UTMTypeLabel}"
+                                                                  Value="{Binding Snapshot.Utm.SystemType, StringFormat='{0}'}" />
+                                </VerticalStackLayout>
 
                             </StackLayout>
 
@@ -379,12 +397,9 @@
 
         </RefreshView>
 
-        <ActivityIndicator HeightRequest="50"
-                           WidthRequest="50"
-                           AbsoluteLayout.LayoutFlags="All"
-                           AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
+        <!-- Centred at its own size; the style gives it the one size every screen uses. -->
+        <ActivityIndicator AbsoluteLayout.LayoutFlags="PositionProportional"
+                           AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
                            IsRunning="{Binding IsBusy}">
             <ActivityIndicator.IsVisible>
                 <MultiBinding Converter="{StaticResource AllTrueConverter}">

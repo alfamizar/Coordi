@@ -4,15 +4,16 @@ namespace JustCompute.Shared.Theming
     public static class AppThemes
     {
         /// <summary>
-        /// The app's original light palette. Kept faithfully, including a primary that only
-        /// reaches 2.6:1 against the white text on it — changing that is a design decision, not
-        /// something to slip into a restore.
+        /// The app's original light palette, with its blue deepened. The original #00A9FF put the
+        /// white text of every button and the title bar at 2.6:1, under even the large-text bar of
+        /// 3:1; #0071AE clears 4.5:1 for both and still reads as a blue on the cyan cards. The bright
+        /// azure stays where nothing is written on it: the surfaces, the secondary, the outlines.
         /// </summary>
         public static readonly ThemePalette Ocean = new(
             IsDark: false,
-            Primary: Color.FromArgb("#00A9FF"),
+            Primary: Color.FromArgb("#0071AE"),
             OnPrimary: Colors.White,
-            PrimaryVariant: Color.FromArgb("#0086CC"),
+            PrimaryVariant: Color.FromArgb("#00609A"),
             Secondary: Color.FromArgb("#89CFF3"),
             OnSecondary: Colors.Black,
             Background: Colors.White,
@@ -22,9 +23,9 @@ namespace JustCompute.Shared.Theming
             Outline: Color.FromArgb("#89CFF3"),
             Error: Color.FromArgb("#B00020"),
             OnError: Colors.White,
-            HeaderBackground: Color.FromArgb("#00A9FF"),
+            HeaderBackground: Color.FromArgb("#0071AE"),
             MutedSurface: Color.FromArgb("#89CFF3"),
-            AccentStrong: Color.FromArgb("#0086CC"));
+            AccentStrong: Color.FromArgb("#00609A"));
 
         /// <summary>
         /// Rose pink over mint. The primary is deeper than a pastel would be on purpose: buttons
@@ -48,11 +49,18 @@ namespace JustCompute.Shared.Theming
             MutedSurface: Color.FromArgb("#A5D6A7"),
             AccentStrong: Color.FromArgb("#A81B5C"));
 
-        /// <summary>The app's original dark palette: crimson and amber on black.</summary>
+        /// <summary>
+        /// The app's original dark palette: crimson and amber on black.
+        ///
+        /// What is written on the crimson is black. White reached only 3.8:1 there, and a darker
+        /// crimson that white could clear would no longer stand out as an outline against the
+        /// #323232 cards; black reads at 5.6:1, as the icons on it already did. Accent text and
+        /// errors are lighter than the crimson, so they read on those cards too.
+        /// </summary>
         public static readonly ThemePalette Midnight = new(
             IsDark: true,
             Primary: Color.FromArgb("#FF1E56"),
-            OnPrimary: Colors.White,
+            OnPrimary: Colors.Black,
             PrimaryVariant: Color.FromArgb("#CC1845"),
             Secondary: Color.FromArgb("#FFAC41"),
             OnSecondary: Colors.Black,
@@ -61,11 +69,11 @@ namespace JustCompute.Shared.Theming
             Surface: Color.FromArgb("#323232"),
             OnSurface: Colors.White,
             Outline: Color.FromArgb("#4A4A4A"),
-            Error: Color.FromArgb("#CF6679"),
+            Error: Color.FromArgb("#FF8A80"),
             OnError: Colors.Black,
             HeaderBackground: Color.FromArgb("#323232"),
             MutedSurface: Color.FromArgb("#404040"),
-            AccentStrong: Color.FromArgb("#FF1E56"));
+            AccentStrong: Color.FromArgb("#FF7A96"));
 
         /// <summary>
         /// Orange on near-black, following Penombre's dark orange scheme (#FF9500 over the
@@ -79,7 +87,9 @@ namespace JustCompute.Shared.Theming
             IsDark: true,
             Primary: Color.FromArgb("#FF9500"),
             OnPrimary: Color.FromArgb("#1C1C1E"),
-            PrimaryVariant: Color.FromArgb("#FF8800"),
+            // The menu's selected row writes white on this, so it is the orange taken down to where
+            // white clears 4.5:1 rather than the bright one, where it managed 2.4.
+            PrimaryVariant: Color.FromArgb("#AD5C00"),
             Secondary: Color.FromArgb("#2C2C2E"),
             OnSecondary: Colors.White,
             Background: Color.FromArgb("#121316"),

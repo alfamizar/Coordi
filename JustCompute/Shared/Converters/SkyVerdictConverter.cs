@@ -19,7 +19,9 @@ namespace JustCompute.Shared.Converters
                 ? verdict switch
                 {
                     SkyVerdict.Clear => Color.FromArgb("#1B5E20"),
-                    SkyVerdict.Partly => Color.FromArgb("#8D6E00"),
+                    // Darker than it first was: the banner's dimmed lines (80% white) came to 3.7:1 on
+                    // #8D6E00 and clear 4.5:1 here.
+                    SkyVerdict.Partly => Color.FromArgb("#795E00"),
                     SkyVerdict.Cloudy => Color.FromArgb("#37474F"),
                     _ => Color.FromArgb("#4A4A55"),
                 }

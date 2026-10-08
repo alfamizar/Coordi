@@ -2,6 +2,7 @@
 <v1:BasePage xmlns:v1="clr-namespace:JustCompute.Shared.Controls"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:Class="JustCompute.Features.SpeedAndDistance.SpeedAndDistancePage"
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.SpeedAndDistance"
@@ -11,7 +12,7 @@
 
     <Grid RowDefinitions="*, Auto, Auto"
           RowSpacing="{StaticResource CardGap}"
-          Padding="{StaticResource PageEdgeInset}">
+          Padding="{StaticResource CardPageInset}">
 
         <ScrollView Grid.Row="0"
                     VerticalScrollBarVisibility="Never">
@@ -64,7 +65,7 @@
         <Border Grid.Row="1"
                 IsVisible="{Binding HasTrip}">
 
-            <StackLayout Spacing="{StaticResource CardGap}">
+            <StackLayout Spacing="{StaticResource RowGap}">
 
                 <Label Text="{localization:Localize DistanceLabel}"
                        Style="{StaticResource TitleLabel}" />
@@ -90,18 +91,20 @@
 
         </Border>
 
-        <Grid ColumnDefinitions="Auto,Auto,*"
-              ColumnSpacing="{StaticResource CardGap}"
+        <!-- Start or stop, and the time on the clock: read at arm's length, so both are set in the
+             Hero size, and the two icons share the touch target's size. The clock keeps its width
+             and the label gives way: "Rozpocznij" in Hero, with the text scaled up, leaves too
+             little room for both, and the button's icon already says what the label says. -->
+        <Grid ColumnDefinitions="Auto,*,Auto"
+              ColumnSpacing="{StaticResource SpacingSmall}"
+              Margin="{StaticResource TextBesideCardsInset}"
+              Padding="{design:Inset Vertical=Small}"
               Grid.Row="2">
 
             <ImageButton Grid.Column="0"
+                         Style="{StaticResource HeroIconButton}"
                          Command="{Binding ToggleLocationTrackingCommand}"
-                         WidthRequest="50"
-                         HeightRequest="50"
-                         CornerRadius="32"
-                         Background="Transparent"
                          VerticalOptions="Center"
-                         Margin="8"
                          Source="{AppThemeBinding Light=play_circle_light_dark.png, Dark=play_circle_icon_light.png}">
                 <ImageButton.Triggers>
                     <DataTrigger TargetType="ImageButton"
@@ -115,32 +118,28 @@
 
             <Label Grid.Column="1"
                    VerticalOptions="Center"
-                   Margin="8"
-                   FontSize="28"
+                   FontSize="{StaticResource FontSizeHero}"
+                   LineBreakMode="TailTruncation"
                    Text="{Binding TrackingActionLabel}" />
 
-
             <HorizontalStackLayout Grid.Column="2"
+                                   Spacing="{StaticResource SpacingSmall}"
                                    HorizontalOptions="End">
 
                 <Image Source="{AppThemeBinding Light=timer_icon_dark.png, Dark=timer_icon_light.png}"
                        VerticalOptions="Center"
-                       WidthRequest="50"
-                       HeightRequest="50"/>
+                       WidthRequest="{StaticResource MinTouchTarget}"
+                       HeightRequest="{StaticResource MinTouchTarget}" />
 
                 <Label VerticalOptions="Center"
-                       Margin="8"
-                       FontSize="26"
+                       FontSize="{StaticResource FontSizeHero}"
                        Text="{Binding FormattedElapsedTime}" />
 
             </HorizontalStackLayout>
 
-
         </Grid>
 
-        <ActivityIndicator HeightRequest="50"
-                           WidthRequest="50"
-                           HorizontalOptions="Center"
+        <ActivityIndicator HorizontalOptions="Center"
                            VerticalOptions="Center"
                            IsVisible="{Binding IsBusy}"
                            IsRunning="{Binding IsBusy}" />

@@ -10,35 +10,64 @@
     <x:Double x:Key="SpacingLarge">16</x:Double>
     <x:Double x:Key="SpacingXLarge">24</x:Double>
 
-    <!-- Semantic Layout Dimensions.
+    <!-- Semantic Layout Dimensions: the same roles Penombre lays its screens out with, so that
+         the two apps line up with each other.
 
-         Values follow Material Design 3 for a compact window, which Apple's HIG agrees with on
-         a phone: a 16 body margin, 16 of padding inside a card, 8 between cards, and a 12 corner
-         on a medium surface. All sit on the 4 grid both systems are built from.
+         Text starts 16 from the edge of every screen, whether it stands on the page or sits in a
+         card. Cards make that work by standing 8 in from the edge and keeping their content 8 in
+         from their own sides: the two add up to the same line. Material 3's compact layout puts
+         both at 16, which lands card text at 32 - more margin than an app of tables can spare on
+         a phone, and text that jumps sideways between a page of cards and a page without.
 
-         Insets are padding only. A card carries no margin of its own: the container states the
-         edge inset once, and the gap between cards is the container's Spacing. When both were in
-         play the gap was 8 of Spacing plus 4 of margin at each end - 16 in total, a number written
-         nowhere - and removing a card's margin silently changed the screen edge as well, because
-         one property was doing two unrelated jobs. -->
-    <Thickness x:Key="PageEdgeInset">16</Thickness>
-    <Thickness x:Key="CardPadding">16</Thickness>
-    <x:Double x:Key="CardGap">8</x:Double>
+         Insets are padding only. A card carries no margin of its own: the page states the edge
+         inset once, and the gap between cards is the page's Spacing. -->
+    <!-- A page of cards: the cards 8 from every edge. -->
+    <Thickness x:Key="CardPageInset">8</Thickness>
+    <!-- A page without cards: its text and controls straight on the 16 line. -->
+    <Thickness x:Key="TextPageInset">16</Thickness>
+    <!-- Text standing among cards rather than in one, such as a section heading or a filter row:
+         8 in from the cards' edge, which puts it on the same 16 line as their text. -->
+    <Thickness x:Key="TextBesideCardsInset">8,0</Thickness>
+    <!-- Inside a card: 8 at the sides, which lands its text on the 16 line, and 12 above and below. -->
+    <Thickness x:Key="CardPadding">8,12</Thickness>
+    <!-- Between one card and the next. -->
+    <x:Double x:Key="CardGap">12</x:Double>
+    <!-- Between the rows of a card. -->
+    <x:Double x:Key="RowGap">8</x:Double>
     <x:Double x:Key="CardCornerRadius">12</x:Double>
+    <!-- A dialog floats free of the screen's edges, so the 16 line means nothing to it: it keeps
+         the roomier inset all round. -->
+    <Thickness x:Key="DialogPadding">16</Thickness>
+
+    <!-- Controls and rows that sit inside a card: a step tighter than the card's 12, so a corner
+         inside a corner reads as nested. Buttons, whose CornerRadius is a whole number, state the
+         same 8 in their styles below. -->
+    <x:Double x:Key="ControlCornerRadius">8</x:Double>
 
     <!-- Material 3 puts the minimum touch target at 48; the HIG says 44. Use the larger. -->
     <x:Double x:Key="MinTouchTarget">48</x:Double>
 
     <!-- Design System: Typography Scale -->
+    <!-- Live readouts meant to be read at arm's length: a speed, a running time. -->
+    <x:Double x:Key="FontSizeHero">28</x:Double>
     <x:Double x:Key="FontSizeDisplay">22</x:Double>
     <x:Double x:Key="FontSizeHeader">18</x:Double>
     <x:Double x:Key="FontSizeTitle">16</x:Double>
     <x:Double x:Key="FontSizeBody">14</x:Double>
     <x:Double x:Key="FontSizeCaption">12</x:Double>
+    <!-- Only for the seven days of the weather strip, a seventh of a phone's card each. Below
+         Material's smallest (11) on purpose: at 11, with the phone's text scaled up a step, a
+         date like "10 Oct" runs into the column dividers. -->
+    <x:Double x:Key="FontSizeMicro">10</x:Double>
 
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color"
                 Value="{DynamicResource ThemePrimary}" />
+        <!-- One size everywhere; the screens used to state 50 each. -->
+        <Setter Property="HeightRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="WidthRequest"
+                Value="{StaticResource MinTouchTarget}" />
     </Style>
 
     <Style TargetType="IndicatorView">
@@ -51,8 +80,11 @@
     <Style TargetType="Border">
         <Setter Property="Stroke"
                 Value="Transparent" />
-        <Setter Property="StrokeShape"
-                Value="RoundRectangle 12" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="{StaticResource CardCornerRadius}" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="StrokeThickness"
                 Value="0" />
         <Setter Property="Background"
@@ -74,61 +106,13 @@
                 Value="{DynamicResource ThemeOutline}" />
     </Style>
 
+    <!-- Inside the dialog's Border, which gives it the card's surface, corner and padding. -->
     <Style TargetType="Grid"
            x:Key="GridDialogContent">
-        <Setter Property="BackgroundColor"
-                Value="{DynamicResource ThemeBackground}" />
         <Setter Property="RowSpacing"
-                Value="8" />
+                Value="{StaticResource SpacingSmall}" />
         <Setter Property="ColumnSpacing"
-                Value="8" />
-        <Setter Property="Padding"
-                Value="8" />
-    </Style>
-
-    <Style TargetType="Button"
-           x:Key="DialogButton">
-        <Setter Property="Opacity"
-                Value="1" />
-        <Setter Property="BackgroundColor"
-                Value="{DynamicResource ThemePrimary}" />
-        <Setter Property="TextColor"
-                Value="{DynamicResource ThemeOnPrimary}" />
-        <Setter Property="BorderColor"
-                Value="{StaticResource Gray500}" />
-        <Setter Property="BorderWidth"
-                Value="1" />
-        <Setter Property="CornerRadius"
-                Value="5" />
-        <Setter Property="MinimumHeightRequest"
-                Value="44" />
-        <Setter Property="MinimumWidthRequest"
-                Value="44" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="Scale"
-                                    Value="1" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Enabled">
-                        <VisualState.Setters>
-                            <Setter Property="Scale"
-                                    Value="1" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Pressed">
-                        <VisualState.Setters>
-                            <Setter Property="Scale"
-                                    Value="0.8" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="PointerOver" />
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
+                Value="{StaticResource SpacingSmall}" />
     </Style>
 
     <Style TargetType="Button">
@@ -142,12 +126,14 @@
                 Value="{StaticResource FontSizeBody}" />
         <Setter Property="CornerRadius"
                 Value="8" />
+        <!-- The 48 minimum sets the height, so the padding is for the label's sake: 12 at the
+             sides, not Material's 24, leaves the most room where two buttons share a row. -->
         <Setter Property="Padding"
-                Value="14,10" />
+                Value="12,8" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -167,13 +153,46 @@
         </Setter>
     </Style>
 
+    <!-- The second strength of button. The plain filled Button is for the one action a card or a
+         dialog is there for; everything beside it - cancel, undo, a step back - is outlined, so
+         the eye goes to the right one first. Label and outline are the accent colour, which every
+         palette keeps readable on a card. -->
+    <Style TargetType="Button"
+           x:Key="OutlinedButton">
+        <Setter Property="BackgroundColor"
+                Value="Transparent" />
+        <Setter Property="TextColor"
+                Value="{DynamicResource ThemeAccentStrong}" />
+        <Setter Property="BorderColor"
+                Value="{DynamicResource ThemeAccentStrong}" />
+        <Setter Property="BorderWidth"
+                Value="1" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor"
+                                    Value="{StaticResource Gray500}" />
+                            <Setter Property="BorderColor"
+                                    Value="{StaticResource Gray500}" />
+                            <Setter Property="Opacity"
+                                    Value="0.6" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
     <Style TargetType="CheckBox">
         <Setter Property="Color"
                 Value="{DynamicResource ThemePrimary}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -197,11 +216,11 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -225,13 +244,13 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="PlaceholderColor"
                 Value="{StaticResource Gray500}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -259,9 +278,9 @@
         <Setter Property="PlaceholderColor"
                 Value="{StaticResource Gray500}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -277,22 +296,10 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Frame">
-        <Setter Property="HasShadow"
-                Value="False" />
-        <Setter Property="BorderColor"
-                Value="{DynamicResource ThemeOutline}" />
-        <Setter Property="CornerRadius"
-                Value="10" />
-        <Setter Property="Background"
-                Value="{DynamicResource ThemeSurface}" />
-        <Setter Property="Padding"
-                Value="8, 8" />
-        <Setter Property="Margin"
-                Value="8, 4" />
-    </Style>
-
-    <Style TargetType="ImageButton">
+    <!-- The shared ImageButton look: filled, shrinking a little when pressed. Every ImageButton
+         gets it through the implicit style after it, and the keyed button styles build on it. -->
+    <Style x:Key="ImageButtonBase"
+           TargetType="ImageButton">
         <Setter Property="Opacity"
                 Value="1" />
         <Setter Property="BackgroundColor"
@@ -304,9 +311,9 @@
         <Setter Property="CornerRadius"
                 Value="0" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -332,6 +339,145 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="ImageButton"
+           BasedOn="{StaticResource ImageButtonBase}" />
+
+    <!-- A glyph on no ground: a 24 icon centred in the 48 target. -->
+    <Style x:Key="IconButton"
+           TargetType="ImageButton"
+           BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="BackgroundColor"
+                Value="Transparent" />
+        <Setter Property="WidthRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="HeightRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="Padding"
+                Value="12" />
+        <Setter Property="CornerRadius"
+                Value="24" />
+    </Style>
+
+    <!-- The same 24 icon on the primary ground, filling the 48 target. -->
+    <Style x:Key="FilledIconButton"
+           TargetType="ImageButton"
+           BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="WidthRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="HeightRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="Padding"
+                Value="12" />
+        <Setter Property="CornerRadius"
+                Value="8" />
+    </Style>
+
+    <!-- A compact filled glyph for a dense row: 32 of ink inside an IconTarget cell that takes the
+         tap, so the target still meets the 48 minimum. Inert, yet still an ImageButton: it is what
+         draws these glyphs correctly on their filled ground. -->
+    <Style x:Key="FilledIconChip"
+           TargetType="ImageButton"
+           BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="InputTransparent"
+                Value="True" />
+        <Setter Property="WidthRequest"
+                Value="32" />
+        <Setter Property="HeightRequest"
+                Value="32" />
+        <Setter Property="MinimumWidthRequest"
+                Value="32" />
+        <Setter Property="MinimumHeightRequest"
+                Value="32" />
+        <Setter Property="Padding"
+                Value="6" />
+        <Setter Property="CornerRadius"
+                Value="8" />
+        <Setter Property="HorizontalOptions"
+                Value="Center" />
+        <Setter Property="VerticalOptions"
+                Value="Center" />
+    </Style>
+
+    <!-- An icon that is itself the picture, edge to edge in the 48 target: start and stop. -->
+    <Style x:Key="HeroIconButton"
+           TargetType="ImageButton"
+           BasedOn="{StaticResource ImageButtonBase}">
+        <Setter Property="BackgroundColor"
+                Value="Transparent" />
+        <Setter Property="WidthRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="HeightRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="CornerRadius"
+                Value="24" />
+    </Style>
+
+    <!-- The 48 cell that takes the tap for a FilledIconChip. -->
+    <Style x:Key="IconTarget"
+           TargetType="Grid">
+        <Setter Property="WidthRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="HeightRequest"
+                Value="{StaticResource MinTouchTarget}" />
+        <Setter Property="VerticalOptions"
+                Value="Center" />
+    </Style>
+
+    <!-- A selectable row inside a card. Its box starts where the card's text does, so a selected
+         row's outline lines up with the title above it, and its own text sits 8 inside the box.
+         Cornered like a control, and drawing its own selected look - left to the platform,
+         CollectionView paints a hard-edged full-bleed fill. -->
+    <Style x:Key="ListRow"
+           TargetType="Border">
+        <Setter Property="Padding"
+                Value="8" />
+        <Setter Property="StrokeThickness"
+                Value="1" />
+        <Setter Property="Stroke"
+                Value="Transparent" />
+        <Setter Property="BackgroundColor"
+                Value="Transparent" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="{StaticResource ControlCornerRadius}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                    Value="Transparent" />
+                            <Setter Property="Stroke"
+                                    Value="Transparent" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                    Value="{DynamicResource ThemeMutedSurface}" />
+                            <Setter Property="Stroke"
+                                    Value="{DynamicResource ThemePrimary}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- A table of labels and their values inside a card. Every such table spaces its columns
+         and rows the same, so the cards line up when read one after another. -->
+    <Style x:Key="KeyValueGrid"
+           TargetType="Grid">
+        <Setter Property="ColumnSpacing"
+                Value="{StaticResource SpacingMedium}" />
+        <Setter Property="RowSpacing"
+                Value="{StaticResource SpacingSmall}" />
     </Style>
 
     <Style TargetType="Label">
@@ -377,9 +523,9 @@
         <Setter Property="FontSize"
                 Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -423,11 +569,11 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -462,9 +608,9 @@
         <Setter Property="FontSize"
                 Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -492,7 +638,7 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -596,11 +742,11 @@
         <Setter Property="FontFamily"
                 Value="OpenSansRegular" />
         <Setter Property="FontSize"
-                Value="14" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="MinimumHeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="MinimumWidthRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -646,8 +792,12 @@
                 Value="{StaticResource White}" />
         <Setter Property="Shell.TabBarTitleColor"
                 Value="{StaticResource White}" />
+        <!-- An unselected tab reads at 4.5:1 too: white on the light palettes' saturated headers,
+             where any dimmer tint fell under it, and Gray300 on the dark ones. With both states
+             that bright, the selected tab is told apart by the chip IndicatedTabsShellRenderer
+             draws behind it on Android, not by a shade; iOS's glass bar has a platter of its own. -->
         <Setter Property="Shell.TabBarUnselectedColor"
-                Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray400}}" />
+                Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray300}}" />
     </Style>
 
     <Style TargetType="NavigationPage">
@@ -718,6 +868,17 @@
                 Value="0.8" />
     </Style>
 
+    <!-- What a screen says when it has nothing to show yet, or found nothing: centred, its lines
+         kept within the 16 text line at the sides, and the same distance from what is above and
+         below it on every screen. -->
+    <Style TargetType="Label"
+           x:Key="HintLabel">
+        <Setter Property="HorizontalTextAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="8,16" />
+    </Style>
+
     <Style TargetType="Label"
            x:Key="ErrorLabel">
         <Setter Property="FontSize"
@@ -726,28 +887,20 @@
                 Value="{DynamicResource ThemeError}" />
     </Style>
 
+    <!-- A dialog reads title first: the question in the header size, the explanation under it in
+         body text. It was the other way round, a small uppercase title over an 18-point message. -->
     <Style TargetType="Label"
            x:Key="DialogTitle">
-        <Setter Property="VerticalOptions"
-                Value="Center" />
-        <Setter Property="HorizontalOptions"
-                Value="Center" />
         <Setter Property="FontSize"
-                Value="{StaticResource FontSizeCaption}" />
+                Value="{StaticResource FontSizeHeader}" />
         <Setter Property="FontAttributes"
                 Value="Bold" />
-        <Setter Property="TextTransform"
-                Value="Uppercase" />
     </Style>
 
     <Style TargetType="Label"
            x:Key="DialogMessage">
-        <Setter Property="VerticalOptions"
-                Value="Center" />
-        <Setter Property="HorizontalOptions"
-                Value="Center" />
         <Setter Property="FontSize"
-                Value="{StaticResource FontSizeHeader}" />
+                Value="{StaticResource FontSizeBody}" />
         <Setter Property="LineBreakMode"
                 Value="WordWrap" />
     </Style>
@@ -794,7 +947,7 @@
         <Setter Property="FontSize"
                 Value="{StaticResource FontSizeBody}" />
         <Setter Property="HeightRequest"
-                Value="44" />
+                Value="{StaticResource MinTouchTarget}" />
     </Style>
 
 </ResourceDictionary>

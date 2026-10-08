@@ -130,13 +130,13 @@
     <value>Prstencové</value>
   </data>
   <data name="AorTEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Začátek prstencového nebo úplného zatmění: {0}</value>
+    <value>Začátek prstencového nebo úplného zatmění</value>
   </data>
   <data name="AorTEclipseEndTimeLabel" xml:space="preserve">
-    <value>Konec prstencového nebo úplného zatmění: {0}</value>
+    <value>Konec prstencového nebo úplného zatmění</value>
   </data>
   <data name="AorTSolarEclipseDurationLabel" xml:space="preserve">
-    <value>Trvání prstencového nebo úplného zatmění: {0}</value>
+    <value>Trvání prstencového nebo úplného zatmění</value>
   </data>
   <data name="AquariusLabel" xml:space="preserve">
     <value>Vodnář</value>
@@ -201,23 +201,17 @@
   <data name="ThemeLabel" xml:space="preserve">
     <value>Motiv</value>
   </data>
-  <data name="DateLabel" xml:space="preserve">
-    <value>Datum: {0:dd MMMM yyyy}</value>
-  </data>
   <data name="DateWithTimeLabel" xml:space="preserve">
     <value>Datum: {0:dd MMMM yyyy hh:mm:ss}</value>
   </data>
   <data name="DayDurationLabel" xml:space="preserve">
-    <value>Délka dne: {0}</value>
+    <value>Délka dne</value>
   </data>
   <data name="DeleteLabel" xml:space="preserve">
     <value>Smazat</value>
   </data>
   <data name="DigraphLabel" xml:space="preserve">
-    <value>Digraf (identifikátor čtverce MGRS 100 000 m): {0}</value>
-  </data>
-  <data name="DistanceFormattedLabel" xml:space="preserve">
-    <value>Vzdálenost: {0:0.##} {1}</value>
+    <value>Digraf (identifikátor čtverce MGRS 100 000 m)</value>
   </data>
   <data name="SpeedAndDistanceLabel" xml:space="preserve">
     <value>Rychlost a vzdálenost</value>
@@ -250,7 +244,7 @@
     <value>Lovecký úplněk</value>
   </data>
   <data name="InverseFlatteningLabel" xml:space="preserve">
-    <value>Inverzní zploštění: {0}</value>
+    <value>Inverzní zploštění</value>
   </data>
   <data name="KilometersAbbreviationLabel" xml:space="preserve">
     <value>km</value>
@@ -263,9 +257,6 @@
   </data>
   <data name="LatitudeLabel" xml:space="preserve">
     <value>Zeměpisná šířka</value>
-  </data>
-  <data name="LatitudeStringFormatLabel" xml:space="preserve">
-    <value>Zeměpisná šířka: {0:0.#####}</value>
   </data>
   <data name="LatLabel" xml:space="preserve">
     <value>Šíř.:</value>
@@ -318,11 +309,8 @@
   <data name="LongitudeLabel" xml:space="preserve">
     <value>Zeměpisná délka</value>
   </data>
-  <data name="LongitudeStringFormatLabel" xml:space="preserve">
-    <value>Zeměpisná délka: {0:0.#####}</value>
-  </data>
   <data name="MaximumSolarEclispseTimeLabel" xml:space="preserve">
-    <value>Maximum zatmění: {0}</value>
+    <value>Maximum zatmění</value>
   </data>
   <data name="MetersAbbreviationLabel" xml:space="preserve">
     <value>m</value>
@@ -331,25 +319,25 @@
     <value>Metry</value>
   </data>
   <data name="MGRSEastingLabel" xml:space="preserve">
-    <value>Východní souřadnice MGRS: {0}</value>
+    <value>Východní souřadnice MGRS</value>
   </data>
   <data name="MGRSLabel" xml:space="preserve">
     <value>MGRS</value>
   </data>
   <data name="MGRSLatZoneLabel" xml:space="preserve">
-    <value>Označení zóny šířkového pásma MGRS: {0}</value>
+    <value>Označení zóny šířkového pásma MGRS</value>
   </data>
   <data name="MGRSLonZoneLabel" xml:space="preserve">
-    <value>Označení zóny délkového pásma MGRS: {0}</value>
+    <value>Označení zóny délkového pásma MGRS</value>
   </data>
   <data name="MGRSNorthingLabel" xml:space="preserve">
-    <value>Severní souřadnice MGRS: {0}</value>
+    <value>Severní souřadnice MGRS</value>
   </data>
   <data name="MGRSTypeLabel" xml:space="preserve">
-    <value>Typ MGRS: {0}</value>
+    <value>Typ MGRS</value>
   </data>
   <data name="MidLunarEclipseTimeLabel" xml:space="preserve">
-    <value>Střed zatmění: {0}</value>
+    <value>Střed zatmění</value>
   </data>
   <data name="MilesAbbreviationLabel" xml:space="preserve">
     <value>mi</value>
@@ -364,7 +352,7 @@
     <value>Minulá zatmění ({0})</value>
   </data>
   <data name="MoonInZodiacSignLabel" xml:space="preserve">
-    <value>Měsíc ve znamení: {0}</value>
+    <value>Měsíc ve znamení</value>
   </data>
   <data name="MoonLabel" xml:space="preserve">
     <value>Měsíc</value>
@@ -373,16 +361,16 @@
     <value>Název úplňku: </value>
   </data>
   <data name="MoonPhaseLabel" xml:space="preserve">
-    <value>Fáze Měsíce: </value>
+    <value>Fáze Měsíce</value>
   </data>
   <data name="MoonRiseDurationLabel" xml:space="preserve">
-    <value>Délka svitu Měsíce: {0}</value>
+    <value>Délka svitu Měsíce</value>
   </data>
   <data name="MoonRiseLabel" xml:space="preserve">
-    <value>Východ Měsíce: {0}</value>
+    <value>Východ Měsíce</value>
   </data>
   <data name="MoonSetLabel" xml:space="preserve">
-    <value>Západ Měsíce: {0}</value>
+    <value>Západ Měsíce</value>
   </data>
   <data name="NauticalMilesAbbreviationLabel" xml:space="preserve">
     <value>nmi</value>
@@ -403,25 +391,25 @@
     <value>Částečné</value>
   </data>
   <data name="PartialLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Začátek částečného zatmění: {0}</value>
+    <value>Začátek částečného zatmění</value>
   </data>
   <data name="PartialLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Konec částečného zatmění: {0}</value>
+    <value>Konec částečného zatmění</value>
   </data>
   <data name="PartialSolarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Začátek částečného zatmění: {0}</value>
+    <value>Začátek částečného zatmění</value>
   </data>
   <data name="PartialSolarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Konec částečného zatmění: {0}</value>
+    <value>Konec částečného zatmění</value>
   </data>
   <data name="PenumbralEclipseLabel" xml:space="preserve">
     <value>Polostínové</value>
   </data>
   <data name="PenumbralLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Začátek polostínového zatmění: {0}</value>
+    <value>Začátek polostínového zatmění</value>
   </data>
   <data name="PenumbralLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Konec polostínového zatmění: {0}</value>
+    <value>Konec polostínového zatmění</value>
   </data>
   <data name="PermissionRequiredDialogMessage" xml:space="preserve">
     <value>Přístup k poloze umožní aplikaci zobrazit údaje pro místo, kde právě jste. I bez něj si můžete místo vybrat ručně.</value>
@@ -493,10 +481,10 @@
     <value>Slunce</value>
   </data>
   <data name="SunRiseLabel" xml:space="preserve">
-    <value>Východ Slunce: {0}</value>
+    <value>Východ Slunce</value>
   </data>
   <data name="SunSetLabel" xml:space="preserve">
-    <value>Západ Slunce: {0}</value>
+    <value>Západ Slunce</value>
   </data>
   <data name="TaurusLabel" xml:space="preserve">
     <value>Býk</value>
@@ -511,16 +499,13 @@
     <value>Úplné</value>
   </data>
   <data name="TotalLunarEclipseBeginTimeLabel" xml:space="preserve">
-    <value>Začátek úplného zatmění: {0}</value>
+    <value>Začátek úplného zatmění</value>
   </data>
   <data name="TotalLunarEclipseEndTimeLabel" xml:space="preserve">
-    <value>Konec úplného zatmění: {0}</value>
+    <value>Konec úplného zatmění</value>
   </data>
   <data name="TwoValuesSeparatedByComa" xml:space="preserve">
     <value>{}{0}, {1}</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Typ: {0}</value>
   </data>
   <data name="UnknownLocationLabel" xml:space="preserve">
     <value>Neznámé místo</value>
@@ -532,22 +517,22 @@
     <value>Posun od UTC</value>
   </data>
   <data name="UTMEastingLabel" xml:space="preserve">
-    <value>Východní souřadnice UTM: {0}</value>
+    <value>Východní souřadnice UTM</value>
   </data>
   <data name="UTMLabel" xml:space="preserve">
     <value>UTM</value>
   </data>
   <data name="UTMLatZoneLabel" xml:space="preserve">
-    <value>Označení zóny šířkového pásma UTM: {0}</value>
+    <value>Označení zóny šířkového pásma UTM</value>
   </data>
   <data name="UTMLonZoneLabel" xml:space="preserve">
-    <value>Označení zóny délkového pásma UTM: {0}</value>
+    <value>Označení zóny délkového pásma UTM</value>
   </data>
   <data name="UTMNorthingLabel" xml:space="preserve">
-    <value>Severní souřadnice UTM: {0}</value>
+    <value>Severní souřadnice UTM</value>
   </data>
   <data name="UTMTypeLabel" xml:space="preserve">
-    <value>Typ UTM: {0}</value>
+    <value>Typ UTM</value>
   </data>
   <data name="VirgoLabel" xml:space="preserve">
     <value>Panna</value>
@@ -574,7 +559,7 @@
     <value>Červí úplněk</value>
   </data>
   <data name="ZodiacSignLabel" xml:space="preserve">
-    <value>Znamení: {0}</value>
+    <value>Znamení</value>
   </data>
   <data name="Point1Label" xml:space="preserve">
     <value>Bod 1</value>
@@ -850,13 +835,13 @@
     <value>V tomto období odsud není vidět žádné zatmění.</value>
   </data>
   <data name="SolarEclipseMagnitudeLabel" xml:space="preserve">
-    <value>Velikost: {0}</value>
+    <value>Velikost</value>
   </data>
   <data name="UmbralMagnitudeLabel" xml:space="preserve">
-    <value>Velikost v plném stínu: {0}</value>
+    <value>Velikost v plném stínu</value>
   </data>
   <data name="PenumbralMagnitudeLabel" xml:space="preserve">
-    <value>Velikost v polostínu: {0}</value>
+    <value>Velikost v polostínu</value>
   </data>
   <data name="StartTrackingLabel" xml:space="preserve">
     <value>Spustit</value>
@@ -1004,5 +989,14 @@
   </data>
   <data name="NowLabel" xml:space="preserve">
     <value>Nyní</value>
+  </data>
+  <data name="DeleteLocationDialogTitle" xml:space="preserve">
+    <value>Smazat místo</value>
+  </data>
+  <data name="DeleteLocationDialogMessage" xml:space="preserve">
+    <value>Odebrat {0} z uložených míst?</value>
+  </data>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Zrušit</value>
   </data>
 </root>

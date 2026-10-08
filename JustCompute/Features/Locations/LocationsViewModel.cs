@@ -19,6 +19,7 @@ using JustCompute.Resources.Strings;
 using Microsoft.Extensions.Localization;
 using Microsoft.Maui.ApplicationModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using Location = Compute.Core.Domain.Entities.Models.Location;
 using JustCompute.Shared.Helpers;
 
@@ -278,16 +279,17 @@ namespace JustCompute.Features.Locations
                 {
                     _permissionDialogOpen = true;
 
+                    // Settings is the way forward, so it is the dialog's filled button and "Close"
+                    // the outlined way out. "Close" used to quit the app, from when a location fix
+                    // was mandatory; it no longer is — there is always a placeholder — so
+                    // dismissing is enough.
                     var result = await _dialogService.DisplayAlert(
                         _localizer.GetString("PermissionRequiredDialogTitle"),
                         _localizer.GetString("PermissionRequiredDialogMessage"),
-                        _localizer.GetString("Close"),
-                        _localizer.GetString("GoToSettings")
-                        );
+                        _localizer.GetString("GoToSettings"),
+                        _localizer.GetString("Close"));
 
-                    // "Close" used to quit the app, from when a location fix was mandatory.
-                    // It no longer is — there is always a placeholder — so dismissing is enough.
-                    if (result == DialogButton.Negative)
+                    if (result == DialogButton.Positive)
                     {
                         AppInfo.Current.ShowSettingsUI();
                     }
@@ -404,6 +406,16 @@ namespace JustCompute.Features.Locations
                     _localizer.GetString("CannotDeleteCurrentLocationToastMessage"));
                 return;
             }
+
+            // Asked first: a saved place is the user's own work, there is no undo, and the delete
+            // chip sits a thumb's width from edit.
+            var answer = await _dialogService.DisplayAlert(
+                _localizer.GetString("DeleteLocationDialogTitle"),
+                string.Format(CultureInfo.CurrentCulture, _localizer.GetString("DeleteLocationDialogMessage"), location.Name),
+                _localizer.GetString("DeleteLabel"),
+                _localizer.GetString("CancelLabel"));
+
+            if (answer != DialogButton.Positive) return;
 
             await _locationService.DeleteLocation(location);
             Locations.Remove(location);
