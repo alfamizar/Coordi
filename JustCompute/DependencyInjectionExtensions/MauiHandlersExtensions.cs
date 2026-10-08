@@ -9,6 +9,7 @@ namespace JustCompute.DependencyInjectionExtensions
             builder.ConfigureMauiHandlers(collection =>
             {
                 collection.AddHandler<SearchBar, SearchBarExHandler>();
+                collection.AddHandler<Shell, Handlers.IndicatedTabs.IndicatedTabsShellRenderer>();
             });
 
             AllowNegativeNumbers();
