@@ -1,0 +1,2 @@
+Wybranie miasta, zanim ekran wyszukiwania się otworzy, nie zamyka już aplikacji.
+Miasto wybrane w wyszukiwaniu Linijki jest zawsze dodawane do trasy.

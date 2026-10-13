@@ -1,0 +1,2 @@
+Výběr města ve chvíli, kdy se obrazovka hledání teprve otevírá, už aplikaci neukončí.
+Město vybrané při hledání v Pravítku se vždy přidá do trasy.

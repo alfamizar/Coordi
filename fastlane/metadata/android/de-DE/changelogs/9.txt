@@ -1,0 +1,2 @@
+Wird eine Stadt gewählt, während sich die Suche noch öffnet, schließt sich die App nicht mehr.
+Eine in der Suche des Lineals gewählte Stadt wird immer zur Route hinzugefügt.

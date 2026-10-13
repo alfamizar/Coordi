@@ -1,0 +1,2 @@
+Scegliere una città mentre la ricerca si sta ancora aprendo non chiude più l'app.
+Una città scelta nella ricerca del Righello viene sempre aggiunta al percorso.

@@ -1,0 +1,2 @@
+Escolher uma cidade enquanto a busca ainda está abrindo não fecha mais o app.
+Uma cidade escolhida na busca da Régua é sempre adicionada à rota.

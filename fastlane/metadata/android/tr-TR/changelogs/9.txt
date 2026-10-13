@@ -1,0 +1,2 @@
+Arama ekranı henüz açılırken şehir seçmek artık uygulamayı kapatmıyor.
+Cetvel'deki aramada seçilen şehir her zaman rotaya ekleniyor.

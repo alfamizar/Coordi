@@ -6,6 +6,7 @@
              xmlns:localization="clr-namespace:JustCompute.Shared.Helpers"
              xmlns:ViewModels="clr-namespace:JustCompute.Features.Locations"
              xmlns:models="clr-namespace:Compute.Core.Domain.Entities.Models;assembly=Compute.Core"
+             xmlns:design="clr-namespace:JustCompute.Shared.Design"
              x:DataType="ViewModels:LocationsViewModel"
              Shell.PresentationMode="Animated">
 
@@ -106,16 +107,27 @@
                                Style="{StaticResource TitleLabel}" />
                         <BoxView Style="{StaticResource DividerStyle}" />
 
-                        <CollectionView ItemsSource="{Binding Locations}"
-                                        SelectionMode="Single"
-                                        SelectedItem="{Binding SelectedLocation, Mode=TwoWay}">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Vertical"
-                                                   ItemSpacing="{StaticResource SpacingMicro}" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
+                        <!-- A stack, not a CollectionView: inside this page's ScrollView, iOS
+                             gave a CollectionView a window about one row high and scrolled the
+                             rest inside the card. The list is a handful of places, so laying out
+                             every row costs nothing. -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding Locations}"
+                                             Spacing="{StaticResource SpacingMicro}">
+                            <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:Location">
                                     <Border Style="{StaticResource ListRow}">
+                                        <design:ListRow.IsSelected>
+                                            <MultiBinding Converter="{StaticResource IsSameItemConverter}">
+                                                <Binding Path="." />
+                                                <Binding Source="{RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}"
+                                                         Path="SelectedLocation"
+                                                         x:DataType="ViewModels:LocationsViewModel" />
+                                            </MultiBinding>
+                                        </design:ListRow.IsSelected>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ViewModels:LocationsViewModel}}, Path=SelectLocationCommand, x:DataType=ViewModels:LocationsViewModel}"
+                                                                  CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
 
                                         <Grid ColumnDefinitions="*,Auto,Auto"
                                               ColumnSpacing="0">
@@ -162,8 +174,8 @@
 
                                     </Border>
                                 </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
 
                     </StackLayout>
 

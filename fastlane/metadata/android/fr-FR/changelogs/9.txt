@@ -1,0 +1,2 @@
+Choisir une ville pendant l'ouverture de la recherche ne ferme plus l'application.
+Une ville choisie dans la recherche de la Règle est toujours ajoutée à l'itinéraire.
