@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:design="clr-namespace:JustCompute.Shared.Design">
 
     <!-- Design System: Spacing & Dimension Scale -->
     <x:Double x:Key="SpacingMicro">4</x:Double>
@@ -429,8 +430,8 @@
 
     <!-- A selectable row inside a card. Its box starts where the card's text does, so a selected
          row's outline lines up with the title above it, and its own text sits 8 inside the box.
-         Cornered like a control, and drawing its own selected look - left to the platform,
-         CollectionView paints a hard-edged full-bleed fill. -->
+         Cornered like a control, and drawing its own selected look for the row the page marks
+         with design:ListRow.IsSelected. -->
     <Style x:Key="ListRow"
            TargetType="Border">
         <Setter Property="Padding"
@@ -446,28 +447,16 @@
                 <RoundRectangle CornerRadius="{StaticResource ControlCornerRadius}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor"
-                                    Value="Transparent" />
-                            <Setter Property="Stroke"
-                                    Value="Transparent" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Selected">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor"
-                                    Value="{DynamicResource ThemeMutedSurface}" />
-                            <Setter Property="Stroke"
-                                    Value="{DynamicResource ThemePrimary}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="Border"
+                     Property="design:ListRow.IsSelected"
+                     Value="True">
+                <Setter Property="BackgroundColor"
+                        Value="{DynamicResource ThemeMutedSurface}" />
+                <Setter Property="Stroke"
+                        Value="{DynamicResource ThemePrimary}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- A table of labels and their values inside a card. Every such table spaces its columns

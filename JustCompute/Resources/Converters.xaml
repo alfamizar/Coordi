@@ -11,6 +11,7 @@
 
     <converters:IsIntEqualZeroConverter x:Key="IsIntEqualZeroConverter" />
     <converters:IsIntNotEqualZeroConverter x:Key="IsIntNotEqualZeroConverter" />
+    <converters:IsSameItemConverter x:Key="IsSameItemConverter" />
     <converters:EmptyStringToBoolConverter x:Key="EmptyStringToBoolConverter" />
     <sunEclipses:SunEclipseTypeToNameConverter x:Key="SunEclipseTypeToNameConverter" />
     <moonEclipses:MoonEclipseTypeToNameConverter x:Key="MoonEclipseTypeToNameConverter" />

@@ -42,9 +42,8 @@ namespace JustCompute.Features.Locations
         private bool _initializationPending;
         private bool _pendingUserInitiated;
 
-        // Suppresses the SelectedLocation write-back while we restore the selection ourselves.
-        // Mutating Locations makes the CarouselView snap CurrentItem to index 0, which would
-        // otherwise echo through the two-way binding and clobber the user's selection.
+        // Set while the selection is restored from the service, so OnSelectedLocationChanged does
+        // not hand it straight back as if the user had just chosen it.
         private bool _suppressSelectionWriteBack;
 
         [ObservableProperty]
@@ -325,10 +324,9 @@ namespace JustCompute.Features.Locations
         {
             if (_suppressSelectionWriteBack) return;
 
-            // A CollectionView clears SelectedItem whenever the selected row leaves the
-            // collection — while the list is rebuilt, for instance. That is not the user
-            // choosing "nowhere", and writing it back erased the location they had picked,
-            // along with the preference that remembers it across launches.
+            // No row selects "nowhere". Null comes from the list itself, emptied or rebuilt, and
+            // writing it back erased the location the user had picked, along with the preference
+            // that remembers it across launches.
             if (value is null) return;
 
             if (ReferenceEquals(value, _selection.SelectedLocation)) return;
@@ -378,6 +376,16 @@ namespace JustCompute.Features.Locations
         {
             var searchLocationContext = SearchLocationContext.GoAhead;
             await _navigationService.NavigateToAsync<SearchByCityViewModel>(searchLocationContext);
+        }
+
+        /// <summary>A tap on a row makes it the place every screen computes for.</summary>
+        [RelayCommand]
+        private void SelectLocation(Location? location)
+        {
+            if (location is not null)
+            {
+                SelectedLocation = location;
+            }
         }
 
         /// <summary>
