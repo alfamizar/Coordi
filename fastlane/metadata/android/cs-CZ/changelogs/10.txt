@@ -1,0 +1,2 @@
+Karta Slunce ukazuje den na obloze, která přechází od noci přes svítání a den k soumraku.
+Karta Měsíc má stejný graf: dráhu Měsíce během dne v dnešní fázi.
