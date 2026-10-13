@@ -125,7 +125,9 @@ for loc in "${LOCALES[@]}"; do
         --es coordi_lat "$SEED_LAT" --es coordi_lon "$SEED_LON" --es coordi_name "$SEED_NAME" >/dev/null
       for i in $(seq 1 30); do
         foc="$(adbx shell dumpsys window 2>/dev/null | grep -m1 mCurrentFocus || true)"
-        echo "$foc" | grep -q justcompute && break
+        # The package, not "justcompute": that was the old package name, and since the rename it
+        # never matched, so every shot sat out the full thirty seconds before its grab.
+        echo "$foc" | grep -q "$PKG" && break
         sleep 1
       done
       sleep "$RENDER_WAIT"   # let the target screen render its data
