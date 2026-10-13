@@ -226,7 +226,10 @@
 
                         </Border>
 
-                        <Border>
+                        <!-- ClassId names the card for the screenshot harness, which scrolls a tablet's
+                             capture to it (coordi_scroll_to). It has no platform meaning, unlike
+                             AutomationId, which a screen reader would announce. -->
+                        <Border ClassId="sun">
 
                             <StackLayout Padding="0"
                                          Spacing="{StaticResource RowGap}">
