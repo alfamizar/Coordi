@@ -9,7 +9,7 @@ using Location = Compute.Core.Domain.Entities.Models.Location;
 
 namespace JustCompute.Shared.ViewModels
 {
-    public abstract partial class BaseViewModel : ObservableObject
+    public abstract partial class BaseViewModel : ObservableObject, IQueryAttributable
     {
         protected readonly INavigationService _navigationService;
 
@@ -154,6 +154,19 @@ namespace JustCompute.Shared.ViewModels
         /// already showing — so Back did nothing at all on Today and could never leave the app.
         /// </summary>
         public virtual bool OnBackButtonPressed() => _navigationService.NavigateToDefaultShellItem();
+
+        /// <summary>
+        /// Shell's way in for a pushed page's parameter: it calls this on the new page's view
+        /// model as it creates the page, before showing it. A screen that takes a parameter says
+        /// so with <see cref="IQueryParameter"/>.
+        /// </summary>
+        void IQueryAttributable.ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (this is IQueryParameter receiver && query.TryGetValue(IQueryParameter.Key, out var parameter))
+            {
+                receiver.ApplyQueryParameter(parameter);
+            }
+        }
 
         public virtual void OnNavigatedFrom() { }
 
