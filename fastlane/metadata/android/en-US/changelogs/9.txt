@@ -1,0 +1,2 @@
+Picking a city while the search screen is still opening no longer closes the app.
+A city picked in Ruler's search is always added to the route.

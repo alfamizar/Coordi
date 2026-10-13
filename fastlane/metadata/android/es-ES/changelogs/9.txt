@@ -1,0 +1,2 @@
+Elegir una ciudad mientras la búsqueda aún se abre ya no cierra la app.
+Una ciudad elegida en la búsqueda del Distanciómetro siempre se añade a la ruta.
