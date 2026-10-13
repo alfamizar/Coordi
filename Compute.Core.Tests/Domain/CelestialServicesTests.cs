@@ -136,5 +136,46 @@ namespace Compute.Core.Tests.Domain
             Assert.Null(snapshot.Mgrs);
             Assert.Null(snapshot.SunRise); // midnight sun
         }
+
+        /// <summary>
+        /// What the day charts colour their sky from: noon falls midway between rise and set, near
+        /// 12:00 on Greenwich's meridian, and the Sun stands at its most northerly on the June
+        /// solstice (20 June 2024, 20:51 UT).
+        /// </summary>
+        [Fact]
+        public void CelestialSnapshot_PlacesSolarNoonAndTheSunsDeclination()
+        {
+            var snapshot = CelestialSnapshot.For(LondonLat, LondonLon, new DateTime(2024, 6, 20), 0.0);
+
+            var noon = snapshot.SolarNoon!.Value;
+            Assert.InRange(noon, new DateTime(2024, 6, 20, 11, 55, 0), new DateTime(2024, 6, 20, 12, 8, 0));
+            var midway = snapshot.SunRise!.Value + (snapshot.SunSet!.Value - snapshot.SunRise.Value) / 2;
+            Assert.InRange((noon - midway).Duration(), TimeSpan.Zero, TimeSpan.FromMinutes(2));
+            Assert.InRange(snapshot.SunDeclination, 23.3, 23.45);
+        }
+
+        /// <summary>
+        /// A day with neither sunrise nor sunset is one of two opposite things, and the chart has to
+        /// know which to draw a Sun that never sets or a sky with no Sun in it.
+        /// </summary>
+        [Fact]
+        public void CelestialSnapshot_TellsMidnightSunFromPolarNight()
+        {
+            var june = CelestialSnapshot.For(88.0, 0.0, new DateTime(2024, 6, 21), 0.0);
+            var december = CelestialSnapshot.For(88.0, 0.0, new DateTime(2024, 12, 21), 0.0);
+
+            Assert.True(june.SunAlwaysUp);
+            Assert.False(december.SunAlwaysUp);
+            Assert.Null(december.SunRise);
+            Assert.Null(december.SunSet);
+        }
+
+        /// <summary>First quarter fell on 11 September 2024 at 06:06 UT and last quarter on 24 September at 18:50.</summary>
+        [Fact]
+        public void CelestialSnapshot_KnowsWhetherTheMoonIsWaxing()
+        {
+            Assert.True(CelestialSnapshot.For(LondonLat, LondonLon, new DateTime(2024, 9, 11), 0.0).MoonWaxing);
+            Assert.False(CelestialSnapshot.For(LondonLat, LondonLon, new DateTime(2024, 9, 25), 0.0).MoonWaxing);
+        }
     }
 }

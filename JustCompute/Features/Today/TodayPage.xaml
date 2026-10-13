@@ -236,8 +236,7 @@
                                 <BoxView Style="{StaticResource DividerStyle}" />
 
                                 <Border Padding="0">
-                                    <extendedcontrols:SunPathView RiseTime="{Binding Snapshot.SunRise}"
-                                                                  SetTime="{Binding Snapshot.SunSet}"
+                                    <extendedcontrols:SunPathView Snapshot="{Binding Snapshot}"
                                                                   CurrentTime="{Binding CurrentTime}" />
                                 </Border>
 
@@ -304,6 +303,11 @@
                                 <Label Text="{localization:Localize MoonLabel}"
                                        Style="{StaticResource TitleLabel}" />
                                 <BoxView Style="{StaticResource DividerStyle}" />
+
+                                <Border Padding="0">
+                                    <extendedcontrols:MoonPathView Snapshot="{Binding Snapshot}"
+                                                                   CurrentTime="{Binding CurrentTime}" />
+                                </Border>
 
                                 <!-- In the Sun card's order: rise, set and the time between, then the
                                      Moon's own state. -->

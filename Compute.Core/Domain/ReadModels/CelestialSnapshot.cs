@@ -35,6 +35,25 @@ namespace Compute.Core.Domain.ReadModels
         public DateTime? SunSet { get; init; }
 
         /// <summary>
+        /// Solar transit in local time. Not 12:00: the equation of time and the distance to the
+        /// time zone's meridian move it by up to an hour either way.
+        /// </summary>
+        public DateTime? SolarNoon { get; init; }
+
+        /// <summary>
+        /// The Sun's declination at local noon, in degrees. With <see cref="Latitude"/> and
+        /// <see cref="SolarNoon"/> it gives the Sun's altitude at any hour of the day, which is
+        /// what the day charts colour their sky by.
+        /// </summary>
+        public double SunDeclination { get; init; }
+
+        /// <summary>
+        /// True under the midnight sun. With no rise and no set, this is what tells a Sun that
+        /// never goes down from one that never comes up.
+        /// </summary>
+        public bool SunAlwaysUp { get; init; }
+
+        /// <summary>
         /// The twilight boundaries of this day in local time, in the order they occur — first
         /// light through last light. Only the stages that actually happen are present.
         /// </summary>
@@ -46,6 +65,12 @@ namespace Compute.Core.Domain.ReadModels
         /// <summary>Moonset in local time; null when it does not occur that day.</summary>
         public DateTime? MoonSet { get; init; }
 
+        /// <summary>
+        /// True when the Moon stays above the horizon all day; with no rise and no set, the
+        /// other possibility is that it never comes up.
+        /// </summary>
+        public bool MoonAlwaysUp { get; init; }
+
         /// <summary>Earth–Moon centre distance in kilometres.</summary>
         public double MoonDistanceKm { get; init; }
 
@@ -54,6 +79,12 @@ namespace Compute.Core.Domain.ReadModels
 
         /// <summary>The Moon's visible phase.</summary>
         public MoonPhase MoonPhase { get; init; }
+
+        /// <summary>
+        /// True while the Moon is waxing at local noon, which decides the side its lit part is
+        /// on: the right as seen from the north, the left from the south.
+        /// </summary>
+        public bool MoonWaxing { get; init; }
 
         /// <summary>The Sun's tropical zodiac sign.</summary>
         public AstroZodiacSign ZodiacSign { get; init; }
@@ -92,12 +123,17 @@ namespace Compute.Core.Domain.ReadModels
                 OffsetHours = offsetHours,
                 SunRise = CelestialTimeUtils.ToLocalTime(day, sun.SunriseUtcMinutes, offsetHours),
                 SunSet = CelestialTimeUtils.ToLocalTime(day, sun.SunsetUtcMinutes, offsetHours),
+                SolarNoon = CelestialTimeUtils.ToLocalTime(day, sun.SolarNoonUtcMinutes, offsetHours),
+                SunDeclination = Astro.Sun.PositionAt(jdNoon).Declination,
+                SunAlwaysUp = sun.Type == DayType.MidnightSun,
                 TwilightStages = BuildTwilightStages(day, twilight, offsetHours),
                 MoonRise = CelestialTimeUtils.ToLocalTime(day, moonEvents.MoonriseUtcMinutes, offsetHours),
                 MoonSet = CelestialTimeUtils.ToLocalTime(day, moonEvents.MoonsetUtcMinutes, offsetHours),
+                MoonAlwaysUp = moonEvents.Type == MoonDayType.AlwaysUp,
                 MoonDistanceKm = moonPosition.DistanceKm,
                 MoonIllumination = Astro.Moon.IlluminatedFraction(jdNoon),
                 MoonPhase = (MoonPhase)MoonPhaseNaming.At(jdNoon),
+                MoonWaxing = Astro.Moon.IsWaxing(jdNoon),
                 ZodiacSign = CelestialTimeUtils.ToAstroZodiacSign(Zodiac.OfSun(jdNoon)),
                 MoonSign = CelestialTimeUtils.ToAstroZodiacSign(Zodiac.OfMoon(jdNoon)),
                 Utm = TryUtm(latitude, longitude),
