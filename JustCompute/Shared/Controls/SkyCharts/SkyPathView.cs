@@ -6,10 +6,10 @@ namespace JustCompute.Shared.Controls
     /// A body's day on a midnight-to-midnight axis, over a sky coloured by where the Sun is at each
     /// hour: its arc above the horizon, its path below it, and where it is now.
     ///
-    /// Two layers. The sky is a couple of hundred gradient strips, so it is a canvas of its own, drawn
+    /// Two layers. The sky is some seventy gradient bands, so it is a canvas of its own, drawn
     /// only when the day, the size or the theme changes. The arc and the marker are on a second,
     /// transparent canvas above it, which is the one the clock and the animations redraw: a frame
-    /// of the pulse costs a dozen shapes, not a hundred gradients.
+    /// of the pulse costs a dozen shapes, not seventy gradients.
     ///
     /// On appearing, the arc draws itself in from rise to set and the marker breathes twice, then
     /// both are still. The pulse used to run for ever in Penombre and kept a CPU core busy to move

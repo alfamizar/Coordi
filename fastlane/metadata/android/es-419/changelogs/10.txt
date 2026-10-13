@@ -1,0 +1,2 @@
+La tarjeta Sol muestra el día sobre un cielo que pasa de la noche al amanecer, el día y el atardecer.
+La tarjeta Luna suma el mismo gráfico: el recorrido de la Luna durante el día, en la fase de esta noche.

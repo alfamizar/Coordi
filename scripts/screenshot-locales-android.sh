@@ -61,6 +61,24 @@ SEED_TRIP="${COORDI_SEED_TRIP:-5120,4180,42}"
 # invisible at that hour.
 SEED_SKY_HOUR="${COORDI_SEED_SKY_HOUR:-23}"
 
+# Screens to scroll before the grab, as "label:classId" pairs, e.g. COORDI_SCROLL="today:sun".
+# A tablet in landscape shows only Today's first cards, and the Sun's chart starts below them.
+SCROLL="${COORDI_SCROLL:-}"
+scroll_for() {
+  local pair
+  for pair in $SCROLL; do
+    [ "${pair%%:*}" = "$1" ] && { echo "${pair#*:}"; return 0; }
+  done
+  return 0   # no scroll for this screen; not a failure, which set -e would exit on
+}
+
+# Whether the app's own window has focus. Matched on "package/", the window of one of its
+# activities: an "Application Not Responding: <package>" dialog names the package too, and was
+# taken for the app and captured.
+app_has_focus() {
+  adbx shell dumpsys window 2>/dev/null | grep -m1 mCurrentFocus | grep -q "$PKG/"
+}
+
 # culture (our resx) | BCP-47 tag for set-app-locales
 LOCALES=(
   "en|en-US" "ru-RU|ru-RU" "uk|uk-UA" "pl|pl-PL" "fr|fr-FR" "it|it-IT"
@@ -107,6 +125,7 @@ adbx shell pm grant "$PKG" android.permission.ACCESS_COARSE_LOCATION 2>/dev/null
 COMP="$(adbx shell cmd package resolve-activity --brief -c android.intent.category.LAUNCHER "$PKG" | tr -d '\r' | tail -1)"
 echo "Launcher: $COMP   seed: $SEED_NAME ($SEED_LAT,$SEED_LON)   -> $OUT_DIR"
 
+FAILED=0
 for loc in "${LOCALES[@]}"; do
   IFS='|' read -r culture bcp <<< "$loc"
   echo "== $culture ($bcp) =="
@@ -114,26 +133,52 @@ for loc in "${LOCALES[@]}"; do
   for theme in "${THEMES[@]}"; do
     for scr in "${SCREENS[@]}"; do
       IFS='|' read -r route label <<< "$scr"
-      adbx shell am force-stop "$PKG"
-      adbx shell am start -n "$COMP" \
-        --es coordi_route "$route" --es coordi_theme "$theme" \
-        ${ONLY_VISIBLE:+--es coordi_only_visible "$ONLY_VISIBLE"} \
-        ${SEED_SAVED:+--es coordi_saved "'$SEED_SAVED'"} \
-        ${SEED_STOPS:+--es coordi_stops "'$SEED_STOPS'"} \
-        ${SEED_TRIP:+--es coordi_trip "$SEED_TRIP"} \
-        ${SEED_SKY_HOUR:+--es coordi_sky_hour "$SEED_SKY_HOUR"} \
-        --es coordi_lat "$SEED_LAT" --es coordi_lon "$SEED_LON" --es coordi_name "$SEED_NAME" >/dev/null
-      for i in $(seq 1 30); do
-        foc="$(adbx shell dumpsys window 2>/dev/null | grep -m1 mCurrentFocus || true)"
-        echo "$foc" | grep -q justcompute && break
-        sleep 1
+      scroll="$(scroll_for "$label")"
+      out="$OUT_DIR/$label.$culture.$theme.png"
+      # A cold start can stall long enough for Android to put up "isn't responding", and on a
+      # shared emulator another app can come forward. Either way the grab is not of this screen,
+      # so it is taken again, from a fresh start.
+      shot=""
+      for attempt in 1 2 3; do
+        adbx shell am force-stop "$PKG"
+        adbx logcat -c
+        adbx shell am start -n "$COMP" \
+          --es coordi_route "$route" --es coordi_theme "$theme" \
+          ${ONLY_VISIBLE:+--es coordi_only_visible "$ONLY_VISIBLE"} \
+          ${SEED_SAVED:+--es coordi_saved "'$SEED_SAVED'"} \
+          ${SEED_STOPS:+--es coordi_stops "'$SEED_STOPS'"} \
+          ${SEED_TRIP:+--es coordi_trip "$SEED_TRIP"} \
+          ${SEED_SKY_HOUR:+--es coordi_sky_hour "$SEED_SKY_HOUR"} \
+          ${scroll:+--es coordi_scroll_to "$scroll"} \
+          --es coordi_lat "$SEED_LAT" --es coordi_lon "$SEED_LON" --es coordi_name "$SEED_NAME" >/dev/null
+        # The harness logs a marker once the screen has navigated, loaded and scrolled. A fixed
+        # wait alone caught a third of one set on the loading spinner, when the machine was busy.
+        ready=""
+        for i in $(seq 1 60); do
+          adbx logcat -d -s DOTNET:I 2>/dev/null | grep -q COORDI_HARNESS_READY && { ready=1; break; }
+          sleep 1
+        done
+        [ -n "$ready" ] || { echo "   $label: the screen never reported ready (attempt $attempt), again"; continue; }
+        sleep "$RENDER_WAIT"   # what loads after the screen does: Today's forecast
+        app_has_focus || { echo "   $label: not the app on screen (attempt $attempt), again"; continue; }
+        adbx exec-out screencap -p > "$out"
+        app_has_focus && { shot=1; break; }
+        echo "   $label: focus lost during the grab (attempt $attempt), again"
       done
-      sleep "$RENDER_WAIT"   # let the target screen render its data
-      adbx exec-out screencap -p > "$OUT_DIR/$label.$culture.$theme.png"
-      echo "   $label.$culture.$theme.png"
+      if [ -n "$shot" ]; then
+        echo "   $label.$culture.$theme.png"
+      else
+        rm -f "$out"
+        echo "   FAILED $label.$culture.$theme.png" >&2
+        FAILED=$((FAILED + 1))
+      fi
     done
   done
 done
 
 adbx shell cmd locale set-app-locales "$PKG" --locales "" || true   # reset to system default
 echo "Done -> $OUT_DIR"
+if [ "$FAILED" -gt 0 ]; then
+  echo "$FAILED screenshot(s) could not be taken; see FAILED above" >&2
+  exit 1
+fi

@@ -44,18 +44,21 @@ namespace JustCompute.Shared.Controls
         private const double Rad = Math.PI / 180.0;
 
         /// <summary>
-        /// How wide each strip of the sky is, in points. A quarter of an hour each was tried first,
-        /// and dawn and dusk, where the sky changes fastest, came out as visible bars; at a point and
-        /// a half they are a smooth glow. The sky is its own layer, painted only when the day
-        /// changes, so the extra strips cost nothing while the chart animates.
+        /// Colour stops across the day in each band of the sky: one every ten minutes. The gradient
+        /// blends between them, so dawn and dusk, the fastest change on the chart, come out smooth.
         /// </summary>
-        private const float StripWidth = 1.5f;
+        private const int HourStops = 145;
 
         /// <summary>
-        /// Altitudes each strip takes a colour at, zenith to horizon. Close together near the bottom,
-        /// where the warm band of twilight lives and changes fastest.
+        /// Bands from the horizon to the zenith. Spaced as the height to the power 1.5, so they are a
+        /// quarter of a degree apart at the horizon, where the warm band of twilight changes fastest,
+        /// and under three overhead. Thirty-two bands spaced as the square left six degrees to the
+        /// top band, and the steps between them showed in a clear blue sky.
         /// </summary>
-        private static readonly double[] AltitudeStops = [90, 60, 35, 18, 8, 3, 0];
+        private const int SkyBands = 48;
+
+        /// <summary>Bands from the horizon's colour down into the ground's shadow.</summary>
+        private const int GroundBands = 24;
 
         /// <summary>A few fixed stars, as (x, y, radius): x across the clock, y down to the horizon.</summary>
         private static readonly (float X, float Y, float Radius)[] Stars =
@@ -91,38 +94,71 @@ namespace JustCompute.Shared.Controls
                 return;
             }
 
-            var columns = Math.Max(24, (int)Math.Ceiling(rect.Width / StripWidth));
-            var columnWidth = rect.Width / columns;
-            // The ground is the horizon's colour taken down into shadow, fully so thirty degrees
-            // below it on the sky's scale of ninety to the height above the horizon.
-            var groundDepth = (horizonY - rect.Top) / 3f;
-            var belowHeight = rect.Bottom - horizonY;
-            var groundEnd = belowHeight > 0 ? Math.Min(1f, (groundDepth + 1f) / (belowHeight + 1f)) : 1f;
-
-            for (var c = 0; c < columns; c++)
+            // Horizontal bands, each one gradient across the whole day. The first version painted a
+            // vertical gradient per column, a point and a half wide: some nine hundred gradients a
+            // chart, and over half a second of the UI thread on an emulator for each of Today's two
+            // charts, enough to help a cold start into "isn't responding". Bands need some seventy.
+            var sunAlt = new double[HourStops];
+            for (var i = 0; i < HourStops; i++)
             {
-                var sunAlt = solar.SunAltitudeDeg((c + 0.5) * 24.0 / columns);
-                var x = rect.Left + c * columnWidth;
-
-                var stops = new PaintGradientStop[AltitudeStops.Length];
-                for (var i = 0; i < AltitudeStops.Length; i++)
-                {
-                    stops[i] = new PaintGradientStop((float)(1.0 - AltitudeStops[i] / 90.0), SkyColour(AltitudeStops[i], sunAlt, palette));
-                }
-                // A pixel wider than the strip, so neighbours overlap instead of leaving a seam.
-                FillVertical(canvas, new RectF(x, rect.Top, columnWidth + 1f, horizonY - rect.Top), stops);
-
-                var horizon = stops[^1].Color;
-                var ground = Ground(horizon);
-                // From a pixel above the horizon: where the two halves of a strip met exactly, the
-                // edge between them was antialiased on its own and every strip left a dot there.
-                FillVertical(canvas, new RectF(x, horizonY - 1f, columnWidth + 1f, belowHeight + 1f),
-                [
-                    new PaintGradientStop(0f, horizon),
-                    new PaintGradientStop(groundEnd, ground),
-                    new PaintGradientStop(1f, ground),
-                ]);
+                sunAlt[i] = solar.SunAltitudeDeg(24.0 * i / (HourStops - 1));
             }
+
+            var skyHeight = horizonY - rect.Top;
+            for (var band = 0; band < SkyBands; band++)
+            {
+                // Altitude as the band's place to the power 1.5, so the bands crowd the horizon.
+                double Altitude(double k) => 90.0 * Math.Pow(k / SkyBands, 1.5);
+                var mid = Altitude(band + 0.5);
+                var bottom = horizonY - (float)(Altitude(band) / 90.0) * skyHeight;
+                var top = horizonY - (float)(Altitude(band + 1) / 90.0) * skyHeight;
+                // Half a point of overlap, so neighbouring bands leave no seam between them.
+                FillAcross(canvas, new RectF(rect.Left, top - 0.5f, rect.Width, bottom - top + 1f),
+                    i => SkyColour(mid, sunAlt[i], palette));
+            }
+
+            // The ground: the horizon's colour taken down into shadow, fully so a third of the sky's
+            // height below it, the sky's thirty degrees of its ninety.
+            var horizon = new Color[HourStops];
+            var ground = new Color[HourStops];
+            for (var i = 0; i < HourStops; i++)
+            {
+                horizon[i] = SkyColour(0, sunAlt[i], palette);
+                ground[i] = Ground(horizon[i]);
+            }
+
+            var groundDepth = skyHeight / 3f;
+            var bandHeight = groundDepth / GroundBands;
+            for (var band = 0; band < GroundBands; band++)
+            {
+                var t = (band + 0.5f) / GroundBands;
+                FillAcross(canvas, new RectF(rect.Left, horizonY + band * bandHeight - 0.5f, rect.Width, bandHeight + 1f),
+                    i => Mix(horizon[i], ground[i], t));
+            }
+            var below = horizonY + groundDepth;
+            FillAcross(canvas, new RectF(rect.Left, below - 0.5f, rect.Width, rect.Bottom - below + 0.5f), i => ground[i]);
+        }
+
+        /// <summary>One band of the sky: a gradient across the day, its colour at each stop from <paramref name="colourAt"/>.</summary>
+        private static void FillAcross(ICanvas canvas, RectF rect, Func<int, Color> colourAt)
+        {
+            if (rect.Width <= 0f || rect.Height <= 0f) return;
+
+            var stops = new PaintGradientStop[HourStops];
+            for (var i = 0; i < HourStops; i++)
+            {
+                stops[i] = new PaintGradientStop((float)i / (HourStops - 1), colourAt(i));
+            }
+
+            canvas.SaveState();
+            canvas.SetFillPaint(new LinearGradientPaint
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 0),
+                GradientStops = stops,
+            }, rect);
+            canvas.FillRectangle(rect);
+            canvas.RestoreState();
         }
 
         /// <summary>

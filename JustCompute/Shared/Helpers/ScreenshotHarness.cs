@@ -71,6 +71,13 @@ namespace JustCompute.Shared.Helpers
         /// </summary>
         public const string SkyHourEnv = "COORDI_SCREENSHOT_SKY_HOUR";
 
+        /// <summary>
+        /// The ClassId of an element the page should be scrolled to, so it sits at the top of the
+        /// capture. A tablet in landscape shows only the first few cards of Today, and the Sun's
+        /// chart, the screen's best picture, starts just below the fold.
+        /// </summary>
+        public const string ScrollToEnv = "COORDI_SCREENSHOT_SCROLL_TO";
+
         // Populated by the Android MainActivity from intent extras.
         public static string? RouteFromPlatform;
         public static string? LatFromPlatform;
@@ -82,6 +89,7 @@ namespace JustCompute.Shared.Helpers
         public static string? RouteStopsFromPlatform;
         public static string? TripFromPlatform;
         public static string? SkyHourFromPlatform;
+        public static string? ScrollToFromPlatform;
 
         /// <summary>
         /// Pins the Ruler should open with, or empty. Read by the view model when it seeds, so
@@ -317,6 +325,7 @@ namespace JustCompute.Shared.Helpers
             }
 
             string target = route;
+            string? scrollTo = Pick(ScrollToFromPlatform, ScrollToEnv);
             // Let the Shell settle one tick before navigating.
             shell.Dispatcher.Dispatch(async () =>
             {
@@ -324,12 +333,64 @@ namespace JustCompute.Shared.Helpers
                 {
                     await Task.Delay(300);
                     await shell.GoToAsync(target);
+                    await UntilLoaded(shell.CurrentPage);
+                    if (scrollTo is not null)
+                    {
+                        // After the page has laid out its data: scrolling earlier lands against a
+                        // page still at its skeleton heights, and the card ends up mid-screen.
+                        await Task.Delay(1000);
+                        await ScrollTo(shell.CurrentPage, scrollTo);
+                    }
+                    await Task.Delay(500);
+                    Console.WriteLine($"{ReadyMarker} {target}");
                 }
                 catch
                 {
                     // Ignore navigation failures (e.g. unknown route) — keep the app usable.
                 }
             });
+        }
+
+        /// <summary>
+        /// Written to the log once the deep-linked screen has loaded its data, been scrolled and
+        /// had a moment to lay out. The capture script waits for it rather than for a fixed time:
+        /// on a loaded machine a cold start took long enough that a third of a store set was
+        /// captured on the loading spinner.
+        /// </summary>
+        public const string ReadyMarker = "COORDI_HARNESS_READY";
+
+        /// <summary>Waits while the page's view model is busy loading, up to half a minute.</summary>
+        private static async Task UntilLoaded(Page? page)
+        {
+            // Its load starts as the page appears, which may be a moment after navigation returns.
+            await Task.Delay(500);
+            if (page?.BindingContext is not ViewModels.BaseViewModel viewModel) return;
+
+            for (var waited = 0; viewModel.IsBusy && waited < 30_000; waited += 200)
+            {
+                await Task.Delay(200);
+            }
+        }
+
+        /// <summary>Scrolls the page so the element with this ClassId is at the top, if it has one.</summary>
+        private static async Task ScrollTo(Page? page, string classId)
+        {
+            if (page is not IVisualTreeElement root) return;
+
+            var element = root.GetVisualTreeDescendants()
+                .OfType<Element>()
+                .FirstOrDefault(e => string.Equals(e.ClassId, classId, StringComparison.OrdinalIgnoreCase));
+
+            Element? parent = element?.Parent;
+            while (parent is not null and not ScrollView)
+            {
+                parent = parent.Parent;
+            }
+
+            if (parent is ScrollView scroll && element is VisualElement target)
+            {
+                await scroll.ScrollToAsync(target, ScrollToPosition.Start, animated: false);
+            }
         }
     }
 }

@@ -1,0 +1,2 @@
+La scheda Sole mostra la giornata su un cielo che passa dalla notte all'alba, al giorno e al tramonto.
+La scheda Luna ha lo stesso grafico: il percorso della Luna nella giornata, nella fase di stanotte.

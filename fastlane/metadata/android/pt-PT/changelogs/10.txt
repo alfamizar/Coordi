@@ -1,0 +1,2 @@
+O cartão Sol mostra o dia sobre um céu que passa da noite ao amanhecer, ao dia e ao entardecer.
+O cartão Lua ganha o mesmo gráfico: o percurso da Lua ao longo do dia, na fase desta noite.

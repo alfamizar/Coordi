@@ -1,0 +1,2 @@
+La carte Soleil montre la journée sur un ciel qui passe de la nuit à l'aube, au jour puis au crépuscule.
+La carte Lune reçoit le même graphique : la course de la Lune dans la journée, dans sa phase de ce soir.
