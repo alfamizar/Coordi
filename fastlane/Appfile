@@ -4,7 +4,7 @@
 # or anywhere in the repo. It is referenced only via an environment variable that
 # points at a file kept OUTSIDE the repository, e.g.:
 #
-#   export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"
+#   export SUPPLY_JSON_KEY="$HOME/.secrets/google-play-service-account.json"
 #
 # See docs/google-play-release.md for how to create, scope, and rotate that key.
 

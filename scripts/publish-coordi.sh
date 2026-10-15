@@ -26,7 +26,7 @@
 #   COORDI_KEY_ALIAS      default coordi
 #   COORDI_KEYSTORE_PASS  asked for
 #   COORDI_KEY_PASS       asked for; Enter means the same as the keystore's
-#   SUPPLY_JSON_KEY       default ~/.secrets/coordi-play-key.json
+#   SUPPLY_JSON_KEY       default ~/.secrets/google-play-service-account.json
 #
 set -euo pipefail
 
@@ -96,7 +96,7 @@ if [ "$DRY" = 0 ]; then
   say "Signing"
   export COORDI_KEYSTORE="${COORDI_KEYSTORE:-$HOME/.secrets/coordi-upload.keystore}"
   export COORDI_KEY_ALIAS="${COORDI_KEY_ALIAS:-coordi}"
-  export SUPPLY_JSON_KEY="${SUPPLY_JSON_KEY:-$HOME/.secrets/coordi-play-key.json}"
+  export SUPPLY_JSON_KEY="${SUPPLY_JSON_KEY:-$HOME/.secrets/google-play-service-account.json}"
   [ -f "$COORDI_KEYSTORE" ] || { echo "no keystore at $COORDI_KEYSTORE — set COORDI_KEYSTORE" >&2; exit 1; }
   [ -f "$SUPPLY_JSON_KEY" ] || { echo "no Play service-account key at $SUPPLY_JSON_KEY — set SUPPLY_JSON_KEY" >&2; exit 1; }
   echo "  keystore: $COORDI_KEYSTORE (alias $COORDI_KEY_ALIAS)"
