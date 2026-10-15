@@ -22,13 +22,15 @@ listings), with five themes.
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/today.png" width="200" alt="Today: sky verdict, weather, Sun path, twilight" />
+  <img src="docs/screenshots/today.png" width="200" alt="Today: sky verdict, weather, and the Sun's day over a sky coloured by the hour" />
+  <img src="docs/screenshots/sky-chart.png" width="200" alt="Sky chart: stars, constellations and planets for any hour" />
   <img src="docs/screenshots/eclipses.png" width="200" alt="A century of solar eclipses with magnitude and local type" />
-  <img src="docs/screenshots/optics.png" width="200" alt="Depth of field, field of view and star-trail exposure" />
+  <img src="docs/screenshots/planets.png" width="200" alt="Planets: where each one is now, when it rises, culminates and sets, and how far" />
 </p>
 <p align="center">
   <img src="docs/screenshots/ruler.png" width="200" alt="Multi-stop route with bearings, detour ratio and fuel cost" />
   <img src="docs/screenshots/speed-distance.png" width="200" alt="GPS speedometer and trip summary" />
+  <img src="docs/screenshots/optics.png" width="200" alt="Depth of field, field of view and star-trail exposure" />
   <img src="docs/screenshots/locations.png" width="200" alt="Saved locations" />
 </p>
 
