@@ -10,7 +10,7 @@ You need **two separate credentials** — don't confuse them:
 | Credential | What it does | Where it comes from |
 |---|---|---|
 | **Upload keystore** (`*.keystore`) | *Signs* the AAB — proves it's really your app | you generate it with `keytool` |
-| **Service-account JSON** (`coordi-play-key.json`) | *Authenticates* fastlane to the Play API for uploads | Google Cloud Console |
+| **Service-account JSON** (`google-play-service-account.json`) | *Authenticates* fastlane to the Play API for uploads | Google Cloud Console |
 
 Both are **secrets**: keep them **outside** the repo, referenced only via env vars. `.gitignore`
 blocks `*.keystore`, `*.jks`, and `*play*key*.json` as a safety net.
@@ -42,9 +42,9 @@ blocks `*.keystore`, `*.jks`, and `*play*key*.json` as a safety net.
 
 ```bash
 mkdir -p ~/.secrets
-mv ~/Downloads/<downloaded>.json ~/.secrets/coordi-play-key.json
-chmod 600 ~/.secrets/coordi-play-key.json
-export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"
+mv ~/Downloads/<downloaded>.json ~/.secrets/google-play-service-account.json
+chmod 600 ~/.secrets/google-play-service-account.json
+export SUPPLY_JSON_KEY="$HOME/.secrets/google-play-service-account.json"
 
 fastlane android check_play_key   # → "Service-account key is valid."
 ```

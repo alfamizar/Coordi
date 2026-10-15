@@ -162,7 +162,7 @@ The Google Play service-account key is a **secret** — never commit it. It's re
 `$SUPPLY_JSON_KEY` (file kept outside the repo). Full key setup: `docs/google-play-release.md`.
 
 ```bash
-export SUPPLY_JSON_KEY="$HOME/.secrets/coordi-play-key.json"
+export SUPPLY_JSON_KEY="$HOME/.secrets/google-play-service-account.json"
 
 fastlane android check_play_key            # confirm the key works
 fastlane android upload_listing_dry_run    # validate metadata (no changes committed)
