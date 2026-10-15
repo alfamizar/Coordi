@@ -14,7 +14,7 @@ listings), with five themes.
 ![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-blue)
 ![.NET](https://img.shields.io/badge/.NET-10-512BD4)
 ![MAUI](https://img.shields.io/badge/.NET%20MAUI-10.0-512BD4)
-![Tests](https://img.shields.io/badge/tests-415%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-574%20passing-brightgreen)
 ![License](https://img.shields.io/badge/license-AGPL--3.0-green)
 
 ---
@@ -96,7 +96,7 @@ listings), with five themes.
 | Resilience | [Polly](https://github.com/App-vNext/Polly) (exponential-backoff retries) |
 | Persistence | [sqlite-net](https://github.com/praeclarum/sqlite-net), hand-written mappers |
 | Localization | `Microsoft.Extensions.Localization` + `.resx` resources |
-| Testing | xUnit — 378 tests |
+| Testing | xUnit — 574 tests |
 
 ### Compute.Astro
 
